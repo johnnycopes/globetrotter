@@ -1,0 +1,48 @@
+// ==================
+// COLORS
+// ==================
+
+$color: (
+	background: #FFF,
+	text: #1B9AAA,
+	start: #06D6A0,
+	pause: #EF476F,
+	disabled: #D2DBDC
+);
+
+// ==================
+// TYPOGRAPHY
+// ==================
+
+$monospace: 'IBM Plex Mono', Consolas, 'Andale Mono WT', 'Andale Mono', 'Lucida Console', 'Lucida Sans Typewriter', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Liberation Mono', 'Nimbus Mono L', Monaco, 'Courier New', Courier, monospace;
+$sans-serif: 'Scope One', Frutiger, 'Frutiger Linotype', Univers, Calibri, 'Gill Sans', 'Gill Sans MT', 'Myriad Pro', Myriad, 'DejaVu Sans Condensed', 'Liberation Sans', 'Nimbus Sans L', Tahoma, Geneva, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+
+// ==================
+// STYLES
+// ==================
+
+$z-index: (
+  positive: 1,
+  none: 0,
+  negative: -1
+);
+
+$border-radius: 8px;
+$border-width: 12px;
+$edge-spacing: 4vh;
+
+
+// ==================
+// TRANSITIONS
+// ==================
+
+$transition: (
+	fast: 100ms all ease-in-out,
+	medium: 300ms all ease-in
+);
+
+
+// ==================
+// ANIMATIONS
+// ==================

@@ -1,27 +1,27 @@
 # Globetrotter
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
+### Live site: _coming soon_
 
-## Development server
+A geography quiz app!
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+_more details coming soon_
 
-## Code scaffolding
+#### Goals of this project:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Build a well-organized, sophisticated front-end application using Angular
+- Include some slick transitions/effects in the app with Angular's animations module
+- Tap into the REST Countries API [https://restcountries.eu] for all data
+- Implement a test-driven development (TDD) approach with the help of Jest
 
-## Build
+#### Local installation:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+1. Clone the project repository
+2. Navigate into the newly-created directory and install all dependencies by running `npm install` in each folder
+3. Navigate into this project's folder via your CLI and boot the project with `npm start`
+4. Run the project locally with `ng serve` and navigate to `http://localhost:4200/` in your browser. The app will automatically reload if you change any of the source files
 
-## Running unit tests
+#### Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- Run `npm run test` to execute the unit tests with __Jest__ (_preferred_)
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+- Run `ng test` to execute the unit tests with __Karma__ (_default_)
