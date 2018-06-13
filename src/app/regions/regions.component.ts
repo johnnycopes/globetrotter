@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { QuizService } from '../quiz/quiz.service';
-import { Country, CountryDictionary } from '../data/country.interface';
+import { Country } from '../data/country.interface';
+import { CountryService } from '../country/country.service';
 
 @Component({
   selector: 'app-regions',
@@ -8,17 +8,20 @@ import { Country, CountryDictionary } from '../data/country.interface';
   styleUrls: ['./regions.component.scss']
 })
 export class RegionsComponent implements OnInit {
-  countries: Country[];
-  countriesKeyedByName: CountryDictionary;
+  countriesByName: _.Dictionary<Country>;
+  countriesByRegion: _.Dictionary<Country[]>;
+  countriesBySubRegion: _.Dictionary<Country[]>;
 
-  constructor(private quizService: QuizService) {}
+  constructor(private countryService: CountryService) {}
 
   ngOnInit() {
-    this.countries = this.quizService.selectRegion('Europe');
-    console.log(this.countries);
-    
-    this.countriesKeyedByName = this.quizService.keyCountriesByProperty('name');
-    console.log(this.countriesKeyedByName);
+    this.countriesByName = this.countryService.keyCountriesByProperty('name');
+    this.countriesByRegion = this.countryService.groupCountriesByProperty('region');
+    this.countriesBySubRegion = this.countryService.groupCountriesByProperty('subregion');
+
+    console.log('countries by name:', this.countriesByName);
+    console.log('countries by region:', this.countriesByRegion);
+    console.log('countries by subregion:', this.countriesBySubRegion);
   }
 
 }

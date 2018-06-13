@@ -39,7 +39,3 @@ export interface Country {
   regionalBlocs: RegionalBloc[]
   cioc: string;
 }
-
-export interface CountryDictionary {
-  [property: string]: Country;
-}
