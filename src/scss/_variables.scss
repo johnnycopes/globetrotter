@@ -3,19 +3,18 @@
 // ==================
 
 $color: (
-	background: #FFF,
-	text: #1B9AAA,
-	start: #06D6A0,
-	pause: #EF476F,
-	disabled: #D2DBDC
+	darkest: #253237,
+	dark: #5C6B73,
+	medium: #9DB4C0,
+	light: #C2DFE3,
+  lightest: #E0FBFC
 );
 
 // ==================
 // TYPOGRAPHY
 // ==================
 
-$monospace: 'IBM Plex Mono', Consolas, 'Andale Mono WT', 'Andale Mono', 'Lucida Console', 'Lucida Sans Typewriter', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Liberation Mono', 'Nimbus Mono L', Monaco, 'Courier New', Courier, monospace;
-$sans-serif: 'Scope One', Frutiger, 'Frutiger Linotype', Univers, Calibri, 'Gill Sans', 'Gill Sans MT', 'Myriad Pro', Myriad, 'DejaVu Sans Condensed', 'Liberation Sans', 'Nimbus Sans L', Tahoma, Geneva, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$sans-serif: 'Tajawal', Frutiger, 'Frutiger Linotype', Univers, Calibri, 'Gill Sans', 'Gill Sans MT', 'Myriad Pro', Myriad, 'DejaVu Sans Condensed', 'Liberation Sans', 'Nimbus Sans L', Tahoma, Geneva, 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
 
 // ==================

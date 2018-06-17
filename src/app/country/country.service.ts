@@ -19,4 +19,18 @@ export class CountryService {
     return _.groupBy(this.countries, property);
   }
 
+  groupSubregionsByRegion(): _.Dictionary<string[]> {
+    return _.reduce(this.countries, (accum, value) => {
+      const region = value.region;
+      const subregion = value.subregion;
+      if (!accum[region]) {
+        accum[region] = [];
+      }
+      if (!accum[region].includes(subregion)) {
+        accum[region].push(subregion);
+      }
+      return accum;
+    }, {});
+  }
+
 }

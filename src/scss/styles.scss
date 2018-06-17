@@ -13,13 +13,12 @@ html {
 }
 
 body {
-  color: map-get($color, text);
-  background: map-get($color, background);
+  color: map-get($color, lightest);
+  background: map-get($color, darkest);
   font-family: $sans-serif;
 	font-size: 3rem;
 	font-weight: 300;
   line-height: 1;
   height: 100vh;
 	position: relative;
-	overflow: hidden;
 }

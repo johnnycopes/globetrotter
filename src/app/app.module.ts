@@ -2,12 +2,16 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { RegionsComponent } from './regions/regions.component';
+import { QuizComponent } from './quiz/quiz.component';
+import { QuizCardComponent } from './quiz-card/quiz-card.component';
+import { CountrySelectionComponent } from './country-selection/country-selection.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    RegionsComponent
+    QuizComponent,
+    QuizCardComponent,
+    CountrySelectionComponent
   ],
   imports: [
     BrowserModule
