@@ -6,12 +6,12 @@ import * as _ from 'lodash';
 @Injectable({
   providedIn: 'root'
 })
-export class CountryService {
+export class CountryService {z
   private countries: Country[] = COUNTRIES;
   private readonly validRegions = ['Asia', 'Africa', 'Americas', 'Europe', 'Oceania'];
 
   constructor() {
-    this.sanitizeCountries();
+    this.standarizeCountries();
   }
 
   keyCountriesByProperty(property: string): _.Dictionary<Country> {
@@ -36,7 +36,7 @@ export class CountryService {
     }, {});
   }
 
-  private sanitizeCountries() {
+  private standarizeCountries() {
     _.forEach(this.countries, (country) => {
       if (!this.validRegions.includes(country.region)) {
         country.region = 'Miscellaneous';

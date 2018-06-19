@@ -44,12 +44,15 @@ export class SelectionService {
   evaluateIndeterminate(form: FormGroup, region: string) {
     const formModel = form.value;
     const subregions = this.subregionsByRegion[region];
-    const allRegionsChecked = subregions.every((region) => {
-      return formModel[region] === true;
+    const allSubregionsChecked = subregions.every((subregion) => {
+      return formModel[subregion] === true;
     });
-    const allRegionsUnchecked = subregions.every((region) => {
-      return formModel[region] === false;
+    const allSubregionsUnchecked = subregions.every((subregion) => {
+      return formModel[subregion] === false;
     });
-    return !allRegionsChecked && !allRegionsUnchecked;
+    return {
+      allSubregionsChecked,
+      allSubregionsUnchecked
+    };
   }
 }

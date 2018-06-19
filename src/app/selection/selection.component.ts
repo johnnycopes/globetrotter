@@ -39,6 +39,18 @@ export class SelectionComponent implements OnInit {
     this.updateSelectionTally();
   }
 
+  selectAll() {
+    const regionsAndSubregions = [...this.regions, ...this.subregions];
+    const updatedFormModel = this.selectionService.createFormModel(regionsAndSubregions, true);
+    this.selectionForm.setValue(updatedFormModel);
+  }
+
+  clearAll() {
+    const regionsAndSubregions = [...this.regions, ...this.subregions];
+    const updatedFormModel = this.selectionService.createFormModel(regionsAndSubregions, false);
+    this.selectionForm.setValue(updatedFormModel);
+  }
+
   onRegionChange(region: HTMLInputElement) {
     const subregions = this.subregionsByRegion[region.value];
     const updatedFormModel = this.selectionService.createFormModel(subregions, region.checked);
@@ -46,12 +58,24 @@ export class SelectionComponent implements OnInit {
   }
 
   onSubregionChange(region: HTMLInputElement) {
-    region.indeterminate = this.selectionService.evaluateIndeterminate(this.selectionForm, region.value);
+    const { allSubregionsChecked, allSubregionsUnchecked } = this.selectionService.evaluateIndeterminate(this.selectionForm, region.value);
+    if (!allSubregionsChecked && !allSubregionsUnchecked) {
+      region.indeterminate = true;
+    }
+    else if (allSubregionsChecked) {
+      region.indeterminate = false;
+      this.selectionForm.patchValue({ [region.value]: true });
+    }
+    else if (allSubregionsUnchecked) {
+      region.indeterminate = false;
+      this.selectionForm.patchValue({ [region.value]: false });
+    }
   }
 
   private initializeForm() {
-    const subregionsFormModel = this.selectionService.createFormModel(this.subregions, true);
-    this.selectionForm = this.fb.group(subregionsFormModel);
+    const regionsAndSubregions = [...this.regions, ...this.subregions];
+    const formModel = this.selectionService.createFormModel(regionsAndSubregions, true);
+    this.selectionForm = this.fb.group(formModel);
     this.selectionForm.valueChanges.subscribe(() => {
       this.updateSelectionTally();
     });
