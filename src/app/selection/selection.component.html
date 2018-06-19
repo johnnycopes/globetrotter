@@ -1,5 +1,5 @@
-<!-- Form value: {{selectionForm.value | json}}<br>
-Form status: {{selectionForm.status | json}}<br> -->
+Form value: {{selectionForm.value | json}}<br>
+Form status: {{selectionForm.status | json}}<br>
 <form [formGroup]="selectionForm">
   <div class="total">
     {{selectionTally.total}} / {{countries.length}} countries selected
@@ -18,12 +18,12 @@ Form status: {{selectionForm.status | json}}<br> -->
       />
       <label class="region__label"
         [for]="region"
-      >
+        >
         {{region}} ({{selectionTally[region]}} / {{countriesByRegion[region].length}})
       </label>
       <div class="subregion"
         *ngFor="let subregion of subregionsByRegion[region]"
-      >
+        >
         <input class="subregion__checkbox"
           #subregionInput
           type="checkbox"
@@ -34,7 +34,7 @@ Form status: {{selectionForm.status | json}}<br> -->
         />
         <label class="subregion__label"
           [for]="subregion"
-        >
+          >
           {{subregion}} ({{countriesBySubregion[subregion].length}})
         </label>
       </div>

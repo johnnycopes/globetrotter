@@ -18,7 +18,7 @@ export class SelectionComponent implements OnInit {
   public regions: string[];
   public subregions: string[];
   public countries: string[];
-  public selectionTally: _.Dictionary<number> = {};
+  public selectionTally: _.Dictionary<number>;
   public selectionForm: FormGroup;
 
   constructor(
@@ -41,23 +41,23 @@ export class SelectionComponent implements OnInit {
 
   onRegionChange(region: HTMLInputElement) {
     const subregions = this.subregionsByRegion[region.value];
-    const updatedSubregionsFormModel = this.selectionService.createFormModel(subregions, region.checked);
-    this.selectionForm.patchValue(updatedSubregionsFormModel);
-    this.updateSelectionTally();
+    const updatedFormModel = this.selectionService.createFormModel(subregions, region.checked);
+    this.selectionForm.patchValue(updatedFormModel);
   }
 
   onSubregionChange(region: HTMLInputElement) {
     region.indeterminate = this.selectionService.evaluateIndeterminate(this.selectionForm, region.value);
-    this.updateSelectionTally();
   }
 
   private initializeForm() {
     const subregionsFormModel = this.selectionService.createFormModel(this.subregions, true);
     this.selectionForm = this.fb.group(subregionsFormModel);
+    this.selectionForm.valueChanges.subscribe(() => {
+      this.updateSelectionTally();
+    });
   }
 
   private updateSelectionTally() {
     this.selectionTally = this.selectionService.countSelections(this.selectionForm);
   }
-
 }

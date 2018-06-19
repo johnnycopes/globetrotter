@@ -7,9 +7,12 @@ import * as _ from 'lodash';
   providedIn: 'root'
 })
 export class CountryService {
-  countries: Country[] = COUNTRIES;
+  private countries: Country[] = COUNTRIES;
+  private readonly validRegions = ['Asia', 'Africa', 'Americas', 'Europe', 'Oceania'];
 
-  constructor() { }
+  constructor() {
+    this.sanitizeCountries();
+  }
 
   keyCountriesByProperty(property: string): _.Dictionary<Country> {
     return _.keyBy(this.countries, property);
@@ -33,4 +36,12 @@ export class CountryService {
     }, {});
   }
 
+  private sanitizeCountries() {
+    _.forEach(this.countries, (country) => {
+      if (!this.validRegions.includes(country.region)) {
+        country.region = 'Miscellaneous';
+        country.subregion = 'N/A';
+      }
+    });
+  }
 }
