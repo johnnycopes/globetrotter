@@ -13,9 +13,12 @@ import { SelectionService } from './selection.service';
 export class SelectionComponent implements OnInit {
   public countriesByRegion: _.Dictionary<Country[]>;
   public countriesBySubregion: _.Dictionary<Country[]>;
-  public subregionsByRegion: _.Dictionary<String[]>;
+  public countriesByName: _.Dictionary<Country>;
+  public subregionsByRegion: _.Dictionary<string[]>;
   public regions: string[];
   public subregions: string[];
+  public countries: string[];
+  public selectionTally: _.Dictionary<number> = {};
   public selectionForm: FormGroup;
 
   constructor(
@@ -27,15 +30,34 @@ export class SelectionComponent implements OnInit {
   ngOnInit() {
     this.countriesByRegion = this.countryService.groupCountriesByProperty('region');
     this.countriesBySubregion = this.countryService.groupCountriesByProperty('subregion');
+    this.countriesByName = this.countryService.keyCountriesByProperty('name');
     this.subregionsByRegion = this.countryService.groupSubregionsByRegion();
     this.regions = Object.keys(this.subregionsByRegion);
     this.subregions = Object.keys(this.countriesBySubregion);
-    this.createForm();
+    this.countries = Object.keys(this.countriesByName);
+    this.initializeForm();
+    this.updateSelectionTally();
   }
 
-  createForm() {
+  onRegionChange(region: HTMLInputElement) {
+    const subregions = this.subregionsByRegion[region.value];
+    const updatedSubregionsFormModel = this.selectionService.createFormModel(subregions, region.checked);
+    this.selectionForm.patchValue(updatedSubregionsFormModel);
+    this.updateSelectionTally();
+  }
+
+  onSubregionChange(region: HTMLInputElement) {
+    region.indeterminate = this.selectionService.evaluateIndeterminate(this.selectionForm, region.value);
+    this.updateSelectionTally();
+  }
+
+  private initializeForm() {
     const subregionsFormModel = this.selectionService.createFormModel(this.subregions, true);
     this.selectionForm = this.fb.group(subregionsFormModel);
+  }
+
+  private updateSelectionTally() {
+    this.selectionTally = this.selectionService.countSelections(this.selectionForm);
   }
 
 }

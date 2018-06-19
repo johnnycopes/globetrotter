@@ -1,33 +1,43 @@
-Form value: {{selectionForm.value | json}}<br>
-Form status: {{selectionForm.status | json}}<br>
+<!-- Form value: {{selectionForm.value | json}}<br>
+Form status: {{selectionForm.status | json}}<br> -->
 <form [formGroup]="selectionForm">
-  <div class="region"
-    *ngFor="let region of regions"
-  >
-    <input class="region__checkbox"
-      type="checkbox"
-      [id]="region"
-      [value]="region"
-    />
-    <label class="region__label"
-      [for]="region"
-    >
-      {{region}} ({{countriesByRegion[region].length}})
-    </label>
-    <div class="subregion"
-      *ngFor="let subregion of subregionsByRegion[region]"
-    >
-      <input class="subregion__checkbox"
-        type="checkbox"
-        [id]="subregion"
-        [value]="subregion"
-        [formControlName]="subregion"
-      />
-      <label class="subregion__label"
-        [for]="subregion"
+  <div class="total">
+    {{selectionTally.total}} / {{countries.length}} countries selected
+  </div>
+  <div class="regions">
+    <div class="region"
+      *ngFor="let region of regions"
       >
-        {{subregion}} ({{countriesBySubregion[subregion].length}})
+      <input class="region__checkbox"
+        #regionInput
+        checked
+        type="checkbox"
+        [id]="region"
+        [value]="region"
+        (change)="onRegionChange(regionInput)"
+      />
+      <label class="region__label"
+        [for]="region"
+      >
+        {{region}} ({{selectionTally[region]}} / {{countriesByRegion[region].length}})
       </label>
+      <div class="subregion"
+        *ngFor="let subregion of subregionsByRegion[region]"
+      >
+        <input class="subregion__checkbox"
+          #subregionInput
+          type="checkbox"
+          [id]="subregion"
+          [value]="subregion"
+          [formControlName]="subregion"
+          (change)="onSubregionChange(regionInput)"
+        />
+        <label class="subregion__label"
+          [for]="subregion"
+        >
+          {{subregion}} ({{countriesBySubregion[subregion].length}})
+        </label>
+      </div>
     </div>
   </div>
 </form>

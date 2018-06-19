@@ -2,10 +2,21 @@ form {
   margin-top: 20px;
 }
 
+.total {
+  margin-bottom: 20px;
+}
+
+.regions {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .region {
+  margin-bottom: 20px;
   font-size: 30px;
+  flex: 0 1 400px;
 }
 
 .subregion {
-  padding-left: 10px;
+  padding-left: 20px;
 }
