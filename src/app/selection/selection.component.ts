@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Validators, FormGroup, FormArray, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 import { Country } from '../data/country.interface';
 import { CountryService } from '../country/country.service';
@@ -40,42 +40,52 @@ export class SelectionComponent implements OnInit {
   }
 
   selectAll() {
-    const regionsAndSubregions = [...this.regions, ...this.subregions];
-    const updatedFormModel = this.selectionService.createFormModel(regionsAndSubregions, true);
-    this.selectionForm.setValue(updatedFormModel);
+    const updatedFormModel = this.selectionService.createFormModel(this.regions, this.subregions, true);
+    this.selectionForm.setValue(updatedFormModel.value);
   }
 
   clearAll() {
-    const regionsAndSubregions = [...this.regions, ...this.subregions];
-    const updatedFormModel = this.selectionService.createFormModel(regionsAndSubregions, false);
-    this.selectionForm.setValue(updatedFormModel);
+    const updatedFormModel = this.selectionService.createFormModel(this.regions, this.subregions, false);
+    this.selectionForm.setValue(updatedFormModel.value);
   }
 
   onRegionChange(region: HTMLInputElement) {
     const subregions = this.subregionsByRegion[region.value];
-    const updatedFormModel = this.selectionService.createFormModel(subregions, region.checked);
-    this.selectionForm.patchValue(updatedFormModel);
+    const formModelUpdate = this.selectionService.createFormModelUpdate([region.value], subregions, region.checked);
+    formModelUpdate[region.value] = { indeterminate: false };
+    this.selectionForm.patchValue(formModelUpdate);
   }
 
   onSubregionChange(region: HTMLInputElement) {
     const { allSubregionsChecked, allSubregionsUnchecked } = this.selectionService.evaluateIndeterminate(this.selectionForm, region.value);
     if (!allSubregionsChecked && !allSubregionsUnchecked) {
-      region.indeterminate = true;
+      this.selectionForm.patchValue({
+        [region.value]: {
+          checked: null,
+          indeterminate: true
+        }
+      });
     }
     else if (allSubregionsChecked) {
-      region.indeterminate = false;
-      this.selectionForm.patchValue({ [region.value]: true });
+      this.selectionForm.patchValue({
+        [region.value]: {
+          checked: true,
+          indeterminate: false
+        }
+      });
     }
     else if (allSubregionsUnchecked) {
-      region.indeterminate = false;
-      this.selectionForm.patchValue({ [region.value]: false });
+      this.selectionForm.patchValue({
+        [region.value]: {
+          checked: false,
+          indeterminate: false
+        }
+      });
     }
   }
 
   private initializeForm() {
-    const regionsAndSubregions = [...this.regions, ...this.subregions];
-    const formModel = this.selectionService.createFormModel(regionsAndSubregions, true);
-    this.selectionForm = this.fb.group(formModel);
+    this.selectionForm = this.selectionService.createFormModel(this.regions, this.subregions, true);
     this.selectionForm.valueChanges.subscribe(() => {
       this.updateSelectionTally();
     });

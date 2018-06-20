@@ -1,13 +1,12 @@
-Form value: {{selectionForm.value | json}}<br>
-Form status: {{selectionForm.status | json}}<br>
+{{selectionForm.value | json}}
 <form [formGroup]="selectionForm">
   <div class="total">
     {{selectionTally.total}} / {{countries.length}} countries selected
     <div class="buttons">
-      <button (click)="selectAll(regionInput)">
+      <button (click)="selectAll()">
         Select all
       </button>
-      <button (click)="clearAll(regionInput)">
+      <button (click)="clearAll()">
         Clear all
       </button>
     </div>
@@ -16,19 +15,22 @@ Form status: {{selectionForm.status | json}}<br>
     <div class="region"
       *ngFor="let region of regions"
       >
-      <input class="region__checkbox"
-        #regionInput
-        type="checkbox"
-        [id]="region"
-        [value]="region"
-        [formControlName]="region"
-        (change)="onRegionChange(regionInput)"
-      />
-      <label class="region__label"
-        [for]="region"
-        >
-        {{region}} ({{selectionTally[region]}} / {{countriesByRegion[region].length}})
-      </label>
+      <div [formGroupName]="region">
+        <input class="region__checkbox"
+          #regionInput
+          type="checkbox"
+          [id]="region"
+          [value]="region"
+          formControlName="checked"
+          [indeterminate]="selectionForm.value[region].indeterminate"
+          (change)="onRegionChange(regionInput)"
+        />
+        <label class="region__label"
+          [for]="region"
+          >
+          {{region}} ({{selectionTally[region]}} / {{countriesByRegion[region].length}})
+        </label>
+      </div>
       <div class="subregion"
         *ngFor="let subregion of subregionsByRegion[region]"
         >
@@ -39,7 +41,7 @@ Form status: {{selectionForm.status | json}}<br>
           [value]="subregion"
           [formControlName]="subregion"
           (change)="onSubregionChange(regionInput)"
-        />
+          />
         <label class="subregion__label"
           [for]="subregion"
           >

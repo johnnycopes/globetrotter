@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import * as _ from 'lodash';
 
 import { CountryService } from '../country/country.service';
 import { Country } from '../data/country.interface';
+import { formGroupNameProvider } from '@angular/forms/src/directives/reactive_directives/form_group_name';
 
 @Injectable({
   providedIn: 'root'
@@ -12,17 +13,12 @@ export class SelectionService {
   private countriesBySubregion: _.Dictionary<Country[]>;
   private subregionsByRegion: _.Dictionary<string[]>;
 
-  constructor(private countryService: CountryService) {
+  constructor(
+    private fb: FormBuilder,
+    private countryService: CountryService
+  ) {
     this.countriesBySubregion = this.countryService.groupCountriesByProperty('subregion');
     this.subregionsByRegion = this.countryService.groupSubregionsByRegion();
-  }
-
-  createFormModel(arr: string[], initValue: boolean) {
-    const formObj = {};
-    _.forEach(arr, (value) => {
-      formObj[value] = initValue;
-    });
-    return formObj;
   }
 
   countSelections(form: FormGroup) {
@@ -54,5 +50,31 @@ export class SelectionService {
       allSubregionsChecked,
       allSubregionsUnchecked
     };
+  }
+
+  createFormModel(regions: string[], subregions: string[], initValue: boolean) {
+    const formModelObject = this.createFormModelObject(regions, subregions, initValue);
+    return this.fb.group(formModelObject);
+  }
+
+  createFormModelUpdate(regions: string[], subregions: string[], initValue: boolean) {
+    const formModelObject = this.createFormModelObject(regions, subregions, initValue);
+    return formModelObject;
+  }
+
+  private createFormModelObject(regions: string[], subregions: string[], initValue: boolean) {
+    const formModel = {};
+    if (regions) {
+      _.forEach(regions, (value) => {
+        formModel[value] = this.fb.group({
+          checked: initValue,
+          indeterminate: false
+        })
+      });
+    }
+    _.forEach(subregions, (value) => {
+      formModel[value] = initValue;
+    });
+    return formModel;
   }
 }
