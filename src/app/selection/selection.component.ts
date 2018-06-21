@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 
 import { Country } from '../data/country.interface';
 import { CountryService } from '../country/country.service';
-import { SelectionService } from './selection.service';
+import { SelectionService, SelectionTally } from './selection.service';
 
 @Component({
   selector: 'app-selection',
@@ -18,7 +18,7 @@ export class SelectionComponent implements OnInit {
   public regions: string[];
   public subregions: string[];
   public countries: string[];
-  public selectionTally: _.Dictionary<number>;
+  public selectionTally: SelectionTally;
   public selectionForm: FormGroup;
 
   constructor(
@@ -55,12 +55,12 @@ export class SelectionComponent implements OnInit {
 
   onRegionChange(region: HTMLInputElement) {
     const subregions = this.subregionsByRegion[region.value];
-    const updateToFormModel = this.selectionService.updateRegionAndSubregions(region.value, subregions, region.checked);
+    const updateToFormModel = this.selectionService.createRegionAndSubregionsUpdate(region.value, subregions, region.checked);
     this.selectionForm.patchValue(updateToFormModel);
   }
 
   onSubregionChange(region: HTMLInputElement) {
-    const updateToFormModel = this.selectionService.updateRegion(this.selectionForm, region.value);
+    const updateToFormModel = this.selectionService.createRegionUpdate(this.selectionForm, region.value);
     this.selectionForm.patchValue(updateToFormModel);
   }
 

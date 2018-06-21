@@ -4,7 +4,20 @@ import * as _ from 'lodash';
 
 import { CountryService } from '../country/country.service';
 import { Country } from '../data/country.interface';
-import { formGroupNameProvider } from '@angular/forms/src/directives/reactive_directives/form_group_name';
+
+export type SelectionTally = _.Dictionary<number>;
+
+export type RegionModel = {
+  checked: boolean | null;
+  indeterminate: boolean;
+}
+export type SubregionModel = boolean;
+export interface FormModelUpdate {
+  [place: string]: RegionModel | SubregionModel;
+}
+export interface FormModelObject {
+  [place: string]: FormGroup | boolean;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +34,7 @@ export class SelectionService {
     this.subregionsByRegion = this.countryService.groupSubregionsByRegion();
   }
 
-  countSelections(form: FormGroup) {
+  countSelections(form: FormGroup): SelectionTally {
     const formModel = form.value;
     const selectionTally = { total: 0 };
     _.forEach(this.subregionsByRegion, (subregions, region) => {
@@ -37,50 +50,53 @@ export class SelectionService {
     return selectionTally;
   }
 
-  createFormModel(regions: string[], subregions: string[], initValue: boolean) {
+  createFormModel(regions: string[], subregions: string[], initValue: boolean): FormGroup {
     const formModelObject = this.createFormModelObject(regions, subregions, initValue);
     return this.fb.group(formModelObject);
   }
 
-  updateRegion(form: FormGroup, region: string) {
+  createRegionUpdate(form: FormGroup, region: string): FormModelUpdate {
     const { allSubregionsChecked, allSubregionsUnchecked } = this.evaluateIndeterminate(form, region);
-    const formModel = {[region]: {
+    const formModelUpdate = {[region]: {
       checked: undefined,
       indeterminate: undefined
     }};
     if (!allSubregionsChecked && !allSubregionsUnchecked) {
-      formModel[region].checked = null;
-      formModel[region].indeterminate = true
+      formModelUpdate[region].checked = null;
+      formModelUpdate[region].indeterminate = true
     }
     else if (allSubregionsChecked) {
-      formModel[region].checked = true;
-      formModel[region].indeterminate = false
+      formModelUpdate[region].checked = true;
+      formModelUpdate[region].indeterminate = false
     }
     else if (allSubregionsUnchecked) {
-      formModel[region].checked = false;
-      formModel[region].indeterminate = false
+      formModelUpdate[region].checked = false;
+      formModelUpdate[region].indeterminate = false
     }
-    return formModel;
+    return formModelUpdate;
   }
 
-  updateRegionAndSubregions(region: string, subregions: string[], isSelected: boolean) {
-    const formModel = this.createFormModelObject([region], subregions, isSelected);
-    formModel[region] = { indeterminate: false };
-    return formModel;
+  createRegionAndSubregionsUpdate(region: string, subregions: string[], isChecked: boolean): FormModelUpdate {
+    const formModelUpdate = {};
+    formModelUpdate[region] = { indeterminate: false };
+    _.forEach(subregions, (subregion) => {
+      formModelUpdate[subregion] = isChecked;
+    });
+    return formModelUpdate;
   }
 
-  private createFormModelObject(regions: string[], subregions: string[], initValue: boolean) {
-    const formModel = {};
-    _.forEach(regions, (value) => {
-      formModel[value] = this.fb.group({
-        checked: initValue,
+  private createFormModelObject(regions: string[], subregions: string[], isChecked: boolean): FormModelObject {
+    const formModelObject = {};
+    _.forEach(regions, (region) => {
+      formModelObject[region] = this.fb.group({
+        checked: isChecked,
         indeterminate: false
       })
     });
-    _.forEach(subregions, (value) => {
-      formModel[value] = initValue;
+    _.forEach(subregions, (subregion) => {
+      formModelObject[subregion] = isChecked;
     });
-    return formModel;
+    return formModelObject;
   }
 
   private evaluateIndeterminate(form: FormGroup, region: string) {
