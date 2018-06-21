@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 
 import { Country } from '../data/country.interface';
 import { CountryService } from '../country/country.service';
@@ -22,7 +22,6 @@ export class SelectionComponent implements OnInit {
   public selectionForm: FormGroup;
 
   constructor(
-    private fb: FormBuilder,
     private countryService: CountryService,
     private selectionService: SelectionService
   ) { }
@@ -39,49 +38,30 @@ export class SelectionComponent implements OnInit {
     this.updateSelectionTally();
   }
 
-  selectAll() {
+  onSubmit() {
+    console.log(`Let's go!`);
+    console.log(this.selectionForm);
+  }
+
+  onSelectAll() {
     const updatedFormModel = this.selectionService.createFormModel(this.regions, this.subregions, true);
     this.selectionForm.setValue(updatedFormModel.value);
   }
 
-  clearAll() {
+  onClearAll() {
     const updatedFormModel = this.selectionService.createFormModel(this.regions, this.subregions, false);
     this.selectionForm.setValue(updatedFormModel.value);
   }
 
   onRegionChange(region: HTMLInputElement) {
     const subregions = this.subregionsByRegion[region.value];
-    const formModelUpdate = this.selectionService.createFormModelUpdate([region.value], subregions, region.checked);
-    formModelUpdate[region.value] = { indeterminate: false };
-    this.selectionForm.patchValue(formModelUpdate);
+    const updateToFormModel = this.selectionService.updateRegionAndSubregions(region.value, subregions, region.checked);
+    this.selectionForm.patchValue(updateToFormModel);
   }
 
   onSubregionChange(region: HTMLInputElement) {
-    const { allSubregionsChecked, allSubregionsUnchecked } = this.selectionService.evaluateIndeterminate(this.selectionForm, region.value);
-    if (!allSubregionsChecked && !allSubregionsUnchecked) {
-      this.selectionForm.patchValue({
-        [region.value]: {
-          checked: null,
-          indeterminate: true
-        }
-      });
-    }
-    else if (allSubregionsChecked) {
-      this.selectionForm.patchValue({
-        [region.value]: {
-          checked: true,
-          indeterminate: false
-        }
-      });
-    }
-    else if (allSubregionsUnchecked) {
-      this.selectionForm.patchValue({
-        [region.value]: {
-          checked: false,
-          indeterminate: false
-        }
-      });
-    }
+    const updateToFormModel = this.selectionService.updateRegion(this.selectionForm, region.value);
+    this.selectionForm.patchValue(updateToFormModel);
   }
 
   private initializeForm() {

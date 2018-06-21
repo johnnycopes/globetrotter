@@ -37,7 +37,53 @@ export class SelectionService {
     return selectionTally;
   }
 
-  evaluateIndeterminate(form: FormGroup, region: string) {
+  createFormModel(regions: string[], subregions: string[], initValue: boolean) {
+    const formModelObject = this.createFormModelObject(regions, subregions, initValue);
+    return this.fb.group(formModelObject);
+  }
+
+  updateRegion(form: FormGroup, region: string) {
+    const { allSubregionsChecked, allSubregionsUnchecked } = this.evaluateIndeterminate(form, region);
+    const formModel = {[region]: {
+      checked: undefined,
+      indeterminate: undefined
+    }};
+    if (!allSubregionsChecked && !allSubregionsUnchecked) {
+      formModel[region].checked = null;
+      formModel[region].indeterminate = true
+    }
+    else if (allSubregionsChecked) {
+      formModel[region].checked = true;
+      formModel[region].indeterminate = false
+    }
+    else if (allSubregionsUnchecked) {
+      formModel[region].checked = false;
+      formModel[region].indeterminate = false
+    }
+    return formModel;
+  }
+
+  updateRegionAndSubregions(region: string, subregions: string[], isSelected: boolean) {
+    const formModel = this.createFormModelObject([region], subregions, isSelected);
+    formModel[region] = { indeterminate: false };
+    return formModel;
+  }
+
+  private createFormModelObject(regions: string[], subregions: string[], initValue: boolean) {
+    const formModel = {};
+    _.forEach(regions, (value) => {
+      formModel[value] = this.fb.group({
+        checked: initValue,
+        indeterminate: false
+      })
+    });
+    _.forEach(subregions, (value) => {
+      formModel[value] = initValue;
+    });
+    return formModel;
+  }
+
+  private evaluateIndeterminate(form: FormGroup, region: string) {
     const formModel = form.value;
     const subregions = this.subregionsByRegion[region];
     const allSubregionsChecked = subregions.every((subregion) => {
@@ -50,31 +96,5 @@ export class SelectionService {
       allSubregionsChecked,
       allSubregionsUnchecked
     };
-  }
-
-  createFormModel(regions: string[], subregions: string[], initValue: boolean) {
-    const formModelObject = this.createFormModelObject(regions, subregions, initValue);
-    return this.fb.group(formModelObject);
-  }
-
-  createFormModelUpdate(regions: string[], subregions: string[], initValue: boolean) {
-    const formModelObject = this.createFormModelObject(regions, subregions, initValue);
-    return formModelObject;
-  }
-
-  private createFormModelObject(regions: string[], subregions: string[], initValue: boolean) {
-    const formModel = {};
-    if (regions) {
-      _.forEach(regions, (value) => {
-        formModel[value] = this.fb.group({
-          checked: initValue,
-          indeterminate: false
-        })
-      });
-    }
-    _.forEach(subregions, (value) => {
-      formModel[value] = initValue;
-    });
-    return formModel;
   }
 }

@@ -1,12 +1,15 @@
-{{selectionForm.value | json}}
-<form [formGroup]="selectionForm">
+<!-- {{selectionForm.value | json}} -->
+<form class="selection"
+  [formGroup]="selectionForm"
+  (ngSubmit)="onSubmit()"
+  >
   <div class="total">
-    {{selectionTally.total}} / {{countries.length}} countries selected
+    {{selectionTally.total}} / {{countries.length}} countries selected <button type="submit">Start</button>
     <div class="buttons">
-      <button (click)="selectAll()">
+      <button (click)="onSelectAll()">
         Select all
       </button>
-      <button (click)="clearAll()">
+      <button (click)="onClearAll()">
         Clear all
       </button>
     </div>
