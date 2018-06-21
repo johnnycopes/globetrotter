@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { Country } from '../data/country.interface';
+import { Country } from '../model/country.interface';
 import { CountryService } from '../country/country.service';
 import { SelectionService, SelectionTally } from './selection.service';
 

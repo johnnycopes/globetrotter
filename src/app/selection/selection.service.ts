@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import * as _ from 'lodash';
 
 import { CountryService } from '../country/country.service';
-import { Country } from '../data/country.interface';
+import { Country } from '../model/country.interface';
 
 export type SelectionTally = _.Dictionary<number>;
 

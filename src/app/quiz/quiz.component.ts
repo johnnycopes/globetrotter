@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Country } from '../data/country.interface';
+import { Country } from '../model/country.interface';
 import { CountryService } from '../country/country.service';
 
 @Component({
@@ -12,7 +12,7 @@ export class QuizComponent implements OnInit {
   public countriesByRegion: _.Dictionary<Country[]>;
   public countriesBySubregion: _.Dictionary<Country[]>;
 
-  constructor(private countryService: CountryService) {}
+  constructor(private countryService: CountryService) { }
 
   ngOnInit() {
     this.countriesByName = this.countryService.keyCountriesByProperty('name');

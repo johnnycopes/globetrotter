@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { COUNTRIES } from './country-data';
-import { Country } from '../data/country.interface';
+import { COUNTRIES } from '../model/countries.model';
+import { Country } from '../model/country.interface';
 import * as _ from 'lodash';
 
 @Injectable({
