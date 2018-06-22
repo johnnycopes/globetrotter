@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import { Country } from '../model/country.interface';
 import { CountryService } from '../country/country.service';
-import { SelectionService, SelectionTally } from './selection.service';
+import { SelectionService, SelectionTally, FormModelObject } from './selection.service';
 
 @Component({
   selector: 'app-selection',
@@ -20,6 +20,7 @@ export class SelectionComponent implements OnInit {
   public countries: string[];
   public selectionTally: SelectionTally;
   public selectionForm: FormGroup;
+  @Output() selectionMade = new EventEmitter<FormModelObject>();
 
   constructor(
     private countryService: CountryService,
@@ -39,8 +40,7 @@ export class SelectionComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(`Let's go!`);
-    console.log(this.selectionForm);
+    this.selectionMade.emit(this.selectionForm.value);
   }
 
   onSelectAll() {

@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
-import { CountryService } from '../country/country.service';
+
+import { FormModelObject } from '../selection/selection.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
+  public selection: FormModelObject;
 
-  constructor(private countryService: CountryService) { }
+  constructor() { }
 }
