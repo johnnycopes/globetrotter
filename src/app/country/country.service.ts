@@ -14,6 +14,10 @@ export class CountryService {z
     this.standarizeCountries();
   }
 
+  getTotalCountries() {
+    return this.countries.length;
+  }
+
   keyCountriesByProperty(property: string): _.Dictionary<Country> {
     return _.keyBy(this.countries, property);
   }

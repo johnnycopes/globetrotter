@@ -2,9 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import { Country } from '../model/country.interface';
 import { FormModelObject } from '../selection/selection.service';
-import { CountryService } from '../country/country.service';
 import { QuizService } from './quiz.service';
-import { DataService } from '../data/data.service';
 
 @Component({
   selector: 'app-quiz',
@@ -13,19 +11,11 @@ import { DataService } from '../data/data.service';
 })
 export class QuizComponent implements OnInit {
   @Input() selection: FormModelObject;
-  public countriesByName: _.Dictionary<Country>;
-  public countriesByRegion: _.Dictionary<Country[]>;
-  public countriesBySubregion: _.Dictionary<Country[]>;
+  countries: Country[];
 
-  constructor(
-    private countryService: CountryService,
-    private quizService: QuizService,
-    private dataService: DataService
-  ) { }
+  constructor(private quizService: QuizService) { }
 
   ngOnInit() {
-    this.countriesByName = this.countryService.keyCountriesByProperty('name');
-    this.countriesByRegion = this.countryService.groupCountriesByProperty('region');
-    this.countriesBySubregion = this.countryService.groupCountriesByProperty('subregion');
+    this.countries = this.quizService.createCountriesList(this.selection);
   }
 }

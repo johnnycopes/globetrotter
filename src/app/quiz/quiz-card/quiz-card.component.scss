@@ -1,0 +1,13 @@
+@import 'variables';
+
+:host {
+  padding: 50px;
+  margin-bottom: 20px;
+  background: map-get($color, lightest);
+  color: map-get($color, darkest);
+  flex: 0 1 300px;
+}
+
+img {
+  width: 200px;
+}

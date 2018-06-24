@@ -4,7 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { QuizComponent } from './quiz/quiz.component';
-import { QuizCardComponent } from './quiz-card/quiz-card.component';
+import { QuizCardComponent } from './quiz/quiz-card/quiz-card.component';
 import { SelectionComponent } from './selection/selection.component';
 
 @NgModule({

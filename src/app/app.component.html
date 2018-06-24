@@ -1,10 +1,10 @@
 <main class="app">
   <h1>Globetrotter</h1><br>
 
-  <app-selection
+  <app-selection *ngIf="!selection"
     (selectionMade)="onSelectionMade($event)"
   ></app-selection>
-  <app-quiz
+  <app-quiz *ngIf="selection"
     [selection]="selection"
   ></app-quiz>
 </main>

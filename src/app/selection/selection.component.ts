@@ -11,13 +11,12 @@ import { SelectionService, SelectionTally, FormModelObject } from './selection.s
   styleUrls: ['./selection.component.scss']
 })
 export class SelectionComponent implements OnInit {
+  public totalCountries: number;
   public countriesByRegion: _.Dictionary<Country[]>;
   public countriesBySubregion: _.Dictionary<Country[]>;
-  public countriesByName: _.Dictionary<Country>;
   public subregionsByRegion: _.Dictionary<string[]>;
   public regions: string[];
   public subregions: string[];
-  public countries: string[];
   public selectionTally: SelectionTally;
   public selectionForm: FormGroup;
   @Output() selectionMade = new EventEmitter<FormModelObject>();
@@ -28,13 +27,12 @@ export class SelectionComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.totalCountries = this.countryService.getTotalCountries();
     this.countriesByRegion = this.countryService.groupCountriesByProperty('region');
     this.countriesBySubregion = this.countryService.groupCountriesByProperty('subregion');
-    this.countriesByName = this.countryService.keyCountriesByProperty('name');
     this.subregionsByRegion = this.countryService.groupSubregionsByRegion();
     this.regions = Object.keys(this.subregionsByRegion);
     this.subregions = Object.keys(this.countriesBySubregion);
-    this.countries = Object.keys(this.countriesByName);
     this.initializeForm();
     this.updateSelectionTally();
   }

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Country } from '../model/country.interface';
+import { Country } from '../../model/country.interface';
 
 @Component({
   selector: 'app-quiz-card',
@@ -12,7 +12,6 @@ export class QuizCardComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.country);
   }
 
 }
