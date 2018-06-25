@@ -8,6 +8,7 @@ import {
 } from '@angular/animations';
 
 import { Country } from '../../shared/model/country.interface';
+import { QuizService, Quiz } from '../quiz.service';
 
 @Component({
   selector: 'app-quiz-card',
@@ -28,16 +29,26 @@ import { Country } from '../../shared/model/country.interface';
 })
 export class QuizCardComponent implements OnInit {
   @Input() country: Country;
-  flag: string;
+  quiz: Quiz;
+  guessState: string;
   flipState: string;
 
-  constructor() { }
+  constructor(private quizService: QuizService) { }
 
   ngOnInit() {
+    this.quiz = this.quizService.quiz;
     this.flipState = 'inactive';
   }
 
   flipCard() {
+    if (this.flipState === 'active') {
+      return;
+    }
     this.flipState = this.flipState === 'inactive' ? 'active' : 'inactive';
+    this.guessState = this.quizService.evaluateGuess(this.country);
+    setTimeout(() => {
+      this.flipState = 'inactive';
+      this.guessState = '';
+    }, 1500);
   }
 }

@@ -8,7 +8,11 @@
       alt="Flag of {{country.name}}"
     />
   </div>
-  <div class="quiz-card__side quiz-card__back">
+  <div class="quiz-card__side quiz-card__back"
+    [ngClass]="{
+      'quiz-card__side--correct': guessState === 'correct',
+      'quiz-card__side--incorrect': guessState === 'incorrect'
+    }">
     <h3>{{country.name}}</h3>
   </div>
 </div>

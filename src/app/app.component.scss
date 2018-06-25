@@ -1,4 +1,12 @@
 .app {
-  max-width: 1050px;
-  margin: 0 auto;
+  max-width: 940px;
+  margin: 120px auto 20px;
+
+  &__header {
+    position: fixed;
+    left: 10px;
+    top: 50%;
+    writing-mode: vertical-lr;
+    transform: rotate(180deg) translateY(50%);
+  }
 }

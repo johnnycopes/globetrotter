@@ -1,7 +1,8 @@
 <main class="quiz">
   <app-quiz-card
-    *ngFor="let country of countries"
+    *ngFor="let country of quiz.countries"
     [country]="country"
     >
   </app-quiz-card>
+  <app-quiz-menu></app-quiz-menu>
 </main>
