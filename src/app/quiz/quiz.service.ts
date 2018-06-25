@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
 
-import { Country } from '../model/country.interface';
-import { CountryService } from '../country/country.service';
+import { Country } from '../shared/model/country.interface';
 import { FormModelObject } from '../selection/selection.service';
+import { CountryService } from '../shared/country/country.service';
 
 @Injectable({
   providedIn: 'root'

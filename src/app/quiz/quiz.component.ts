@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { Country } from '../model/country.interface';
+import { Country } from '../shared/model/country.interface';
 import { FormModelObject } from '../selection/selection.service';
 import { QuizService } from './quiz.service';
 

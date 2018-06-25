@@ -1,8 +1,8 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { Country } from '../model/country.interface';
-import { CountryService } from '../country/country.service';
+import { Country } from '../shared/model/country.interface';
+import { CountryService } from '../shared/country/country.service';
 import { SelectionService, SelectionTally, FormModelObject } from './selection.service';
 
 @Component({

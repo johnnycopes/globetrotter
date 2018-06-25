@@ -1,4 +1,14 @@
-<div class="quiz-card">
-  <p>{{country.name}}</p>
-  <img [src]="country.flag" alt="Flag of {{country.name}}">
+<div class="quiz-card"
+  [@flip]="flipState"
+  (click)="flipCard()"
+  >
+  <div class="quiz-card__side quiz-card__front">
+    <img
+      [src]="country.flag"
+      alt="Flag of {{country.name}}"
+    />
+  </div>
+  <div class="quiz-card__side quiz-card__back">
+    <h3>{{country.name}}</h3>
+  </div>
 </div>

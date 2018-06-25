@@ -12,4 +12,8 @@ export class AppComponent {
   onSelectionMade(selection: FormModelObject) {
     this.selection = selection;
   }
+
+  reset() {
+    this.selection = null;
+  }
 }

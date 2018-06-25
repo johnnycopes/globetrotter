@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import * as _ from 'lodash';
 
-import { Country } from '../model/country.interface';
-import { CountryService } from '../country/country.service';
-import { DataService } from '../data/data.service';
+import { Country } from '../shared/model/country.interface';
+import { CountryService } from '../shared/country/country.service';
+
 
 export type SelectionTally = _.Dictionary<number>;
 
@@ -35,7 +35,6 @@ export class SelectionService {
   constructor(
     private fb: FormBuilder,
     private countryService: CountryService,
-    private dataService: DataService
   ) {
     this.countriesBySubregion = this.countryService.groupCountriesByProperty('subregion');
     this.subregionsByRegion = this.countryService.groupSubregionsByRegion();

@@ -1,5 +1,5 @@
 <main class="app">
-  <h1>Globetrotter</h1><br>
+  <h1 (click)="reset()">Globetrotter</h1><br>
 
   <app-selection *ngIf="!selection"
     (selectionMade)="onSelectionMade($event)"
