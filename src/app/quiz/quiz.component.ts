@@ -11,16 +11,12 @@ import { QuizService, Quiz } from './quiz.service';
 })
 export class QuizComponent implements OnInit {
   @Input() selection: FormModelObject;
-  quiz: Quiz;
+  countries: Country[];
 
   constructor(private quizService: QuizService) { }
 
   ngOnInit() {
-    this.startQuiz();
-  }
-
-  startQuiz() {
-    this.quizService.startQuiz(this.selection);
-    this.quiz = this.quizService.quiz;
+    this.quizService.createQuiz(this.selection);
+    this.countries = this.quizService.createCountriesList(this.selection);
   }
 }

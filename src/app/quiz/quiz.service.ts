@@ -26,30 +26,7 @@ export class QuizService {
     this.countriesBySubregion = this.countryService.groupCountriesByProperty('subregion');
   }
 
-  startQuiz(selection: FormModelObject): void {
-    const countries = this.createCountriesList(selection);
-    this.quiz = {
-      countries,
-      currentIndex: 0,
-      guess: 1
-    };
-  }
-
-  evaluateGuess(guess: Country): string {
-    const currentCountry = this.quiz.countries[this.quiz.currentIndex];
-    let result = '';
-    if (guess === currentCountry) {
-      result = 'correct'
-      this.quiz.currentIndex++;
-    }
-    else {
-      result = 'incorrect';
-    }
-    this.quiz.guess++;
-    return result;
-  }
-
-  private createCountriesList(selection: FormModelObject): Country[] {
+  createCountriesList(selection: FormModelObject): Country[] {
     const list = _(selection)
       .pickBy((value, key) => {
         if (value && _.isBoolean(value)) {
@@ -62,5 +39,27 @@ export class QuizService {
       .shuffle()
       .value();
     return list;
+  }
+
+  createQuiz(selection: FormModelObject): void {
+    this.quiz = {
+      countries: this.createCountriesList(selection),
+      currentIndex: 0,
+      guess: 1
+    };
+  }
+
+  evaluateGuess(guess: Country): string {
+    let result = '';
+    const currentCountry = this.quiz.countries[this.quiz.currentIndex];
+    if (guess.name === currentCountry.name) {
+      this.quiz.currentIndex++;
+      result = 'correct'
+    }
+    else {
+      result = 'incorrect';
+    }
+    this.quiz.guess++;
+    return result;
   }
 }

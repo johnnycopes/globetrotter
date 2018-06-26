@@ -14,8 +14,8 @@ import { SelectionComponent } from './selection/selection.component';
     AppComponent,
     QuizComponent,
     QuizCardComponent,
-    QuizMenuComponent
-    SelectionComponent,
+    QuizMenuComponent,
+    SelectionComponent
   ],
   imports: [
     BrowserModule,

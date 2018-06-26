@@ -2,17 +2,17 @@
   [@flip]="flipState"
   (click)="flipCard()"
   >
-  <div class="quiz-card__side quiz-card__front">
+  <div class="quiz-card__side quiz-card__front"
+    [@play]="playState"
+    >
     <img
       [src]="country.flag"
       alt="Flag of {{country.name}}"
     />
   </div>
   <div class="quiz-card__side quiz-card__back"
-    [ngClass]="{
-      'quiz-card__side--correct': guessState === 'correct',
-      'quiz-card__side--incorrect': guessState === 'incorrect'
-    }">
+    [@guess]="guessState"
+    >
     <h3>{{country.name}}</h3>
   </div>
 </div>

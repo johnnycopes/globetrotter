@@ -27,14 +27,6 @@
     user-select: none;
     padding: 20px;
     text-align: center;
-
-    &--correct {
-      border: 20px solid limegreen;
-    }
-
-    &--incorrect {
-      border: 20px solid crimson;
-    }
   }
 
   &__front {
