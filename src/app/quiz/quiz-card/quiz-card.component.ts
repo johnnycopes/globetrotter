@@ -50,26 +50,21 @@ export class QuizCardComponent implements OnInit {
   flipState: string;
   playState: string;
   guessState: string;
+  canFlip: boolean;
 
   constructor(private quizService: QuizService) { }
 
   ngOnInit() {
     this.quiz = this.quizService.quiz;
+    this.canFlip = true;
     this.flipState = 'front';
   }
 
-  flipCard() {
-    if (this.flipState === 'back' || this.playState === 'disabled') {
-      return;
-    }
+  evaluate() {
+    this.quizService.evaluateCard(this);
+  }
+
+  flip() {
     this.flipState = this.flipState === 'front' ? 'back' : 'front';
-    setTimeout(() => this.guessState = this.quizService.evaluateGuess(this.country), 300);
-    setTimeout(() => this.flipState = 'front', 1500);
-    setTimeout(() => {
-      if (this.guessState === 'correct') {
-        this.playState = 'disabled';
-      }
-      this.guessState = '';
-    }, 1800);
   }
 }

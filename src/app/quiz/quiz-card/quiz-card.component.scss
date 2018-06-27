@@ -25,7 +25,8 @@
     backface-visibility: hidden;
     cursor: pointer;
     user-select: none;
-    padding: 20px;
+    padding: $border-width;
+    border-radius: $border-radius;
     text-align: center;
   }
 

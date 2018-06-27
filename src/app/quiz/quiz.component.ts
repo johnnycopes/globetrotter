@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import { Country } from '../shared/model/country.interface';
 import { FormModelObject } from '../selection/selection.service';
-import { QuizService, Quiz } from './quiz.service';
+import { QuizService } from './quiz.service';
 
 @Component({
   selector: 'app-quiz',

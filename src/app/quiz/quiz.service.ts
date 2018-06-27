@@ -4,6 +4,7 @@ import * as _ from 'lodash';
 import { Country } from '../shared/model/country.interface';
 import { FormModelObject } from '../selection/selection.service';
 import { CountryService } from '../shared/country/country.service';
+import { QuizCardComponent } from './quiz-card/quiz-card.component';
 
 export interface Quiz {
   countries: Country[];
@@ -49,17 +50,39 @@ export class QuizService {
     };
   }
 
-  evaluateGuess(guess: Country): string {
-    let result = '';
-    const currentCountry = this.quiz.countries[this.quiz.currentIndex];
-    if (guess.name === currentCountry.name) {
-      this.quiz.currentIndex++;
-      result = 'correct'
+  evaluateCard(card: QuizCardComponent): void {
+    // create boolean to disallow this function from running if it's running
+    if (!card.canFlip) {
+      return;
     }
-    else {
-      result = 'incorrect';
-    }
-    this.quiz.guess++;
-    return result;
+    card.flip();
+    card.canFlip = false;
+
+    const cardCountry = card.country.name;
+    const currentCountry = this.quiz.countries[this.quiz.currentIndex].name;
+    setTimeout(() => {
+      if (cardCountry === currentCountry) {
+        card.guessState = 'correct'
+      }
+      else {
+        card.guessState = 'incorrect';
+      }
+    }, 300);
+    setTimeout(() => card.flip(), 1500);
+    setTimeout(() => {
+      if (card.guessState === 'correct') {
+        card.playState = 'disabled';
+        setTimeout(() => {
+          this.quiz.currentIndex++;
+          this.quiz.guess++
+        }, 300);
+      }
+      else if (card.guessState === 'incorrect') {
+        card.canFlip = true;
+        card.guessState = '';
+        this.quiz.guess++
+      }
+    }, 1800);
   }
+
 }
