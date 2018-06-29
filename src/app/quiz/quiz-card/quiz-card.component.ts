@@ -8,7 +8,7 @@ import {
 } from '@angular/animations';
 
 import { Country } from '../../shared/model/country.interface';
-import { QuizService, Quiz } from '../quiz.service';
+import { QuizService } from '../quiz.service';
 
 @Component({
   selector: 'app-quiz-card',
@@ -32,6 +32,10 @@ import { QuizService, Quiz } from '../quiz.service';
       transition('* => disabled', animate('300ms ease-in'))
     ]),
     trigger('guess', [
+      state('none', style({
+        border: 'none',
+        padding: '20px'
+      })),
       state('correct', style({
         border: '20px solid limegreen',
         padding: '0'
@@ -46,25 +50,37 @@ import { QuizService, Quiz } from '../quiz.service';
 })
 export class QuizCardComponent implements OnInit {
   @Input() country: Country;
-  quiz: Quiz;
-  flipState: string;
-  playState: string;
-  guessState: string;
-  canFlip: boolean;
+  @Input() canFlip: boolean;
+  private playState: string;
+  private guessState: string;
+  private flipState: string;
 
   constructor(private quizService: QuizService) { }
 
   ngOnInit() {
-    this.quiz = this.quizService.quiz;
-    this.canFlip = true;
     this.flipState = 'front';
   }
 
-  evaluate() {
-    this.quizService.evaluateCard(this);
+  onClick() {
+    if (this.canFlip && this.playState !== 'disabled') {
+      this.flip();
+      this.quizService.evaluateCard(this);
+    }
   }
 
   flip() {
     this.flipState = this.flipState === 'front' ? 'back' : 'front';
   }
+
+  guess(guess: string) {
+    this.guessState = guess;
+  }
+
+  handleGuess() {
+    if (this.guessState === 'correct') {
+      this.playState = 'disabled';
+    }
+    this.guess('none');
+  }
+
 }

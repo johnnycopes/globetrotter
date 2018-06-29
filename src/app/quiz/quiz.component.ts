@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import { Country } from '../shared/model/country.interface';
 import { FormModelObject } from '../selection/selection.service';
-import { QuizService } from './quiz.service';
+import { QuizService, Quiz } from './quiz.service';
 
 @Component({
   selector: 'app-quiz',
@@ -12,11 +12,14 @@ import { QuizService } from './quiz.service';
 export class QuizComponent implements OnInit {
   @Input() selection: FormModelObject;
   countries: Country[];
+  quiz: Quiz;
 
   constructor(private quizService: QuizService) { }
 
   ngOnInit() {
     this.quizService.createQuiz(this.selection);
     this.countries = this.quizService.createCountriesList(this.selection);
+    this.quiz = this.quizService.quiz;
   }
+
 }

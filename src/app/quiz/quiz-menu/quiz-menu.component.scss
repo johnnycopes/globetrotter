@@ -12,6 +12,7 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
+  z-index: map-get($z-index, quiz-menu);
 }
 
 .quiz-menu {

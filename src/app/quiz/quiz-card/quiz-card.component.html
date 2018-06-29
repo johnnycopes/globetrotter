@@ -1,11 +1,11 @@
 <div class="quiz-card"
   [@flip]="flipState"
-  (click)="evaluate()"
+  (click)="onClick()"
   >
   <div class="quiz-card__side quiz-card__front"
     [@play]="playState"
     >
-    <img
+    <img class="quiz-card__flag"
       [src]="country.flag"
       alt="Flag of {{country.name}}"
     />
@@ -13,6 +13,6 @@
   <div class="quiz-card__side quiz-card__back"
     [@guess]="guessState"
     >
-    <h3>{{country.name}}</h3>
+    <h3 class="quiz-card__country">{{country.name}}</h3>
   </div>
 </div>

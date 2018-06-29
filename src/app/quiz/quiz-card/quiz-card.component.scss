@@ -38,13 +38,10 @@
     background: map-get($color, lightest);
     transform: rotateY(180deg);
   }
-}
 
-p {
-  margin-bottom: 2rem;
-}
+  &__flag {
+    max-width: 200px;
+    max-height: 150px;
+  }
 
-img {
-  max-width: 200px;
-  max-height: 150px;
 }

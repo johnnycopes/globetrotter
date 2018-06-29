@@ -1,9 +1,9 @@
-<h4 class="quiz-menu__tally">
-  {{quiz.currentIndex}} / {{quiz.countries.length}}
+<h4 class="quiz-menu__item quiz-menu__tally">
+  {{currentIndex}} / {{countries.length}}
 </h4>
-<p class="quiz-menu__item quiz-menu__question">
-  {{quiz.countries[quiz.currentIndex].name}}
+<p class="quiz-menu__item quiz-menu__prompt">
+  {{countries[currentIndex].name}}
 </p>
-<h4 class="quiz-menu__guess">
-  Guess #{{quiz.guess}}
+<h4 class="quiz-menu__item quiz-menu__guess">
+  Guess #{{guess}}
 </h4>

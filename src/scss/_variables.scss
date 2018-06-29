@@ -23,6 +23,7 @@ $sans-serif: 'Tajawal', Frutiger, 'Frutiger Linotype', Univers, Calibri, 'Gill S
 // ==================
 
 $z-index: (
+  quiz-menu: 100,
   positive: 1,
   none: 0,
   negative: -1
@@ -30,7 +31,6 @@ $z-index: (
 
 $border-radius: 2px;
 $border-width: 20px;
-$edge-spacing: 4vh;
 
 
 // ==================

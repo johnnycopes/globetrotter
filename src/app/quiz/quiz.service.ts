@@ -10,6 +10,7 @@ export interface Quiz {
   countries: Country[];
   currentIndex: number;
   guess: number;
+  canFlip: boolean;
 }
 
 @Injectable({
@@ -46,41 +47,30 @@ export class QuizService {
     this.quiz = {
       countries: this.createCountriesList(selection),
       currentIndex: 0,
-      guess: 1
+      guess: 1,
+      canFlip: true
     };
   }
 
   evaluateCard(card: QuizCardComponent): void {
-    // create boolean to disallow this function from running if it's running
-    if (!card.canFlip) {
-      return;
-    }
-    card.flip();
-    card.canFlip = false;
-
+    this.quiz.canFlip = false;
     const cardCountry = card.country.name;
     const currentCountry = this.quiz.countries[this.quiz.currentIndex].name;
-    setTimeout(() => {
-      if (cardCountry === currentCountry) {
-        card.guessState = 'correct'
-      }
-      else {
-        card.guessState = 'incorrect';
-      }
-    }, 300);
+    const guess = cardCountry === currentCountry ? 'correct' : 'incorrect';
+    setTimeout(() => card.guess(guess), 300);
     setTimeout(() => card.flip(), 1500);
     setTimeout(() => {
-      if (card.guessState === 'correct') {
-        card.playState = 'disabled';
+      card.handleGuess();
+      if (guess === 'correct') {
         setTimeout(() => {
           this.quiz.currentIndex++;
           this.quiz.guess++
+          this.quiz.canFlip = true;
         }, 300);
       }
-      else if (card.guessState === 'incorrect') {
-        card.canFlip = true;
-        card.guessState = '';
+      else if (guess === 'incorrect') {
         this.quiz.guess++
+        this.quiz.canFlip = true;
       }
     }, 1800);
   }

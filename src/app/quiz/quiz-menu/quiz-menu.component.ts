@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
-import { QuizService, Quiz } from '../quiz.service';
+import { Country } from '../../shared/model/country.interface';
 
 @Component({
   selector: 'app-quiz-menu',
@@ -8,11 +8,13 @@ import { QuizService, Quiz } from '../quiz.service';
   styleUrls: ['./quiz-menu.component.scss']
 })
 export class QuizMenuComponent implements OnInit {
-  quiz: Quiz;
+  @Input() countries: Country[];
+  @Input() currentIndex: number;
+  @Input() guess: number;
 
-  constructor(private quizService: QuizService) { }
+  constructor() { }
 
   ngOnInit() {
-    this.quiz = this.quizService.quiz;
   }
+
 }

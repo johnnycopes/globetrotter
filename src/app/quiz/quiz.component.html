@@ -1,8 +1,13 @@
 <main class="quiz">
-  <app-quiz-card
+  <app-quiz-menu class="quiz__menu"
+    [countries]="quiz.countries"
+    [currentIndex]="quiz.currentIndex"
+    [guess]="quiz.guess"
+  ></app-quiz-menu>
+  <app-quiz-card class="quiz__card"
     *ngFor="let country of countries"
     [country]="country"
+    [canFlip]="quiz.canFlip"
     >
   </app-quiz-card>
-  <app-quiz-menu></app-quiz-menu>
 </main>
