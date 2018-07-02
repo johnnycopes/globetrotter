@@ -29,6 +29,8 @@ interface IndeterminateStatus {
   providedIn: 'root'
 })
 export class SelectService {
+  public regions: string[];
+  public subregions: string[];
   private countriesBySubregion: _.Dictionary<Country[]>;
   private subregionsByRegion: _.Dictionary<string[]>;
 
@@ -38,26 +40,12 @@ export class SelectService {
   ) {
     this.countriesBySubregion = this.countryService.groupCountriesByProperty('subregion');
     this.subregionsByRegion = this.countryService.groupSubregionsByRegion();
+    this.regions = Object.keys(this.subregionsByRegion);
+    this.subregions = Object.keys(this.countriesBySubregion);
   }
 
-  countSelections(form: FormGroup): SelectionTally {
-    const formModel = form.value;
-    const selectionTally = { total: 0 };
-    _.forEach(this.subregionsByRegion, (subregions, region) => {
-      selectionTally[region] = 0;
-      _.forEach(subregions, (subregion) => {
-        if (formModel[subregion]) {
-          const numberOfCountries = this.countriesBySubregion[subregion].length;
-          selectionTally[region] += numberOfCountries;
-          selectionTally.total += numberOfCountries;
-        }
-      });
-    })
-    return selectionTally;
-  }
-
-  createFormModel(regions: string[], subregions: string[], initValue: boolean): FormGroup {
-    const formModelObject = this.createFormModelObject(regions, subregions, initValue);
+  createFormModel(initValue: boolean): FormGroup {
+    const formModelObject = this.createFormModelObject(this.regions, this.subregions, initValue);
     return this.fb.group(formModelObject);
   }
 
@@ -89,6 +77,22 @@ export class SelectService {
       formModelUpdate[subregion] = isChecked;
     });
     return formModelUpdate;
+  }
+
+  countSelections(form: FormGroup): SelectionTally {
+    const formModel = form.value;
+    const selectionTally = { total: 0 };
+    _.forEach(this.subregionsByRegion, (subregions, region) => {
+      selectionTally[region] = 0;
+      _.forEach(subregions, (subregion) => {
+        if (formModel[subregion]) {
+          const numberOfCountries = this.countriesBySubregion[subregion].length;
+          selectionTally[region] += numberOfCountries;
+          selectionTally.total += numberOfCountries;
+        }
+      });
+    })
+    return selectionTally;
   }
 
   private createFormModelObject(regions: string[], subregions: string[], isChecked: boolean): FormModelObject {

@@ -1,3 +1,58 @@
-<p>
-  select-country works!
-</p>
+<form class="selection"
+  [formGroup]="form"
+  >
+  <div class="total">
+    <span>{{tally.total}} / {{totalCountries}} countries selected</span>
+    <div class="buttons">
+      <button type="button"
+        (click)="onSelectAll()"
+        >
+        Select all
+      </button>
+      <button type="button"
+        (click)="onClearAll()"
+        >
+        Clear all
+      </button>
+    </div>
+  </div>
+  <div class="regions">
+    <div class="region"
+      *ngFor="let region of regions"
+      >
+      <div [formGroupName]="region">
+        <input class="region__checkbox"
+          #regionInput
+          type="checkbox"
+          [id]="region"
+          [value]="region"
+          formControlName="checked"
+          [indeterminate]="form.value[region].indeterminate"
+          (change)="onRegionChange(regionInput)"
+        />
+        <label class="region__label"
+          [for]="region"
+          >
+          {{region}} ({{tally[region]}} / {{countriesByRegion[region].length}})
+        </label>
+      </div>
+      <div class="subregion"
+        *ngFor="let subregion of subregionsByRegion[region]"
+        >
+        <input class="subregion__checkbox"
+          #subregionInput
+          type="checkbox"
+          [id]="subregion"
+          [value]="subregion"
+          [formControlName]="subregion"
+          (change)="onSubregionChange(regionInput)"
+          />
+        <label class="subregion__label"
+          [for]="subregion"
+          >
+          {{subregion}} ({{countriesBySubregion[subregion].length}})
+        </label>
+      </div>
+    </div>
+  </div>
+</form>

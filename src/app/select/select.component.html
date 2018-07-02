@@ -1,64 +1,16 @@
-<form class="selection"
-  [formGroup]="selectionForm"
-  (ngSubmit)="onSubmit()"
+<button type="submit"
+  [disabled]="!tally.total"
+  (click)="onSubmit()"
   >
-  <div class="total">
-    <span>{{selectionTally.total}} / {{totalCountries}} countries selected</span>
-    <button type="submit"
-      [disabled]="!selectionTally.total"
-      >
-      Start
-    </button>
-    <div class="buttons">
-      <button type="button"
-        (click)="onSelectAll()"
-        >
-        Select all
-      </button>
-      <button type="button"
-        (click)="onClearAll()"
-        >
-        Clear all
-      </button>
-    </div>
-  </div>
-  <div class="regions">
-    <div class="region"
-      *ngFor="let region of regions"
-      >
-      <div [formGroupName]="region">
-        <input class="region__checkbox"
-          #regionInput
-          type="checkbox"
-          [id]="region"
-          [value]="region"
-          formControlName="checked"
-          [indeterminate]="selectionForm.value[region].indeterminate"
-          (change)="onRegionChange(regionInput)"
-        />
-        <label class="region__label"
-          [for]="region"
-          >
-          {{region}} ({{selectionTally[region]}} / {{countriesByRegion[region].length}})
-        </label>
-      </div>
-      <div class="subregion"
-        *ngFor="let subregion of subregionsByRegion[region]"
-        >
-        <input class="subregion__checkbox"
-          #subregionInput
-          type="checkbox"
-          [id]="subregion"
-          [value]="subregion"
-          [formControlName]="subregion"
-          (change)="onSubregionChange(regionInput)"
-          />
-        <label class="subregion__label"
-          [for]="subregion"
-          >
-          {{subregion}} ({{countriesBySubregion[subregion].length}})
-        </label>
-      </div>
-    </div>
-  </div>
-</form>
+  Start
+</button>
+
+<!-- TODO: use this component to select # of countries, and then combine the two forms' info onSubmit() -->
+<app-select-quantity>
+</app-select-quantity>
+
+<app-select-country
+  [form]="form"
+  [tally]="tally"
+  >
+</app-select-country>
