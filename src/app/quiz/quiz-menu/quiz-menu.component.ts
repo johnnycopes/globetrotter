@@ -11,6 +11,7 @@ export class QuizMenuComponent implements OnInit {
   @Input() countries: Country[];
   @Input() currentIndex: number;
   @Input() guess: number;
+  @Input() accuracy: number;
 
   constructor() { }
 

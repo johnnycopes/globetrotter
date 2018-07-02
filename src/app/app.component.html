@@ -1,12 +1,16 @@
 <main class="app">
-  <h1 class="app__header"
-    (click)="reset()">
-    Globetrotter
-  </h1>
-  <app-selection *ngIf="!selection"
-    (selectionMade)="onSelectionMade($event)"
-  ></app-selection>
-  <app-quiz *ngIf="selection"
-    [selection]="selection"
-  ></app-quiz>
+  <nav class="app__nav">
+    <h1 class="app__header"
+      (click)="reset()">
+      Globetrotter
+    </h1>
+  </nav>
+  <div class="app__content">
+    <app-selection *ngIf="!selection"
+      (selectionMade)="onSelectionMade($event)"
+    ></app-selection>
+    <app-quiz *ngIf="selection"
+      [selection]="selection"
+    ></app-quiz>
+  </div>
 </main>

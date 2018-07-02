@@ -11,6 +11,7 @@ export interface Quiz {
   currentIndex: number;
   guess: number;
   canFlip: boolean;
+  accuracy: number | undefined
 }
 
 @Injectable({
@@ -48,7 +49,8 @@ export class QuizService {
       countries: this.createCountriesList(selection),
       currentIndex: 0,
       guess: 1,
-      canFlip: true
+      canFlip: true,
+      accuracy: null
     };
   }
 
@@ -62,17 +64,26 @@ export class QuizService {
     setTimeout(() => {
       card.handleGuess();
       if (guess === 'correct') {
-        setTimeout(() => {
-          this.quiz.currentIndex++;
-          this.quiz.guess++
-          this.quiz.canFlip = true;
-        }, 300);
+        setTimeout(() => this.updateQuiz(), 300);
       }
       else if (guess === 'incorrect') {
-        this.quiz.guess++
-        this.quiz.canFlip = true;
+        this.incrementGuesses();
       }
     }, 1800);
+  }
+
+  updateQuiz(guess?: string): void {
+    this.incrementGuesses();
+    this.quiz.currentIndex++;
+    if (this.quiz.currentIndex === this.quiz.countries.length) {
+      // if all cards have been guessed, calculate the user's score and display it
+      this.quiz.accuracy = Math.round((this.quiz.countries.length / this.quiz.guess) * 100);
+    }
+  }
+
+  private incrementGuesses(): void {
+    this.quiz.guess++
+    this.quiz.canFlip = true;
   }
 
 }

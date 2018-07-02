@@ -1,12 +1,19 @@
-.app {
-  max-width: 940px;
-  margin: 120px auto 20px;
+@import 'variables';
 
-  &__header {
+.app {
+
+  &__nav {
     position: fixed;
     left: 10px;
     top: 50%;
     writing-mode: vertical-lr;
     transform: rotate(180deg) translateY(50%);
+    z-index: map-get($z-index, app-menu);
+  }
+
+  &__content {
+    margin: 0 auto;
+    max-width: 940px;
+    padding-top: 120px;
   }
 }

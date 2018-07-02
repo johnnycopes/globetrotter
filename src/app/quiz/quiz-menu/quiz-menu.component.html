@@ -1,9 +1,18 @@
-<h4 class="quiz-menu__item quiz-menu__tally">
-  {{currentIndex}} / {{countries.length}}
-</h4>
-<p class="quiz-menu__item quiz-menu__prompt">
-  {{countries[currentIndex].name}}
-</p>
-<h4 class="quiz-menu__item quiz-menu__guess">
-  Guess #{{guess}}
-</h4>
+<main class="quiz-menu"
+  [ngClass]="{'quiz-menu--expanded': accuracy}"
+>
+  <article class="quiz-menu__outcome">
+    Quiz complete! Your guesses were {{accuracy}}% accurate.
+  </article>
+  <nav class="quiz-menu__progress">
+    <h4 class="quiz-menu__item quiz-menu__tally">
+      {{currentIndex}} / {{countries.length}}
+    </h4>
+    <p class="quiz-menu__item quiz-menu__prompt">
+      {{countries[currentIndex]?.name}}
+    </p>
+    <h4 class="quiz-menu__item quiz-menu__guess">
+      Guess #{{guess}}
+    </h4>
+  </nav>
+</main>
