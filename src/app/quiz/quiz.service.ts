@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
 
 import { Country } from '../shared/model/country.interface';
-import { FormModelObject } from '../selection/selection.service';
+import { FormModelObject } from '../select/select.service';
 import { CountryService } from '../shared/country/country.service';
 import { QuizCardComponent } from './quiz-card/quiz-card.component';
 

@@ -7,7 +7,9 @@ import { AppComponent } from './app.component';
 import { QuizComponent } from './quiz/quiz.component';
 import { QuizCardComponent } from './quiz/quiz-card/quiz-card.component';
 import { QuizMenuComponent } from './quiz/quiz-menu/quiz-menu.component';
-import { SelectionComponent } from './selection/selection.component';
+import { SelectComponent } from './select/select.component';
+import { SelectCountryComponent } from './select/select-country/select-country.component';
+import { SelectQuantityComponent } from './select/select-quantity/select-quantity.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +17,9 @@ import { SelectionComponent } from './selection/selection.component';
     QuizComponent,
     QuizCardComponent,
     QuizMenuComponent,
-    SelectionComponent
+    SelectComponent,
+    SelectCountryComponent,
+    SelectQuantityComponent
   ],
   imports: [
     BrowserModule,

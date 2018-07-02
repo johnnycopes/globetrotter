@@ -13,7 +13,7 @@
   align-items: flex-end;
   z-index: map-get($z-index, quiz-menu);
   transform: translateY(-90vh);
-  transition: map-get($transition, medium);
+  transition: map-get($transition, slow);
 
   &--expanded {
     transform: translateY(0);

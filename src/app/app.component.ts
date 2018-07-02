@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormModelObject } from './selection/selection.service';
+import { FormModelObject } from './select/select.service';
 
 @Component({
   selector: 'app-root',

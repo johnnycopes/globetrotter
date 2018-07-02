@@ -28,7 +28,7 @@ interface IndeterminateStatus {
 @Injectable({
   providedIn: 'root'
 })
-export class SelectionService {
+export class SelectService {
   private countriesBySubregion: _.Dictionary<Country[]>;
   private subregionsByRegion: _.Dictionary<string[]>;
 

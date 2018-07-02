@@ -6,9 +6,9 @@
     </h1>
   </nav>
   <div class="app__content">
-    <app-selection *ngIf="!selection"
+    <app-select *ngIf="!selection"
       (selectionMade)="onSelectionMade($event)"
-    ></app-selection>
+    ></app-select>
     <app-quiz *ngIf="selection"
       [selection]="selection"
     ></app-quiz>
