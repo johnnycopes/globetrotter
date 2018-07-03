@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Quantity, QuantityModel } from '../select.service';
+import { QuantityModel, Quantity } from '../../shared/model/select.interface';
 
 @Component({
   selector: 'app-select-quantity',

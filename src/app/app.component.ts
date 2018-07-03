@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Selection } from './select/select.service';
+import { Selection } from './shared/model/select.interface';
 
 @Component({
   selector: 'app-root',

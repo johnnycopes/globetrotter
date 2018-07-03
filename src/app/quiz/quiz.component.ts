@@ -1,8 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import { Country } from '../shared/model/country.interface';
-import { Selection } from '../select/select.service';
-import { QuizService, Quiz } from './quiz.service';
+import { Quiz } from '../shared/model/quiz.interface';
+import { Selection } from '../shared/model/select.interface';
+import { QuizService } from './quiz.service';
 
 @Component({
   selector: 'app-quiz',

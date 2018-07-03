@@ -1,7 +1,8 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { SelectService, Selection, Quantity, QuantityModel, CountryTally } from './select.service';
+import { SelectService } from './select.service';
+import { Selection, CountryTally, Quantity, QuantityModel } from '../shared/model/select.interface';
 
 @Component({
   selector: 'app-select',

@@ -2,8 +2,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import { Country } from '../../shared/model/country.interface';
-import { SelectService, CountryTally } from '../select.service';
+import { CountryTally } from '../../shared/model/select.interface';
 import { CountryService } from '../../shared/country/country.service';
+import { SelectService } from '../select.service';
 
 @Component({
   selector: 'app-select-country',
@@ -26,16 +27,12 @@ export class SelectCountryComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    /*
-      TODO: reconsider how to distribute the different country data structures between components
-      -- maybe define them all in the country service and then reference those in onInit()?
-    */
-    this.totalCountries = this.countryService.getTotalCountries();
-    this.countriesByRegion = this.countryService.groupCountriesByProperty('region');
-    this.countriesBySubregion = this.countryService.groupCountriesByProperty('subregion');
-    this.subregionsByRegion = this.countryService.groupSubregionsByRegion();
-    this.regions = Object.keys(this.subregionsByRegion);
-    this.subregions = Object.keys(this.countriesBySubregion);
+    this.totalCountries = this.countryService.totalCountries;
+    this.countriesByRegion = this.countryService.countriesByRegion;
+    this.countriesBySubregion = this.countryService.countriesBySubregion;
+    this.subregionsByRegion = this.countryService.subregionsByRegion;
+    this.regions = this.countryService.regions;
+    this.subregions = this.countryService.subregions;
   }
 
   onSelectAll() {

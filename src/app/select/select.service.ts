@@ -4,42 +4,7 @@ import * as _ from 'lodash';
 
 import { Country } from '../shared/model/country.interface';
 import { CountryService } from '../shared/country/country.service';
-
-// TODO: consider moving some of these type/interface definitions to their own files
-export type CountryTally = _.Dictionary<number>;
-export type RegionModel = {
-  checked: boolean | null;
-  indeterminate: boolean;
-}
-export type SubregionModel = boolean;
-export type QuantityValue = number | undefined;
-
-export interface FormModelUpdate {
-  [place: string]: RegionModel | SubregionModel;
-}
-
-export interface FormModelObject {
-  [place: string]: FormGroup | boolean;
-}
-
-export interface Quantity {
-  display: string;
-  value: QuantityValue;
-}
-
-export interface QuantityModel {
-  quantity: QuantityValue;
-}
-
-export interface Selection {
-  countryForm: FormModelObject;
-  quantity: QuantityValue;
-}
-
-interface IndeterminateStatus {
-  allSubregionsChecked: boolean;
-  allSubregionsUnchecked: boolean;
-}
+import { FormModelUpdate, CountryTally, FormModelObject, IndeterminateStatus } from '../shared/model/select.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -54,10 +19,10 @@ export class SelectService {
     private fb: FormBuilder,
     private countryService: CountryService,
   ) {
-    this.countriesBySubregion = this.countryService.groupCountriesByProperty('subregion');
-    this.subregionsByRegion = this.countryService.groupSubregionsByRegion();
-    this.regions = Object.keys(this.subregionsByRegion);
-    this.subregions = Object.keys(this.countriesBySubregion);
+    this.countriesBySubregion = this.countryService.countriesBySubregion;
+    this.subregionsByRegion = this.countryService.subregionsByRegion;
+    this.regions = this.countryService.regions;
+    this.subregions = this.countryService.subregions;
   }
 
   createCountryForm(initValue: boolean): FormGroup {

@@ -27,6 +27,7 @@
               "src/assets"
             ],
             "styles": [
+              "src/scss/reset.scss",
               "src/scss/styles.scss"
             ],
             "stylePreprocessorOptions": {

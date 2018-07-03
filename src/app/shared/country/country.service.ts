@@ -6,16 +6,48 @@ import * as _ from 'lodash';
 @Injectable({
   providedIn: 'root'
 })
-export class CountryService {z
+export class CountryService {
   private countries: Country[] = COUNTRIES;
+  private _totalCountries: number;
+  private _countriesByRegion: _.Dictionary<Country[]>;
+  private _countriesBySubregion: _.Dictionary<Country[]>;
+  private _subregionsByRegion: _.Dictionary<string[]>;
+  private _regions: string[];
+  private _subregions: string[];
   private readonly validRegions = ['Asia', 'Africa', 'Americas', 'Europe', 'Oceania'];
 
   constructor() {
     this.standarizeCountries();
+    this._totalCountries = this.countries.length;
+    this._countriesByRegion = this.groupCountriesByProperty('region');
+    this._countriesBySubregion = this.groupCountriesByProperty('subregion');
+    this._subregionsByRegion = this.groupSubregionsByRegion();
+    this._regions = Object.keys(this._subregionsByRegion);
+    this._subregions = Object.keys(this._countriesBySubregion);
   }
 
-  getTotalCountries() {
-    return this.countries.length;
+  get totalCountries(): number {
+    return this._totalCountries;
+  }
+
+  get countriesByRegion(): _.Dictionary<Country[]> {
+    return this._countriesByRegion;
+  }
+
+  get countriesBySubregion(): _.Dictionary<Country[]> {
+    return this._countriesBySubregion;
+  }
+
+  get subregionsByRegion(): _.Dictionary<string[]> {
+    return this._subregionsByRegion;
+  }
+
+  get regions(): string[] {
+    return this._regions;
+  }
+
+  get subregions(): string[] {
+    return this._subregions;
   }
 
   keyCountriesByProperty(property: string): _.Dictionary<Country> {

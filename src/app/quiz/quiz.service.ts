@@ -2,31 +2,22 @@ import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
 
 import { Country } from '../shared/model/country.interface';
-import { Selection } from '../select/select.service';
+import { Quiz } from '../shared/model/quiz.interface';
+import { Selection } from '../shared/model/select.interface';
 import { CountryService } from '../shared/country/country.service';
 import { QuizCardComponent } from './quiz-card/quiz-card.component';
-
-export interface Quiz {
-  countries: Country[];
-  currentIndex: number;
-  guess: number;
-  canFlip: boolean;
-  accuracy: number | undefined
-}
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuizService {
-  public countriesByName: _.Dictionary<Country>;
   public countriesByRegion: _.Dictionary<Country[]>;
   public countriesBySubregion: _.Dictionary<Country[]>;
   public quiz: Quiz;
 
   constructor(private countryService: CountryService) {
-    this.countriesByName = this.countryService.keyCountriesByProperty('name');
-    this.countriesByRegion = this.countryService.groupCountriesByProperty('region');
-    this.countriesBySubregion = this.countryService.groupCountriesByProperty('subregion');
+    this.countriesByRegion = this.countryService.countriesByRegion;
+    this.countriesBySubregion = this.countryService.countriesBySubregion;
   }
 
   createCountriesList(selection: Selection): Country[] {
