@@ -1,9 +1,9 @@
 <app-quiz-menu class="quiz__menu"
-    [countries]="quiz.countries"
-    [currentIndex]="quiz.currentIndex"
-    [guess]="quiz.guess"
-    [accuracy]="quiz.accuracy"
-  ></app-quiz-menu>
+  [countries]="quiz.countries"
+  [currentIndex]="quiz.currentIndex"
+  [guess]="quiz.guess"
+  [accuracy]="quiz.accuracy"
+></app-quiz-menu>
 <main class="quiz__cards">
   <app-quiz-card class="quiz__card"
     *ngFor="let country of countries"

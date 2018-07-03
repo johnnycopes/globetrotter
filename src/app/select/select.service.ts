@@ -5,19 +5,35 @@ import * as _ from 'lodash';
 import { Country } from '../shared/model/country.interface';
 import { CountryService } from '../shared/country/country.service';
 
-
-export type SelectionTally = _.Dictionary<number>;
-
+// TODO: consider moving some of these type/interface definitions to their own files
+export type CountryTally = _.Dictionary<number>;
 export type RegionModel = {
   checked: boolean | null;
   indeterminate: boolean;
 }
 export type SubregionModel = boolean;
+export type QuantityValue = number | undefined;
+
 export interface FormModelUpdate {
   [place: string]: RegionModel | SubregionModel;
 }
+
 export interface FormModelObject {
   [place: string]: FormGroup | boolean;
+}
+
+export interface Quantity {
+  display: string;
+  value: QuantityValue;
+}
+
+export interface QuantityModel {
+  quantity: QuantityValue;
+}
+
+export interface Selection {
+  countryForm: FormModelObject;
+  quantity: QuantityValue;
 }
 
 interface IndeterminateStatus {
@@ -44,9 +60,9 @@ export class SelectService {
     this.subregions = Object.keys(this.countriesBySubregion);
   }
 
-  createFormModel(initValue: boolean): FormGroup {
-    const formModelObject = this.createFormModelObject(this.regions, this.subregions, initValue);
-    return this.fb.group(formModelObject);
+  createCountryForm(initValue: boolean): FormGroup {
+    const countryFormModel = this.createFormModelObject(this.regions, this.subregions, initValue);
+    return this.fb.group(countryFormModel);
   }
 
   createRegionUpdate(form: FormGroup, region: string): FormModelUpdate {
@@ -79,20 +95,20 @@ export class SelectService {
     return formModelUpdate;
   }
 
-  countSelections(form: FormGroup): SelectionTally {
+  updateCountryTally(form: FormGroup): CountryTally {
     const formModel = form.value;
-    const selectionTally = { total: 0 };
+    const countryTally = { total: 0 };
     _.forEach(this.subregionsByRegion, (subregions, region) => {
-      selectionTally[region] = 0;
+      countryTally[region] = 0;
       _.forEach(subregions, (subregion) => {
         if (formModel[subregion]) {
           const numberOfCountries = this.countriesBySubregion[subregion].length;
-          selectionTally[region] += numberOfCountries;
-          selectionTally.total += numberOfCountries;
+          countryTally[region] += numberOfCountries;
+          countryTally.total += numberOfCountries;
         }
       });
-    })
-    return selectionTally;
+    });
+    return countryTally;
   }
 
   private createFormModelObject(regions: string[], subregions: string[], isChecked: boolean): FormModelObject {

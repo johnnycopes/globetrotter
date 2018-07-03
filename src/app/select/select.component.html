@@ -1,16 +1,18 @@
 <button type="submit"
-  [disabled]="!tally.total"
+  [disabled]="!countryTally.total"
   (click)="onSubmit()"
   >
   Start
 </button>
 
-<!-- TODO: use this component to select # of countries, and then combine the two forms' info onSubmit() -->
-<app-select-quantity>
+<app-select-quantity
+  [model]="quantityModel"
+  [quantities]="quantities"
+  >
 </app-select-quantity>
 
 <app-select-country
-  [form]="form"
-  [tally]="tally"
+  [form]="countryForm"
+  [tally]="countryTally"
   >
 </app-select-country>

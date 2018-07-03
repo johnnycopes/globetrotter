@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
 
 import { Country } from '../shared/model/country.interface';
-import { FormModelObject } from '../select/select.service';
+import { Selection } from '../select/select.service';
 import { CountryService } from '../shared/country/country.service';
 import { QuizCardComponent } from './quiz-card/quiz-card.component';
 
@@ -29,8 +29,10 @@ export class QuizService {
     this.countriesBySubregion = this.countryService.groupCountriesByProperty('subregion');
   }
 
-  createCountriesList(selection: FormModelObject): Country[] {
-    const list = _(selection)
+  createCountriesList(selection: Selection): Country[] {
+    const countries = selection.countryForm;
+    const quantity = selection.quantity;
+    return _(countries)
       .pickBy((value, key) => {
         if (value && _.isBoolean(value)) {
           return key;
@@ -40,13 +42,13 @@ export class QuizService {
         return this.countriesBySubregion[key];
       })
       .shuffle()
+      .slice(0, quantity)
       .value();
-    return list;
   }
 
-  createQuiz(selection: FormModelObject): void {
+  createQuiz(countries: Country[]): void {
     this.quiz = {
-      countries: this.createCountriesList(selection),
+      countries: _.shuffle(countries),
       currentIndex: 0,
       guess: 1,
       canFlip: true,
@@ -72,12 +74,14 @@ export class QuizService {
     }, 1800);
   }
 
-  updateQuiz(guess?: string): void {
-    this.incrementGuesses();
+  updateQuiz(): void {
     this.quiz.currentIndex++;
     if (this.quiz.currentIndex === this.quiz.countries.length) {
       // if all cards have been guessed, calculate the user's score and display it
       this.quiz.accuracy = Math.round((this.quiz.countries.length / this.quiz.guess) * 100);
+    }
+    else {
+      this.incrementGuesses();
     }
   }
 

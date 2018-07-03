@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import { Country } from '../../shared/model/country.interface';
-import { SelectService, SelectionTally } from '../select.service';
+import { SelectService, CountryTally } from '../select.service';
 import { CountryService } from '../../shared/country/country.service';
 
 @Component({
@@ -12,7 +12,7 @@ import { CountryService } from '../../shared/country/country.service';
 })
 export class SelectCountryComponent implements OnInit {
   @Input() form: FormGroup;
-  @Input() tally: SelectionTally;
+  @Input() tally: CountryTally;
   public totalCountries: number;
   public countriesByRegion: _.Dictionary<Country[]>;
   public countriesBySubregion: _.Dictionary<Country[]>;
@@ -39,12 +39,12 @@ export class SelectCountryComponent implements OnInit {
   }
 
   onSelectAll() {
-    const updatedFormModel = this.selectService.createFormModel(true);
+    const updatedFormModel = this.selectService.createCountryForm(true);
     this.form.setValue(updatedFormModel.value);
   }
 
   onClearAll() {
-    const updatedFormModel = this.selectService.createFormModel(false);
+    const updatedFormModel = this.selectService.createCountryForm(false);
     this.form.setValue(updatedFormModel.value);
   }
 

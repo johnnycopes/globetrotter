@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormModelObject } from './select/select.service';
+import { Selection } from './select/select.service';
 
 @Component({
   selector: 'app-root',
@@ -7,10 +7,13 @@ import { FormModelObject } from './select/select.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  selection: FormModelObject;
+  selection: Selection;
 
-  onSelectionMade(selection: FormModelObject) {
-    this.selection = selection;
+  onSelectionMade(selection: Selection) {
+    this.selection = {
+      countryForm: selection.countryForm,
+      quantity: selection.quantity
+    };
   }
 
   reset() {

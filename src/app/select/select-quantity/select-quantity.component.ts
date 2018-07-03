@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Quantity, QuantityModel } from '../select.service';
 
 @Component({
   selector: 'app-select-quantity',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./select-quantity.component.scss']
 })
 export class SelectQuantityComponent implements OnInit {
+  @Input() model: QuantityModel;
+  @Input() quantities: Quantity[];
 
   constructor() { }
 

@@ -1,3 +1,21 @@
-<p>
-  select-quantity works!
-</p>
+<form class="form"
+  #quantityForm="ngForm"
+  >
+  <span>Number of countries to include in the quiz:</span>
+  <div class="form-control"
+    *ngFor="let quantity of quantities"
+    >
+    <input class="number-input"
+      [id]="quantity.display"
+      [value]="quantity.value"
+      [(ngModel)]="model.quantity"
+      type="radio"
+      name="quantity"
+      />
+    <label class="number-label"
+      [for]="quantity.display"
+      >
+      {{quantity.display}}
+    </label>
+  </div>
+</form>
