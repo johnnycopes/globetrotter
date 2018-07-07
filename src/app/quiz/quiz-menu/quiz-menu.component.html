@@ -1,6 +1,6 @@
 <main class="quiz-menu"
-  [ngClass]="{'quiz-menu--expanded': accuracy}"
->
+  [@position]="positionState"
+  >
   <article class="quiz-menu__outcome">
     Quiz complete! Your guesses were {{accuracy}}% accurate.
   </article>

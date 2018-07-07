@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "deploy:win": "ng build --prod && cd dist/globetrotter && move index.html 200.html && surge . --domain https://globetrotter.surge.sh",
     "karma": "ng test",
     "test": "jest",
     "test:watch": "jest --watch",

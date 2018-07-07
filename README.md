@@ -1,10 +1,8 @@
 # Globetrotter
 
-### Live site: _coming soon_
+### Live site: https://globetrotter.surge.sh/
 
-A geography quiz app!
-
-_more details coming soon_
+This is a geography quiz! Currently, you can generate and take a custom quiz on national flags from any part(s) of the world that you want. I plan on expanding the app so that you can take quizzes on different characteristics of countries (such as population size and capital city).
 
 #### Goals of this project:
 

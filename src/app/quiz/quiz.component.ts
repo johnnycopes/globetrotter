@@ -1,4 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
+import {
+  trigger,
+  style,
+  animate,
+  transition,
+  query,
+  stagger,
+  animateChild
+} from '@angular/animations';
 
 import { Country } from '../shared/model/country.interface';
 import { Quiz } from '../shared/model/quiz.interface';
@@ -8,7 +17,20 @@ import { QuizService } from './quiz.service';
 @Component({
   selector: 'app-quiz',
   templateUrl: './quiz.component.html',
-  styleUrls: ['./quiz.component.scss']
+  styleUrls: ['./quiz.component.scss'],
+  animations: [
+    trigger('stagger', [
+      transition(':enter', [
+        query(':enter', stagger('100ms', [animateChild()]))
+      ])
+    ]),
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: '0' }),
+        animate('300ms ease-in', style({ opacity: '1' }))
+      ])
+    ])
+  ]
 })
 export class QuizComponent implements OnInit {
   @Input() selection: Selection;

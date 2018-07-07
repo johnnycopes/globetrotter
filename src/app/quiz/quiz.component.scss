@@ -1,5 +1,9 @@
 .quiz__cards {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   flex-wrap: wrap;
+}
+
+.quiz__card {
+  margin: 10px;
 }

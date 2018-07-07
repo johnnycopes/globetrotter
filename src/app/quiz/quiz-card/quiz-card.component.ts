@@ -51,9 +51,9 @@ import { QuizService } from '../quiz.service';
 export class QuizCardComponent implements OnInit {
   @Input() country: Country;
   @Input() canFlip: boolean;
-  private playState: string;
-  private guessState: string;
-  private flipState: string;
+  public playState: string;
+  public guessState: string;
+  public flipState: string;
 
   constructor(private quizService: QuizService) { }
 

@@ -12,12 +12,7 @@
   flex-direction: column;
   align-items: flex-end;
   z-index: map-get($z-index, quiz-menu);
-  transform: translateY(-90vh);
-  transition: map-get($transition, slow);
-
-  &--expanded {
-    transform: translateY(0);
-  }
+  transform: translateY(-100vh);
 
   &__outcome {
     height: 90vh;

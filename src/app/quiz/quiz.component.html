@@ -4,11 +4,14 @@
   [guess]="quiz.guess"
   [accuracy]="quiz.accuracy"
 ></app-quiz-menu>
-<main class="quiz__cards">
+<main class="quiz__cards"
+  @stagger
+  >
   <app-quiz-card class="quiz__card"
     *ngFor="let country of countries"
     [country]="country"
     [canFlip]="quiz.canFlip"
+    @fadeIn
     >
   </app-quiz-card>
 </main>
