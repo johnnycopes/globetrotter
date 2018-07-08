@@ -1,18 +1,39 @@
+.form {
+  display: grid;
+}
+
 .total {
   margin-bottom: 20px;
 }
 
 .regions {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
 .region {
-  margin-bottom: 20px;
-  font-size: 30px;
+  display: flex;
   flex: 0 1 50%;
+  align-items: center;
+  padding: 2rem 0;
+
+  &__label {
+    font-weight: 700;
+  }
+
+  &__icon {
+    height: 15rem;
+  }
+
+  &__wrapper {
+    padding: 0 2rem;
+  }
 }
 
 .subregion {
-  padding-left: 20px;
+  padding-left: 2rem;
+}
+
+.highlight {
+  font-weight: 700;
 }

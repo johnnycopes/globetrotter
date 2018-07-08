@@ -7,16 +7,20 @@
   height: 100vh;
   width: 100%;
   background: map-get($color, dark);
-  border-top: 4px solid map-get($color, medium);
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   z-index: map-get($z-index, quiz-menu);
   transform: translateY(-100vh);
 
+  &__wrapper {
+    max-width: 1550px;
+    width: 90%;
+    margin: 0 auto;
+  }
+
   &__outcome {
     height: 90vh;
-    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -26,12 +30,20 @@
     height: 10vh;
     width: 100%;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
   }
 
   &__item {
     flex: 0 0 33.33%;
     text-align: center;
+  }
+
+  &__tally {
+    text-align: left;
+  }
+
+  &__guess {
+    text-align: right;
   }
 }

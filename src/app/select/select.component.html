@@ -1,18 +1,22 @@
-<button type="submit"
-  [disabled]="!countryTally.total"
-  (click)="onSubmit()"
+<main class="select"
+  @fadeIn
   >
-  Start
-</button>
+  <button type="submit"
+    [disabled]="!countryTally.total"
+    (click)="onSubmit()"
+    >
+    Start
+  </button>
 
-<app-select-quantity
-  [model]="quantityModel"
-  [quantities]="quantities"
-  >
-</app-select-quantity>
+  <app-select-quantity
+    [model]="quantityModel"
+    [quantities]="quantities"
+    >
+  </app-select-quantity>
 
-<app-select-country
-  [form]="countryForm"
-  [tally]="countryTally"
-  >
-</app-select-country>
+  <app-select-country
+    [form]="countryForm"
+    [tally]="countryTally"
+    >
+  </app-select-country>
+</main>

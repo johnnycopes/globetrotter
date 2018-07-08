@@ -1,9 +1,7 @@
 .quiz__cards {
-  display: flex;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-}
-
-.quiz__card {
-  margin: 10px;
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(auto-fill, 300px);
+  grid-auto-rows: 300px;
+  grid-gap: 1rem;
 }
