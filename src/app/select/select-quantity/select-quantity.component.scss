@@ -1,3 +1,40 @@
+@import 'variables';
+
 form {
   margin: 40px 0;
+}
+
+.quantities {
+  display: flex;
+  justify-content: space-between;
+}
+
+.quantity {
+  width: 15rem;
+  height: 15rem;
+
+  &__input {
+    display: none;
+    position: absolute;
+    left: -100vh;
+  }
+
+  &__label {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 5rem;
+    border: 2px solid map-get($color, medium);
+    color: map-get($color, medium);
+    transition: map-get($transition, fast);
+    cursor: pointer;
+  }
+
+  &__input:checked + .quantity__label {
+    color: map-get($color, lightest);
+    border: 6px solid map-get($color, lightest);
+    font-weight: 700;
+  }
 }

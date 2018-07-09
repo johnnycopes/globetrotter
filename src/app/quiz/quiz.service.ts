@@ -4,20 +4,18 @@ import * as _ from 'lodash';
 import { Country } from '../shared/model/country.interface';
 import { Quiz } from '../shared/model/quiz.interface';
 import { Selection } from '../shared/model/select.interface';
+import { CountryClass } from '../shared/country/country.class';
 import { CountryService } from '../shared/country/country.service';
 import { QuizCardComponent } from './quiz-card/quiz-card.component';
 
 @Injectable({
   providedIn: 'root'
 })
-export class QuizService {
-  public countriesByRegion: _.Dictionary<Country[]>;
-  public countriesBySubregion: _.Dictionary<Country[]>;
+export class QuizService extends CountryClass {
   public quiz: Quiz;
 
-  constructor(private countryService: CountryService) {
-    this.countriesByRegion = this.countryService.countriesByRegion;
-    this.countriesBySubregion = this.countryService.countriesBySubregion;
+  constructor(countryService: CountryService) {
+    super(countryService)
   }
 
   createCountriesList(selection: Selection): Country[] {

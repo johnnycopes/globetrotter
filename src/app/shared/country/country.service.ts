@@ -19,8 +19,8 @@ export class CountryService {
   constructor() {
     this.standarizeCountries();
     this._totalCountries = this.countries.length;
-    this._countriesByRegion = this.groupCountriesByProperty('region');
-    this._countriesBySubregion = this.groupCountriesByProperty('subregion');
+    this._countriesByRegion = _.groupBy(this.countries, 'region');
+    this._countriesBySubregion = _.groupBy(this.countries, 'subregion');
     this._subregionsByRegion = this.groupSubregionsByRegion();
     this._regions = Object.keys(this._subregionsByRegion);
     this._subregions = Object.keys(this._countriesBySubregion);
@@ -50,15 +50,7 @@ export class CountryService {
     return this._subregions;
   }
 
-  keyCountriesByProperty(property: string): _.Dictionary<Country> {
-    return _.keyBy(this.countries, property);
-  }
-
-  groupCountriesByProperty(property: string): _.Dictionary<Country[]> {
-    return _.groupBy(this.countries, property);
-  }
-
-  groupSubregionsByRegion(): _.Dictionary<string[]> {
+  private groupSubregionsByRegion(): _.Dictionary<string[]> {
     return _.reduce(this.countries, (accum, value) => {
       const region = value.region;
       const subregion = value.subregion;

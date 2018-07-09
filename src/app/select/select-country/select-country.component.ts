@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { Country } from '../../shared/model/country.interface';
+import { CountryClass } from '../../shared/country/country.class';
 import { CountryTally } from '../../shared/model/select.interface';
 import { CountryService } from '../../shared/country/country.service';
 import { SelectService } from '../select.service';
@@ -11,28 +11,18 @@ import { SelectService } from '../select.service';
   templateUrl: './select-country.component.html',
   styleUrls: ['./select-country.component.scss']
 })
-export class SelectCountryComponent implements OnInit {
+export class SelectCountryComponent extends CountryClass implements OnInit {
   @Input() form: FormGroup;
   @Input() tally: CountryTally;
-  public totalCountries: number;
-  public countriesByRegion: _.Dictionary<Country[]>;
-  public countriesBySubregion: _.Dictionary<Country[]>;
-  public subregionsByRegion: _.Dictionary<string[]>;
-  public regions: string[];
-  public subregions: string[];
 
   constructor(
-    private countryService: CountryService,
+    countryService: CountryService,
     private selectService: SelectService
-  ) { }
+  ) {
+    super(countryService)
+  }
 
   ngOnInit() {
-    this.totalCountries = this.countryService.totalCountries;
-    this.countriesByRegion = this.countryService.countriesByRegion;
-    this.countriesBySubregion = this.countryService.countriesBySubregion;
-    this.subregionsByRegion = this.countryService.subregionsByRegion;
-    this.regions = this.countryService.regions;
-    this.subregions = this.countryService.subregions;
   }
 
   onSelectAll() {

@@ -1,3 +1,5 @@
+@import 'variables';
+
 .form {
   display: grid;
 }
@@ -34,6 +36,16 @@
   padding-left: 2rem;
 }
 
-.highlight {
+input + label {
+  color: map-get($color, medium);
+  transition: map-get($transition, fastest);
+}
+
+input:indeterminate + label,
+input:checked + label {
+  color: map-get($color, lightest);
+}
+
+.bold {
   font-weight: 700;
 }

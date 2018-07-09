@@ -5,24 +5,18 @@ import * as _ from 'lodash';
 import { Country } from '../shared/model/country.interface';
 import { CountryService } from '../shared/country/country.service';
 import { FormModelUpdate, CountryTally, FormModelObject, IndeterminateStatus } from '../shared/model/select.interface';
+import { CountryClass } from '../shared/country/country.class';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SelectService {
-  public regions: string[];
-  public subregions: string[];
-  private countriesBySubregion: _.Dictionary<Country[]>;
-  private subregionsByRegion: _.Dictionary<string[]>;
+export class SelectService extends CountryClass {
 
   constructor(
-    private fb: FormBuilder,
-    private countryService: CountryService,
+    countryService: CountryService,
+    private fb: FormBuilder
   ) {
-    this.countriesBySubregion = this.countryService.countriesBySubregion;
-    this.subregionsByRegion = this.countryService.subregionsByRegion;
-    this.regions = this.countryService.regions;
-    this.subregions = this.countryService.subregions;
+    super(countryService)
   }
 
   createCountryForm(initValue: boolean): FormGroup {
