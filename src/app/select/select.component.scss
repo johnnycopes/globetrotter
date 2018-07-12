@@ -1,4 +1,26 @@
+@import 'variables';
+
 .select {
   max-width: 1200px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  font-size: 15rem;
+  text-align: center;
+}
+
+.divider {
+  width: 10rem;
+  border: none;
+  border-top: map-get($border, medium) double map-get($color, dark);
+  color: map-get($color, dark);
+  margin: 8rem auto;
+}
+
+.start {
+  align-self: center;
+  margin: 4rem 0 8rem;
 }

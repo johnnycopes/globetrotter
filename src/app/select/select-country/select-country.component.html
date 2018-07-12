@@ -2,18 +2,31 @@
   [formGroup]="form"
   >
   <div class="total">
-    <span class="highlight">{{tally.total}} / {{totalCountries}}</span> possible countries selected
+    <div class="total__tally">
+      <span class="total__tally-number">
+        {{tally.total}} / {{totalCountries}}&nbsp;
+      </span>
+      <span class="total__tally-words">
+        possible countries selected.
+      </span>
+    </div>
     <div class="buttons">
-      <button type="button"
+      <app-button class="buttons__select-all"
+        buttonStyle="secondary"
+        buttonType="button"
+        buttonText="Select all"
         (click)="onSelectAll()"
         >
-        Select all
-      </button>
-      <button type="button"
+        Clear all
+      </app-button>
+      <app-button class="buttons__clear-all"
+        buttonStyle="secondary"
+        buttonType="button"
+        buttonText="Clear all"
         (click)="onClearAll()"
         >
         Clear all
-      </button>
+      </app-button>
     </div>
   </div>
   <div class="regions">
@@ -38,7 +51,7 @@
           <label class="region__label"
             [for]="region"
             >
-            {{region}} <span class="highlight">({{tally[region]}} / {{countriesByRegion[region].length}})</span>
+            {{region}} <span class="bold">({{tally[region]}} / {{countriesByRegion[region].length}})</span>
           </label>
         </div>
         <div class="subregion"

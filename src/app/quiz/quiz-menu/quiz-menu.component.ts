@@ -16,12 +16,15 @@ import { Country } from '../../shared/model/country.interface';
   animations: [
     trigger('position', [
       state('offscreen', style({
+        opacity: 0,
         transform: 'translateY(-100vh)'
       })),
       state('header', style({
+        opacity: 1,
         transform: 'translateY(-90vh)'
       })),
       state('fullscreen', style({
+        opacity: 1,
         transform: 'translateY(0)'
       })),
       transition('* => *', animate('400ms ease-in'))

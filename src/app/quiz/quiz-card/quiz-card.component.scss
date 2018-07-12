@@ -25,7 +25,7 @@
     backface-visibility: hidden;
     cursor: pointer;
     user-select: none;
-    padding: $border-width;
+    padding: map-get($border, thick);
     border-radius: $border-radius;
     text-align: center;
   }

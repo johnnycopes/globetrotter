@@ -1,7 +1,12 @@
 @import 'variables';
 
 form {
-  margin: 40px 0;
+  margin: 40px 0 80px;
+}
+
+.text {
+  text-align: center;
+  margin-bottom: 40px;
 }
 
 .quantities {
@@ -26,15 +31,16 @@ form {
     justify-content: center;
     align-items: center;
     font-size: 5rem;
-    border: 2px solid map-get($color, medium);
+    border: map-get($border, thin) solid map-get($color, medium);
     color: map-get($color, medium);
     transition: map-get($transition, fast);
+    border-radius: $border-radius;
     cursor: pointer;
   }
 
   &__input:checked + .quantity__label {
     color: map-get($color, lightest);
-    border: 6px solid map-get($color, lightest);
+    border: map-get($border, medium) solid map-get($color, lightest);
     font-weight: 700;
   }
 }

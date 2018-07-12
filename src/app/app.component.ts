@@ -14,6 +14,7 @@ export class AppComponent {
       countryForm: selection.countryForm,
       quantity: selection.quantity
     };
+    window.scrollTo(0, 0);
   }
 
   reset() {

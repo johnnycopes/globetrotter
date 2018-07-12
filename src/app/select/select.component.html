@@ -1,22 +1,27 @@
 <main class="select"
   @fadeIn
   >
-  <button type="submit"
-    [disabled]="!countryTally.total"
-    (click)="onSubmit()"
-    >
-    Start
-  </button>
-
+  <h1 class="header">
+    Globetrotter
+  </h1>
+  <hr class="divider">
   <app-select-quantity
     [model]="quantityModel"
     [quantities]="quantities"
     >
   </app-select-quantity>
-
   <app-select-country
     [form]="countryForm"
     [tally]="countryTally"
     >
   </app-select-country>
+  <app-button class="start"
+    buttonStyle="primary"
+    buttonType="submit"
+    buttonText="Start"
+    buttonSize="huge"
+    [isDisabled]="!countryTally.total"
+    (click)="onSubmit(!countryTally.total)"
+    >
+  </app-button>
 </main>

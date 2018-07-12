@@ -1,0 +1,13 @@
+<button class="button"
+  [ngClass]="{
+    'button--primary': buttonStyle === 'primary',
+    'button--secondary': buttonStyle === 'secondary',
+    'button--disabled': isDisabled,
+    'button--huge': buttonSize === 'huge'
+  }"
+  [type]="buttonType || 'button'"
+  >
+  <span class="button__text">
+    {{ buttonText }}
+  </span>
+</button>

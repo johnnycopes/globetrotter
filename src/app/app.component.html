@@ -1,8 +1,9 @@
 <main class="app">
   <nav class="app__nav">
     <h1 class="app__header"
+      *ngIf="selection"
       (click)="reset()">
-      Globetrotter
+      <i class="fa fa-home"></i>
     </h1>
   </nav>
   <div class="app__content">

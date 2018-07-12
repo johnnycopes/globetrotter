@@ -1,0 +1,40 @@
+@import 'variables';
+
+.button {
+  padding: 15px 25px;
+  min-width: 10rem;
+  border: none;
+  text-decoration: none;
+  color: map-get($color,  darkest);
+  background: map-get($color, lightest);
+  font: $sans-serif;
+  font-size: 2rem;
+  border-radius: $border-radius;
+  outline: none;
+  cursor: pointer;
+
+  &--primary {
+    background: map-get($color, lightest);
+    color: map-get($color, darkest);
+  }
+
+  &--secondary {
+    background: map-get($color, darkest);
+    color: map-get($color, lightest);
+    border: map-get($border, thin) solid map-get($color, lightest);
+  }
+
+  &--disabled {
+    background: map-get($color, medium);
+  }
+
+  &--huge {
+    padding: 30px 75px;
+    font-size: 4rem;
+  }
+
+  // TODO: improve this
+  &:hover {
+    opacity: 0.9;
+  }
+}

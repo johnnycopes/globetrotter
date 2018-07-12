@@ -2,10 +2,31 @@
 
 .form {
   display: grid;
+  margin: 40px 0 80px;
 }
 
 .total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 20px;
+
+  &__tally {
+    display: flex;
+    align-items: center;
+
+    &-number {
+      font-size: 4rem;
+      font-weight: 700;
+    }
+  }
+}
+
+.buttons {
+
+  &__select-all {
+    margin-right: 10px;
+  }
 }
 
 .regions {
@@ -38,14 +59,9 @@
 
 input + label {
   color: map-get($color, medium);
-  transition: map-get($transition, fastest);
 }
 
 input:indeterminate + label,
 input:checked + label {
   color: map-get($color, lightest);
-}
-
-.bold {
-  font-weight: 700;
 }

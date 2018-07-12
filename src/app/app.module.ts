@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
+import { ButtonComponent } from './shared/components/button/button.component';
 import { QuizComponent } from './quiz/quiz.component';
 import { QuizCardComponent } from './quiz/quiz-card/quiz-card.component';
 import { QuizMenuComponent } from './quiz/quiz-menu/quiz-menu.component';
@@ -14,6 +15,7 @@ import { SelectQuantityComponent } from './select/select-quantity/select-quantit
 @NgModule({
   declarations: [
     AppComponent,
+    ButtonComponent,
     QuizComponent,
     QuizCardComponent,
     QuizMenuComponent,
