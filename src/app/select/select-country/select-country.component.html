@@ -15,7 +15,7 @@
         buttonStyle="secondary"
         buttonType="button"
         buttonText="Select all"
-        (click)="onSelectAll()"
+        (onClick)="onSelectAll()"
         >
         Clear all
       </app-button>
@@ -23,7 +23,7 @@
         buttonStyle="secondary"
         buttonType="button"
         buttonText="Clear all"
-        (click)="onClearAll()"
+        (onClick)="onClearAll()"
         >
         Clear all
       </app-button>
@@ -38,7 +38,7 @@
         [alt]="region"
       />
       <section class="region__wrapper">
-        <label class="region__label"
+        <label class="region__checkbox"
           [formGroupName]="region"
           >
           <input class="region__checkbox-input"
@@ -55,7 +55,7 @@
             {{region}} <span class="bold">({{tally[region]}} / {{countriesByRegion[region].length}})</span>
           </span>
         </label>
-        <label class="subregion__label"
+        <label class="subregion__checkbox"
           *ngFor="let subregion of subregionsByRegion[region]"
           >
           <input class="subregion__checkbox-input"

@@ -14,18 +14,22 @@
   cursor: pointer;
 
   &--primary {
-    background: map-get($color, lightest);
     color: map-get($color, darkest);
+    background: map-get($color, lightest);
+
+    &:hover {
+      background: lighten(map-get($color, lightest), 10%);
+    }
   }
 
   &--secondary {
-    background: map-get($color, darkest);
     color: map-get($color, lightest);
+    background: map-get($color, darkest);
     border: map-get($border, thin) solid map-get($color, lightest);
-  }
 
-  &--disabled {
-    background: map-get($color, medium);
+    &:hover {
+      background: lighten(map-get($color, darkest), 10%);
+    }
   }
 
   &--huge {
@@ -33,8 +37,8 @@
     font-size: 4rem;
   }
 
-  // TODO: improve this
-  &:hover {
-    opacity: 0.9;
+  &:disabled {
+    background: map-get($color, medium);
+    cursor: not-allowed;
   }
 }
