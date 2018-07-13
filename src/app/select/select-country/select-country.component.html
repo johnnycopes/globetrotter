@@ -38,8 +38,10 @@
         [alt]="region"
       />
       <section class="region__wrapper">
-        <div [formGroupName]="region">
-          <input class="region__checkbox"
+        <label class="region__label"
+          [formGroupName]="region"
+          >
+          <input class="region__checkbox-input"
             #regionInput
             type="checkbox"
             [id]="region"
@@ -48,16 +50,15 @@
             [indeterminate]="form.value[region].indeterminate"
             (change)="onRegionChange(regionInput)"
           />
-          <label class="region__label"
-            [for]="region"
-            >
+          <span class="region__checkbox-element"></span>
+          <span class="region__checkbox-label">
             {{region}} <span class="bold">({{tally[region]}} / {{countriesByRegion[region].length}})</span>
-          </label>
-        </div>
-        <div class="subregion"
+          </span>
+        </label>
+        <label class="subregion__label"
           *ngFor="let subregion of subregionsByRegion[region]"
           >
-          <input class="subregion__checkbox"
+          <input class="subregion__checkbox-input"
             #subregionInput
             type="checkbox"
             [id]="subregion"
@@ -65,12 +66,11 @@
             [formControlName]="subregion"
             (change)="onSubregionChange(regionInput)"
             />
-          <label class="subregion__label"
-            [for]="subregion"
-            >
+          <span class="subregion__checkbox-element"></span>
+          <span class="subregion__checkbox-label">
             {{subregion}} <span class="bold">({{countriesBySubregion[subregion].length}})</span>
-          </label>
-        </div>
+          </span>
+        </label>
       </section>
     </div>
   </div>
