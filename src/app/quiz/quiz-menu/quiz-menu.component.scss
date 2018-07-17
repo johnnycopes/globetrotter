@@ -1,6 +1,8 @@
 @import 'variables';
 
 .quiz-menu {
+  --header-height: 10vh;
+
   position: fixed;
   top: 0;
   left: 0;
@@ -21,13 +23,19 @@
 
   &__outcome {
     height: 90vh;
+    padding-top: var(--header-height);
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    &-accuracy {
+      font-size: map-get($font-size, accuracy);
+    }
   }
 
   &__progress {
-    height: 10vh;
+    height: var(--header-height);
     width: 100%;
     display: flex;
     justify-content: space-between;

@@ -1,10 +1,11 @@
 <main class="app">
   <nav class="app__nav">
-    <h1 class="app__header"
+    <img class="app__nav-home"
       *ngIf="selection"
-      (click)="reset()">
-      <i class="fa fa-home"></i>
-    </h1>
+      src="assets/icons/Home.svg"
+      [alt]="Home"
+      (click)="reset()"
+    />
   </nav>
   <div class="app__content">
     <app-select *ngIf="!selection"

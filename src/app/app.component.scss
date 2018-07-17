@@ -2,19 +2,22 @@
 
 
 // TODO: establish consistent visual hierarchy, fix margin values and
-// spacing between elements (bottom margin as much as possible rather
-// than top
+// spacing between elements (use bottom margin as much as possible rather
+// than both bottom- and top-margin for spacing)
 .app {
 
   &__nav {
     position: fixed;
-    left: 10px;
+    left: 2rem;
     top: 50%;
     writing-mode: vertical-lr;
     // transform: rotate(180deg) translateY(50%); // for words
-    // transform: rotate(270deg); // for FA icon
     z-index: map-get($z-index, app-menu);
     cursor: pointer;
+  }
+
+  &__header {
+    width: 3rem;
   }
 
   &__content {

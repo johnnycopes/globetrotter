@@ -37,6 +37,9 @@
         src="assets/icons/{{region}}.svg"
         [alt]="region"
       />
+      <div class="region__icon-cover"
+        *ngIf="!tally[region]"
+      ></div>
       <section class="region__wrapper">
         <label class="region__checkbox"
           [formGroupName]="region"

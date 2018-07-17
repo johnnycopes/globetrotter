@@ -20,7 +20,7 @@
     align-items: center;
 
     &-number {
-      font-size: 4rem;
+      font-size: map-get($font-size, header);
       font-weight: 700;
     }
   }
@@ -43,9 +43,23 @@
   flex: 0 1 50%;
   align-items: center;
   padding: 2rem 0;
+  position: relative;
 
   &__icon {
-    height: 15rem;
+    $icon-height: 15rem;
+    height: $icon-height;
+
+    &-cover {
+      position: absolute;
+      width: $icon-height;
+      height: $icon-height;
+      transform: translateY(-50%);
+      top: 50%;
+      left: 0;
+      z-index: map-get($z-index, positive);
+      background: map-get($color, darkest);
+      filter: blur(50px);
+    }
   }
 
   &__wrapper {

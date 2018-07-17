@@ -7,6 +7,7 @@ form {
 .text {
   text-align: center;
   margin-bottom: 40px;
+  font-size: map-get($font-size, header);
 }
 
 .quantities {
@@ -30,7 +31,7 @@ form {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 5rem;
+    font-size: map-get($font-size, header);
     border: map-get($border, thin) solid map-get($color, medium);
     color: map-get($color, medium);
     transition: map-get($transition, fast);

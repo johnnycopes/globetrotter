@@ -4,7 +4,13 @@
   <h1 class="header">
     Globetrotter
   </h1>
-  <hr class="divider">
+  <div class="divider">
+    <hr class="divider__line">
+    <img class="divider__icon"
+      src="assets/icons/Globetrotter.svg"
+      [alt]="Globe"
+    />
+  </div>
   <app-select-quantity
     [model]="quantityModel"
     [quantities]="quantities"

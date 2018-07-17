@@ -8,16 +8,31 @@
 }
 
 .header {
-  font-size: 15rem;
+  font-size: map-get($font-size, app-name);
   text-align: center;
 }
 
 .divider {
-  width: 10rem;
-  border: none;
-  border-top: map-get($border, medium) double map-get($color, dark);
-  color: map-get($color, dark);
-  margin: 8rem auto;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__line {
+    width: 25rem;
+    border: none;
+    border-top: 6px double map-get($color, dark);
+    color: map-get($color, dark);
+    margin: 8rem auto;
+    position: relative;
+  }
+
+  &__icon {
+    position: absolute;
+    background: map-get($color, darkest);
+    width: 8rem;
+    padding: 1rem;
+  }
 }
 
 .start {

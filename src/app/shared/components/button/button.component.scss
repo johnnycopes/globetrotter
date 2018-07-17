@@ -8,7 +8,7 @@
   color: map-get($color,  darkest);
   background: map-get($color, lightest);
   font: $sans-serif;
-  font-size: 2rem;
+  font-size: map-get($font-size, button);
   border-radius: $border-radius;
   outline: none;
   cursor: pointer;
@@ -33,8 +33,8 @@
   }
 
   &--huge {
-    padding: 30px 75px;
-    font-size: 4rem;
+    padding: 3rem 8rem;
+    font-size: map-get($font-size, header);
   }
 
   &:disabled {
