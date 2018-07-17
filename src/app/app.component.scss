@@ -14,11 +14,12 @@
     // transform: rotate(180deg) translateY(50%); // for words
     z-index: map-get($z-index, app-menu);
     cursor: pointer;
+
+    &-home {
+      width: 3rem;
+    }
   }
 
-  &__header {
-    width: 3rem;
-  }
 
   &__content {
     margin: 0 auto;
