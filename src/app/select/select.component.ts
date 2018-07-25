@@ -37,10 +37,7 @@ export class SelectComponent implements OnInit {
     this.initializeQuantityModel();
   }
 
-  onSubmit(isDisabled: boolean): void {
-    if (isDisabled) {
-      return;
-    }
+  onSubmit(): void {
     const selection: Selection = {
       countryForm: this.countryForm.value,
       quantity: this.quantityModel.quantity
