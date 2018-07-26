@@ -7,7 +7,7 @@ import * as _ from 'lodash';
   providedIn: 'root'
 })
 export class CountryService {
-  private countries: Country[] = COUNTRIES;
+  private _countries: Country[] = COUNTRIES;
   private _totalCountries: number;
   private _countriesByRegion: _.Dictionary<Country[]>;
   private _countriesBySubregion: _.Dictionary<Country[]>;
@@ -24,6 +24,10 @@ export class CountryService {
     this._subregionsByRegion = this.groupSubregionsByRegion();
     this._regions = Object.keys(this._subregionsByRegion);
     this._subregions = Object.keys(this._countriesBySubregion);
+  }
+
+  get countries(): Country[] {
+    return this._countries;
   }
 
   get totalCountries(): number {
@@ -65,7 +69,7 @@ export class CountryService {
   }
 
   private standarizeCountries() {
-    _.forEach(this.countries, (country) => {
+    _.forEach(this._countries, (country) => {
       if (!this.validRegions.includes(country.region)) {
         country.region = 'Miscellaneous';
         country.subregion = 'N/A';

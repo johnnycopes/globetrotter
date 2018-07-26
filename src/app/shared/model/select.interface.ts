@@ -6,7 +6,7 @@ import { FormGroup } from "@angular/forms";
 
 export interface Selection {
   countryForm: FormModelObject;
-  quantity: QuantityValue;
+  quantity: OptionValue;
 }
 
 export interface IndeterminateStatus {
@@ -20,6 +20,7 @@ export interface IndeterminateStatus {
 // ==================
 
 export type CountryTally = _.Dictionary<number>;
+export type Tally = _.Dictionary<number>;
 
 export type RegionModel = {
   checked: boolean | null;
@@ -41,13 +42,13 @@ export interface FormModelObject {
 // SELECT-QUANTITY
 // ==================
 
-export type QuantityValue = number | undefined;
+type OptionValue = number | undefined;
 
-export interface Quantity {
+export interface Option {
   display: string;
-  value: QuantityValue;
+  value: OptionValue;
 }
 
-export interface QuantityModel {
-  quantity: QuantityValue;
+export interface OptionModel {
+  option: OptionValue;
 }

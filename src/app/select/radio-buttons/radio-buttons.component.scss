@@ -10,12 +10,12 @@ form {
   font-size: map-get($font-size, header);
 }
 
-.quantities {
+.options {
   display: flex;
   justify-content: space-between;
 }
 
-.quantity {
+.option {
   width: 15rem;
   height: 15rem;
 
@@ -39,7 +39,7 @@ form {
     cursor: pointer;
   }
 
-  &__input:checked + .quantity__label {
+  &__input:checked + .option__label {
     color: map-get($color, lightest);
     border: map-get($border, medium) solid map-get($color, lightest);
     font-weight: 700;

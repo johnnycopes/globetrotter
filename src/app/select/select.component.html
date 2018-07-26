@@ -11,23 +11,25 @@
       alt="Globetrotter logo"
     />
   </div>
-  <app-select-quantity
-    [model]="quantityModel"
-    [quantities]="quantities"
+  <app-radio-buttons
+    [options]="quantities"
+    text="Number of countries to include in the quiz:"
     >
-  </app-select-quantity>
-  <app-select-country
-    [form]="countryForm"
-    [tally]="countryTally"
+  </app-radio-buttons>
+  <app-nested-checkboxes
+    [data]="countries"
+    category="region"
+    subcategory="subregion"
     >
-  </app-select-country>
+  </app-nested-checkboxes>
   <app-button class="start"
     buttonStyle="primary"
     buttonType="submit"
     buttonText="Start"
     buttonSize="huge"
-    [isDisabled]="!countryTally.total"
-    (onClick)="onSubmit(!countryTally.total)"
     >
+    <!-- TODO: put these back inside the app-button -->
+    <!-- [isDisabled]="!countryTally.total"
+    (onClick)="onSubmit(!countryTally.total)" -->
   </app-button>
 </main>

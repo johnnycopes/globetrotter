@@ -10,8 +10,8 @@ import { QuizComponent } from './quiz/quiz.component';
 import { QuizCardComponent } from './quiz/quiz-card/quiz-card.component';
 import { QuizMenuComponent } from './quiz/quiz-menu/quiz-menu.component';
 import { SelectComponent } from './select/select.component';
-import { SelectCountryComponent } from './select/select-country/select-country.component';
-import { SelectQuantityComponent } from './select/select-quantity/select-quantity.component';
+import { NestedCheckboxesComponent } from './select/nested-checkboxes/nested-checkboxes.component';
+import { RadioButtonsComponent } from './select/radio-buttons/radio-buttons.component';
 
 @NgModule({
   declarations: [
@@ -22,8 +22,8 @@ import { SelectQuantityComponent } from './select/select-quantity/select-quantit
     QuizCardComponent,
     QuizMenuComponent,
     SelectComponent,
-    SelectCountryComponent,
-    SelectQuantityComponent
+    NestedCheckboxesComponent,
+    RadioButtonsComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,25 @@
+<form class="form"
+  #optionForm="ngForm"
+  >
+  <aside class="text">
+    {{text}}
+  </aside>
+  <main class="options">
+    <div class="option"
+      *ngFor="let option of options"
+      >
+      <input class="option__input"
+        [id]="option.display"
+        [value]="option.value"
+        [(ngModel)]="model.option"
+        type="radio"
+        name="option"
+        />
+      <label class="option__label"
+        [for]="option.display"
+        >
+        {{option.display}}
+      </label>
+    </div>
+  </main>
+</form>
