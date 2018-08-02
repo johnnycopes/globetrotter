@@ -1,5 +1,4 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import {
   trigger,
   style,
@@ -9,8 +8,8 @@ import {
 
 import { Country } from '../shared/model/country.interface';
 import { CountryService } from '../shared/country/country.service';
-import { Selection, Option } from '../shared/model/select.interface';
-import { SelectService } from './select.service';
+import { Selection, Option, Tally } from '../shared/model/select.interface';
+import { FormInfo } from './nested-checkboxes/nested-checkboxes.component';
 
 @Component({
   selector: 'app-select',
@@ -27,14 +26,15 @@ import { SelectService } from './select.service';
 })
 export class SelectComponent implements OnInit {
   @Output() selectionMade = new EventEmitter<Selection>();
+  public selection: Selection = {
+    countriesForm: {},
+    quantity: 0
+  };
   public countries: Country[];
+  public countriesTally: Tally;
   public quantities: Option[];
 
-
-  constructor(
-    private countryService: CountryService,
-    private selectService: SelectService
-  ) { }
+  constructor(private countryService: CountryService) { }
 
   ngOnInit() {
     this.countries = this.countryService.countries;
@@ -47,13 +47,16 @@ export class SelectComponent implements OnInit {
     ];
   }
 
-  onSubmit(): void {
-    // TODO: build selection object to send to quiz
-    // const selection: Selection = {
-    //   countryForm: this.countryForm.value,
-    //   quantity: this.quantityModel.quantity
-    // };
-    // this.selectionMade.emit(selection);
+  onCountriesChange(formInfo: FormInfo) {
+    this.selection.countriesForm = formInfo.form;
+    this.countriesTally = formInfo.tally;
   }
 
+  onQuantityChange(quantity: number | undefined) {
+    this.selection.quantity = quantity;
+  }
+
+  onSubmit(): void {
+    this.selectionMade.emit(this.selection);
+  }
 }

@@ -13,23 +13,24 @@
   </div>
   <app-radio-buttons
     [options]="quantities"
+    (formChanged)="onQuantityChange($event)"
     text="Number of countries to include in the quiz:"
     >
   </app-radio-buttons>
   <app-nested-checkboxes
     [data]="countries"
+    (formChanged)="onCountriesChange($event)"
     category="region"
     subcategory="subregion"
     >
   </app-nested-checkboxes>
   <app-button class="start"
+    [isDisabled]="!countriesTally.total"
+    (onClick)="onSubmit()"
     buttonStyle="primary"
     buttonType="submit"
     buttonText="Start"
     buttonSize="huge"
     >
-    <!-- TODO: put these back inside the app-button -->
-    <!-- [isDisabled]="!countryTally.total"
-    (onClick)="onSubmit(!countryTally.total)" -->
   </app-button>
 </main>

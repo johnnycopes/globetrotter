@@ -19,7 +19,7 @@ export class QuizService extends CountryClass {
   }
 
   createCountriesList(selection: Selection): Country[] {
-    const countries = selection.countryForm;
+    const countries = selection.countriesForm;
     const quantity = selection.quantity;
     return _(countries)
       .pickBy((value, key) => {

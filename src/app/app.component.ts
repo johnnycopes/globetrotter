@@ -11,7 +11,7 @@ export class AppComponent {
 
   onSelectionMade(selection: Selection) {
     this.selection = {
-      countryForm: selection.countryForm,
+      countriesForm: selection.countriesForm,
       quantity: selection.quantity
     };
     window.scrollTo(0, 0);

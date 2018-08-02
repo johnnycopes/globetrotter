@@ -44,12 +44,12 @@
           >
           <input class="category__checkbox-input"
             #categoryInput
-            type="checkbox"
             [id]="category"
             [value]="category"
-            formControlName="checked"
             [indeterminate]="form.value[category].indeterminate"
             (change)="onCategoryChange(categoryInput)"
+            formControlName="checked"
+            type="checkbox"
           />
           <span class="category__checkbox-element"></span>
           <span class="category__checkbox-label">
@@ -61,11 +61,11 @@
           >
           <input class="subcategory__checkbox-input"
             #subcategoryInput
-            type="checkbox"
             [id]="subcategory"
             [value]="subcategory"
             [formControlName]="subcategory"
             (change)="onSubcategoryChange(categoryInput)"
+            type="checkbox"
             />
           <span class="subcategory__checkbox-element"></span>
           <span class="subcategory__checkbox-label">

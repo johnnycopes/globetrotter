@@ -5,7 +5,7 @@ import { FormGroup } from "@angular/forms";
 // ==================
 
 export interface Selection {
-  countryForm: FormModelObject;
+  countriesForm: FormModelObject;
   quantity: OptionValue;
 }
 

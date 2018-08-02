@@ -1,8 +1,13 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { Tally } from '../../shared/model/select.interface';
+import { Tally, FormModelObject } from '../../shared/model/select.interface';
 import { NestedCheckboxesService } from './nested-checkboxes.service';
+
+export interface FormInfo {
+  form: FormModelObject;
+  tally: Tally
+};
 
 @Component({
   selector: 'app-nested-checkboxes',
@@ -13,6 +18,7 @@ export class NestedCheckboxesComponent implements OnInit {
   @Input() readonly data: any[];
   @Input() readonly category: string;
   @Input() readonly subcategory: string;
+  @Output() formChanged: EventEmitter<FormInfo> = new EventEmitter<FormInfo>();
   public dataByCategory: _.Dictionary<any[]>;
   public dataBySubcategory: _.Dictionary<any[]>;
   public subcategoriesByCategory: _.Dictionary<string[]>;
@@ -34,8 +40,16 @@ export class NestedCheckboxesComponent implements OnInit {
     // initialize form/tally
     this.form = this.nestedCheckboxesService.createForm(this.categories, this.subcategories, true);
     this.updateTally();
+    this.formChanged.emit({
+      form: this.form.value,
+      tally: this.tally
+    });
     this.form.valueChanges.subscribe(() => {
       this.updateTally();
+      this.formChanged.emit({
+        form: this.form.value,
+        tally: this.tally
+      });
     });
   }
 
