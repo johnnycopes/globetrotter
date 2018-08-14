@@ -9,7 +9,7 @@ import {
 import { Country } from '../shared/model/country.interface';
 import { CountryService } from '../shared/country/country.service';
 import { Selection, Option, Tally } from '../shared/model/select.interface';
-import { FormInfo } from './nested-checkboxes/nested-checkboxes.component';
+import { FormInfo } from './nested-checkboxes-group/nested-checkboxes-group.component';
 
 @Component({
   selector: 'app-select',

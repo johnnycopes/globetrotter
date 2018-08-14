@@ -17,13 +17,13 @@
     text="Number of countries to include in the quiz:"
     >
   </app-radio-buttons>
-  <app-nested-checkboxes
+  <app-nested-checkboxes-group
     [data]="countries"
     (formChanged)="onCountriesChange($event)"
     category="region"
     subcategory="subregion"
     >
-  </app-nested-checkboxes>
+  </app-nested-checkboxes-group>
   <app-button class="start"
     [isDisabled]="!countriesTally.total"
     (onClick)="onSubmit()"

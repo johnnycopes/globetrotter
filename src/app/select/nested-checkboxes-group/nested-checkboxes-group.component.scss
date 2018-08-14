@@ -1,7 +1,3 @@
-/* TODO:
-  - extract these inputs into a reusable component
-*/
-
 @import 'variables';
 
 .form {
@@ -39,11 +35,11 @@
 }
 
 .category {
-  display: flex;
-  flex: 0 1 50%;
-  align-items: center;
-  padding: 2rem 0;
-  position: relative;
+  // display: flex;
+  // flex: 0 1 50%;
+  // align-items: center;
+  // padding: 2rem 0;
+  // position: relative;
 
   &__icon {
     $icon-height: 15rem;

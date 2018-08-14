@@ -12,7 +12,7 @@ interface IndeterminateStatus {
 @Injectable({
   providedIn: 'root'
 })
-export class NestedCheckboxesService {
+export class NestedCheckboxesGroupService {
 
   constructor(private fb: FormBuilder) { }
 

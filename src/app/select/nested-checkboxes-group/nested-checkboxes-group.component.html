@@ -28,6 +28,16 @@
     </div>
   </div>
   <div class="categories">
+
+    <app-nested-checkboxes class="category"
+      *ngFor="let category of categories"
+      [category]="category"
+      [subcategories]="subcategoriesByCategory[category]"
+      [dataByCategory]="dataByCategory[category]"
+      [dataBySubcategory]="dataBySubcategory"
+      [tally]="tally"
+    ></app-nested-checkboxes>
+
     <div class="category"
       *ngFor="let category of categories"
       >

@@ -1,0 +1,45 @@
+<main class="category">
+  <img class="category__icon"
+    src="assets/icons/{{category}}.svg"
+    [alt]="category"
+  />
+  <div class="category__icon-cover"
+    *ngIf="!tally[category]"
+  ></div>
+  <section class="category__wrapper">
+    <label class="category__checkbox"
+      >
+      <input class="category__checkbox-input"
+        #categoryInput
+        [id]="category"
+        [value]="category"
+        (change)="onCategoryChange(categoryInput)"
+        type="checkbox"
+        />
+        <!-- [indeterminate]="form.value[category].indeterminate"
+        formControlName="checked" -->
+      <span class="category__checkbox-element"></span>
+      <span class="category__checkbox-label">
+        {{category}}
+        <span class="bold">({{tally[category]}} / {{dataByCategory.length}})</span>
+      </span>
+    </label>
+    <label class="subcategory__checkbox"
+      *ngFor="let subcategory of subcategories"
+      >
+      <input class="subcategory__checkbox-input"
+        #subcategoryInput
+        [id]="subcategory"
+        [value]="subcategory"
+        (change)="onSubcategoryChange(categoryInput)"
+        type="checkbox"
+        />
+        <!-- [formControlName]="subcategory" -->
+      <span class="subcategory__checkbox-element"></span>
+      <span class="subcategory__checkbox-label">
+        {{subcategory}}
+        <span class="bold">({{dataBySubcategory[subcategory].length}})</span>
+      </span>
+    </label>
+  </section>
+</main>
