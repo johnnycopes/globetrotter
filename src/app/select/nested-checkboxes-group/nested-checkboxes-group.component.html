@@ -29,15 +29,12 @@
   </div>
   <div class="categories">
     <app-nested-checkboxes class="category"
-      *ngFor="let category of categories"
-      [category]="category"
-      [subcategories]="subcategoriesByCategory[category]"
-      [dataByCategory]="dataByCategory[category]"
-      [dataBySubcategory]="dataBySubcategory"
+      *ngFor="let category of newDataByCategory"
+      [data]="category"
       [tally]="tally"
     ></app-nested-checkboxes>
 
-    <!-- TODO: eventually remove this once the new component has been completed -->
+    <!-- TODO: eventually remove this once the new component is completed -->
     <div class="category"
       *ngFor="let category of categories"
       >

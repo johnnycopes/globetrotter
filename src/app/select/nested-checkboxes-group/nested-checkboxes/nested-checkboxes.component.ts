@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import * as _ from 'lodash';
 
 import { Tally } from 'src/app/shared/model/select.interface';
 
@@ -9,60 +10,66 @@ import { Tally } from 'src/app/shared/model/select.interface';
 })
 export class NestedCheckboxesComponent implements OnInit {
   @Input() category: string;
-  @Input() subcategories: string[];
-  @Input() dataByCategory: _.Dictionary<any[]>;
-  @Input() dataBySubcategory: _.Dictionary<any[]>;
+  @Input() data: any;
   @Input() tally: Tally;
-  public categoryModel: any; // TODO: define this
+  public categoryModel: any; // TODO: type this
 
   constructor() { }
 
   ngOnInit() {
-    console.group(`${this.category}:`);
-    console.log('data by category:', this.dataByCategory);
-    console.log('data by subcategory:', this.subcategories);
-    console.log('tally:', this.tally);
+    console.group(this.data.name);
+    console.log(this.data);
     console.groupEnd();
 
     /*
     * TODO:
-    * - initialize the form in a cleaner way
-    * - extract the useful functionality out of the nested-checkboxes-group service
+    * - fix the category (top-level) tally
     * - make this component responsible for generating/maintaining its own tally
     */
-    this.categoryModel = {
-      category: this.category,
-      checkboxState: true,
-      subcategories: {}
-    };
-    this.initializeModel();
+    this.initializeModel(true);
   }
 
-  initializeModel() {
-    this.subcategories.forEach(subcategory => {
-      this.categoryModel.subcategories[subcategory] = true;
+  initializeModel(startingValue: boolean) {
+    const categoryStartingValue = startingValue ? 'checked' : 'unchecked';
+    this.categoryModel = {
+      category: this.category,
+      checkboxState: categoryStartingValue,
+      subcategories: []
+    };
+    this.data.subcategories.forEach(subcategory => {
+      this.categoryModel.subcategories.push({
+        name: subcategory.name,
+        isChecked: startingValue,
+        subcategories: subcategory.subcategories
+      });
     });
   }
 
-  onCategoryChange(category: HTMLInputElement) {
-    console.log('category change', category);
+  onCategoryChange() {
+    const newCheckboxState = this.categoryModel.checkboxState !== 'checked' ? 'checked' : 'unchecked';
+    this.categoryModel.checkboxState = newCheckboxState;
 
-    // TODO: make this toggle all the subcategories' values to be all true or all false at once
-
-    // (ORIGINAL CODE BELOW)
-  //   const subcategories = this.subcategoriesByCategory[category.value];
-  //   const updateToFormModel = this.nestedCheckboxesGroupService.createCategoryAndSubcategoryUpdate(category.value, subcategories, category.checked);
-  //   this.form.patchValue(updateToFormModel);
+    // set all subcategories' checkbox state to match that of the category's new checkbox state
+    const isChecked = newCheckboxState === 'checked' ? true : false;
+    this.categoryModel.subcategories.forEach(subcategory => {
+      subcategory.isChecked = isChecked;
+    });
   }
 
-  onSubcategoryChange(category: HTMLInputElement) {
-    console.log('subcategory change:', category);
+  onSubcategoryChange() {
+    const sum = this.categoryModel.subcategories.reduce((accum, current) => {
+      return current.isChecked ? accum + 1 : accum;
+    }, 0);
 
-    // TODO: make this toggle the indeterminate state of the category checkbox as needed
-
-    // (ORIGINAL CODE BELOW)
-  //   const updateToFormModel = this.nestedCheckboxesGroupService.createCategoryUpdate(this.form, category.value, this.subcategoriesByCategory[category.value]);
-  //   this.form.patchValue(updateToFormModel);
+    if (sum === 0) {
+      this.categoryModel.checkboxState = 'unchecked';
+    }
+    else if (sum === this.categoryModel.subcategories.length) {
+      this.categoryModel.checkboxState = 'checked';
+    }
+    else {
+      this.categoryModel.checkboxState = 'indeterminate';
+    }
   }
 
 }

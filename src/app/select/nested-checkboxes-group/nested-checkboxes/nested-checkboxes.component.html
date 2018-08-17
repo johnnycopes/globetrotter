@@ -1,45 +1,46 @@
 <!-- {{categoryModel | json}} -->
 <main class="category">
   <img class="category__icon"
-    src="assets/icons/{{category}}.svg"
+    src="assets/icons/{{data.name}}.svg"
     [alt]="category"
   />
   <div class="category__icon-cover"
-    *ngIf="!tally[category]"
+    *ngIf="categoryModel.checkboxState === 'unchecked'"
   ></div>
   <section class="category__wrapper">
     <label class="category__checkbox"
       >
       <input class="category__checkbox-input"
-        #categoryInput
-        [id]="category"
-        [value]="category"
+        [id]="data.name"
+        [value]="data.name"
         [indeterminate]="categoryModel.checkboxState === 'indeterminate'"
-        [(ngModel)]="categoryModel.checkboxState"
-        (change)="onCategoryChange(categoryInput)"
+        [checked]="categoryModel.checkboxState === 'checked'"
+        (change)="onCategoryChange()"
         type="checkbox"
       />
       <span class="category__checkbox-element"></span>
       <span class="category__checkbox-label">
-        {{category}}
-        <span class="bold">({{tally[category]}} / {{dataByCategory.length}})</span>
+        {{data.name}}
+        <!-- TODO: figure out a good way to get the total country tally -->
+        <!-- old code: <span class="bold">({{tally[data.name]}} / {{dataByCategory.length}})</span> -->
       </span>
     </label>
     <label class="subcategory__checkbox"
-      *ngFor="let subcategory of subcategories"
+      *ngFor="let subcategory of categoryModel.subcategories"
       >
       <input class="subcategory__checkbox-input"
-        #subcategoryInput
         [id]="subcategory"
         [value]="subcategory"
-        [(ngModel)]="categoryModel.subcategories[subcategory]"
-        (change)="onSubcategoryChange(categoryInput)"
+        [(ngModel)]="subcategory.isChecked"
+        (change)="onSubcategoryChange()"
         type="checkbox"
         />
       <span class="subcategory__checkbox-element"></span>
       <span class="subcategory__checkbox-label">
-        {{subcategory}}
-        <span class="bold">({{dataBySubcategory[subcategory].length}})</span>
+        {{subcategory.name}}
+        <span class="bold">
+          ({{subcategory.subcategories.length}})
+        </span>
       </span>
     </label>
   </section>

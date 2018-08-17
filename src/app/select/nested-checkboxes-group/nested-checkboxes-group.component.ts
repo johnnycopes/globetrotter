@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import * as _ from 'lodash';
 
 import { Tally, FormModelObject } from '../../shared/model/select.interface';
 import { NestedCheckboxesGroupService } from './nested-checkboxes-group.service';
@@ -19,6 +20,7 @@ export class NestedCheckboxesGroupComponent implements OnInit {
   @Input() readonly category: string;
   @Input() readonly subcategory: string;
   @Output() formChanged: EventEmitter<FormInfo> = new EventEmitter<FormInfo>();
+  public newDataByCategory: any; // TODO: rename this
   public dataByCategory: _.Dictionary<any[]>;
   public dataBySubcategory: _.Dictionary<any[]>;
   public subcategoriesByCategory: _.Dictionary<string[]>;
@@ -36,6 +38,10 @@ export class NestedCheckboxesGroupComponent implements OnInit {
     this.subcategoriesByCategory = this.nestedCheckboxesGroupService.groupSubcategoriesByCategory(this.data, this.category, this.subcategory);
     this.categories = Object.keys(this.dataByCategory);
     this.subcategories = Object.keys(this.dataBySubcategory);
+
+    // new! keep this
+    this.initializeData();
+    //
 
     // initialize form/tally
     this.form = this.nestedCheckboxesGroupService.createForm(this.categories, this.subcategories, true);
@@ -78,6 +84,24 @@ export class NestedCheckboxesGroupComponent implements OnInit {
     this.tally = this.nestedCheckboxesGroupService.updateTally(this.form, this.dataBySubcategory, this.subcategoriesByCategory);
   }
 
+  private initializeData() {
+    this.newDataByCategory = [];
+    _.forEach(this.categories, category => {
+      const categoryData = {
+        name: category,
+        subcategories: []
+      };
+      _.forEach(this.subcategoriesByCategory[category], subcategory => {
+        const subcategoryData = {
+          name: subcategory,
+          subcategories: this.dataBySubcategory[subcategory]
+        };
+        categoryData.subcategories.push(subcategoryData);
+      });
+      this.newDataByCategory.push(categoryData);
+    });
+    console.log('new data structure', this.newDataByCategory);
+  }
 }
 
 
