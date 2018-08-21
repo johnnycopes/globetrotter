@@ -1,7 +1,20 @@
 import { Component, OnInit, Input } from '@angular/core';
 import * as _ from 'lodash';
 
-import { Tally } from 'src/app/shared/model/select.interface';
+interface CategoryModel {
+  name: string;
+  checkboxState: string;
+  subcategories: SubcategoryModel[];
+  current: number;
+  total: number;
+}
+
+interface SubcategoryModel {
+  name: string;
+  isChecked: boolean;
+  subcategories: any[];
+  total: number;
+}
 
 @Component({
   selector: 'app-nested-checkboxes',
@@ -9,66 +22,76 @@ import { Tally } from 'src/app/shared/model/select.interface';
   styleUrls: ['./nested-checkboxes.component.scss']
 })
 export class NestedCheckboxesComponent implements OnInit {
-  @Input() category: string;
-  @Input() data: any;
-  @Input() tally: Tally;
-  public categoryModel: any; // TODO: type this
+  @Input() data: any; // TODO: type this
+  @Input() startingValue?: boolean; // Sets all checkboxes to be selected or deselected from the start (default is true)
+  @Input() imagePath?: string; // Displays an image alongside the checkboxes
+  public model: CategoryModel;
 
-  constructor() { }
+  constructor() {
+    this.startingValue = this.startingValue ? this.startingValue : true;
+  }
 
   ngOnInit() {
-    console.group(this.data.name);
-    console.log(this.data);
-    console.groupEnd();
-
-    /*
-    * TODO:
-    * - fix the category (top-level) tally
-    * - make this component responsible for generating/maintaining its own tally
-    */
-    this.initializeModel(true);
+    this.initializeModel(this.startingValue);
   }
 
   initializeModel(startingValue: boolean) {
-    const categoryStartingValue = startingValue ? 'checked' : 'unchecked';
-    this.categoryModel = {
-      category: this.category,
-      checkboxState: categoryStartingValue,
-      subcategories: []
+    this.model = {
+      name: this.data.name,
+      checkboxState: startingValue ? 'checked' : 'unchecked',
+      subcategories: [],
+      current: 0,
+      total: 0
     };
-    this.data.subcategories.forEach(subcategory => {
-      this.categoryModel.subcategories.push({
+    _.forEach(this.data.subcategories, subcategory => {
+      const subcategoryModel: SubcategoryModel = {
         name: subcategory.name,
         isChecked: startingValue,
-        subcategories: subcategory.subcategories
-      });
+        subcategories: subcategory.subcategories,
+        total: subcategory.subcategories.length
+      };
+      this.model.subcategories.push(subcategoryModel);
+      this.model.total += subcategoryModel.subcategories.length;
     });
+    this.model.current = startingValue ? this.model.total : 0;
   }
 
   onCategoryChange() {
-    const newCheckboxState = this.categoryModel.checkboxState !== 'checked' ? 'checked' : 'unchecked';
-    this.categoryModel.checkboxState = newCheckboxState;
+    const newCheckboxState = this.model.checkboxState !== 'checked' ? 'checked' : 'unchecked';
+    this.model.checkboxState = newCheckboxState;
 
     // set all subcategories' checkbox state to match that of the category's new checkbox state
     const isChecked = newCheckboxState === 'checked' ? true : false;
-    this.categoryModel.subcategories.forEach(subcategory => {
+    this.model.subcategories.forEach(subcategory => {
       subcategory.isChecked = isChecked;
     });
+
+    // update the tally
+    this.model.current = isChecked ? this.model.total : 0;
   }
 
-  onSubcategoryChange() {
-    const sum = this.categoryModel.subcategories.reduce((accum, current) => {
+  onSubcategoryChange(subcategory) {
+    // evaluate which subcategories are checked and update the category checkbox state accordingly
+    const sum = _.reduce(this.model.subcategories, (accum, current) => {
       return current.isChecked ? accum + 1 : accum;
     }, 0);
 
     if (sum === 0) {
-      this.categoryModel.checkboxState = 'unchecked';
+      this.model.checkboxState = 'unchecked';
     }
-    else if (sum === this.categoryModel.subcategories.length) {
-      this.categoryModel.checkboxState = 'checked';
+    else if (sum === this.model.subcategories.length) {
+      this.model.checkboxState = 'checked';
     }
     else {
-      this.categoryModel.checkboxState = 'indeterminate';
+      this.model.checkboxState = 'indeterminate';
+    }
+
+    // update the tally
+    if (subcategory.isChecked) {
+      this.model.current += subcategory.total;
+    }
+    else {
+      this.model.current -= subcategory.total;
     }
   }
 

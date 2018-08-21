@@ -31,55 +31,7 @@
     <app-nested-checkboxes class="category"
       *ngFor="let category of newDataByCategory"
       [data]="category"
-      [tally]="tally"
+      imagePath="assets/icons/{{category.name}}.svg"
     ></app-nested-checkboxes>
-
-    <!-- TODO: eventually remove this once the new component is completed -->
-    <div class="category"
-      *ngFor="let category of categories"
-      >
-      <img class="category__icon"
-        src="assets/icons/{{category}}.svg"
-        [alt]="category"
-      />
-      <div class="category__icon-cover"
-        *ngIf="!tally[category]"
-      ></div>
-      <section class="category__wrapper">
-        <label class="category__checkbox"
-          [formGroupName]="category"
-          >
-          <input class="category__checkbox-input"
-            #categoryInput
-            [id]="category"
-            [value]="category"
-            [indeterminate]="form.value[category].indeterminate"
-            (change)="onCategoryChange(categoryInput)"
-            formControlName="checked"
-            type="checkbox"
-          />
-          <span class="category__checkbox-element"></span>
-          <span class="category__checkbox-label">
-            {{category}} <span class="bold">({{tally[category]}} / {{dataByCategory[category].length}})</span>
-          </span>
-        </label>
-        <label class="subcategory__checkbox"
-          *ngFor="let subcategory of subcategoriesByCategory[category]"
-          >
-          <input class="subcategory__checkbox-input"
-            #subcategoryInput
-            [id]="subcategory"
-            [value]="subcategory"
-            [formControlName]="subcategory"
-            (change)="onSubcategoryChange(categoryInput)"
-            type="checkbox"
-            />
-          <span class="subcategory__checkbox-element"></span>
-          <span class="subcategory__checkbox-label">
-            {{subcategory}} <span class="bold">({{dataBySubcategory[subcategory].length}})</span>
-          </span>
-        </label>
-      </section>
-    </div>
   </div>
 </form>

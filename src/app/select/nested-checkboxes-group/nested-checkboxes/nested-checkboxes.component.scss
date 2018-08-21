@@ -10,6 +10,7 @@
   &__icon {
     $icon-height: 15rem;
     height: $icon-height;
+    padding-right: 2rem;
 
     &-cover {
       position: absolute;
@@ -25,7 +26,6 @@
   }
 
   &__wrapper {
-    padding: 0 2rem;
     display: flex;
     flex-direction: column;
   }

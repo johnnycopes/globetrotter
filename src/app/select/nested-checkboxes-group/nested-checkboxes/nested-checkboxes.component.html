@@ -1,45 +1,45 @@
-<!-- {{categoryModel | json}} -->
+<!-- {{model | json}} -->
 <main class="category">
   <img class="category__icon"
-    src="assets/icons/{{data.name}}.svg"
+    *ngIf="imagePath"
+    [src]="imagePath"
     [alt]="category"
   />
   <div class="category__icon-cover"
-    *ngIf="categoryModel.checkboxState === 'unchecked'"
+    *ngIf="imagePath && model.checkboxState === 'unchecked'"
   ></div>
   <section class="category__wrapper">
     <label class="category__checkbox"
       >
       <input class="category__checkbox-input"
-        [id]="data.name"
-        [value]="data.name"
-        [indeterminate]="categoryModel.checkboxState === 'indeterminate'"
-        [checked]="categoryModel.checkboxState === 'checked'"
+        [value]="model.name"
+        [indeterminate]="model.checkboxState === 'indeterminate'"
+        [checked]="model.checkboxState === 'checked'"
         (change)="onCategoryChange()"
         type="checkbox"
       />
       <span class="category__checkbox-element"></span>
       <span class="category__checkbox-label">
-        {{data.name}}
-        <!-- TODO: figure out a good way to get the total country tally -->
-        <!-- old code: <span class="bold">({{tally[data.name]}} / {{dataByCategory.length}})</span> -->
+        {{model.name}}
+        <span class="bold">
+          ({{model.current}} / {{model.total}})
+        </span>
       </span>
     </label>
     <label class="subcategory__checkbox"
-      *ngFor="let subcategory of categoryModel.subcategories"
+      *ngFor="let subcategory of model.subcategories"
       >
       <input class="subcategory__checkbox-input"
-        [id]="subcategory"
         [value]="subcategory"
         [(ngModel)]="subcategory.isChecked"
-        (change)="onSubcategoryChange()"
+        (change)="onSubcategoryChange(subcategory)"
         type="checkbox"
         />
       <span class="subcategory__checkbox-element"></span>
       <span class="subcategory__checkbox-label">
         {{subcategory.name}}
         <span class="bold">
-          ({{subcategory.subcategories.length}})
+          ({{subcategory.total}})
         </span>
       </span>
     </label>
