@@ -1,7 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChange, SimpleChanges } from '@angular/core';
 import * as _ from 'lodash';
 
-interface CategoryModel {
+export interface CategoryModel {
   name: string;
   checkboxState: string;
   subcategories: SubcategoryModel[];
@@ -25,6 +25,7 @@ export class NestedCheckboxesComponent implements OnInit {
   @Input() data: any; // TODO: type this
   @Input() startingValue?: boolean; // Sets all checkboxes to be selected or deselected from the start (default is true)
   @Input() imagePath?: string; // Displays an image alongside the checkboxes
+  @Output() modelChanged: EventEmitter<CategoryModel> = new EventEmitter<CategoryModel>();
   public model: CategoryModel;
 
   constructor() {
@@ -33,6 +34,15 @@ export class NestedCheckboxesComponent implements OnInit {
 
   ngOnInit() {
     this.initializeModel(this.startingValue);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+
+    // TODO: figure out how to get this working properly with select all/clear all binding
+    console.log(changes);
+    if (changes && changes.startingValue && changes.startingValue.currentValue !== null) {
+      this.initializeModel(changes.startingValue.currentValue);
+    }
   }
 
   initializeModel(startingValue: boolean) {
@@ -54,6 +64,8 @@ export class NestedCheckboxesComponent implements OnInit {
       this.model.total += subcategoryModel.subcategories.length;
     });
     this.model.current = startingValue ? this.model.total : 0;
+
+    this.modelChanged.emit(this.model);
   }
 
   onCategoryChange() {
@@ -68,31 +80,26 @@ export class NestedCheckboxesComponent implements OnInit {
 
     // update the tally
     this.model.current = isChecked ? this.model.total : 0;
+
+    this.modelChanged.emit(this.model);
   }
 
-  onSubcategoryChange(subcategory) {
-    // evaluate which subcategories are checked and update the category checkbox state accordingly
-    const sum = _.reduce(this.model.subcategories, (accum, current) => {
-      return current.isChecked ? accum + 1 : accum;
+  onSubcategoryChange() {
+    // evaluate which subcategories are checked, then update both the tally and the category's checkbox state accordingly
+    this.model.current = _.reduce(this.model.subcategories, (accum, current) => {
+      return current.isChecked ? accum + current.total : accum;
     }, 0);
 
-    if (sum === 0) {
+    if (this.model.current === 0) {
       this.model.checkboxState = 'unchecked';
     }
-    else if (sum === this.model.subcategories.length) {
+    else if (this.model.current === this.model.total) {
       this.model.checkboxState = 'checked';
     }
     else {
       this.model.checkboxState = 'indeterminate';
     }
 
-    // update the tally
-    if (subcategory.isChecked) {
-      this.model.current += subcategory.total;
-    }
-    else {
-      this.model.current -= subcategory.total;
-    }
+    this.modelChanged.emit(this.model);
   }
-
 }

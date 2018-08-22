@@ -4,7 +4,7 @@
   <div class="total">
     <div class="total__tally">
       <span class="total__tally-number">
-        {{tally.total}} / {{data.length}}&nbsp;
+        {{model.current}} / {{model.total}}&nbsp;
       </span>
       <span class="total__tally-words">
         possible countries selected.
@@ -31,6 +31,8 @@
     <app-nested-checkboxes class="category"
       *ngFor="let category of newDataByCategory"
       [data]="category"
+      [startingValue]="entireFormSelected"
+      (modelChanged)="updateModel($event)"
       imagePath="assets/icons/{{category.name}}.svg"
     ></app-nested-checkboxes>
   </div>

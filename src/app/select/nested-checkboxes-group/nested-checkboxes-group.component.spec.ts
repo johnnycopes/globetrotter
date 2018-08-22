@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NestedCheckboxesComponent } from './nested-checkboxes.component';
+import { NestedCheckboxesGroupComponent } from './nested-checkboxes-group.component';
 
-describe('NestedCheckboxesComponent', () => {
-  let component: NestedCheckboxesComponent;
-  let fixture: ComponentFixture<NestedCheckboxesComponent>;
+describe('NestedCheckboxesGroupComponent', () => {
+  let component: NestedCheckboxesGroupComponent;
+  let fixture: ComponentFixture<NestedCheckboxesGroupComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NestedCheckboxesComponent ]
+      declarations: [ NestedCheckboxesGroupComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NestedCheckboxesComponent);
+    fixture = TestBed.createComponent(NestedCheckboxesGroupComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
