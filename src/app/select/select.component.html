@@ -19,13 +19,14 @@
   </app-radio-buttons>
   <app-nested-checkboxes-group
     [data]="countries"
-    (formChanged)="onCountriesChange($event)"
+    (modelChanged)="onCountriesChange($event)"
     category="region"
     subcategory="subregion"
     >
   </app-nested-checkboxes-group>
+  <!-- TODO: figure out how to avoid ExpressionChangedAfterItHasBeenCheckedError caused by disabled property binding here -->
   <app-button class="start"
-    [isDisabled]="!countriesTally.total"
+    [isDisabled]="!countriesModel?.current"
     (onClick)="onSubmit()"
     buttonStyle="primary"
     buttonType="submit"

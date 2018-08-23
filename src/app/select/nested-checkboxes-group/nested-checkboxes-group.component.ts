@@ -1,15 +1,14 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChildren, QueryList } from '@angular/core';
 import * as _ from 'lodash';
 
-import { Tally, FormModelObject } from '../../shared/model/select.interface';
 import { NestedCheckboxesGroupService } from './nested-checkboxes-group.service';
-import { CategoryModel } from './nested-checkboxes/nested-checkboxes.component';
+import { CategoryModel, NestedCheckboxesComponent } from './nested-checkboxes/nested-checkboxes.component';
 
-export interface FormInfo {
-  form: FormModelObject;
-  tally: Tally
-};
+interface CategoriesModel {
+  current: number;
+  total: number;
+  categories: _.Dictionary<CategoryModel>;
+}
 
 @Component({
   selector: 'app-nested-checkboxes-group',
@@ -20,29 +19,32 @@ export class NestedCheckboxesGroupComponent implements OnInit {
   @Input() readonly data: any[];
   @Input() readonly category: string;
   @Input() readonly subcategory: string;
-  @Output() formChanged: EventEmitter<FormInfo> = new EventEmitter<FormInfo>();
+  @Output() modelChanged: EventEmitter<any> = new EventEmitter<any>();
+  @ViewChildren(NestedCheckboxesComponent) nestedCheckboxesComponents: QueryList<NestedCheckboxesComponent>
   public dataByCategory: _.Dictionary<any[]>;
   public dataBySubcategory: _.Dictionary<any[]>;
   public subcategoriesByCategory: _.Dictionary<string[]>;
   public categories: string[];
   public subcategories: string[];
-  public form: FormGroup;
-  public tally: Tally;
 
   // new! keep this
   public newDataByCategory: any; // TODO: rename this
-  public model: any = {
-    current: 0,
-    total: 0,
-    categories: {}
-  };
+  public model: CategoriesModel;
   public entireFormSelected: boolean;
 
   constructor(private nestedCheckboxesGroupService: NestedCheckboxesGroupService) {
+    this.initializeModel();
     this.entireFormSelected = true;
   }
 
   ngOnInit() {
+    /**
+     * TODO:
+     * - build the data object (newDataByCategory) outside of this component and pass it in. move all associated
+     * logic outside of this component as well
+     * - remove dependency on nested-checkboxes-group service
+     * - figure out the error of the current count in the select template
+     */
     // organize data
     this.dataByCategory = this.nestedCheckboxesGroupService.groupDataByProperty(this.data, this.category);
     this.dataBySubcategory = this.nestedCheckboxesGroupService.groupDataByProperty(this.data, this.subcategory);
@@ -50,43 +52,20 @@ export class NestedCheckboxesGroupComponent implements OnInit {
     this.categories = Object.keys(this.dataByCategory);
     this.subcategories = Object.keys(this.dataBySubcategory);
 
-    // new! keep this
     this.initializeData();
-    //
-
-    // initialize form/tally
-    this.form = this.nestedCheckboxesGroupService.createForm(this.categories, this.subcategories, true);
-    this.updateTally();
-    this.formChanged.emit({
-      form: this.form.value,
-      tally: this.tally
-    });
-    this.form.valueChanges.subscribe(() => {
-      this.updateTally();
-      this.formChanged.emit({
-        form: this.form.value,
-        tally: this.tally
-      });
-    });
   }
 
   onSelectAll() {
-    this.entireFormSelected = true;
-
-    // OLD CODE
-    // const updatedFormModel = this.nestedCheckboxesGroupService.createForm(this.categories, this.subcategories, true);
-    // this.form.setValue(updatedFormModel.value);
+    this.initializeModel();
+    this.nestedCheckboxesComponents.forEach(instance => instance.initializeModel(true));
   }
 
   onClearAll() {
-    this.entireFormSelected = false;
-
-    // OLD CODE
-    // const updatedFormModel = this.nestedCheckboxesGroupService.createForm(this.categories, this.subcategories, false);
-    // this.form.setValue(updatedFormModel.value);
+    this.initializeModel();
+    this.nestedCheckboxesComponents.forEach(instance => instance.initializeModel(false));
   }
 
-  updateModel(model: CategoryModel) {
+  onModelChange(model: CategoryModel) {
     this.model.categories[model.name] = model;
 
     if (Object.keys(this.model.categories).length === this.newDataByCategory.length) {
@@ -98,12 +77,16 @@ export class NestedCheckboxesGroupComponent implements OnInit {
       this.model.current = tally.current;
       this.model.total = tally.total;
 
-      console.log(this.model);
+      this.modelChanged.emit(this.model);
     }
   }
 
-  private updateTally(): void {
-    this.tally = this.nestedCheckboxesGroupService.updateTally(this.form, this.dataBySubcategory, this.subcategoriesByCategory);
+  private initializeModel() {
+    this.model = {
+      current: 0,
+      total: 0,
+      categories: {}
+    };
   }
 
   private initializeData() {

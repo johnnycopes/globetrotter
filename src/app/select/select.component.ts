@@ -8,8 +8,7 @@ import {
 
 import { Country } from '../shared/model/country.interface';
 import { CountryService } from '../shared/country/country.service';
-import { Selection, Option, Tally } from '../shared/model/select.interface';
-import { FormInfo } from './nested-checkboxes-group/nested-checkboxes-group.component';
+import { Selection, Option } from '../shared/model/select.interface';
 
 @Component({
   selector: 'app-select',
@@ -27,11 +26,10 @@ import { FormInfo } from './nested-checkboxes-group/nested-checkboxes-group.comp
 export class SelectComponent implements OnInit {
   @Output() selectionMade = new EventEmitter<Selection>();
   public selection: Selection = {
-    countriesForm: {},
+    countries: {},
     quantity: 0
   };
   public countries: Country[];
-  public countriesTally: Tally;
   public quantities: Option[];
 
   constructor(private countryService: CountryService) { }
@@ -47,9 +45,8 @@ export class SelectComponent implements OnInit {
     ];
   }
 
-  onCountriesChange(formInfo: FormInfo) {
-    this.selection.countriesForm = formInfo.form;
-    this.countriesTally = formInfo.tally;
+  onCountriesChange(model) {
+    this.selection.countries = model;
   }
 
   onQuantityChange(quantity: number | undefined) {

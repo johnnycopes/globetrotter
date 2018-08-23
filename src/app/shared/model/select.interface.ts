@@ -5,36 +5,8 @@ import { FormGroup } from "@angular/forms";
 // ==================
 
 export interface Selection {
-  countriesForm: FormModelObject;
+  countries: any;
   quantity: OptionValue;
-}
-
-export interface IndeterminateStatus {
-  allSubregionsChecked: boolean;
-  allSubregionsUnchecked: boolean;
-}
-
-
-// ==================
-// SELECT-COUNTRY
-// ==================
-
-export type CountryTally = _.Dictionary<number>;
-export type Tally = _.Dictionary<number>;
-
-export type RegionModel = {
-  checked: boolean | null;
-  indeterminate: boolean;
-}
-
-export type SubregionModel = boolean;
-
-export interface FormModelUpdate {
-  [place: string]: RegionModel | SubregionModel;
-}
-
-export interface FormModelObject {
-  [place: string]: FormGroup | boolean;
 }
 
 

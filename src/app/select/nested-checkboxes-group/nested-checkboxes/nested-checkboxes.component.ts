@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, SimpleChange, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import * as _ from 'lodash';
 
 export interface CategoryModel {
@@ -34,15 +34,6 @@ export class NestedCheckboxesComponent implements OnInit {
 
   ngOnInit() {
     this.initializeModel(this.startingValue);
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-
-    // TODO: figure out how to get this working properly with select all/clear all binding
-    console.log(changes);
-    if (changes && changes.startingValue && changes.startingValue.currentValue !== null) {
-      this.initializeModel(changes.startingValue.currentValue);
-    }
   }
 
   initializeModel(startingValue: boolean) {
