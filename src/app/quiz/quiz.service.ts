@@ -3,7 +3,7 @@ import * as _ from 'lodash';
 
 import { Country } from '../shared/model/country.interface';
 import { Quiz } from '../shared/model/quiz.interface';
-import { Selection } from '../shared/model/select.interface';
+import { Selection } from 'src/app/select/select.component';
 import { CountryClass } from '../shared/country/country.class';
 import { CountryService } from '../shared/country/country.service';
 import { QuizCardComponent } from './quiz-card/quiz-card.component';
@@ -19,7 +19,7 @@ export class QuizService extends CountryClass {
   }
 
   createCountriesList(selection: Selection): Country[] {
-    const countries = selection.countriesForm;
+    const countries = selection.countries;
     const quantity = selection.quantity;
     return _(countries)
       .pickBy((value, key) => {

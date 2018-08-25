@@ -27,11 +27,11 @@
   </div>
   <div class="categories">
     <app-nested-checkboxes class="category"
-      *ngFor="let category of newDataByCategory"
-      [data]="category"
-      [startingValue]="entireFormSelected"
+      *ngFor="let category of categories"
+      [category]="category"
+      [startingValue]="startingValue"
+      imagePath="{{imagePath}}/{{category.name}}.{{imageType}}"
       (modelChanged)="onModelChange($event)"
-      imagePath="assets/icons/{{category.name}}.svg"
     ></app-nested-checkboxes>
   </div>
 </form>

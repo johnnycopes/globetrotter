@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Selection } from './shared/model/select.interface';
+import { Selection } from 'src/app/select/select.component';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +11,7 @@ export class AppComponent {
 
   onSelectionMade(selection: Selection) {
     this.selection = {
-      countriesForm: selection.countriesForm,
+      countries: selection.countries,
       quantity: selection.quantity
     };
     window.scrollTo(0, 0);

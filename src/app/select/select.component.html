@@ -13,25 +13,26 @@
   </div>
   <app-radio-buttons
     [options]="quantities"
-    (formChanged)="onQuantityChange($event)"
     text="Number of countries to include in the quiz:"
+    (modelChanged)="onQuantityChange($event)"
     >
   </app-radio-buttons>
   <app-nested-checkboxes-group
-    [data]="countries"
+    [categories]="countries"
+    [startingValue]="true"
+    imagePath="assets/icons"
+    imageType="svg"
     (modelChanged)="onCountriesChange($event)"
-    category="region"
-    subcategory="subregion"
     >
   </app-nested-checkboxes-group>
   <!-- TODO: figure out how to avoid ExpressionChangedAfterItHasBeenCheckedError caused by disabled property binding here -->
   <app-button class="start"
-    [isDisabled]="!countriesModel?.current"
-    (onClick)="onSubmit()"
+    [isDisabled]="!selection.countries.current"
     buttonStyle="primary"
     buttonType="submit"
     buttonText="Start"
     buttonSize="huge"
+    (onClick)="onSubmit()"
     >
   </app-button>
 </main>

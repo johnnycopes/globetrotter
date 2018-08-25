@@ -10,8 +10,8 @@ import {
 } from '@angular/animations';
 
 import { Country } from '../shared/model/country.interface';
+import { Selection } from 'src/app/select/select.component';
 import { Quiz } from '../shared/model/quiz.interface';
-import { Selection } from '../shared/model/select.interface';
 import { QuizService } from './quiz.service';
 
 @Component({

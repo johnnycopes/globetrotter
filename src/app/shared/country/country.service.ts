@@ -3,6 +3,16 @@ import { COUNTRIES } from '../model/countries.model';
 import { Country } from '../model/country.interface';
 import * as _ from 'lodash';
 
+export interface Region {
+  name: string;
+  subcategories: Subregion[];
+}
+
+interface Subregion {
+  name: string;
+  subcategories: Country[];
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -52,6 +62,25 @@ export class CountryService {
 
   get subregions(): string[] {
     return this._subregions;
+  }
+
+  initializeData(): Region[] {
+    const data = [];
+    _.forEach(this._regions, region => {
+      const regionData = {
+        name: region,
+        subcategories: []
+      };
+      _.forEach(this._subregionsByRegion[region], subregion => {
+        const subregionData = {
+          name: subregion,
+          subcategories: this._countriesBySubregion[subregion]
+        };
+        regionData.subcategories.push(subregionData);
+      });
+      data.push(regionData);
+    });
+    return data;
   }
 
   private groupSubregionsByRegion(): _.Dictionary<string[]> {

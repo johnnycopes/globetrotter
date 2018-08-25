@@ -1,10 +1,14 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChildren, QueryList } from '@angular/core';
 import * as _ from 'lodash';
 
-import { NestedCheckboxesGroupService } from './nested-checkboxes-group.service';
 import { CategoryModel, NestedCheckboxesComponent } from './nested-checkboxes/nested-checkboxes.component';
 
-interface CategoriesModel {
+export interface Category {
+  name: string;
+  subcategories: Category[];
+}
+
+export interface CategoriesModel {
   current: number;
   total: number;
   categories: _.Dictionary<CategoryModel>;
@@ -16,51 +20,30 @@ interface CategoriesModel {
   styleUrls: ['./nested-checkboxes-group.component.scss']
 })
 export class NestedCheckboxesGroupComponent implements OnInit {
-  @Input() readonly data: any[];
-  @Input() readonly category: string;
-  @Input() readonly subcategory: string;
-  @Output() modelChanged: EventEmitter<any> = new EventEmitter<any>();
+  @Input() categories: Category[]; // The data to be iterated over and passed into the individual nested-checkboxes components, which each control their own model
+  @Input() startingValue: boolean; // Sets all checkboxes to be selected or deselected from the start (default is true)
+  @Input() imagePath?: string; // The file path of an image to be displayed next to the nested-checkboxes component up until the name of the file itself (e.g. `assets/icons`)
+  @Input() imageType?: string; // The extension that gets concatenated onto the end of the file path (e.g. `svg`)
+  @Output() modelChanged: EventEmitter<CategoriesModel> = new EventEmitter<CategoriesModel>();
   @ViewChildren(NestedCheckboxesComponent) nestedCheckboxesComponents: QueryList<NestedCheckboxesComponent>
-  public dataByCategory: _.Dictionary<any[]>;
-  public dataBySubcategory: _.Dictionary<any[]>;
-  public subcategoriesByCategory: _.Dictionary<string[]>;
-  public categories: string[];
-  public subcategories: string[];
-
-  // new! keep this
-  public newDataByCategory: any; // TODO: rename this
   public model: CategoriesModel;
-  public entireFormSelected: boolean;
 
-  constructor(private nestedCheckboxesGroupService: NestedCheckboxesGroupService) {
+  constructor() {
     this.initializeModel();
-    this.entireFormSelected = true;
+    this.startingValue = this.startingValue ? this.startingValue : true;
   }
 
   ngOnInit() {
-    /**
-     * TODO:
-     * - build the data object (newDataByCategory) outside of this component and pass it in. move all associated
-     * logic outside of this component as well
-     * - remove dependency on nested-checkboxes-group service
-     * - figure out the error of the current count in the select template
-     */
-    // organize data
-    this.dataByCategory = this.nestedCheckboxesGroupService.groupDataByProperty(this.data, this.category);
-    this.dataBySubcategory = this.nestedCheckboxesGroupService.groupDataByProperty(this.data, this.subcategory);
-    this.subcategoriesByCategory = this.nestedCheckboxesGroupService.groupSubcategoriesByCategory(this.data, this.category, this.subcategory);
-    this.categories = Object.keys(this.dataByCategory);
-    this.subcategories = Object.keys(this.dataBySubcategory);
-
-    this.initializeData();
   }
 
   onSelectAll() {
+    // rebuild the model from scratch and then have each nested-checkboxes component rebuild and submit their own new models
     this.initializeModel();
     this.nestedCheckboxesComponents.forEach(instance => instance.initializeModel(true));
   }
 
   onClearAll() {
+    // rebuild the model from scratch and then have each nested-checkboxes component rebuild and submit their own new models
     this.initializeModel();
     this.nestedCheckboxesComponents.forEach(instance => instance.initializeModel(false));
   }
@@ -68,7 +51,8 @@ export class NestedCheckboxesGroupComponent implements OnInit {
   onModelChange(model: CategoryModel) {
     this.model.categories[model.name] = model;
 
-    if (Object.keys(this.model.categories).length === this.newDataByCategory.length) {
+    // once all models have been sent up from the children components, calculate the tally of currently-selected and total options
+    if (Object.keys(this.model.categories).length === this.categories.length) {
       const tally = _.reduce(this.model.categories, (accum, current) => {
         accum.current += current.current;
         accum.total += current.total;
@@ -88,23 +72,4 @@ export class NestedCheckboxesGroupComponent implements OnInit {
       categories: {}
     };
   }
-
-  private initializeData() {
-    this.newDataByCategory = [];
-    _.forEach(this.categories, category => {
-      const categoryData = {
-        name: category,
-        subcategories: []
-      };
-      _.forEach(this.subcategoriesByCategory[category], subcategory => {
-        const subcategoryData = {
-          name: subcategory,
-          subcategories: this.dataBySubcategory[subcategory]
-        };
-        categoryData.subcategories.push(subcategoryData);
-      });
-      this.newDataByCategory.push(categoryData);
-    });
-  }
-
 }
