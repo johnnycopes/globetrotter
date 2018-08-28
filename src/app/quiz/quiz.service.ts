@@ -19,17 +19,19 @@ export class QuizService extends CountryClass {
   }
 
   createCountriesList(selection: Selection): Country[] {
-    const countries = selection.countries;
+    const countries = [];
     const quantity = selection.quantity;
+    _.forEach(selection.countries.categories, category => {
+      if (category.checkboxState !== 'unchecked') {
+        _.forEach(category.subcategories, subcategory => {
+          if (subcategory.isChecked) {
+            countries.push(subcategory.subcategories);
+          }
+        });
+      }
+    });
     return _(countries)
-      .pickBy((value, key) => {
-        if (value && _.isBoolean(value)) {
-          return key;
-        }
-      })
-      .flatMap((value, key) => {
-        return this.countriesBySubregion[key];
-      })
+      .flatMap()
       .shuffle()
       .slice(0, quantity)
       .value();

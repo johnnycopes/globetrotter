@@ -38,7 +38,6 @@ export class SelectComponent implements OnInit {
     /**
      * TODO:
      * - ask about the constructor vs onInit placement -- where things should go, and if the code below is ok
-     * - restructure this.selection so that the `countries` key only sends over the actual countries, not the tally
      * - address problem in select view (need to use a different lifecycle hook to avoid error? afterViewInit?)
      */
     this.selection = {
