@@ -13,6 +13,8 @@ import { SelectComponent } from './select/select.component';
 import { RadioButtonsComponent } from './select/radio-buttons/radio-buttons.component';
 import { NestedCheckboxesGroupComponent } from './select/nested-checkboxes-group/nested-checkboxes-group.component';
 import { NestedCheckboxesComponent } from './select/nested-checkboxes-group/nested-checkboxes/nested-checkboxes.component';
+import { ParentComponent } from './parent/parent.component';
+import { ChildComponent } from './child/child.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { NestedCheckboxesComponent } from './select/nested-checkboxes-group/nest
     SelectComponent,
     RadioButtonsComponent,
     NestedCheckboxesGroupComponent,
-    NestedCheckboxesComponent
+    NestedCheckboxesComponent,
+    ParentComponent,
+    ChildComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,8 @@
+<p>
+  parent works!
+  My Count is {{count}}.
+  <app-child
+    [text]="myText"
+    (calculated)="onCalculated($event)"
+  ></app-child>
+</p>
