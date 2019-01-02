@@ -8,34 +8,35 @@
     *ngIf="imagePath && model.checkboxState === 'unchecked'"
   ></div>
   <section class="category__wrapper">
-    <label class="category__checkbox"
-      >
-      <input class="category__checkbox-input"
+    <!-- TODO: incorporate the rest of this markup into the app-checkbox component -->
+    <label class="category__checkbox">
+      <app-checkbox
         [value]="model.name"
-        [indeterminate]="model.checkboxState === 'indeterminate'"
-        [checked]="model.checkboxState === 'checked'"
-        (change)="onCategoryChange()"
-        type="checkbox"
-      />
-      <span class="category__checkbox-element"></span>
-      <span class="category__checkbox-label">
+        [state]="model.checkboxState"
+        [invertColors]="true"
+        (changed)="onCategoryChange()"
+      ></app-checkbox>
+      <span class="category__checkbox-label"
+        [ngClass]="{'category__checkbox-label--active': model.checkboxState !== 'unchecked'}"
+        >
         {{model.name}}
         <span class="bold">
           ({{model.current}} / {{model.total}})
         </span>
       </span>
     </label>
+    <!-- TODO: incorporate the rest of this markup into the app-checkbox component -->
     <label class="subcategory__checkbox"
       *ngFor="let subcategory of model.subcategories"
       >
-      <input class="subcategory__checkbox-input"
-        [value]="subcategory"
-        [(ngModel)]="subcategory.isChecked"
-        (change)="onSubcategoryChange(subcategory)"
-        type="checkbox"
-        />
-      <span class="subcategory__checkbox-element"></span>
-      <span class="subcategory__checkbox-label">
+      <app-checkbox
+        [value]="subcategory.name"
+        [state]="subcategory.checkboxState"
+        (changed)="onSubcategoryChange($event, subcategory)"
+      ></app-checkbox>
+      <span class="subcategory__checkbox-label"
+        [ngClass]="{'subcategory__checkbox-label--active': subcategory.checkboxState !== 'unchecked'}"
+        >
         {{subcategory.name}}
         <span class="bold">
           ({{subcategory.total}})

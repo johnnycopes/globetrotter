@@ -19,7 +19,6 @@
   </app-radio-buttons>
   <app-nested-checkboxes-group
     [categories]="countries"
-    [startingValue]="true"
     imagePath="assets/icons"
     imageType="svg"
     (modelChanged)="onCountriesChange($event)"
@@ -32,7 +31,7 @@
     buttonType="submit"
     buttonText="Start"
     buttonSize="huge"
-    (onClick)="onSubmit()"
+    (click)="onSubmit()"
     >
   </app-button>
 </main>

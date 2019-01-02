@@ -21,19 +21,17 @@ export interface CategoriesModel {
 })
 export class NestedCheckboxesGroupComponent implements OnInit {
   @Input() categories: Category[]; // The data to be iterated over and passed into the individual nested-checkboxes components, which each control their own model
-  @Input() startingValue: boolean; // Sets all checkboxes to be selected or deselected from the start (default is true)
+  @Input() startingValue?: boolean = true; // Sets all checkboxes to be selected or deselected from the start
   @Input() imagePath?: string; // The file path of an image to be displayed next to the nested-checkboxes component up until the name of the file itself (e.g. `assets/icons`)
   @Input() imageType?: string; // The extension that gets concatenated onto the end of the file path (e.g. `svg`)
   @Output() modelChanged: EventEmitter<CategoriesModel> = new EventEmitter<CategoriesModel>();
   @ViewChildren(NestedCheckboxesComponent) nestedCheckboxesComponents: QueryList<NestedCheckboxesComponent>
   public model: CategoriesModel;
 
-  constructor() {
-    this.initializeModel();
-    this.startingValue = this.startingValue ? this.startingValue : true;
-  }
+  constructor() { }
 
   ngOnInit() {
+    this.initializeModel();
   }
 
   onSelectAll() {

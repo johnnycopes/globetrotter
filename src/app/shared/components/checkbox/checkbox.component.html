@@ -1,20 +1,12 @@
-<label class="checkbox">
+<label class="checkbox"
+  [ngClass]="{'checkbox--inverted': invertColors}"
+  >
   <input class="checkbox__input"
-    #checkboxInput
-    type="checkbox"
     [value]="value"
-    [indeterminate]="isIndeterminate"
-  />
+    [indeterminate]="state === 'indeterminate'"
+    [checked]="state === 'checked'"
+    (change)="onChange()"
+    type="checkbox"
+    />
   <span class="checkbox__element"></span>
-  <span class="checkbox__label">
-    {{value}}
-    <span class="checkbox__tally">
-      <span *ngIf="tally.current !== undefined">
-        ({{tally.current}} / {{tally.total}})
-      </span>
-      <span *ngIf="tally.current === undefined">
-        ({{tally.total}})
-      </span>
-    </span>
-  </span>
 </label>

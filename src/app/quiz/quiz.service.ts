@@ -24,7 +24,7 @@ export class QuizService extends CountryClass {
     _.forEach(selection.countries.categories, category => {
       if (category.checkboxState !== 'unchecked') {
         _.forEach(category.subcategories, subcategory => {
-          if (subcategory.isChecked) {
+          if (subcategory.checkboxState === 'checked') {
             countries.push(subcategory.subcategories);
           }
         });

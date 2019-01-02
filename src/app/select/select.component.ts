@@ -34,12 +34,10 @@ export class SelectComponent implements OnInit {
   public countries: Region[];
   public quantities: Option[];
 
-  constructor(private countryService: CountryService) {
-    /**
-     * TODO:
-     * - ask about the constructor vs onInit placement -- where things should go, and if the code below is ok
-     * - address problem in select view (need to use a different lifecycle hook to avoid error? afterViewInit?)
-     */
+  constructor(private countryService: CountryService) { }
+
+  ngOnInit() {
+    this.countries = this.countryService.initializeData();
     this.selection = {
       countries: {
         current: 0,
@@ -48,7 +46,6 @@ export class SelectComponent implements OnInit {
       },
       quantity: 0
     };
-    this.countries = this.countryService.initializeData();
     this.quantities = [
       { display: '5', value: 5 },
       { display: '10', value: 10 },
@@ -58,13 +55,8 @@ export class SelectComponent implements OnInit {
     ];
   }
 
-  ngOnInit() {
-    // console.log(this.selection); // this shows up as empty at first (what's set in the constructor)...
-  }
-
   onCountriesChange(model: CategoriesModel) {
     this.selection.countries = model;
-    // console.log(this.selection); // ...and then immediately after, this.selection is correctly populated. Is this OK?
   }
 
   onQuantityChange(quantity: number | undefined) {

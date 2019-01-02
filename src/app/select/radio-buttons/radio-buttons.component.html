@@ -11,7 +11,7 @@
       <input class="option__input"
         [id]="option.display"
         [value]="option.value"
-        (change)="this.modelChanged.emit(model.option)"
+        (change)="onChange(option)"
         [(ngModel)]="model.option"
         type="radio"
         name="option"

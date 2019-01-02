@@ -29,4 +29,8 @@ export class RadioButtonsComponent implements OnInit {
     this.modelChanged.emit(this.model.option);
   }
 
+  onChange(option: Option) {
+    this.modelChanged.emit(option.value);
+  }
+
 }
