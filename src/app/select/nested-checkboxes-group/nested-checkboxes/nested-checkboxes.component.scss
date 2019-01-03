@@ -9,7 +9,8 @@
 
   &__icon {
     $icon-height: 15rem;
-    height: $icon-height;
+    width: $icon-height;
+    // height: $icon-height;
     padding-right: 2rem;
 
     &-cover {
@@ -30,37 +31,17 @@
     flex-direction: column;
   }
 
-  // the <label> of the checkbox becomes the container
   &__checkbox {
     font-weight: 700;
     position: relative;
     margin-bottom: 5px;
-
-    &-label {
-      color: map-get($color, medium);
-
-      &--active {
-        color: map-get($color, lightest);
-      }
-    }
   }
 }
 
-// the <label> of the checkbox becomes the container
 .subcategory {
 
   &__checkbox {
-    position: relative;
 	  margin-bottom: 5px;
     margin-left: 20px;
-
-    &-label {
-      color: map-get($color, medium);
-
-      &--active {
-        color: map-get($color, lightest);
-      }
-    }
   }
-
 }

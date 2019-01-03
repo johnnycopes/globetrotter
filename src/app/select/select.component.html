@@ -19,19 +19,19 @@
   </app-radio-buttons>
   <app-nested-checkboxes-group
     [categories]="countries"
+    [allChecked]="allCountriesSelected"
     imagePath="assets/icons"
     imageType="svg"
     (modelChanged)="onCountriesChange($event)"
     >
   </app-nested-checkboxes-group>
-  <!-- TODO: figure out how to avoid ExpressionChangedAfterItHasBeenCheckedError caused by disabled property binding here -->
   <app-button class="start"
-    [isDisabled]="!selection.countries.current"
     buttonStyle="primary"
     buttonType="submit"
     buttonText="Start"
     buttonSize="huge"
-    (click)="onSubmit()"
+    [disabled]="!canStartQuiz"
+    (clicked)="onSubmit()"
     >
   </app-button>
 </main>

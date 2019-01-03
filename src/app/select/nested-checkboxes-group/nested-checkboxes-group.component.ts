@@ -19,30 +19,26 @@ export interface CategoriesModel {
   templateUrl: './nested-checkboxes-group.component.html',
   styleUrls: ['./nested-checkboxes-group.component.scss']
 })
-export class NestedCheckboxesGroupComponent implements OnInit {
+export class NestedCheckboxesGroupComponent {
   @Input() categories: Category[]; // The data to be iterated over and passed into the individual nested-checkboxes components, which each control their own model
-  @Input() startingValue?: boolean = true; // Sets all checkboxes to be selected or deselected from the start
+  @Input() allChecked?: boolean = true; // Sets all checkboxes to be selected or deselected from the start
   @Input() imagePath?: string; // The file path of an image to be displayed next to the nested-checkboxes component up until the name of the file itself (e.g. `assets/icons`)
   @Input() imageType?: string; // The extension that gets concatenated onto the end of the file path (e.g. `svg`)
   @Output() modelChanged: EventEmitter<CategoriesModel> = new EventEmitter<CategoriesModel>();
   @ViewChildren(NestedCheckboxesComponent) nestedCheckboxesComponents: QueryList<NestedCheckboxesComponent>
-  public model: CategoriesModel;
+  model: CategoriesModel = {
+    current: 0,
+    total: 0,
+    categories: {}
+  };
 
   constructor() { }
 
-  ngOnInit() {
-    this.initializeModel();
-  }
-
   onSelectAll() {
-    // rebuild the model from scratch and then have each nested-checkboxes component rebuild and submit their own new models
-    this.initializeModel();
     this.nestedCheckboxesComponents.forEach(instance => instance.initializeModel(true));
   }
 
   onClearAll() {
-    // rebuild the model from scratch and then have each nested-checkboxes component rebuild and submit their own new models
-    this.initializeModel();
     this.nestedCheckboxesComponents.forEach(instance => instance.initializeModel(false));
   }
 
@@ -61,13 +57,5 @@ export class NestedCheckboxesGroupComponent implements OnInit {
 
       this.modelChanged.emit(this.model);
     }
-  }
-
-  private initializeModel() {
-    this.model = {
-      current: 0,
-      total: 0,
-      categories: {}
-    };
   }
 }

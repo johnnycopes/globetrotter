@@ -25,7 +25,7 @@ interface SubcategoryModel {
 })
 export class NestedCheckboxesComponent implements OnInit {
   @Input() category: Category; // The data used to create the model that two-way binds with the UI
-  @Input() startingValue: boolean; // Sets all checkboxes to be selected or deselected from the start
+  @Input() allChecked: boolean; // Sets all checkboxes to be selected or deselected from the start
   @Input() imagePath?: string; // The file path of an image to be displayed next to the checkboxes
   @Output() modelChanged: EventEmitter<CategoryModel> = new EventEmitter<CategoryModel>();
   public model: CategoryModel;
@@ -33,13 +33,13 @@ export class NestedCheckboxesComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.initializeModel(this.startingValue);
+    this.initializeModel(this.allChecked);
   }
 
-  initializeModel(startingValue: boolean) {
+  initializeModel(allChecked: boolean) {
     this.model = {
       name: this.category.name,
-      checkboxState: startingValue ? 'checked' : 'unchecked',
+      checkboxState: allChecked ? 'checked' : 'unchecked',
       subcategories: [],
       current: 0,
       total: 0
@@ -47,20 +47,19 @@ export class NestedCheckboxesComponent implements OnInit {
     _.forEach(this.category.subcategories, subcategory => {
       const subcategoryModel: SubcategoryModel = {
         name: subcategory.name,
-        checkboxState: startingValue ? 'checked' : 'unchecked',
+        checkboxState: allChecked ? 'checked' : 'unchecked',
         subcategories: subcategory.subcategories,
         total: subcategory.subcategories.length
       };
       this.model.subcategories.push(subcategoryModel);
       this.model.total += subcategoryModel.subcategories.length;
     });
-    this.model.current = startingValue ? this.model.total : 0;
+    this.model.current = allChecked ? this.model.total : 0;
 
     this.modelChanged.emit(this.model);
   }
 
-  onCategoryChange() {
-    const newCheckboxState = this.model.checkboxState !== 'checked' ? 'checked' : 'unchecked';
+  onCategoryChange(newCheckboxState: string) {
     this.model.checkboxState = newCheckboxState;
     this.model.subcategories.forEach(subcategory => {
       subcategory.checkboxState = newCheckboxState;
@@ -73,7 +72,6 @@ export class NestedCheckboxesComponent implements OnInit {
   }
 
   onSubcategoryChange(newCheckboxState: string, subcategory: SubcategoryModel) {
-    // const newCheckboxState = subcategory.checkboxState !== 'checked' ? 'checked' : 'unchecked';
     subcategory.checkboxState = newCheckboxState;
     this.model.current = _.reduce(this.model.subcategories, (accum, current) => {
       return current.checkboxState === 'checked' ? accum + current.total : accum;

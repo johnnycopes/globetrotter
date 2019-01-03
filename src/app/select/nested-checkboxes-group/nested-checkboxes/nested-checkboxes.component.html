@@ -2,46 +2,27 @@
   <img class="category__icon"
     *ngIf="imagePath"
     [src]="imagePath"
-    [alt]="category"
+    alt="{{category}}"
   />
   <div class="category__icon-cover"
     *ngIf="imagePath && model.checkboxState === 'unchecked'"
   ></div>
   <section class="category__wrapper">
-    <!-- TODO: incorporate the rest of this markup into the app-checkbox component -->
-    <label class="category__checkbox">
-      <app-checkbox
-        [value]="model.name"
-        [state]="model.checkboxState"
-        [invertColors]="true"
-        (changed)="onCategoryChange()"
-      ></app-checkbox>
-      <span class="category__checkbox-label"
-        [ngClass]="{'category__checkbox-label--active': model.checkboxState !== 'unchecked'}"
-        >
-        {{model.name}}
-        <span class="bold">
-          ({{model.current}} / {{model.total}})
-        </span>
-      </span>
-    </label>
-    <!-- TODO: incorporate the rest of this markup into the app-checkbox component -->
-    <label class="subcategory__checkbox"
-      *ngFor="let subcategory of model.subcategories"
+    <app-checkbox class="category__checkbox"
+      [invertColors]="true"
+      [value]="model.name"
+      [state]="model.checkboxState"
+      (changed)="onCategoryChange($event)"
       >
-      <app-checkbox
-        [value]="subcategory.name"
-        [state]="subcategory.checkboxState"
-        (changed)="onSubcategoryChange($event, subcategory)"
-      ></app-checkbox>
-      <span class="subcategory__checkbox-label"
-        [ngClass]="{'subcategory__checkbox-label--active': subcategory.checkboxState !== 'unchecked'}"
-        >
-        {{subcategory.name}}
-        <span class="bold">
-          ({{subcategory.total}})
-        </span>
-      </span>
-    </label>
+      {{model.name}} ({{model.current}} / {{model.total}})
+    </app-checkbox>
+    <app-checkbox class="subcategory__checkbox"
+      *ngFor="let subcategory of model.subcategories"
+      [value]="subcategory.name"
+      [state]="subcategory.checkboxState"
+      (changed)="onSubcategoryChange($event, subcategory)"
+      >
+      {{subcategory.name}} ({{subcategory.total}})
+    </app-checkbox>
   </section>
 </main>

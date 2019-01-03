@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, AfterContentInit } from '@angular/core';
 import {
   trigger,
   style,
@@ -29,15 +29,25 @@ export interface Selection {
   ]
 })
 export class SelectComponent implements OnInit {
+  allCountriesSelected = true;
+  canStartQuiz: boolean;
+  selection: Selection;
+  countries: Region[];
+  quantities: Option[];
   @Output() selectionMade: EventEmitter<Selection> = new EventEmitter<Selection>();
-  public selection: Selection;
-  public countries: Region[];
-  public quantities: Option[];
 
   constructor(private countryService: CountryService) { }
 
   ngOnInit() {
+    this.canStartQuiz = this.allCountriesSelected;
     this.countries = this.countryService.initializeData();
+    this.quantities = [
+      { display: '5', value: 5 },
+      { display: '10', value: 10 },
+      { display: '15', value: 15 },
+      { display: '20', value: 20 },
+      { display: 'All', value: undefined }
+    ];
     this.selection = {
       countries: {
         current: 0,
@@ -46,17 +56,11 @@ export class SelectComponent implements OnInit {
       },
       quantity: 0
     };
-    this.quantities = [
-      { display: '5', value: 5 },
-      { display: '10', value: 10 },
-      { display: '15', value: 15 },
-      { display: '20', value: 20 },
-      { display: 'All', value: undefined }
-    ];
   }
 
   onCountriesChange(model: CategoriesModel) {
     this.selection.countries = model;
+    this.canStartQuiz = Boolean(model.current);
   }
 
   onQuantityChange(quantity: number | undefined) {

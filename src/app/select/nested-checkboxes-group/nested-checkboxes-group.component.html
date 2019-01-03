@@ -1,37 +1,35 @@
-<form class="form">
-  <div class="total">
-    <div class="total__tally">
-      <span class="total__tally-number">
-        {{model.current}} / {{model.total}}&nbsp;
-      </span>
-      <span class="total__tally-text">
-        possible countries selected.
-      </span>
-    </div>
-    <div class="buttons">
-      <app-button class="buttons__select-all"
-        buttonStyle="secondary"
-        buttonType="button"
-        buttonText="Select all"
-        (click)="onSelectAll()"
-        >
-      </app-button>
-      <app-button class="buttons__clear-all"
-        buttonStyle="secondary"
-        buttonType="button"
-        buttonText="Clear all"
-        (click)="onClearAll()"
-        >
-      </app-button>
-    </div>
+<div class="total">
+  <div class="total__tally">
+    <span class="total__tally-number">
+      {{model.current}} / {{model.total}}&nbsp;
+    </span>
+    <span class="total__tally-text">
+      possible countries selected.
+    </span>
   </div>
-  <div class="categories">
-    <app-nested-checkboxes class="category"
-      *ngFor="let category of categories"
-      [category]="category"
-      [startingValue]="startingValue"
-      imagePath="{{imagePath}}/{{category.name}}.{{imageType}}"
-      (modelChanged)="onModelChange($event)"
-    ></app-nested-checkboxes>
+  <div class="total__buttons">
+    <app-button class="total__select-all"
+      buttonStyle="secondary"
+      buttonType="button"
+      buttonText="Select all"
+      (click)="onSelectAll()"
+      >
+    </app-button>
+    <app-button class="total__clear-all"
+      buttonStyle="secondary"
+      buttonType="button"
+      buttonText="Clear all"
+      (click)="onClearAll()"
+      >
+    </app-button>
   </div>
-</form>
+</div>
+<div class="categories">
+  <app-nested-checkboxes class="category"
+    *ngFor="let category of categories"
+    [category]="category"
+    [allChecked]="allChecked"
+    imagePath="{{imagePath}}/{{category.name}}.{{imageType}}"
+    (modelChanged)="onModelChange($event)"
+  ></app-nested-checkboxes>
+</div>
