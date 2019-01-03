@@ -10,14 +10,8 @@
     />
   <span class="checkbox__element"></span>
   <span class="checkbox__label"
-    [ngClass]="{'checkbox-label--active': checkboxState !== 'unchecked'}"
+    [ngClass]="{'checkbox-label--active': state !== 'unchecked'}"
     >
     <ng-content></ng-content>
   </span>
 </label>
-
-
-<!-- {{subcategory.name}}
-<span class="bold">
-  ({{subcategory.total}})
-</span> -->
