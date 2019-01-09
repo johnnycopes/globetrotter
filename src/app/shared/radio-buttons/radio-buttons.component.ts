@@ -1,14 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
-export type OptionValue = number | undefined;
-
-export interface Option {
+export interface RadioButtonsOption {
   display: string;
-  value: OptionValue;
-}
-
-export interface OptionModel {
-  option: OptionValue;
+  value: number | string | boolean | undefined;
 }
 
 @Component({
@@ -17,20 +11,21 @@ export interface OptionModel {
   styleUrls: ['./radio-buttons.component.scss']
 })
 export class RadioButtonsComponent implements OnInit {
-  @Input() options: Option[];
+  @Input() options: RadioButtonsOption[];
   @Input() text: string;
-  @Output() modelChanged: EventEmitter<number> = new EventEmitter<number>();
-  public model: OptionModel;
+  @Output() modelChanged: EventEmitter<RadioButtonsOption> = new EventEmitter<RadioButtonsOption>();
+  public model: RadioButtonsOption;
 
   constructor() { }
 
   ngOnInit() {
-    this.model = { option: this.options[0].value };
-    this.modelChanged.emit(this.model.option);
+    this.model = this.options[0];
+    this.modelChanged.emit(this.model);
   }
 
-  onChange(option: Option) {
-    this.modelChanged.emit(option.value);
+  onChange(option: RadioButtonsOption) {
+    this.model = option;
+    this.modelChanged.emit(this.model);
   }
 
 }

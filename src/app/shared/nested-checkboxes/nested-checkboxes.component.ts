@@ -1,7 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import * as _ from 'lodash';
 
-import { Category } from '../nested-checkboxes-group.component';
+export interface Category {
+  name: string;
+  subcategories: Category[];
+}
 
 export interface CategoryModel {
   name: string;
@@ -24,7 +27,7 @@ interface SubcategoryModel {
   styleUrls: ['./nested-checkboxes.component.scss']
 })
 export class NestedCheckboxesComponent implements OnInit {
-  @Input() category: Category; // The data used to create the model that two-way binds with the UI
+  @Input() category: Category; // The data used to populate the component create the model
   @Input() allChecked: boolean; // Sets all checkboxes to be selected or deselected from the start
   @Input() imagePath?: string; // The file path of an image to be displayed next to the checkboxes
   @Output() modelChanged: EventEmitter<CategoryModel> = new EventEmitter<CategoryModel>();
@@ -64,8 +67,6 @@ export class NestedCheckboxesComponent implements OnInit {
     this.model.subcategories.forEach(subcategory => {
       subcategory.checkboxState = newCheckboxState;
     });
-
-    // update the tally
     this.model.current = this.model.checkboxState === 'checked' ? this.model.total : 0;
 
     this.modelChanged.emit(this.model);

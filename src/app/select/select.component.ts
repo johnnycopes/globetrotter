@@ -8,11 +8,11 @@ import {
 
 import { CountryService, Region } from 'src/app/country/country.service';
 import { CategoriesModel } from 'src/app/shared/nested-checkboxes-group/nested-checkboxes-group.component';
-import { OptionValue, Option } from 'src/app/shared/radio-buttons/radio-buttons.component';
+import { RadioButtonsOption } from 'src/app/shared/radio-buttons/radio-buttons.component';
 
 export interface Selection {
   countries: CategoriesModel;
-  quantity: OptionValue;
+  quantity: number;
 }
 
 @Component({
@@ -33,7 +33,7 @@ export class SelectComponent implements OnInit {
   canStartQuiz: boolean;
   selection: Selection;
   countries: Region[];
-  quantities: Option[];
+  quantities: RadioButtonsOption[];
   @Output() selectionMade: EventEmitter<Selection> = new EventEmitter<Selection>();
 
   constructor(private countryService: CountryService) { }
@@ -63,8 +63,10 @@ export class SelectComponent implements OnInit {
     this.canStartQuiz = Boolean(model.current);
   }
 
-  onQuantityChange(quantity: number | undefined) {
-    this.selection.quantity = quantity;
+  onQuantityChange(option: RadioButtonsOption) {
+    if (typeof option.value === 'number' || typeof option.value === 'undefined') {
+      this.selection.quantity = option.value;
+    }
   }
 
   onSubmit() {

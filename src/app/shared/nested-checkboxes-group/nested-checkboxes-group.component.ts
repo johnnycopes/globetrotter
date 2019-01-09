@@ -1,12 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChildren, QueryList } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChildren, QueryList } from '@angular/core';
 import * as _ from 'lodash';
 
-import { CategoryModel, NestedCheckboxesComponent } from './nested-checkboxes/nested-checkboxes.component';
-
-export interface Category {
-  name: string;
-  subcategories: Category[];
-}
+import { Category, CategoryModel, NestedCheckboxesComponent } from '../nested-checkboxes/nested-checkboxes.component';
 
 export interface CategoriesModel {
   current: number;
