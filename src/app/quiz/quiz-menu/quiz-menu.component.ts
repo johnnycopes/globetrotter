@@ -7,7 +7,7 @@ import {
   transition
 } from '@angular/animations';
 
-import { Country } from '../../shared/model/country.interface';
+import { Country } from 'src/app/model/country.interface';
 
 @Component({
   selector: 'app-quiz-menu',

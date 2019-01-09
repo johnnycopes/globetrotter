@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
 
-import { Country } from '../shared/model/country.interface';
-import { Quiz } from '../shared/model/quiz.interface';
+import { Country } from 'src/app/model/country.interface';
+import { Quiz } from 'src/app/model/quiz.interface';
 import { Selection } from 'src/app/select/select.component';
-import { CountryClass } from '../shared/country/country.class';
-import { CountryService } from '../shared/country/country.service';
+import { CountryClass } from 'src/app/country/country.class';
+import { CountryService } from 'src/app/country/country.service';
 import { QuizCardComponent } from './quiz-card/quiz-card.component';
 
 @Injectable({

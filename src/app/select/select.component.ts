@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, AfterContentInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import {
   trigger,
   style,
@@ -6,9 +6,9 @@ import {
   transition
 } from '@angular/animations';
 
-import { CountryService, Region } from '../shared/country/country.service';
-import { CategoriesModel } from './nested-checkboxes-group/nested-checkboxes-group.component';
-import { OptionValue, Option } from './radio-buttons/radio-buttons.component';
+import { CountryService, Region } from 'src/app/country/country.service';
+import { CategoriesModel } from 'src/app/shared/nested-checkboxes-group/nested-checkboxes-group.component';
+import { OptionValue, Option } from 'src/app/shared/radio-buttons/radio-buttons.component';
 
 export interface Selection {
   countries: CategoriesModel;
