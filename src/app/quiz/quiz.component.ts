@@ -27,7 +27,7 @@ import { QuizService } from './quiz.service';
     trigger('fadeIn', [
       transition(':enter', [
         style({ opacity: '0' }),
-        animate('300ms ease-in', style({ opacity: '1' }))
+        animate('400ms 600ms ease-in-out', style({ opacity: '1' }))
       ])
     ])
   ]

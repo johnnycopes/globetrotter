@@ -31,9 +31,9 @@ $z-index: (
 
 $border: (
   thin: 2px,
-  medium: 6px,
+  medium: 8px,
   thick: 20px
 );
 
 $border-radius: 2px;
-$border-width: map-get($spacing, 8);
+$header-height: map-get($spacing, 128);

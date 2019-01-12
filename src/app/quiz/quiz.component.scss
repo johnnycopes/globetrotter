@@ -1,7 +1,17 @@
-.quiz__cards {
-  display: grid;
-  justify-content: center;
-  grid-template-columns: repeat(auto-fill, 300px);
-  grid-auto-rows: 300px;
-  grid-gap: 1rem;
+@import 'styles';
+
+.quiz {
+  min-height: 100vh;
+
+  &__cards {
+    $grid-gap: map-get($spacing, 12);
+
+    margin-top: calc(#{$header-height} + #{$grid-gap});
+    margin-bottom: calc((#{$header-height} / 2) + #{$grid-gap});
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(auto-fill, 300px);
+    grid-auto-rows: 300px;
+    grid-gap: $grid-gap;
+  }
 }

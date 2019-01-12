@@ -1,8 +1,8 @@
 @import 'styles';
 
 .button {
-  padding: 15px 25px;
-  min-width: 10rem;
+  padding: map-get($spacing, 16) 0;
+  width: map-get($spacing, 192);
   border: none;
   text-decoration: none;
   color: map-get($color,  darkest);
@@ -30,11 +30,6 @@
     &:hover {
       background: lighten(map-get($color, darkest), 10%);
     }
-  }
-
-  &--huge {
-    padding: 3rem 8rem;
-    font-size: map-get($font-size, header);
   }
 
   &:disabled {

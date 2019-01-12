@@ -1,6 +1,9 @@
 @import 'styles';
 
 .select {
+  padding: map-get($spacing, 48) 0;
+  max-width: 1200px;
+  margin: 0 auto;
 
   &__form {
     margin-bottom: map-get($spacing, 64);

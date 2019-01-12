@@ -29,7 +29,7 @@
   &__line {
     width: map-get($spacing, 256);
     border: none;
-    border-top: $border-width double map-get($color, dark);
+    border-top: map-get($border, medium) double map-get($color, dark);
     color: map-get($color, dark);
     margin: map-get($spacing, 48) auto;
     position: relative;

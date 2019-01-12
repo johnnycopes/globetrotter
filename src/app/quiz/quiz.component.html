@@ -1,17 +1,19 @@
-<app-quiz-menu class="quiz__menu"
-  [countries]="quiz.countries"
-  [currentIndex]="quiz.currentIndex"
-  [guess]="quiz.guess"
-  [accuracy]="quiz.accuracy"
-></app-quiz-menu>
-<main class="quiz__cards"
-  @stagger
-  >
-  <app-quiz-card class="quiz__card"
-    *ngFor="let country of countries"
-    [country]="country"
-    [canFlip]="quiz.canFlip"
-    @fadeIn
+<main class="quiz">
+  <app-quiz-menu
+    [countries]="quiz.countries"
+    [currentIndex]="quiz.currentIndex"
+    [guess]="quiz.guess"
+    [accuracy]="quiz.accuracy"
+  ></app-quiz-menu>
+  <div class="quiz__cards"
+    @stagger
     >
-  </app-quiz-card>
+    <app-quiz-card
+      *ngFor="let country of countries"
+      [country]="country"
+      [canFlip]="quiz.canFlip"
+      @fadeIn
+      >
+    </app-quiz-card>
+  </div>
 </main>

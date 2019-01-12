@@ -21,13 +21,13 @@ import { Country } from 'src/app/model/country.interface';
       })),
       state('header', style({
         opacity: 1,
-        transform: 'translateY(-90vh)'
+        transform: 'translateY(calc(-100vh + 128px))' // TODO: set the header height dynamically using HostListener
       })),
       state('fullscreen', style({
         opacity: 1,
         transform: 'translateY(0)'
       })),
-      transition('* => *', animate('400ms ease-in'))
+      transition('* => *', animate('500ms ease-in-out'))
     ])
   ]
 })

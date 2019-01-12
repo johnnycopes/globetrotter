@@ -3,21 +3,21 @@
   >
   <div class="quiz-menu__wrapper">
     <article class="quiz-menu__outcome">
-      <span class="quiz-menu__outcome-text">
+      <p class="quiz-menu__outcome-text">
         Quiz complete! You scored
-      </span>
+      </p>
       <h1 class="quiz-menu__outcome-accuracy">
         {{accuracy}}%
       </h1>
     </article>
     <nav class="quiz-menu__progress">
-      <h4 class="quiz-menu__item quiz-menu__tally">
+      <h4 class="quiz-menu__tally">
         {{currentIndex}} / {{countries.length}}
       </h4>
-      <p class="quiz-menu__item quiz-menu__prompt">
+      <p class="quiz-menu__prompt">
         {{countries[currentIndex]?.name}}
       </p>
-      <h4 class="quiz-menu__item quiz-menu__guess">
+      <h4 class="quiz-menu__guess">
         Guess #{{guess}}
       </h4>
     </nav>
