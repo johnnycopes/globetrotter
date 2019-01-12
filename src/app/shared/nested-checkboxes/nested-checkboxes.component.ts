@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import * as _ from 'lodash';
+import { Country } from 'src/app/model/country.interface';
 
 export interface Category {
   name: string;
@@ -9,7 +10,7 @@ export interface Category {
 export interface CategoryModel {
   name: string;
   checkboxState: string;
-  subcategories: SubcategoryModel[];
+  subcategories: SubcategoryModel[]; // how can I make this CategoryModel[] when the model does need to transmit the array of countries at the bottom level of the model to the quiz component?
   current: number;
   total: number;
 }
@@ -17,7 +18,7 @@ export interface CategoryModel {
 interface SubcategoryModel {
   name: string;
   checkboxState: string;
-  subcategories: any[];
+  subcategories: Category[]; // why does this fail when I try to type it as Country[]?
   total: number;
 }
 
@@ -54,6 +55,7 @@ export class NestedCheckboxesComponent implements OnInit {
         subcategories: subcategory.subcategories,
         total: subcategory.subcategories.length
       };
+      console.log(subcategoryModel);
       this.model.subcategories.push(subcategoryModel);
       this.model.total += subcategoryModel.subcategories.length;
     });

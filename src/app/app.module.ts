@@ -9,6 +9,7 @@ import { QuizComponent } from './quiz/quiz.component';
 import { QuizCardComponent } from './quiz/quiz-card/quiz-card.component';
 import { QuizMenuComponent } from './quiz/quiz-menu/quiz-menu.component';
 import { SelectComponent } from './select/select.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { SelectComponent } from './select/select.component';
     QuizCardComponent,
     QuizMenuComponent,
     SelectComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,

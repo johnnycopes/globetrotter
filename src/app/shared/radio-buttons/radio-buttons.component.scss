@@ -1,13 +1,9 @@
-@import 'variables';
-
-form {
-  margin: 40px 0 80px;
-}
+@import 'styles';
 
 .text {
   text-align: center;
-  margin-bottom: 40px;
-  font-size: map-get($font-size, header);
+  margin-bottom: map-get($spacing, 48);
+  font-size: map-get($font-size, 36);
 }
 
 .options {
@@ -16,8 +12,8 @@ form {
 }
 
 .option {
-  width: 15rem;
-  height: 15rem;
+  width: map-get($spacing, 128);
+  height: map-get($spacing, 128);
 
   &__input {
     display: none;
@@ -31,7 +27,7 @@ form {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: map-get($font-size, header);
+    font-size: map-get($font-size, 36);
     border: map-get($border, thin) solid map-get($color, medium);
     color: map-get($color, medium);
     transition: map-get($transition, fast);
@@ -42,6 +38,6 @@ form {
   &__input:checked + .option__label {
     color: map-get($color, lightest);
     border: map-get($border, medium) solid map-get($color, lightest);
-    font-weight: 700;
+    font-weight: map-get($font-weight, bold);
   }
 }

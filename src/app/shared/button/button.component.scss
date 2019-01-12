@@ -1,4 +1,4 @@
-@import 'variables';
+@import 'styles';
 
 .button {
   padding: 15px 25px;
@@ -7,8 +7,8 @@
   text-decoration: none;
   color: map-get($color,  darkest);
   background: map-get($color, lightest);
-  font: $sans-serif;
-  font-size: map-get($font-size, button);
+  font-family: $font-stack;
+  font-size: map-get($font-size, 24);
   border-radius: $border-radius;
   outline: none;
   cursor: pointer;

@@ -1,22 +1,21 @@
-@import 'variables';
+@import 'styles';
 
 .category {
   display: flex;
   flex: 0 1 50%;
   align-items: center;
-  padding: 2rem 0;
+  padding: map-get($spacing, 16) 0;
   position: relative;
 
   &__icon {
-    $icon-height: 15rem;
-    width: $icon-height;
-    // height: $icon-height;
+    $icon-size: map-get($spacing, 192);
+    width: $icon-size;
     padding-right: 2rem;
 
     &-cover {
       position: absolute;
-      width: $icon-height;
-      height: $icon-height;
+      width: $icon-size;
+      height: $icon-size;
       transform: translateY(-50%);
       top: 50%;
       left: 0;
@@ -32,16 +31,16 @@
   }
 
   &__checkbox {
-    font-weight: 700;
+    font-weight: map-get($font-weight, bold);
     position: relative;
-    margin-bottom: 5px;
+    margin-bottom: map-get($spacing, 4);
   }
 }
 
 .subcategory {
 
   &__checkbox {
-	  margin-bottom: 5px;
-    margin-left: 20px;
+	  margin-bottom: map-get($spacing, 4);
+    margin-left: map-get($spacing, 24);
   }
 }

@@ -1,0 +1,44 @@
+@import 'styles';
+
+:host {
+  text-align: center;
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.header {
+  font-size: map-get($font-size, 128);
+  text-align: center;
+  margin-bottom: map-get($spacing, 48);
+}
+
+.divider {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: map-get($spacing, 96);
+
+  &__line {
+    width: map-get($spacing, 256);
+    border: none;
+    border-top: $border-width double map-get($color, dark);
+    color: map-get($color, dark);
+    margin: map-get($spacing, 48) auto;
+    position: relative;
+  }
+
+  &__icon {
+    position: absolute;
+    background: map-get($color, darkest);
+    width: map-get($spacing, 128);
+    padding: 0 map-get($spacing, 12);
+  }
+}

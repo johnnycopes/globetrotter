@@ -1,38 +1,10 @@
-@import 'variables';
+@import 'styles';
 
 .select {
-  max-width: 1200px;
+  max-width: 1000px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-}
-
-.header {
-  font-size: map-get($font-size, app-name);
-  text-align: center;
-}
-
-.divider {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  &__line {
-    width: 25rem;
-    border: none;
-    border-top: 6px double map-get($color, dark);
-    color: map-get($color, dark);
-    margin: 8rem auto;
-    position: relative;
-  }
-
-  &__icon {
-    position: absolute;
-    background: map-get($color, darkest);
-    width: 8rem;
-    padding: 1rem;
-  }
 }
 
 .start {

@@ -1,5 +1,7 @@
-@import 'variables';
-@import 'mixins';
+@import 'typography';
+@import 'colors';
+@import 'layout';
+@import 'animations';
 
 *,
 *::before,
@@ -7,17 +9,57 @@
 	box-sizing: border-box;
 }
 
-html {
-  font-size: 10px;
-}
+// html {
+//   font-size: 10px;
+// }
 
 body {
   color: map-get($color, lightest);
   background: map-get($color, darkest);
-  font-family: $sans-serif;
-	font-size: map-get($font-size, normal);
+  font-family: $font-stack;
+	font-size: map-get($font-size, 30);
 	font-weight: 300;
-  line-height: 1;
+  line-height: map-get($line-height, 1.5);
   min-height: 100vh;
 	position: relative;
 }
+
+// *,
+// *::before,
+// *::after {
+//   box-sizing: border-box;
+// }
+
+// body {
+//   font-family: $font-stack;
+//   font-size: map-get($font-size, 16);
+//   color: map-get($font-color, dark);
+//   line-height: map-get($line-height, normal);
+//   min-height: 100vh;
+// }
+
+// a {
+//   text-decoration: none;
+//   color: map-get($font-color, dark);
+//   transition: $fast-transition;
+//   text-decoration: underline;
+
+//   &:hover {
+//     background: $blue;
+//     color: map-get($font-color, white);
+//     text-decoration: none;
+//     border-radius: $border-radius;
+//   }
+// }
+
+// code {
+//   display: inline-block;
+//   font-family: monospace;
+//   background: $light-gray;
+//   border-radius: $border-radius;
+//   padding: map-get($spacing, 4);
+// }
+
+// em {
+//   font-style: italic;
+// }

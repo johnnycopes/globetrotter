@@ -1,28 +1,27 @@
-@import 'variables';
+@import 'styles';
 
 .form {
   display: grid;
-  margin: 40px 0 80px;
 }
 
 .total {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: map-get($spacing, 24);
 
   &__tally {
     display: flex;
     align-items: center;
+    font-size: map-get($font-size, 36);
 
     &-number {
-      font-size: map-get($font-size, header);
-      font-weight: 700;
+      font-weight: map-get($font-weight, bold);
     }
   }
 
   &__select-all {
-    margin-right: 10px;
+    margin-right: map-get($spacing, 32);
   }
 }
 

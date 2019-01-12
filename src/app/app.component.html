@@ -8,10 +8,13 @@
     />
   </nav>
   <div class="app__content">
-    <app-select *ngIf="!selection"
+    <app-home *ngIf="!started"
+      (started)="onStart($event)"
+    ></app-home>
+    <app-select *ngIf="started && !selection"
       (selectionMade)="onSelectionMade($event)"
     ></app-select>
-    <app-quiz *ngIf="selection"
+    <app-quiz *ngIf="started && selection"
       [selection]="selection"
     ></app-quiz>
   </div>

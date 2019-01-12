@@ -7,7 +7,12 @@ import { Selection } from 'src/app/select/select.component';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  started = false;
   selection: Selection;
+
+  onStart() {
+    this.started = true;
+  }
 
   onSelectionMade(selection: Selection) {
     this.selection = {
