@@ -1,17 +1,22 @@
-<h1 class="header">
-  Globetrotter
-</h1>
-<div class="divider">
-  <hr class="divider__line">
-  <img class="divider__icon"
-    src="assets/icons/Globetrotter.svg"
-    alt="Globetrotter logo"
-  />
-</div>
-<app-button class="start"
-  buttonStyle="primary"
-  buttonType="submit"
-  buttonText="Start"
-  (clicked)="onStart()"
+<main class="home"
+  @fadeIn
   >
-</app-button>
+  <h1 class="title">
+    Globetrotter
+  </h1>
+  <div class="divider">
+    <hr class="divider__line">
+    <img class="divider__icon"
+      src="assets/icons/Globetrotter.svg"
+      alt="Globetrotter logo"
+    />
+  </div>
+  <app-button class="start"
+    buttonStyle="primary"
+    buttonType="submit"
+    buttonText="Start"
+    (clicked)="onStart()"
+    >
+  </app-button>
+</main>
+

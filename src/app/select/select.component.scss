@@ -1,13 +1,12 @@
 @import 'styles';
 
 .select {
-  max-width: 1000px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-}
 
-.start {
-  align-self: center;
-  margin: 4rem 0 8rem;
+  &__form {
+    margin-bottom: map-get($spacing, 64);
+  }
+
+  &__button {
+    text-align: center;
+  }
 }

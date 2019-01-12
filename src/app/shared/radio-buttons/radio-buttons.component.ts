@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 export interface RadioButtonsOption {
   display: string;
-  value: number | string | boolean | undefined;
+  value: number | undefined;
 }
 
 @Component({
@@ -23,8 +23,7 @@ export class RadioButtonsComponent implements OnInit {
     this.modelChanged.emit(this.model);
   }
 
-  onChange(option: RadioButtonsOption) {
-    this.model = option;
+  onChange() {
     this.modelChanged.emit(this.model);
   }
 

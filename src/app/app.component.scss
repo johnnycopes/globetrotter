@@ -4,7 +4,7 @@
 
   &__nav {
     position: fixed;
-    left: 2rem;
+    left: map-get($spacing, 24);
     top: 50%;
     writing-mode: vertical-lr;
     // transform: rotate(180deg) translateY(50%); // for words
@@ -12,15 +12,19 @@
     cursor: pointer;
 
     &-home {
-      width: map-get($spacing, 30);
+      width: map-get($spacing, 32);
     }
   }
 
 
   &__content {
     margin: 0 auto;
-    max-width: 1550px;
+    padding: map-get($spacing, 48);
     width: 90%;
-    padding: 15vh 0 5vh;
+    max-width: 1200px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 }

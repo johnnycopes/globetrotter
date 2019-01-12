@@ -5,6 +5,7 @@ import {
   animate,
   transition
 } from '@angular/animations';
+import * as _ from 'lodash';
 
 import { CountryService, Region } from 'src/app/country/country.service';
 import { CategoriesModel } from 'src/app/shared/nested-checkboxes-group/nested-checkboxes-group.component';
@@ -12,7 +13,7 @@ import { RadioButtonsOption } from 'src/app/shared/radio-buttons/radio-buttons.c
 
 export interface Selection {
   countries: CategoriesModel;
-  quantity: number;
+  quantity: number | undefined;
 }
 
 @Component({
@@ -29,12 +30,14 @@ export interface Selection {
   ]
 })
 export class SelectComponent implements OnInit {
+  @Output() selectionMade: EventEmitter<Selection> = new EventEmitter<Selection>();
   allCountriesSelected = true;
   canStartQuiz: boolean;
   selection: Selection;
   countries: Region[];
   quantities: RadioButtonsOption[];
-  @Output() selectionMade: EventEmitter<Selection> = new EventEmitter<Selection>();
+  buttonText = 'Next'
+  currentStage = 1;
 
   constructor(private countryService: CountryService) { }
 
@@ -64,12 +67,16 @@ export class SelectComponent implements OnInit {
   }
 
   onQuantityChange(option: RadioButtonsOption) {
-    if (typeof option.value === 'number' || typeof option.value === 'undefined') {
-      this.selection.quantity = option.value;
-    }
+    this.selection.quantity = option.value;
   }
 
   onSubmit() {
-    this.selectionMade.emit(this.selection);
+    this.currentStage++;
+    if (this.currentStage === 2) {
+      this.buttonText = 'Start';
+    }
+    else if (this.currentStage === 3) {
+      this.selectionMade.emit(this.selection);
+    }
   }
 }

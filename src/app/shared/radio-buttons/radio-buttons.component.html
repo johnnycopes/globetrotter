@@ -10,9 +10,9 @@
       >
       <input class="option__input"
         [id]="option.display"
-        [value]="option.value"
-        (change)="onChange(option)"
-        [(ngModel)]="model.option"
+        [value]="option"
+        (change)="onChange()"
+        [(ngModel)]="model"
         type="radio"
         name="option"
         />

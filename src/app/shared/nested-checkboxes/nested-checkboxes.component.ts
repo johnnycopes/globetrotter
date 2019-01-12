@@ -55,7 +55,6 @@ export class NestedCheckboxesComponent implements OnInit {
         subcategories: subcategory.subcategories,
         total: subcategory.subcategories.length
       };
-      console.log(subcategoryModel);
       this.model.subcategories.push(subcategoryModel);
       this.model.total += subcategoryModel.subcategories.length;
     });

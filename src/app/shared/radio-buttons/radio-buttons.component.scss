@@ -27,7 +27,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: map-get($font-size, 36);
+    font-size: map-get($font-size, 30);
     border: map-get($border, thin) solid map-get($color, medium);
     color: map-get($color, medium);
     transition: map-get($transition, fast);

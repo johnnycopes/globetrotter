@@ -1,5 +1,9 @@
 @import 'styles';
 
+span, label {
+  display: inline-block;
+}
+
 // the <label> element of the checkbox is used as the container
 .checkbox {
   position: relative;
@@ -8,11 +12,10 @@
   // create a custom checkbox
   &__element {
     position: absolute;
-    top: 50%;
+    top: 6px;
     left: 0;
     height: 20px;
     width: 20px;
-    transform: translateY(-50%);
     border: map-get($border, thin) solid map-get($color, medium);
     user-select: none;
     border-radius: $border-radius;
