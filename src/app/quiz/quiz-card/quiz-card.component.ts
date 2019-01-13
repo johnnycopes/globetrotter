@@ -1,86 +1,55 @@
-import { Component, OnInit, Input } from '@angular/core';
-import {
-  trigger,
-  state,
-  style,
-  animate,
-  transition
-} from '@angular/animations';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 
 import { Country } from 'src/app/model/country.interface';
 import { QuizService } from '../quiz.service';
+import { FlipCardComponent } from 'src/app/shared/flip-card/flip-card.component';
 
 @Component({
   selector: 'app-quiz-card',
   templateUrl: './quiz-card.component.html',
-  styleUrls: ['./quiz-card.component.scss'],
-  animations: [
-    trigger('flip', [
-      state('front', style({
-        transform: 'rotateY(0)'
-      })),
-      state('back', style({
-        transform: 'rotateY(180deg)'
-      })),
-      transition('front => back', animate('300ms ease-in')),
-      transition('back => front', animate('300ms ease-out'))
-    ]),
-    trigger('play', [
-      state('disabled', style({
-        filter: 'grayscale(100%)'
-      })),
-      transition('* => disabled', animate('300ms ease-in'))
-    ]),
-    trigger('guess', [
-      state('none', style({
-        border: 'none',
-        padding: '20px'
-      })),
-      state('correct', style({
-        border: '20px solid limegreen',
-        padding: '0'
-      })),
-      state('incorrect', style({
-        border: '20px solid crimson',
-        padding: '0'
-      })),
-      transition('* => *', animate('300ms ease-in'))
-    ])
-  ]
+  styleUrls: ['./quiz-card.component.scss']
 })
-export class QuizCardComponent implements OnInit {
+export class QuizCardComponent {
   @Input() country: Country;
   @Input() canFlip: boolean;
-  public playState: string;
-  public guessState: string;
-  public flipState: string;
+  @Output() flipped = new EventEmitter<boolean>();
+  @ViewChild(FlipCardComponent)
+  private flipCardComponent: FlipCardComponent;
+  guess: string;
+  disabled: boolean;
 
   constructor(private quizService: QuizService) { }
 
-  ngOnInit() {
-    this.flipState = 'front';
+  onFlip() {
+    // prevent all cards from being flipped
+    this.flipped.emit(true);
+
+    // evaluate guess and pass it to the card after it finishes its flip animation
+    const correctGuess = this.quizService.evaluateGuess(this.country);
+    const correctGuessString = correctGuess ? 'correct' : 'incorrect';
+    setTimeout(() => this.guess = correctGuessString, 300);
+
+    // flip the card back over and clear guess animation
+    setTimeout(() => {
+      this.flipCardComponent.flip();
+      this.guess = '';
+    }, 1500);
+
+    // disable card if correct guess, update quiz, and allow all cards to be flipped
+    setTimeout(() => {
+      if (correctGuess) {
+        this.disabled = true;
+         // delay updates to allow disabled animation time to finish
+        setTimeout(() => this.updateQuiz(correctGuess), 300);
+      }
+      else {
+        this.updateQuiz(correctGuess);
+      }
+    }, 1800);
   }
 
-  onClick() {
-    if (this.canFlip && this.playState !== 'disabled') {
-      this.flip();
-      this.quizService.evaluateCard(this);
-    }
+  private updateQuiz(correctGuess: boolean) {
+    this.quizService.updateQuiz(correctGuess);
+    this.flipped.emit(false);
   }
-
-  flip() {
-    this.flipState = this.flipState === 'front' ? 'back' : 'front';
-  }
-
-  guess(guess: string) {
-    this.guessState = guess;
-  }
-
-  handleGuess() {
-    if (this.guessState === 'correct') {
-      this.playState = 'disabled';
-    }
-    this.guess('none');
-  }
-
 }

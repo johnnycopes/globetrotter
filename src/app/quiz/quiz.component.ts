@@ -36,12 +36,17 @@ export class QuizComponent implements OnInit {
   @Input() selection: Selection;
   countries: Country[];
   quiz: Quiz;
+  canFlipCards = true;
 
   constructor(private quizService: QuizService) { }
 
   ngOnInit() {
     this.initializeCountries();
     this.initializeQuiz();
+  }
+
+  onFlip(cardFlipped: boolean) {
+    this.canFlipCards = !cardFlipped;
   }
 
   private initializeCountries() {

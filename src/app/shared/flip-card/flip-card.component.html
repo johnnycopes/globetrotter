@@ -1,0 +1,16 @@
+<div class="flip-card"
+  [@flip]="side"
+  (click)="onClick()"
+  >
+  <div class="flip-card__side flip-card__front"
+    [@disabled]="disabled ? 'disabled' : ''"
+    >
+    <ng-content select="app-flip-card-front"></ng-content>
+  </div>
+  <div class="flip-card__side flip-card__back"
+    [@disabled]="disabled ? 'disabled' : ''"
+    [@guess]="guess"
+    >
+    <ng-content select="app-flip-card-back"></ng-content>
+  </div>
+</div>

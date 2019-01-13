@@ -6,7 +6,6 @@ import { Quiz } from 'src/app/model/quiz.interface';
 import { Selection } from 'src/app/select/select.component';
 import { CountryClass } from 'src/app/country/country.class';
 import { CountryService } from 'src/app/country/country.service';
-import { QuizCardComponent } from './quiz-card/quiz-card.component';
 
 @Injectable({
   providedIn: 'root'
@@ -47,38 +46,28 @@ export class QuizService extends CountryClass {
     };
   }
 
-  evaluateCard(card: QuizCardComponent): void {
-    this.quiz.canFlip = false;
-    const cardCountry = card.country.name;
-    const currentCountry = this.quiz.countries[this.quiz.currentIndex].name;
-    const guess = cardCountry === currentCountry ? 'correct' : 'incorrect';
-    setTimeout(() => card.guess(guess), 300);
-    setTimeout(() => card.flip(), 1500);
-    setTimeout(() => {
-      card.handleGuess();
-      if (guess === 'correct') {
-        setTimeout(() => this.updateQuiz(), 300);
-      }
-      else if (guess === 'incorrect') {
-        this.incrementGuesses();
-      }
-    }, 1800);
+  evaluateGuess(country: Country) {
+    const guessedCountry = country;
+    const currentCountry = this.quiz.countries[this.quiz.currentIndex];
+    return guessedCountry === currentCountry;
   }
 
-  updateQuiz(): void {
-    this.quiz.currentIndex++;
-    if (this.quiz.currentIndex === this.quiz.countries.length) {
-      // if all cards have been guessed, calculate the user's score and display it
-      this.quiz.accuracy = Math.round((this.quiz.countries.length / this.quiz.guess) * 100);
+  updateQuiz(correctGuess: boolean): void {
+    let addGuess = true;
+    if (correctGuess) {
+      this.quiz.currentIndex++;
+      if (this.quiz.currentIndex === this.quiz.countries.length) {
+        // if all cards have been guessed, calculate the user's score and display it. do not increment the guess counter
+        addGuess = false;
+        this.quiz.accuracy = Math.round((this.quiz.countries.length / this.quiz.guess) * 100);
+      }
     }
-    else {
-      this.incrementGuesses();
+    this.incrementGuessCount(addGuess);
+  }
+
+  private incrementGuessCount(shouldIncrement: boolean) {
+    if (shouldIncrement) {
+      this.quiz.guess++;
     }
   }
-
-  private incrementGuesses(): void {
-    this.quiz.guess++
-    this.quiz.canFlip = true;
-  }
-
 }

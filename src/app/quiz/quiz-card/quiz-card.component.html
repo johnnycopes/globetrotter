@@ -1,18 +1,18 @@
-<div class="quiz-card"
-  [@flip]="flipState"
-  (click)="onClick()"
+<app-flip-card
+  [canFlip]="canFlip"
+  [guess]="guess"
+  [disabled]="disabled"
+  (flipped)="onFlip()"
   >
-  <div class="quiz-card__side quiz-card__front"
-    [@play]="playState"
-    >
+  <app-flip-card-front>
     <img class="quiz-card__flag"
       [src]="country.flag"
       alt="Flag of {{country.name}}"
     />
-  </div>
-  <div class="quiz-card__side quiz-card__back"
-    [@guess]="guessState"
-    >
-    <h3 class="quiz-card__country">{{country.name}}</h3>
-  </div>
-</div>
+  </app-flip-card-front>
+  <app-flip-card-back>
+    <h3 class="quiz-card__country">
+      {{country.name}}
+    </h3>
+  </app-flip-card-back>
+</app-flip-card>

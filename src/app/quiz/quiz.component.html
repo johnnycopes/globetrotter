@@ -11,7 +11,8 @@
     <app-quiz-card
       *ngFor="let country of countries"
       [country]="country"
-      [canFlip]="quiz.canFlip"
+      [canFlip]="canFlipCards"
+      (flipped)="onFlip($event)"
       @fadeIn
       >
     </app-quiz-card>

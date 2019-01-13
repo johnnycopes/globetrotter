@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 
 import { ButtonComponent } from './button/button.component';
 import { CheckboxComponent } from './checkbox/checkbox.component';
+import { FlipCardComponent } from './flip-card/flip-card.component';
 import { NestedCheckboxesComponent } from './nested-checkboxes/nested-checkboxes.component';
 import { NestedCheckboxesGroupComponent } from './nested-checkboxes-group/nested-checkboxes-group.component';
 import { RadioButtonsComponent } from './radio-buttons/radio-buttons.component';
@@ -16,16 +17,18 @@ import { RadioButtonsComponent } from './radio-buttons/radio-buttons.component';
   declarations: [
     ButtonComponent,
     CheckboxComponent,
+    FlipCardComponent,
     NestedCheckboxesComponent,
     NestedCheckboxesGroupComponent,
-    RadioButtonsComponent
+    RadioButtonsComponent,
   ],
   exports: [
     ButtonComponent,
     CheckboxComponent,
+    FlipCardComponent,
     NestedCheckboxesComponent,
     NestedCheckboxesGroupComponent,
     RadioButtonsComponent
-  ]
+  ],
 })
 export class SharedModule { }
