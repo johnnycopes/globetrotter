@@ -1,0 +1,9 @@
+$breakpoints: (
+  large-desktop: 1200px
+);
+
+@mixin large-desktop {
+  @media (min-width: #{map-get($breakpoints, large-desktop)}) {
+    @content;
+  }
+}

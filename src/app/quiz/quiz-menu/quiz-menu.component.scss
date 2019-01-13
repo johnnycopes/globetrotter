@@ -14,7 +14,7 @@
   transform: translateY(-100vh);
 
   &__wrapper {
-    max-width: 1200px;
+    max-width: map-get($breakpoints, large-desktop);
     width: 90%;
     margin: 0 auto;
   }
