@@ -30,10 +30,14 @@ $z-index: (
 );
 
 $border: (
+  radius: 2px,
   thin: 2px,
   medium: 8px,
   thick: 20px
 );
 
-$border-radius: 2px;
-$header-height: map-get($spacing, 128);
+$app: (
+  header-height: map-get($spacing, 128),
+  quiz-card-width: 300px,
+  quiz-cards-grid-gap: 12px
+);

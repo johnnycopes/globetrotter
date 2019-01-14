@@ -23,6 +23,7 @@ export class AppComponent {
   }
 
   reset() {
+    this.started = false;
     this.selection = null;
   }
 }

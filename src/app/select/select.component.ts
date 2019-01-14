@@ -30,7 +30,7 @@ export interface Selection {
   ]
 })
 export class SelectComponent implements OnInit {
-  @Output() selectionMade: EventEmitter<Selection> = new EventEmitter<Selection>();
+  @Output() selectionMade = new EventEmitter<Selection>();
   allCountriesSelected = true;
   canStartQuiz: boolean;
   selection: Selection;

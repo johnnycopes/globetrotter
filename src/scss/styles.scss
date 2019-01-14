@@ -49,7 +49,7 @@ body {
 //     background: $blue;
 //     color: map-get($font-color, white);
 //     text-decoration: none;
-//     border-radius: $border-radius;
+//     border-radius: map-get($border, radius);
 //   }
 // }
 
@@ -57,7 +57,7 @@ body {
 //   display: inline-block;
 //   font-family: monospace;
 //   background: $light-gray;
-//   border-radius: $border-radius;
+//   border-radius: map-get($border, radius);
 //   padding: map-get($spacing, 4);
 // }
 

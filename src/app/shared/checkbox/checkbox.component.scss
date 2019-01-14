@@ -18,7 +18,7 @@ span, label {
     width: 20px;
     border: map-get($border, thin) solid map-get($color, medium);
     user-select: none;
-    border-radius: $border-radius;
+    border-radius: map-get($border, radius);
 
     // create a custom checkmark
     &::after {

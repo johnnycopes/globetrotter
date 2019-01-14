@@ -9,7 +9,7 @@
   background: map-get($color, lightest);
   font-family: $font-stack;
   font-size: map-get($font-size, 24);
-  border-radius: $border-radius;
+  border-radius: map-get($border, radius);
   outline: none;
   cursor: pointer;
 

@@ -24,7 +24,7 @@
     cursor: pointer;
     user-select: none;
     padding: map-get($border, thick);
-    border-radius: $border-radius;
+    border-radius: map-get($border, radius);
     text-align: center;
   }
 
