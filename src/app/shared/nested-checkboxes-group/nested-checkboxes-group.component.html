@@ -27,7 +27,7 @@
 <div class="categories">
   <app-nested-checkboxes class="category"
     *ngFor="let category of categories"
-    [category]="category"
+    [region]="category"
     [allChecked]="allChecked"
     imagePath="{{imagePath}}/{{category.name}}.{{imageType}}"
     (modelChanged)="onModelChange($event)"

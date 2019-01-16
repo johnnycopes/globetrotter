@@ -2,24 +2,51 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import * as _ from 'lodash';
 import { Country } from 'src/app/model/country.interface';
 
-export interface Category {
-  name: string;
-  subcategories: Category[];
-}
+// export interface Category {
+//   name: string;
+//   subcategories: Category[];
+// }
 
-export interface CategoryModel {
-  name: string;
+
+
+
+
+// export interface CategoryModel {
+//   name: string;
+//   checkboxState: string;
+//   subcategories: SubcategoryModel[]; // how can I make this CategoryModel[] when the model does need to transmit the array of countries at the bottom level of the model to the quiz component?
+//   current: number;
+//   total: number;
+// }
+
+// interface SubcategoryModel {
+//   name: string;
+//   checkboxState: string;
+//   subcategories: Country[]; // why does this fail when I try to type it as Country[]?
+//   total: number;
+// }
+
+// Extra state for each region/subregion object:
+// * checkboxState
+// * current
+// * total
+
+interface CheckboxUIState {
   checkboxState: string;
-  subcategories: SubcategoryModel[]; // how can I make this CategoryModel[] when the model does need to transmit the array of countries at the bottom level of the model to the quiz component?
-  current: number;
+  current?: number;
   total: number;
 }
 
-interface SubcategoryModel {
+type CheckboxUIStates = _.Dictionary<CheckboxUIState>;
+
+interface Region {
   name: string;
-  checkboxState: string;
-  subcategories: Category[]; // why does this fail when I try to type it as Country[]?
-  total: number;
+  subcategories: Subregion[];
+}
+
+interface Subregion {
+  name: string;
+  subcategories: Country[];
 }
 
 @Component({
@@ -28,11 +55,11 @@ interface SubcategoryModel {
   styleUrls: ['./nested-checkboxes.component.scss']
 })
 export class NestedCheckboxesComponent implements OnInit {
-  @Input() category: Category; // The data used to populate the component create the model
+  @Input() region: Region; // The data used to populate the component create the model
   @Input() allChecked: boolean; // Sets all checkboxes to be selected or deselected from the start
   @Input() imagePath?: string; // The file path of an image to be displayed next to the checkboxes
-  @Output() modelChanged: EventEmitter<CategoryModel> = new EventEmitter<CategoryModel>();
-  public model: CategoryModel;
+  @Output() modelChanged= new EventEmitter<_.Dictionary<CheckboxUIState>>();
+  public checkboxUIStates: _.Dictionary<CheckboxUIState> = {};
 
   constructor() { }
 
@@ -41,54 +68,76 @@ export class NestedCheckboxesComponent implements OnInit {
   }
 
   initializeModel(allChecked: boolean) {
-    this.model = {
-      name: this.category.name,
+    const regionCheckboxUIState = this.checkboxUIStates[this.region.name] = {
       checkboxState: allChecked ? 'checked' : 'unchecked',
-      subcategories: [],
       current: 0,
       total: 0
     };
-    _.forEach(this.category.subcategories, subcategory => {
-      const subcategoryModel: SubcategoryModel = {
-        name: subcategory.name,
+    _.forEach(this.region.subcategories, (subregion: Subregion) => {
+      this.checkboxUIStates[subregion.name] = {
         checkboxState: allChecked ? 'checked' : 'unchecked',
-        subcategories: subcategory.subcategories,
-        total: subcategory.subcategories.length
+        total: subregion.subcategories.length
       };
-      this.model.subcategories.push(subcategoryModel);
-      this.model.total += subcategoryModel.subcategories.length;
+      regionCheckboxUIState.total += subregion.subcategories.length;
     });
-    this.model.current = allChecked ? this.model.total : 0;
+    regionCheckboxUIState.current = allChecked ? regionCheckboxUIState.total : 0;
 
-    this.modelChanged.emit(this.model);
+    // this.model = {
+    //   name: this.category.name,
+    //   checkboxState: allChecked ? 'checked' : 'unchecked',
+    //   subcategories: [],
+    //   current: 0,
+    //   total: 0
+    // };
+    // _.forEach(this.category.subcategories, (subcategory) => {
+    //   const subcategoryModel: SubcategoryModel = {
+    //     name: subcategory.name,
+    //     checkboxState: allChecked ? 'checked' : 'unchecked',
+    //     subcategories: subcategory.subcategories,
+    //     total: subcategory.subcategories.length
+    //   };
+    //   this.model.subcategories.push(subcategoryModel);
+    //   this.model.total += subcategoryModel.subcategories.length;
+    // });
+    // this.model.current = allChecked ? this.model.total : 0;
+
+    this.modelChanged.emit(this.checkboxUIStates);
   }
 
   onCategoryChange(newCheckboxState: string) {
-    this.model.checkboxState = newCheckboxState;
-    this.model.subcategories.forEach(subcategory => {
-      subcategory.checkboxState = newCheckboxState;
+    const checkboxUIState = this.checkboxUIStates[this.region.name];
+    checkboxUIState.checkboxState = newCheckboxState;
+    this.region.subcategories.forEach(subregion => {
+      this.checkboxUIStates[subregion.name].checkboxState = newCheckboxState;
     });
-    this.model.current = this.model.checkboxState === 'checked' ? this.model.total : 0;
+    checkboxUIState.current = checkboxUIState.checkboxState === 'checked' ? checkboxUIState.total : 0;
 
-    this.modelChanged.emit(this.model);
+    this.modelChanged.emit(this.checkboxUIStates);
   }
 
-  onSubcategoryChange(newCheckboxState: string, subcategory: SubcategoryModel) {
-    subcategory.checkboxState = newCheckboxState;
-    this.model.current = _.reduce(this.model.subcategories, (accum, current) => {
-      return current.checkboxState === 'checked' ? accum + current.total : accum;
+  onSubcategoryChange(newCheckboxState: string, subregion: Subregion) {
+    const regionCheckboxUIState = this.checkboxUIStates[this.region.name];
+    const subregionCheckboxUIState = this.checkboxUIStates[subregion.name];
+    subregionCheckboxUIState.checkboxState = newCheckboxState;
+    regionCheckboxUIState.current = _.reduce(this.region.subcategories, (accum, current) => {
+      const subregionCheckboxUIState = this.checkboxUIStates[current.name];
+      return subregionCheckboxUIState.checkboxState === 'checked' ? accum + subregionCheckboxUIState.total : accum;
     }, 0);
 
-    if (this.model.current === 0) {
-      this.model.checkboxState = 'unchecked';
+    if (regionCheckboxUIState.current === 0) {
+      regionCheckboxUIState.checkboxState = 'unchecked';
     }
-    else if (this.model.current === this.model.total) {
-      this.model.checkboxState = 'checked';
+    else if (regionCheckboxUIState.current === regionCheckboxUIState.total) {
+      regionCheckboxUIState.checkboxState = 'checked';
     }
     else {
-      this.model.checkboxState = 'indeterminate';
+      regionCheckboxUIState.checkboxState = 'indeterminate';
     }
 
-    this.modelChanged.emit(this.model);
+    this.modelChanged.emit(this.checkboxUIStates);
+  }
+
+  lookup(place: Region | Subregion): CheckboxUIState {
+    return this.checkboxUIStates[place.name];
   }
 }
