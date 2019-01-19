@@ -8,11 +8,11 @@ import {
 import * as _ from 'lodash';
 
 import { CountryService, Region } from 'src/app/country/country.service';
-import { CategoriesModel } from 'src/app/shared/nested-checkboxes-group/nested-checkboxes-group.component';
+import { RegionsModel } from 'src/app/shared/nested-checkboxes-group/nested-checkboxes-group.component';
 import { RadioButtonsOption } from 'src/app/shared/radio-buttons/radio-buttons.component';
 
 export interface Selection {
-  countries: CategoriesModel;
+  countries: RegionsModel;
   quantity: number | undefined;
 }
 
@@ -34,7 +34,7 @@ export class SelectComponent implements OnInit {
   allCountriesSelected = true;
   canStartQuiz: boolean;
   selection: Selection;
-  countries: Region[];
+  regions: Region[];
   quantities: RadioButtonsOption[];
   buttonText = 'Next'
   currentStage = 1;
@@ -43,7 +43,7 @@ export class SelectComponent implements OnInit {
 
   ngOnInit() {
     this.canStartQuiz = this.allCountriesSelected;
-    this.countries = this.countryService.initializeData();
+    this.regions = this.countryService.initializeData();
     this.quantities = [
       { display: '5', value: 5 },
       { display: '10', value: 10 },
@@ -55,13 +55,13 @@ export class SelectComponent implements OnInit {
       countries: {
         current: 0,
         total: 0,
-        categories: {}
+        regions: {}
       },
       quantity: 0
     };
   }
 
-  onCountriesChange(model: CategoriesModel) {
+  onCountriesChange(model: RegionsModel) {
     this.selection.countries = model;
     this.canStartQuiz = Boolean(model.current);
   }

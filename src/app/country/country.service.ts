@@ -5,12 +5,12 @@ import * as _ from 'lodash';
 
 export interface Region {
   name: string;
-  subcategories: Subregion[];
+  subregions: Subregion[];
 }
 
-interface Subregion {
+export interface Subregion {
   name: string;
-  subcategories: Country[];
+  countries: Country[];
 }
 
 @Injectable({
@@ -69,14 +69,14 @@ export class CountryService {
     _.forEach(this._regions, region => {
       const regionData = {
         name: region,
-        subcategories: []
+        subregions: []
       };
       _.forEach(this._subregionsByRegion[region], subregion => {
         const subregionData = {
           name: subregion,
-          subcategories: this._countriesBySubregion[subregion]
+          countries: this._countriesBySubregion[subregion]
         };
-        regionData.subcategories.push(subregionData);
+        regionData.subregions.push(subregionData);
       });
       data.push(regionData);
     });

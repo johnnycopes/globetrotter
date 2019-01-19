@@ -20,11 +20,11 @@ export class QuizService extends CountryClass {
   createCountriesList(selection: Selection): Country[] {
     const countries = [];
     const quantity = selection.quantity;
-    _.forEach(selection.countries.categories, category => {
-      if (category.checkboxState !== 'unchecked') {
-        _.forEach(category.subcategories, subcategory => {
-          if (subcategory.checkboxState === 'checked') {
-            countries.push(subcategory.subcategories);
+    _.forEach(selection.countries.regions, region => {
+      if (region.checkboxState !== 'unchecked') {
+        _.forEach(region.subregions, subregion => {
+          if (subregion.checkboxState === 'checked') {
+            countries.push(this.countriesBySubregion[subregion.name]);
           }
         });
       }

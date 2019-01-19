@@ -1,6 +1,6 @@
 @import 'styles';
 
-.category {
+.region {
   display: flex;
   flex: 0 1 50%;
   align-items: center;
@@ -42,7 +42,7 @@
   }
 }
 
-.subcategory {
+.subregion {
 
   &__checkbox {
 	  margin-bottom: map-get($spacing, 4);

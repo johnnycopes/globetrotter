@@ -1,26 +1,26 @@
-<main class="category">
-  <img class="category__icon"
+<main class="region">
+  <img class="region__icon"
     *ngIf="imagePath"
     [src]="imagePath"
     alt="{{region.name}}"
   />
-  <div class="category__icon-cover"
-    *ngIf="imagePath && lookup(region).checkboxState === 'unchecked'"
+  <div class="region__icon-cover"
+    *ngIf="imagePath && regionModel.checkboxState === 'unchecked'"
   ></div>
-  <section class="category__wrapper">
-    <app-checkbox class="category__checkbox"
+  <section class="region__wrapper">
+    <app-checkbox class="region__checkbox"
       [invertColors]="true"
       [value]="region.name"
-      [state]="lookup(region).checkboxState"
-      (changed)="onCategoryChange($event)"
+      [state]="regionModel.checkboxState"
+      (changed)="onRegionChange($event)"
       >
-      {{region.name}} ({{lookup(region).current}} / {{lookup(region).total}})
+      {{region.name}} ({{regionModel.current}} / {{regionModel.total}})
     </app-checkbox>
-    <app-checkbox class="subcategory__checkbox"
-      *ngFor="let subregion of region.subcategories"
+    <app-checkbox class="subregion__checkbox"
+      *ngFor="let subregion of region.subregions"
       [value]="subregion.name"
       [state]="lookup(subregion).checkboxState"
-      (changed)="onSubcategoryChange($event, subregion)"
+      (changed)="onSubregionChange($event, subregion)"
       >
       {{subregion.name}} ({{lookup(subregion).total}})
     </app-checkbox>

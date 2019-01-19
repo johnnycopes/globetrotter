@@ -24,12 +24,12 @@
     </app-button>
   </div>
 </div>
-<div class="categories">
-  <app-nested-checkboxes class="category"
-    *ngFor="let category of categories"
-    [region]="category"
+<div class="regions">
+  <app-nested-checkboxes class="region"
+    *ngFor="let region of regions"
+    [region]="region"
     [allChecked]="allChecked"
-    imagePath="{{imagePath}}/{{category.name}}.{{imageType}}"
+    imagePath="{{imagePath}}/{{region.name}}.{{imageType}}"
     (modelChanged)="onModelChange($event)"
   ></app-nested-checkboxes>
 </div>
