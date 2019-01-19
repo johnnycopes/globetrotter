@@ -26,8 +26,8 @@
       push it down so the content of the outcome section sits perfectly in
       the center of the screen
     */
-    height: calc(100vh - #{map-get($app, header-height)});
-    padding-top: map-get($app, header-height);
+    height: calc(100vh - #{map-get($app, quiz-header-height)});
+    padding-top: map-get($app, quiz-header-height);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -44,7 +44,7 @@
   }
 
   &__progress {
-    height: map-get($app, header-height);
+    height: map-get($app, quiz-header-height);
     width: 100%;
     display: flex;
     justify-content: space-between;

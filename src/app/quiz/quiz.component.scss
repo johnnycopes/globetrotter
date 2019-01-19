@@ -1,13 +1,14 @@
 @import 'styles';
 
+$header: map-get($app, quiz-header-height);
+$grid-gap: map-get($app, quiz-cards-grid-gap);
+
 .quiz {
-  min-height: 100vh;
+  min-height: calc(100vh - (#{$header} + #{$grid-gap}));
 
   &__cards {
-    $grid-gap: map-get($spacing, 12);
-
-    margin-top: calc(#{map-get($app, header-height)} + #{$grid-gap});
-    margin-bottom: calc((#{map-get($app, header-height)} / 2) + #{$grid-gap});
+    margin-top: calc(#{$header} + #{$grid-gap});
+    padding-bottom: calc((#{$header} / 2) + #{$grid-gap});
     display: grid;
     justify-content: center;
     grid-template-columns: repeat(auto-fill, 300px);

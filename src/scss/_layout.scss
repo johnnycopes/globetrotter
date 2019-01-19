@@ -37,7 +37,7 @@ $border: (
 );
 
 $app: (
-  header-height: map-get($spacing, 128),
+  quiz-header-height: map-get($spacing, 128),
   quiz-card-width: 300px,
   quiz-cards-grid-gap: 12px
 );

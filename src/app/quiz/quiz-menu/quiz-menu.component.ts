@@ -6,6 +6,7 @@ import {
   state,
   transition
 } from '@angular/animations';
+import * as _ from 'lodash';
 
 import { Country } from 'src/app/model/country.interface';
 
@@ -31,25 +32,21 @@ import { Country } from 'src/app/model/country.interface';
     ])
   ]
 })
-export class QuizMenuComponent implements OnInit, OnChanges {
+export class QuizMenuComponent implements OnChanges {
   @Input() countries: Country[];
   @Input() currentIndex: number;
   @Input() guess: number;
   @Input() accuracy: number;
-  public positionState: string;
+  position: string;
 
   constructor() { }
 
-  ngOnInit() {
-  }
-
   ngOnChanges(changes: SimpleChanges) {
-    // TODO: improve/reconsider these animations
-    if (changes.countries && changes.countries.firstChange) {
-      this.positionState = 'header';
+    if (_.get(changes, 'countries.firstChange')) {
+      this.position = 'header';
     }
-    else if (changes.accuracy && typeof changes.accuracy.currentValue === 'number') {
-      this.positionState = 'fullscreen';
+    else if (_.get(changes, 'accuracy.currentValue')) {
+      this.position = 'fullscreen';
     }
   }
 

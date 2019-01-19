@@ -1,5 +1,5 @@
 <main class="quiz-menu"
-  [@position]="positionState"
+  [@position]="position"
   >
   <div class="quiz-menu__wrapper">
     <article class="quiz-menu__outcome">
@@ -11,15 +11,20 @@
       </h1>
     </article>
     <nav class="quiz-menu__progress">
-      <h4 class="quiz-menu__tally">
-        {{currentIndex}} / {{countries.length}}
-      </h4>
-      <p class="quiz-menu__prompt">
-        {{countries[currentIndex]?.name}}
-      </p>
-      <h4 class="quiz-menu__guess">
-        Guess #{{guess}}
-      </h4>
+      <ng-container *ngIf="!accuracy">
+        <h4 class="quiz-menu__tally">
+          {{currentIndex}} / {{countries.length}}
+        </h4>
+        <p class="quiz-menu__prompt">
+          {{countries[currentIndex]?.name}}
+        </p>
+        <h4 class="quiz-menu__guess">
+          Guess #{{guess}}
+        </h4>
+      </ng-container>
+      <ng-container *ngIf="accuracy">
+        <!-- Home/reset buttons can go here -->
+      </ng-container>
     </nav>
   </div>
 </main>
