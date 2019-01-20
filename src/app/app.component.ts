@@ -12,14 +12,14 @@ import { Subscription } from 'rxjs';
 export class AppComponent implements OnInit, OnDestroy {
   started = false;
   selection: Selection;
-  noScroll = false;
+  quizCompleted = false;
   quizCompletedSubscription: Subscription;
 
   constructor(private quizService: QuizService) { }
 
   ngOnInit() {
     this.quizCompletedSubscription = this.quizService.quizCompleted.subscribe(
-      () => this.noScroll = true
+      () => this.quizCompleted = true
     );
   }
 
@@ -38,7 +38,7 @@ export class AppComponent implements OnInit, OnDestroy {
   reset() {
     this.started = false;
     this.selection = null;
-    this.noScroll = false;
+    this.quizCompleted = false;
   }
 
   ngOnDestroy() {

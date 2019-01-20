@@ -1,0 +1,12 @@
+<main class="fixed-slideable-panel"
+  [@position]="position"
+  >
+  <div class="fixed-slideable-panel__wrapper">
+    <section class="fixed-slideable-panel__content">
+      <ng-content select="app-fixed-slideable-panel-content"></ng-content>
+    </section>
+    <nav class="fixed-slideable-panel__header">
+      <ng-content select="app-fixed-slideable-panel-header"></ng-content>
+    </nav>
+  </div>
+</main>

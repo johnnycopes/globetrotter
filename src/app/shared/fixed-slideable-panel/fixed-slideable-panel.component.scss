@@ -1,0 +1,54 @@
+@import 'styles';
+
+.fixed-slideable-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  background: map-get($color, dark);
+  z-index: map-get($z-index, fixed-slideable-panel);
+  transform: translateY(-100vh);
+
+  &__wrapper {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  &__content {
+    /*
+      set the height of the outcome section of the full-screen menu panel
+      to be 100vh, then subtract the header height to allow for the header
+      to fit on the bottom and set the padding-top to the header height to
+      push it down so the content of the outcome section sits perfectly in
+      the center of the screen
+    */
+    height: calc(100vh - #{map-get($spacing, 128)});
+    padding-top: map-get($spacing, 128);
+    width: 100%;
+
+      // make ng-content slots take up their maximum allowed space
+    & ::ng-deep > * {
+      width: 100%;
+      height: 100%;
+      display: flex;
+    }
+  }
+
+  &__header {
+    height: map-get($spacing, 128);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    & ::ng-deep > * {
+      width: 100%;
+      height: 100%;
+      display: flex;
+    }
+  }
+
+}

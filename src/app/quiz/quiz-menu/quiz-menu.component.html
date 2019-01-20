@@ -1,30 +1,27 @@
-<main class="quiz-menu"
-  [@position]="position"
-  >
-  <div class="quiz-menu__wrapper">
-    <article class="quiz-menu__outcome">
+<app-fixed-slideable-panel [position]="position">
+  <app-fixed-slideable-panel-content>
+    <div class="quiz-menu__outcome">
       <p class="quiz-menu__outcome-text">
         Quiz complete! You scored
       </p>
       <h1 class="quiz-menu__outcome-accuracy">
         {{accuracy}}%
       </h1>
-    </article>
-    <nav class="quiz-menu__progress">
-      <ng-container *ngIf="!accuracy">
-        <h4 class="quiz-menu__tally">
-          {{currentIndex}} / {{countries.length}}
-        </h4>
-        <p class="quiz-menu__prompt">
-          {{countries[currentIndex]?.name}}
-        </p>
-        <h4 class="quiz-menu__guess">
-          Guess #{{guess}}
-        </h4>
-      </ng-container>
-      <ng-container *ngIf="accuracy">
-        <!-- Home/reset buttons can go here -->
-      </ng-container>
-    </nav>
-  </div>
-</main>
+    </div>
+  </app-fixed-slideable-panel-content>
+  <app-fixed-slideable-panel-header>
+    <div class="quiz-menu__progress"
+      *ngIf="!accuracy"
+      >
+      <h4 class="quiz-menu__progress-tally">
+        {{currentIndex}} / {{countries.length}}
+      </h4>
+      <p class="quiz-menu__progress-prompt">
+        {{countries[currentIndex]?.name}}
+      </p>
+      <h4 class="quiz-menu__progress-guess">
+        Guess #{{guess}}
+      </h4>
+    </div>
+  </app-fixed-slideable-panel-header>
+</app-fixed-slideable-panel>

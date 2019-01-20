@@ -1,37 +1,13 @@
 @import 'styles';
 
 .quiz-menu {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 100%;
-  background: map-get($color, dark);
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  z-index: map-get($z-index, quiz-menu);
-  transform: translateY(-100vh);
-
-  &__wrapper {
-    @include quiz-width;
-    margin: 0 auto;
-  }
 
   &__outcome {
-    /*
-      set the height of the outcome section of the full-screen menu panel
-      to be 100vh, then subtract the header height to allow for the header
-      to fit on the bottom and set the padding-top to the header height to
-      push it down so the content of the outcome section sits perfectly in
-      the center of the screen
-    */
-    height: calc(100vh - #{map-get($app, quiz-header-height)});
-    padding-top: map-get($app, quiz-header-height);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    @include quiz-width;
 
     &-text {
       font-size: map-get($font-size, 36);
@@ -44,26 +20,24 @@
   }
 
   &__progress {
-    height: map-get($app, quiz-header-height);
-    width: 100%;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-  }
+    @include quiz-width;
 
-  &__tally {
-    text-align: left;
-    flex: 0 0 20%;
-  }
+    &-tally {
+      text-align: left;
+      flex: 0 0 20%;
+    }
 
-  &__prompt {
-    text-align: center;
-    flex: 0 0 60%;
-    font-weight: map-get($font-weight, bold);
-  }
+    &-prompt {
+      text-align: center;
+      flex: 0 0 60%;
+      font-weight: map-get($font-weight, bold);
+    }
 
-  &__guess {
-    text-align: right;
-    flex: 0 0 20%;
+    &-guess {
+      text-align: right;
+      flex: 0 0 20%;
+    }
   }
 }

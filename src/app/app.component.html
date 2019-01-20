@@ -8,7 +8,7 @@
     />
   </nav>
   <div class="app__content"
-    [ngClass]="{'app__content--no-scroll': noScroll}"
+    [ngClass]="{'app__content--no-scroll': quizCompleted}"
     >
     <app-home *ngIf="!started"
       (started)="onStart()"

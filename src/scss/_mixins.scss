@@ -11,4 +11,5 @@ $breakpoints: (
 @mixin quiz-width {
   max-width: (map-get($app, quiz-card-width) * 5) + (map-get($app, quiz-cards-grid-gap) * 4);
   width: 90%;
+  margin: 0 auto;
 }
