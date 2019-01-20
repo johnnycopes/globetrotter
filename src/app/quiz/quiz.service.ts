@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 import * as _ from 'lodash';
 
 import { Country } from 'src/app/model/country.interface';
@@ -18,6 +19,7 @@ export interface Quiz {
 })
 export class QuizService extends CountryClass {
   quiz: Quiz;
+  quizCompleted = new Subject<void>();
 
   constructor(countryService: CountryService) {
     super(countryService)
@@ -42,7 +44,6 @@ export class QuizService extends CountryClass {
       .value();
   }
 
-
   createQuiz(countries: Country[]): void {
     this.quiz = {
       countries: _.shuffle(countries),
@@ -66,6 +67,7 @@ export class QuizService extends CountryClass {
         // if all cards have been guessed, calculate the user's score and display it. do not increment the guess counter
         addGuess = false;
         this.quiz.accuracy = Math.round((this.quiz.countries.length / this.quiz.guess) * 100);
+        this.quizCompleted.next();
       }
     }
     this.incrementGuessCount(addGuess);

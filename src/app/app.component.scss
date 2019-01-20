@@ -24,5 +24,10 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+
+    &--no-scroll {
+      height: 100vh;
+      overflow: hidden;
+    }
   }
 }

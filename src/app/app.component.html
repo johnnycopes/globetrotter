@@ -7,9 +7,11 @@
       (click)="reset()"
     />
   </nav>
-  <div class="app__content">
+  <div class="app__content"
+    [ngClass]="{'app__content--no-scroll': noScroll}"
+    >
     <app-home *ngIf="!started"
-      (started)="onStart($event)"
+      (started)="onStart()"
     ></app-home>
     <app-select *ngIf="started && !selection"
       (selectionMade)="onSelectionMade($event)"

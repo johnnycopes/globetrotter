@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import {
   trigger,
   style,
@@ -19,13 +19,10 @@ import {
     ])
   ]
 })
-export class HomeComponent implements OnInit {
-  @Output() started: EventEmitter<any> = new EventEmitter<any>();
+export class HomeComponent {
+  @Output() started = new EventEmitter<void>();
 
   constructor() { }
-
-  ngOnInit() {
-  }
 
   onStart() {
     this.started.emit();

@@ -5,10 +5,6 @@
   max-width: map-get($breakpoints, large-desktop);
   margin: 0 auto;
 
-  &__form {
-    margin-bottom: map-get($spacing, 64);
-  }
-
   &__button {
     text-align: center;
   }

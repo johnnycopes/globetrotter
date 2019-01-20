@@ -30,8 +30,7 @@ export class SelectComponent implements OnInit, OnDestroy {
   countriesChangedSubscription: Subscription;
   allCountriesSelected = true;
   canStartQuiz: boolean;
-  buttonText = 'Next'
-  currentStage = 1;
+  current = 'quantity';
 
   constructor(private selectService: SelectService) { }
 
@@ -45,14 +44,12 @@ export class SelectComponent implements OnInit, OnDestroy {
     );
   }
 
-  onSubmit() {
-    this.currentStage++;
-    if (this.currentStage === 2) {
-      this.buttonText = 'Start';
-    }
-    else if (this.currentStage === 3) {
-      this.selectionMade.emit(this.selection);
-    }
+  onSubmitQuantity() {
+    this.current = 'countries';
+  }
+
+  onSubmitCountries() {
+    this.selectionMade.emit(this.selection);
   }
 
   ngOnDestroy() {
