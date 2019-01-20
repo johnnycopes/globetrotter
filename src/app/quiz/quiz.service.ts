@@ -2,22 +2,28 @@ import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
 
 import { Country } from 'src/app/model/country.interface';
-import { Quiz } from 'src/app/model/quiz.interface';
 import { Selection } from '../select/select.service';
 import { CountryClass } from 'src/app/country/country.class';
 import { CountryService } from 'src/app/country/country.service';
+
+export interface Quiz {
+  countries: Country[];
+  currentIndex: number;
+  guess: number;
+  accuracy: number | undefined
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuizService extends CountryClass {
-  public quiz: Quiz;
+  quiz: Quiz;
 
   constructor(countryService: CountryService) {
     super(countryService)
   }
 
-  createCountriesList(selection: Selection): Country[] {
+  selectCountries(selection: Selection): Country[] {
     const countries = [];
     const quantity = selection.quantity;
     _.forEach(selection.countries.regions, region => {
@@ -36,13 +42,13 @@ export class QuizService extends CountryClass {
       .value();
   }
 
+
   createQuiz(countries: Country[]): void {
     this.quiz = {
       countries: _.shuffle(countries),
       currentIndex: 0,
       guess: 1,
-      canFlip: true,
-      accuracy: null
+      accuracy: undefined
     };
   }
 

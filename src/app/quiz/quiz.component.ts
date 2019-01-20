@@ -11,8 +11,7 @@ import {
 
 import { Country } from 'src/app/model/country.interface';
 import { Selection } from '../select/select.service';
-import { Quiz } from 'src/app/model/quiz.interface';
-import { QuizService } from './quiz.service';
+import { QuizService, Quiz } from './quiz.service';
 
 @Component({
   selector: 'app-quiz',
@@ -50,7 +49,7 @@ export class QuizComponent implements OnInit {
   }
 
   private initializeCountries() {
-    this.countries = this.quizService.createCountriesList(this.selection);
+    this.countries = this.quizService.selectCountries(this.selection);
   }
 
   private initializeQuiz() {
