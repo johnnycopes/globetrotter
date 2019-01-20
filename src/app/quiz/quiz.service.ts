@@ -3,7 +3,7 @@ import * as _ from 'lodash';
 
 import { Country } from 'src/app/model/country.interface';
 import { Quiz } from 'src/app/model/quiz.interface';
-import { Selection } from 'src/app/select/select.component';
+import { Selection } from '../select/select.service';
 import { CountryClass } from 'src/app/country/country.class';
 import { CountryService } from 'src/app/country/country.service';
 

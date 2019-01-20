@@ -31,17 +31,19 @@ export class NestedCheckboxesGroupComponent {
   constructor() { }
 
   onSelectAll() {
+    this.model.regions = {};
     this.nestedCheckboxesComponents.forEach(instance => instance.initializeModel(true));
   }
 
   onClearAll() {
+    this.model.regions = {};
     this.nestedCheckboxesComponents.forEach(instance => instance.initializeModel(false));
   }
 
   onModelChange(model: RegionModel) {
     this.model.regions[model.name] = model;
 
-    // once all models have been sent up from the children components, calculate the tally of currently-selected and total options
+    // once all models have been sent up from the children components, calculate the tally of currently-selected and total options and emit the completed model a single time
     if (Object.keys(this.model.regions).length === this.regions.length) {
       const tally = _.reduce(this.model.regions, (accum, current) => {
         accum.current += current.current;

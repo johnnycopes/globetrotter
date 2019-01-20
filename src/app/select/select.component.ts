@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy, AfterContentInit } from '@angular/core';
 import {
   trigger,
   style,
@@ -7,14 +7,8 @@ import {
 } from '@angular/animations';
 import * as _ from 'lodash';
 
-import { CountryService, Region } from 'src/app/country/country.service';
-import { RegionsModel } from 'src/app/shared/nested-checkboxes-group/nested-checkboxes-group.component';
-import { RadioButtonsOption } from 'src/app/shared/radio-buttons/radio-buttons.component';
-
-export interface Selection {
-  countries: RegionsModel;
-  quantity: number | undefined;
-}
+import { SelectService, Selection } from './select.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-select',
@@ -29,45 +23,26 @@ export interface Selection {
     ])
   ]
 })
-export class SelectComponent implements OnInit {
+export class SelectComponent implements OnInit, OnDestroy {
   @Output() selectionMade = new EventEmitter<Selection>();
+  selection: Selection;
+  selectionSubscription: Subscription;
+  countriesChangedSubscription: Subscription;
   allCountriesSelected = true;
   canStartQuiz: boolean;
-  selection: Selection;
-  regions: Region[];
-  quantities: RadioButtonsOption[];
   buttonText = 'Next'
   currentStage = 1;
 
-  constructor(private countryService: CountryService) { }
+  constructor(private selectService: SelectService) { }
 
   ngOnInit() {
     this.canStartQuiz = this.allCountriesSelected;
-    this.regions = this.countryService.initializeData();
-    this.quantities = [
-      { display: '5', value: 5 },
-      { display: '10', value: 10 },
-      { display: '15', value: 15 },
-      { display: '20', value: 20 },
-      { display: 'All', value: undefined }
-    ];
-    this.selection = {
-      countries: {
-        current: 0,
-        total: 0,
-        regions: {}
-      },
-      quantity: 0
-    };
-  }
-
-  onCountriesChange(model: RegionsModel) {
-    this.selection.countries = model;
-    this.canStartQuiz = Boolean(model.current);
-  }
-
-  onQuantityChange(option: RadioButtonsOption) {
-    this.selection.quantity = option.value;
+    this.selectionSubscription = this.selectService.selectionChanged.subscribe(
+      (selection) => this.selection = selection
+    );
+    this.countriesChangedSubscription = this.selectService.countriesChanged.subscribe(
+      (anyCountrySelected) => this.canStartQuiz = anyCountrySelected
+    );
   }
 
   onSubmit() {
@@ -78,5 +53,10 @@ export class SelectComponent implements OnInit {
     else if (this.currentStage === 3) {
       this.selectionMade.emit(this.selection);
     }
+  }
+
+  ngOnDestroy() {
+    this.selectionSubscription.unsubscribe();
+    this.countriesChangedSubscription.unsubscribe();
   }
 }

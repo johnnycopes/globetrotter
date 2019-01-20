@@ -5,20 +5,24 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA, } from '@angular/core';
 import { SharedModule } from './shared/shared.module';
 
 import { AppComponent } from './app.component';
+import { HomeComponent } from './home/home.component';
 import { QuizComponent } from './quiz/quiz.component';
 import { QuizCardComponent } from './quiz/quiz-card/quiz-card.component';
 import { QuizMenuComponent } from './quiz/quiz-menu/quiz-menu.component';
 import { SelectComponent } from './select/select.component';
-import { HomeComponent } from './home/home.component';
+import { SelectCountriesComponent } from './select/select-countries/select-countries.component';
+import { SelectQuantityComponent } from './select/select-quantity/select-quantity.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    HomeComponent,
     QuizComponent,
     QuizCardComponent,
     QuizMenuComponent,
     SelectComponent,
-    HomeComponent,
+    SelectCountriesComponent,
+    SelectQuantityComponent,
   ],
   imports: [
     BrowserModule,
