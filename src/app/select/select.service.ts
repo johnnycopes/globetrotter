@@ -12,8 +12,8 @@ export interface Selection {
   providedIn: 'root'
 })
 export class SelectService {
+  screenChanged = new Subject<string>();
   selectionChanged = new Subject<Selection>();
-  countriesChanged = new Subject<boolean>();
   private selection: Selection = {
     quantity: 0,
     countries: {
@@ -25,6 +25,15 @@ export class SelectService {
 
   constructor() { }
 
+  nextScreen(currentScreen: string) {
+    if (currentScreen === 'quantity') {
+      this.screenChanged.next('countries');
+    }
+    else if (currentScreen === 'countries') {
+      this.screenChanged.next('quiz');
+    }
+  }
+
   updateQuantity(quantity: number) {
     this.selection.quantity = quantity;
     this.selectionChanged.next(this.selection);
@@ -33,6 +42,5 @@ export class SelectService {
   updateCountries(model: RegionsModel) {
     this.selection.countries = model;
     this.selectionChanged.next(this.selection);
-    this.countriesChanged.next(Boolean(model.current));
   }
 }

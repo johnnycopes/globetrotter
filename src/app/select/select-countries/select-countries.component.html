@@ -1,10 +1,22 @@
 <div class="select-countries">
-  <app-nested-checkboxes-group
-    [regions]="regions"
-    [allChecked]="allCountriesSelected"
-    imagePath="assets/icons"
-    imageType="svg"
-    (modelChanged)="onCountriesChange($event)"
-    >
-  </app-nested-checkboxes-group>
+  <div class="select-countries__form">
+    <app-nested-checkboxes-group
+      [regions]="regions"
+      [allChecked]="allCountriesSelected"
+      imagePath="assets/icons"
+      imageType="svg"
+      (modelChanged)="onCountriesChange($event)"
+      >
+    </app-nested-checkboxes-group>
+  </div>
+  <div class="select-countries__button">
+    <app-button
+      buttonStyle="primary"
+      buttonType="submit"
+      buttonText="Launch"
+      [disabled]="!canStartQuiz"
+      (clicked)="onSubmit()"
+      >
+    </app-button>
+  </div>
 </div>

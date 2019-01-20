@@ -6,9 +6,9 @@ import {
   transition
 } from '@angular/animations';
 import * as _ from 'lodash';
+import { Subscription } from 'rxjs';
 
 import { SelectService, Selection } from './select.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-select',
@@ -25,35 +25,31 @@ import { Subscription } from 'rxjs';
 })
 export class SelectComponent implements OnInit, OnDestroy {
   @Output() selectionMade = new EventEmitter<Selection>();
+  screen = 'quantity';
+  screenSubscription: Subscription;
   selection: Selection;
   selectionSubscription: Subscription;
-  countriesChangedSubscription: Subscription;
-  allCountriesSelected = true;
-  canStartQuiz: boolean;
-  current = 'quantity';
 
   constructor(private selectService: SelectService) { }
 
   ngOnInit() {
-    this.canStartQuiz = this.allCountriesSelected;
+    this.screenSubscription = this.selectService.screenChanged.subscribe(
+      (screen) => {
+        if (screen !== 'quiz') {
+          this.screen = screen;
+        }
+        else if (screen === 'quiz') {
+          this.selectionMade.emit(this.selection);
+        }
+      }
+    );
     this.selectionSubscription = this.selectService.selectionChanged.subscribe(
       (selection) => this.selection = selection
     );
-    this.countriesChangedSubscription = this.selectService.countriesChanged.subscribe(
-      (anyCountrySelected) => this.canStartQuiz = anyCountrySelected
-    );
-  }
-
-  onSubmitQuantity() {
-    this.current = 'countries';
-  }
-
-  onSubmitCountries() {
-    this.selectionMade.emit(this.selection);
   }
 
   ngOnDestroy() {
+    this.screenSubscription.unsubscribe();
     this.selectionSubscription.unsubscribe();
-    this.countriesChangedSubscription.unsubscribe();
   }
 }

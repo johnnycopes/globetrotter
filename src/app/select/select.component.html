@@ -1,33 +1,14 @@
 <main class="select"
   @fadeIn
   >
-  <div *ngIf="current === 'quantity'"
+  <div *ngIf="screen === 'quantity'"
     @fadeIn
     >
     <app-select-quantity></app-select-quantity>
-    <div class="select__button">
-      <app-button
-        buttonStyle="primary"
-        buttonType="submit"
-        buttonText="Next"
-        (clicked)="onSubmitQuantity()"
-        >
-      </app-button>
-    </div>
   </div>
-  <div *ngIf="current === 'countries'"
+  <div *ngIf="screen === 'countries'"
     @fadeIn
     >
-    <app-select-countries [allCountriesSelected]="allCountriesSelected"></app-select-countries>
-    <div class="select__button">
-      <app-button
-        buttonStyle="primary"
-        buttonType="submit"
-        buttonText="Launch"
-        [disabled]="!canStartQuiz"
-        (clicked)="onSubmitCountries()"
-        >
-      </app-button>
-    </div>
+    <app-select-countries></app-select-countries>
   </div>
 </main>

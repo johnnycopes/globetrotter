@@ -10,7 +10,8 @@ import { RegionsModel } from 'src/app/shared/nested-checkboxes-group/nested-chec
   styleUrls: ['./select-countries.component.scss']
 })
 export class SelectCountriesComponent implements OnInit {
-  @Input() allCountriesSelected: boolean;
+  allCountriesSelected = true;
+  canStartQuiz = this.allCountriesSelected;
   regions: Region[];
 
   constructor(
@@ -24,6 +25,11 @@ export class SelectCountriesComponent implements OnInit {
 
   onCountriesChange(model: RegionsModel) {
     this.selectService.updateCountries(model);
+    this.canStartQuiz = Boolean(model.current);
+  }
+
+  onSubmit() {
+    this.selectService.nextScreen('countries');
   }
 
 }
