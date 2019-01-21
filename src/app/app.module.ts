@@ -7,13 +7,11 @@ import { SharedModule } from './shared/shared.module';
 import { SelectModule } from './select/select.module';
 
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HomeComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,

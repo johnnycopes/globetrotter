@@ -10,7 +10,6 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, OnDestroy {
-  started = false;
   selection: Selection;
   quizCompleted = false;
   quizCompletedSubscription: Subscription;
@@ -23,10 +22,6 @@ export class AppComponent implements OnInit, OnDestroy {
     );
   }
 
-  onStart() {
-    this.started = true;
-  }
-
   onSelectionMade(selection: Selection) {
     this.selection = {
       countries: selection.countries,
@@ -36,8 +31,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   reset() {
-    this.started = false;
-    this.selection = null;
+    this.selection = undefined;
     this.quizCompleted = false;
   }
 

@@ -26,7 +26,10 @@ export class SelectService {
   constructor() { }
 
   nextScreen(currentScreen: string) {
-    if (currentScreen === 'quantity') {
+    if (currentScreen === 'home') {
+      this.screenChanged.next('quantity');
+    }
+    else if (currentScreen === 'quantity') {
       this.screenChanged.next('countries');
     }
     else if (currentScreen === 'countries') {

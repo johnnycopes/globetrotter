@@ -26,7 +26,7 @@ export class SelectQuantityComponent implements OnInit {
     this.selectService.updateQuantity(option.value);
   }
 
-  onSubmit() {
+  onClick() {
     this.selectService.nextScreen('quantity');
   }
 

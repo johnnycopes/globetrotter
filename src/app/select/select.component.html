@@ -1,6 +1,9 @@
-<main class="select"
-  @fadeIn
-  >
+<main class="select">
+  <div *ngIf="screen === 'home'"
+    @fadeIn
+    >
+    <app-select-home></app-select-home>
+  </div>
   <div *ngIf="screen === 'quantity'"
     @fadeIn
     >

@@ -28,7 +28,7 @@ export class SelectCountriesComponent implements OnInit {
     this.canStartQuiz = Boolean(model.current);
   }
 
-  onSubmit() {
+  onClick() {
     this.selectService.nextScreen('countries');
   }
 
