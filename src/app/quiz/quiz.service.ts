@@ -27,7 +27,7 @@ export class QuizService extends CountryClass {
     super(countryService)
   }
 
-  createQuiz(selection: Selection) {
+  createQuiz(selection: Selection): void {
     this.countries = this.selectCountries(selection);
     this.quiz = {
       countries: _.shuffle(this.countries),
@@ -37,7 +37,7 @@ export class QuizService extends CountryClass {
     };
   }
 
-  getQuiz() {
+  getQuiz(): Quiz {
     const quiz: Quiz = {
       countries: this.quiz.countries,
       currentIndex: this.quiz.currentIndex,
@@ -47,11 +47,11 @@ export class QuizService extends CountryClass {
     return quiz;
   }
 
-  getCountries() {
+  getCountries(): Country[] {
     return this.countries.slice();
   }
 
-  evaluateGuess(country: Country) {
+  evaluateGuess(country: Country): boolean {
     const guessedCountry = country;
     const currentCountry = this.quiz.countries[this.quiz.currentIndex];
     return guessedCountry === currentCountry;
@@ -72,7 +72,7 @@ export class QuizService extends CountryClass {
     this.quizUpdated.next();
   }
 
-  private incrementGuessCount(shouldIncrement: boolean) {
+  private incrementGuessCount(shouldIncrement: boolean): void {
     if (shouldIncrement) {
       this.quiz.guess++;
     }
