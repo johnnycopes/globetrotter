@@ -1,18 +1,5 @@
 @import 'styles';
 
-$header: map-get($app, quiz-header-height);
-$grid-gap: map-get($app, quiz-cards-grid-gap);
-
 .quiz {
-  min-height: calc(100vh - (#{$header} + #{$grid-gap}));
-
-  &__cards {
-    margin-top: calc(#{$header} + #{$grid-gap});
-    padding-bottom: calc((#{$header} / 2) + #{$grid-gap});
-    display: grid;
-    justify-content: center;
-    grid-template-columns: repeat(auto-fill, 300px);
-    grid-auto-rows: 300px;
-    grid-gap: $grid-gap;
-  }
+  min-height: calc(100vh - (#{map-get($app, quiz-header-height)} + #{map-get($app, quiz-cards-grid-gap)}));
 }

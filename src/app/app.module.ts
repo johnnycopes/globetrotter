@@ -7,7 +7,8 @@ import { SharedModule } from './shared/shared.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { QuizComponent } from './quiz/quiz.component';
-import { QuizCardComponent } from './quiz/quiz-card/quiz-card.component';
+import { QuizCardComponent } from './quiz/quiz-cards/quiz-card/quiz-card.component';
+import { QuizCardsComponent } from './quiz/quiz-cards/quiz-cards.component';
 import { QuizMenuComponent } from './quiz/quiz-menu/quiz-menu.component';
 import { SelectComponent } from './select/select.component';
 import { SelectCountriesComponent } from './select/select-countries/select-countries.component';
@@ -19,6 +20,7 @@ import { SelectQuantityComponent } from './select/select-quantity/select-quantit
     HomeComponent,
     QuizComponent,
     QuizCardComponent,
+    QuizCardsComponent,
     QuizMenuComponent,
     SelectComponent,
     SelectCountriesComponent,

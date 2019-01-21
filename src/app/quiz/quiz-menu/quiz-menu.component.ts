@@ -1,51 +1,43 @@
-import { Component, Input, SimpleChanges, OnChanges } from '@angular/core';
-import {
-  trigger,
-  style,
-  animate,
-  state,
-  transition
-} from '@angular/animations';
-import * as _ from 'lodash';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 
+import { QuizService } from '../quiz.service';
 import { Country } from 'src/app/model/country.interface';
 
 @Component({
   selector: 'app-quiz-menu',
   templateUrl: './quiz-menu.component.html',
-  styleUrls: ['./quiz-menu.component.scss'],
-  animations: [
-    trigger('position', [
-      state('offscreen', style({
-        opacity: 0,
-        transform: 'translateY(-100vh)'
-      })),
-      state('header', style({
-        opacity: 1,
-        transform: 'translateY(calc(-100vh + 128px))' // TODO: set the header height dynamically using HostListener
-      })),
-      state('fullscreen', style({
-        opacity: 1,
-        transform: 'translateY(0)'
-      })),
-      transition('* => *', animate('500ms ease-in-out'))
-    ])
-  ]
+  styleUrls: ['./quiz-menu.component.scss']
 })
-export class QuizMenuComponent implements OnChanges {
-  @Input() countries: Country[];
-  @Input() currentIndex: number;
-  @Input() guess: number;
-  @Input() accuracy: number;
-  position: string;
+export class QuizMenuComponent implements OnInit, OnDestroy {
+  quizSubscription: Subscription;
+  position = 'header';
+  countries: Country[];
+  currentIndex: number;
+  guess: number;
+  accuracy: number;
 
-  constructor() { }
+  constructor(private quizService: QuizService) { }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (_.get(changes, 'countries.firstChange')) {
-      this.position = 'header';
-    }
-    else if (_.get(changes, 'accuracy.currentValue')) {
+  ngOnInit() {
+    this.getQuiz();
+    this.quizSubscription = this.quizService.quizUpdated.subscribe(
+      () => this.getQuiz()
+    );
+  }
+
+  ngOnDestroy() {
+    this.quizSubscription.unsubscribe();
+  }
+
+  private getQuiz() {
+    const { countries, currentIndex, guess, accuracy } = this.quizService.getQuiz();
+    this.countries = countries;
+    this.currentIndex = currentIndex;
+    this.guess = guess;
+    this.accuracy = accuracy;
+
+    if (this.accuracy) {
       this.position = 'fullscreen';
     }
   }

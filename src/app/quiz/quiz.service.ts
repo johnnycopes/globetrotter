@@ -18,39 +18,37 @@ export interface Quiz {
   providedIn: 'root'
 })
 export class QuizService extends CountryClass {
-  quiz: Quiz;
+  quizUpdated = new Subject<void>();
   quizCompleted = new Subject<void>();
+  private countries: Country[];
+  private quiz: Quiz;
 
   constructor(countryService: CountryService) {
     super(countryService)
   }
 
-  selectCountries(selection: Selection): Country[] {
-    const countries = [];
-    const quantity = selection.quantity;
-    _.forEach(selection.countries.regions, region => {
-      if (region.checkboxState !== 'unchecked') {
-        _.forEach(region.subregions, subregion => {
-          if (subregion.checkboxState === 'checked') {
-            countries.push(this.countriesBySubregion[subregion.name]);
-          }
-        });
-      }
-    });
-    return _(countries)
-      .flatMap()
-      .shuffle()
-      .slice(0, quantity)
-      .value();
-  }
-
-  createQuiz(countries: Country[]): void {
+  createQuiz(selection: Selection) {
+    this.countries = this.selectCountries(selection);
     this.quiz = {
-      countries: _.shuffle(countries),
+      countries: _.shuffle(this.countries),
       currentIndex: 0,
       guess: 1,
       accuracy: undefined
     };
+  }
+
+  getQuiz() {
+    const quiz: Quiz = {
+      countries: this.quiz.countries,
+      currentIndex: this.quiz.currentIndex,
+      guess: this.quiz.guess,
+      accuracy: this.quiz.accuracy
+    };
+    return quiz;
+  }
+
+  getCountries() {
+    return this.countries.slice();
   }
 
   evaluateGuess(country: Country) {
@@ -71,11 +69,31 @@ export class QuizService extends CountryClass {
       }
     }
     this.incrementGuessCount(addGuess);
+    this.quizUpdated.next();
   }
 
   private incrementGuessCount(shouldIncrement: boolean) {
     if (shouldIncrement) {
       this.quiz.guess++;
     }
+  }
+
+  private selectCountries(selection: Selection): Country[] {
+    const countries = [];
+    const quantity = selection.quantity;
+    _.forEach(selection.countries.regions, region => {
+      if (region.checkboxState !== 'unchecked') {
+        _.forEach(region.subregions, subregion => {
+          if (subregion.checkboxState === 'checked') {
+            countries.push(this.countriesBySubregion[subregion.name]);
+          }
+        });
+      }
+    });
+    return _(countries)
+      .flatMap()
+      .shuffle()
+      .slice(0, quantity)
+      .value();
   }
 }
