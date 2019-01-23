@@ -6,8 +6,6 @@
     position: fixed;
     left: map-get($spacing, 12);
     bottom: map-get($spacing, 24);
-    writing-mode: vertical-lr;
-    // transform: rotate(180deg) translateY(50%); // for words
     z-index: map-get($z-index, app-menu);
     cursor: pointer;
 

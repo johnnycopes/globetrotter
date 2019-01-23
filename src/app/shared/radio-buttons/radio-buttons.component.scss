@@ -15,6 +15,11 @@
   width: map-get($spacing, 128);
   height: map-get($spacing, 128);
 
+  @include large-desktop {
+    width: map-get($spacing, 192);
+    height: map-get($spacing, 192);
+  }
+
   &__input {
     display: none;
     position: absolute;
@@ -33,6 +38,10 @@
     transition: map-get($transition, fast);
     border-radius: map-get($border, radius);
     cursor: pointer;
+
+    @include large-desktop {
+      font-size: map-get($font-size, 36);
+    }
   }
 
   &__input:checked + .option__label {
