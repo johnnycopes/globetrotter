@@ -1,12 +1,10 @@
 <main class="region">
   <img class="region__icon"
     *ngIf="imagePath"
+    [ngClass]="{'region__icon--inactive': imagePath && regionModel.checkboxState === 'unchecked'}"
     [src]="imagePath"
     alt="{{region.name}}"
   />
-  <div class="region__icon-cover"
-    *ngIf="imagePath && regionModel.checkboxState === 'unchecked'"
-  ></div>
   <section class="region__wrapper">
     <app-checkbox class="region__checkbox"
       [invertColors]="true"

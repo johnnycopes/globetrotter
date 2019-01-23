@@ -12,16 +12,8 @@
     width: $icon-size;
     padding-right: 2rem;
 
-    &-cover {
-      position: absolute;
-      width: $icon-size;
-      height: $icon-size;
-      transform: translateY(-50%);
-      top: 50%;
-      left: 0;
-      z-index: map-get($z-index, positive);
-      background: map-get($color, darkest);
-      filter: blur(50px);
+    &--inactive {
+      opacity: 0.4;
     }
   }
 
