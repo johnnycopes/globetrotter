@@ -1,4 +1,4 @@
-$font-stack: 'Tajawal', Frutiger, 'Frutiger Linotype', Univers, Calibri, 'Gill Sans', 'Gill Sans MT', 'Myriad Pro', Myriad, 'DejaVu Sans Condensed', 'Liberation Sans', 'Nimbus Sans L', Tahoma, Geneva, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$font-stack: 'Mukta', Frutiger, 'Frutiger Linotype', Univers, Calibri, 'Gill Sans', 'Gill Sans MT', 'Myriad Pro', Myriad, 'DejaVu Sans Condensed', 'Liberation Sans', 'Nimbus Sans L', Tahoma, Geneva, 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
 /*
 Use these values for font-sizing. A hand-crafted type scale
@@ -20,14 +20,6 @@ $font-size: (
   128: 128px
 );
 
-// $font-size: (
-//   accuracy: 30rem,
-//   app-name: 15rem,
-//   header: 4rem,
-//   normal: 3rem,
-//   button: 2rem
-// );
-
 $font-color: (
   white: hsl(0, 100%, 100%),
   light: hsl(203, 15%, 47%),
@@ -36,7 +28,7 @@ $font-color: (
 );
 
 $font-weight: (
-  normal: 400,
+  normal: 300,
   bold: 700
 );
 
@@ -51,39 +43,3 @@ $text-align: (
   center: center,
   right: right
 );
-
-
-// @each $key, $value in $font-size {
-//   .font-size--#{$key} {
-//     font-size: $value;
-
-//     // Note that the line-height is reduced for the larger sizes in the scale
-//     @if $key >= 30 {
-//       line-height: map-get($line-height, small);
-//     }
-//   }
-// }
-
-// @each $key, $value in $font-color {
-//   .font-color--#{$key} {
-//     color: $value;
-//   }
-// }
-
-// @each $key, $value in $font-weight {
-//   .font-weight--#{$key} {
-//     font-weight: $value;
-//   }
-// }
-
-// @each $key, $value in $line-height {
-//   .line-height--#{$key} {
-//     line-height: $value;
-//   }
-// }
-
-// @each $key, $value in $text-align {
-//   .text-align--#{$key} {
-//     text-align: $value;
-//   }
-// }
