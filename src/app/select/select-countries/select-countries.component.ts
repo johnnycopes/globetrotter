@@ -4,6 +4,12 @@ import { CountryService, Region } from 'src/app/country/country.service';
 import { SelectService } from '../select.service';
 import { RegionsModel } from 'src/app/shared/nested-checkboxes-group/nested-checkboxes-group.component';
 
+export interface CheckboxState {
+  current: number;
+  total: number;
+  checkboxState: string;
+}
+
 @Component({
   selector: 'app-select-countries',
   templateUrl: './select-countries.component.html',
@@ -13,6 +19,11 @@ export class SelectCountriesComponent implements OnInit {
   allCountriesSelected = true;
   canStartQuiz = this.allCountriesSelected;
   regions: Region[];
+  treeProvider = {
+    getChildItems: (place) => place.subregions,
+    getItemDisplayName: (place) => place.name
+  };
+  checkboxStates: _.Dictionary<CheckboxState> = {};
 
   constructor(
     private countryService: CountryService,

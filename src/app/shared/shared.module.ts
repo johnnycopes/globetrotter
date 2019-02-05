@@ -9,6 +9,7 @@ import { FlipCardComponent } from './flip-card/flip-card.component';
 import { NestedCheckboxesComponent } from './nested-checkboxes/nested-checkboxes.component';
 import { NestedCheckboxesGroupComponent } from './nested-checkboxes-group/nested-checkboxes-group.component';
 import { RadioButtonsComponent } from './radio-buttons/radio-buttons.component';
+import { NewNestedCheckboxesComponent } from './new-nested-checkboxes/new-nested-checkboxes.component';
 
 @NgModule({
   imports: [
@@ -23,6 +24,7 @@ import { RadioButtonsComponent } from './radio-buttons/radio-buttons.component';
     NestedCheckboxesComponent,
     NestedCheckboxesGroupComponent,
     RadioButtonsComponent,
+    NewNestedCheckboxesComponent,
   ],
   exports: [
     ButtonComponent,
@@ -31,7 +33,8 @@ import { RadioButtonsComponent } from './radio-buttons/radio-buttons.component';
     FlipCardComponent,
     NestedCheckboxesComponent,
     NestedCheckboxesGroupComponent,
-    RadioButtonsComponent
+    RadioButtonsComponent,
+    NewNestedCheckboxesComponent
   ],
 })
 export class SharedModule { }

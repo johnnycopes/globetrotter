@@ -1,0 +1,11 @@
+<label>
+  <input type="checkbox"> {{treeProvider.getItemDisplayName(rootItem)}}
+</label>
+<ul>
+  <li *ngFor="let childItem of childItems">
+    <app-new-nested-checkboxes
+      [treeProvider]="treeProvider"
+      [rootItem]="childItem"
+    ></app-new-nested-checkboxes>
+  </li>
+</ul>
