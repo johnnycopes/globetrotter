@@ -1,5 +1,20 @@
 <main class="select-home">
-  <h1 class="title">
+  checkbox1: {{checkbox1}}
+  checkbox2: {{checkbox2}}
+  checkbox3: {{checkbox3}}
+  <app-checkbox
+    [(ngModel)]="checkbox1"
+  >
+	</app-checkbox>
+  <app-checkbox
+    [(ngModel)]="checkbox2"
+  >
+	</app-checkbox>
+  <app-checkbox
+    [(ngModel)]="checkbox3"
+  >
+	</app-checkbox>
+  <!-- <h1 class="title">
     Globetrotter
   </h1>
   <div class="divider">
@@ -15,5 +30,5 @@
     buttonText="Embark"
     (clicked)="onClick()"
     >
-  </app-button>
+  </app-button> -->
 </main>

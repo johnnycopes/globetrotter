@@ -6,8 +6,8 @@ import { ButtonComponent } from './button/button.component';
 import { CheckboxComponent } from './checkbox/checkbox.component';
 import { FixedSlideablePanelComponent } from './fixed-slideable-panel/fixed-slideable-panel.component';
 import { FlipCardComponent } from './flip-card/flip-card.component';
-import { NestedCheckboxesComponent } from './nested-checkboxes/nested-checkboxes.component';
-import { NestedCheckboxesGroupComponent } from './nested-checkboxes-group/nested-checkboxes-group.component';
+// import { NestedCheckboxesComponent } from './nested-checkboxes/nested-checkboxes.component';
+// import { NestedCheckboxesGroupComponent } from './nested-checkboxes-group/nested-checkboxes-group.component';
 import { RadioButtonsComponent } from './radio-buttons/radio-buttons.component';
 
 @NgModule({
@@ -20,8 +20,8 @@ import { RadioButtonsComponent } from './radio-buttons/radio-buttons.component';
     CheckboxComponent,
     FixedSlideablePanelComponent,
     FlipCardComponent,
-    NestedCheckboxesComponent,
-    NestedCheckboxesGroupComponent,
+    // NestedCheckboxesComponent,
+    // NestedCheckboxesGroupComponent,
     RadioButtonsComponent,
   ],
   exports: [
@@ -29,8 +29,8 @@ import { RadioButtonsComponent } from './radio-buttons/radio-buttons.component';
     CheckboxComponent,
     FixedSlideablePanelComponent,
     FlipCardComponent,
-    NestedCheckboxesComponent,
-    NestedCheckboxesGroupComponent,
+    // NestedCheckboxesComponent,
+    // NestedCheckboxesGroupComponent,
     RadioButtonsComponent
   ],
 })

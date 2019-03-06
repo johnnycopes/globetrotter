@@ -2,7 +2,6 @@
   [ngClass]="{'checkbox--inverted': invertColors}"
   >
   <input class="checkbox__input"
-    [value]="value"
     [indeterminate]="state === 'indeterminate'"
     [checked]="state === 'checked'"
     (change)="onChange()"
