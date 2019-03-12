@@ -1,0 +1,18 @@
+<!-- <label>
+  <input type="checkbox"> {{treeProvider.getItemDisplayName(rootItem)}}
+</label> -->
+<app-checkbox
+  [ngModel]="treeProvider.getItemID(item)"
+  (ngModelChange)="updateCheckboxState($event)"
+  >
+  {{treeProvider.getItemDisplayName(item)}}
+</app-checkbox>
+<ul>
+  <li *ngFor="let childItem of childItems">
+    <app-new-nested-checkboxes
+      [checkboxStates]="checkboxStates"
+      [treeProvider]="treeProvider"
+      [item]="childItem"
+    ></app-new-nested-checkboxes>
+  </li>
+</ul>

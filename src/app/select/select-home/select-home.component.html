@@ -1,19 +1,9 @@
 <main class="select-home">
-  checkbox1: {{checkbox1}}
-  checkbox2: {{checkbox2}}
-  checkbox3: {{checkbox3}}
-  <app-checkbox
-    [(ngModel)]="checkbox1"
+  <app-new-nested-checkboxes
+    [item]="regions[0]"
+    [treeProvider]="treeProvider"
   >
-	</app-checkbox>
-  <app-checkbox
-    [(ngModel)]="checkbox2"
-  >
-	</app-checkbox>
-  <app-checkbox
-    [(ngModel)]="checkbox3"
-  >
-	</app-checkbox>
+  </app-new-nested-checkboxes>
   <!-- <h1 class="title">
     Globetrotter
   </h1>
