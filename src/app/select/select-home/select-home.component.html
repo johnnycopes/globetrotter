@@ -1,9 +1,11 @@
 <main class="select-home">
   <app-new-nested-checkboxes
     [item]="regions[0]"
+    [(ngModel)]="checkboxStates"
     [treeProvider]="treeProvider"
   >
   </app-new-nested-checkboxes>
+  {{ checkboxStates | json }}
   <!-- <h1 class="title">
     Globetrotter
   </h1>

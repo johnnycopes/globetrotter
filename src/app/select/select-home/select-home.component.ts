@@ -31,6 +31,7 @@ export class SelectHomeComponent {
 
   ngOnInit() {
     this.regions = this.countryService.initializeData();
+    console.log("REGIONS:", this.regions);
   }
 
   onClick() {
