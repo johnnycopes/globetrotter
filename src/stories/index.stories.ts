@@ -1,5 +1,4 @@
 import { storiesOf } from '@storybook/angular';
-import { withNotes } from '@storybook/addon-notes';
 import { action } from '@storybook/addon-actions';
 import {
   withKnobs,
@@ -12,16 +11,17 @@ import {
   color,
   date,
   button,
-} from '@storybook/addon-knobs';
-import { linkTo } from '@storybook/addon-links';
+} from '@storybook/addon-knobs/angular';
 
-import { Welcome, Button } from '@storybook/angular/demo';
-import { CheckboxComponent } from 'src/app/shared/checkbox/checkbox.component';
-import { FixedSlideablePanelComponent } from 'src/app/shared/fixed-slideable-panel/fixed-slideable-panel.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FlipCardComponent } from 'src/app/shared/flip-card/flip-card.component';
-import { ButtonComponent } from 'src/app/shared/button/button.component';
+
+import { Welcome } from '@storybook/angular/demo';
+import { ButtonComponent } from '../app/shared/button/button.component';
+import { CheckboxComponent } from '../app/shared/checkbox/checkbox.component';
+import { FixedSlideablePanelComponent } from '../app/shared/fixed-slideable-panel/fixed-slideable-panel.component';
+import { FlipCardComponent } from '../app/shared/flip-card/flip-card.component';
+
 
 storiesOf('Welcome', module)
   .add('to Storybook', () => ({
@@ -81,42 +81,68 @@ storiesOf('Checkbox', module)
   });
 
 storiesOf('FixedSlideablePanel', module)
-  .add('fixed slideable panel', () => ({
-    moduleMetadata: {
-      imports: [BrowserAnimationsModule],
-      declarations: [FixedSlideablePanelComponent],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    },
-    template: `
-      <app-fixed-slideable-panel position="header">
-        <app-fixed-slideable-panel-content>
-          this is a label!
-          from storybook: {{position}}
-        </app-fixed-slideable-panel-content>
-      </app-fixed-slideable-panel>
-    `,
-    props: {
-      position: 'header',
-    },
-  }));
+  .addDecorator(withKnobs)
+  .add('fixed slideable panel', () => {
+    const positions = ['offscreen', 'header', 'fullscreen'];
+    return {
+      moduleMetadata: {
+        imports: [BrowserAnimationsModule],
+        declarations: [FixedSlideablePanelComponent],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      },
+      template: `
+        <app-fixed-slideable-panel [position]="position">
+          <app-fixed-slideable-panel-content>
+            I'm the fixed-slideable-panel body content
+          </app-fixed-slideable-panel-content>
+          <app-fixed-slideable-panel-header>
+            I'm the fixed-slideable-panel header content
+          </app-fixed-slideable-panel-header>
+        </app-fixed-slideable-panel>
+      `,
+      props: {
+        position: radios('position', positions, 'offscreen')
+      }
+    };
+  });
 
-storiesOf('FlipCard', module).add('flipCard', () => ({
-  moduleMetadata: {
-    imports: [BrowserAnimationsModule],
-    declarations: [FlipCardComponent],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
-  },
-  template: `
-    <app-flip-card>
-      <app-flip-card-front>
-        front side
-      </app-flip-card-front>
-      <app-flip-card-back>
-        back side
-      </app-flip-card-back>
-    </app-flip-card>
-  `,
-  props: {
-    side: 'front',
-  },
-}));
+storiesOf('FlipCard', module)
+  .addDecorator(withKnobs)
+  .add('flipCard', () => {
+    const sides = ['front', 'back'];
+    return {
+      moduleMetadata: {
+        imports: [BrowserAnimationsModule],
+        declarations: [FlipCardComponent],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      },
+      template: `
+        <app-flip-card
+          [side]="side"
+          [disabled]="disabled"
+          >
+          <app-flip-card-front>
+            <img class="quiz-card__flag"
+              style="max-width: 200px;"
+              [src]="country.flag"
+              alt="Flag of {{country.name}}"
+            />
+          </app-flip-card-front>
+          <app-flip-card-back>
+            <h3 class="quiz-card__country">
+              {{country.name}}
+            </h3>
+          </app-flip-card-back>
+        </app-flip-card>
+      `,
+      props: {
+        country: {
+          name: 'United States of America',
+          flag: 'https://restcountries.eu/data/usa.svg'
+        },
+        side: radios('side', sides, 'side'),
+        canFlip: boolean('canFlip', true),
+        disabled: boolean('disabled', false)
+      },
+    }
+ });
