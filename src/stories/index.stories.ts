@@ -31,7 +31,7 @@ storiesOf('Welcome', module)
 
 storiesOf('Button', module)
   .addDecorator(withKnobs)
-  .add('button', () => {
+  .add('standard', () => {
     const buttonStyles = ['primary', 'secondary'];
     return {
       component: ButtonComponent,
@@ -45,18 +45,18 @@ storiesOf('Button', module)
 
 storiesOf('Checkbox', module)
   .addDecorator(withKnobs)
-  .add('checkbox', () => {
+  .add('standard', () => {
     const states = ['checked', 'unchecked', 'indeterminate'];
     return {
       component: CheckboxComponent,
       props: {
-        state: select('state', states, 'checked'),
+        state: select('state', states, states[2]),
         invertColors: boolean('invertColors', false),
         changed: action(`clicked!`)
       }
     };
   })
-  .add('checkbox with label', () => {
+  .add('with label', () => {
     const states = ['checked', 'unchecked', 'indeterminate'];
     return {
       moduleMetadata: {
@@ -82,7 +82,7 @@ storiesOf('Checkbox', module)
 
 storiesOf('FixedSlideablePanel', module)
   .addDecorator(withKnobs)
-  .add('fixed slideable panel', () => {
+  .add('header', () => {
     const positions = ['offscreen', 'header', 'fullscreen'];
     return {
       moduleMetadata: {
@@ -90,6 +90,7 @@ storiesOf('FixedSlideablePanel', module)
         declarations: [FixedSlideablePanelComponent],
         schemas: [CUSTOM_ELEMENTS_SCHEMA]
       },
+      component: FixedSlideablePanelComponent,
       template: `
         <app-fixed-slideable-panel [position]="position">
           <app-fixed-slideable-panel-content>
@@ -101,14 +102,14 @@ storiesOf('FixedSlideablePanel', module)
         </app-fixed-slideable-panel>
       `,
       props: {
-        position: radios('position', positions, 'offscreen')
+        position: select('position', positions, 'header')
       }
     };
   });
 
 storiesOf('FlipCard', module)
   .addDecorator(withKnobs)
-  .add('flipCard', () => {
+  .add('standard', () => {
     const sides = ['front', 'back'];
     return {
       moduleMetadata: {
@@ -129,9 +130,9 @@ storiesOf('FlipCard', module)
             />
           </app-flip-card-front>
           <app-flip-card-back>
-            <h3 class="quiz-card__country">
+            <div class="quiz-card__country">
               {{country.name}}
-            </h3>
+            </div>
           </app-flip-card-back>
         </app-flip-card>
       `,
@@ -140,7 +141,7 @@ storiesOf('FlipCard', module)
           name: 'United States of America',
           flag: 'https://restcountries.eu/data/usa.svg'
         },
-        side: radios('side', sides, 'side'),
+        side: select('side', sides, 'side'),
         canFlip: boolean('canFlip', true),
         disabled: boolean('disabled', false)
       },

@@ -1,5 +1,6 @@
 import { addParameters, configure } from '@storybook/angular';
 import { themes } from '@storybook/theming';
+import '../src/scss/reset.scss';
 
 addParameters({
   options: {
