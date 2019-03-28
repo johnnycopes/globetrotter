@@ -44,17 +44,26 @@ export class NewNestedCheckboxesComponent<T> implements OnInit, ControlValueAcce
 
   }
 
-  // John TODO: write logic in updateCheckBoxState to set indeterminate state
-
   ngOnInit() {
+    const itemID = this.treeProvider.getItemID(this.item);
     this.childItems = this.treeProvider.getChildItems(this.item);
+    // console.log("child items in onInit", this.childItems);
+    // console.log("itemID in onInit", itemID);
   }
 
   updateCheckboxState(checkboxValue: string) {
+    const newCheckboxStatesDict = {...this.checkboxStates};
+
     const itemID = this.treeProvider.getItemID(this.item);
-    // console.log("itemID", itemID);
-    // console.log("checkbox value", checkboxValue);
-    this.checkboxStates[itemID] = checkboxValue;
+    newCheckboxStatesDict[itemID] = checkboxValue;
+
+    for (let child of this.childItems) {
+      const childID = this.treeProvider.getItemID(child);
+      newCheckboxStatesDict[childID] = checkboxValue;
+    }
+    this.checkboxStates = newCheckboxStatesDict;
+    console.log("checkboxes states", this.checkboxStates);
+    // this.checkboxStates[itemID] = checkboxValue;
     this.onChangeFn(this.checkboxStates);
     // console.log("checkbox states from new-nested component", this.checkboxStates);
   }

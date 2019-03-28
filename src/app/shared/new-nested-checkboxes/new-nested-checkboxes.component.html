@@ -1,5 +1,5 @@
 <app-checkbox
-  [ngModel]="treeProvider.getItemID(item)"
+  [ngModel]="checkboxStates && checkboxStates[treeProvider.getItemID(item)]"
   (ngModelChange)="updateCheckboxState($event)"
   >
   {{treeProvider.getItemDisplayName(item)}}
