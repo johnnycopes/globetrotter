@@ -2,12 +2,14 @@
   <div class="select-quantity__form">
     <app-radio-buttons
       [options]="quantities"
+      [ngModel]="currentlySelectedQuantity"
+      (ngModelChange)="onQuantityChange($event)"
       text="Number of countries to include in the quiz:"
-      (modelChanged)="onQuantityChange($event)"
       >
     </app-radio-buttons>
   </div>
   <div class="select-quantity__button">
+    {{ model | json }}
     <app-button
       buttonStyle="primary"
       buttonText="Next"

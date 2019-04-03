@@ -1,30 +1,43 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
-export interface RadioButtonsOption {
+export interface RadioButtonsOption<T> {
   display: string;
-  value: number | undefined;
+  value: T;
 }
 
 @Component({
   selector: 'app-radio-buttons',
   templateUrl: './radio-buttons.component.html',
-  styleUrls: ['./radio-buttons.component.scss']
+  styleUrls: ['./radio-buttons.component.scss'],
+  providers: [{
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: RadioButtonsComponent,
+    multi: true
+  }]
 })
-export class RadioButtonsComponent implements OnInit {
-  @Input() options: RadioButtonsOption[];
+export class RadioButtonsComponent<T> implements ControlValueAccessor {
+  @Input() options: RadioButtonsOption<T>[];
   @Input() text: string;
-  @Output() modelChanged: EventEmitter<RadioButtonsOption> = new EventEmitter<RadioButtonsOption>();
-  public model: RadioButtonsOption;
+  public model: RadioButtonsOption<T>;
+  private onChangeFn: any;
 
   constructor() { }
 
-  ngOnInit() {
-    this.model = this.options[0];
-    this.modelChanged.emit(this.model);
+  writeValue(obj: any): void {
+    this.model = obj;
+  }
+
+  registerOnChange(fn: any): void {
+    this.onChangeFn = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+
   }
 
   onChange() {
-    this.modelChanged.emit(this.model);
+    this.onChangeFn(this.model);
   }
 
 }
