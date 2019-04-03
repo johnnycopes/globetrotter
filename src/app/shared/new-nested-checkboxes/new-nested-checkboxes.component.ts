@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import * as _ from 'lodash';
 
 /*
 1. Make it implement ValueControlAccessor + add the required methods
@@ -47,8 +48,6 @@ export class NewNestedCheckboxesComponent<T> implements OnInit, ControlValueAcce
   ngOnInit() {
     const itemID = this.treeProvider.getItemID(this.item);
     this.childItems = this.treeProvider.getChildItems(this.item);
-    // console.log("child items in onInit", this.childItems);
-    // console.log("itemID in onInit", itemID);
   }
 
   updateCheckboxState(checkboxValue: string) {
@@ -62,14 +61,28 @@ export class NewNestedCheckboxesComponent<T> implements OnInit, ControlValueAcce
       newCheckboxStatesDict[childID] = checkboxValue;
     }
     this.checkboxStates = newCheckboxStatesDict;
-    console.log("checkboxes states", this.checkboxStates);
-    // this.checkboxStates[itemID] = checkboxValue;
     this.onChangeFn(this.checkboxStates);
-    // console.log("checkbox states from new-nested component", this.checkboxStates);
   }
 
   updateAllCheckboxStates(newStates: _.Dictionary<string>) {
     this.checkboxStates = newStates;
+
+    const numberOfSelectedChildren = _.reduce(this.childItems, (accum, current) => {
+      const id = this.treeProvider.getItemID(current);
+      return this.checkboxStates[id] === 'checked' ? accum + 1 : accum;
+    }, 0);
+
+    const id = this.treeProvider.getItemID(this.item);
+    if (numberOfSelectedChildren === this.childItems.length) {
+      this.checkboxStates[id] = 'checked';
+    }
+    else if (numberOfSelectedChildren === 0) {
+      this.checkboxStates[id] = 'unchecked';
+    }
+    else {
+      this.checkboxStates[id] = 'indeterminate';
+    }
+
     this.onChangeFn(this.checkboxStates);
   }
 
