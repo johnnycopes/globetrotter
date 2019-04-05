@@ -1,16 +1,27 @@
-<app-checkbox
-  [ngModel]="checkboxStates && checkboxStates[treeProvider.getItemID(item)]"
-  (ngModelChange)="updateCheckboxState($event)"
+<div class="nested-checkboxes"
+  [ngClass]="{'nested-checkboxes--padding': firstInstance}"
   >
-  {{treeProvider.getItemDisplayName(item)}}
-</app-checkbox>
-<ul>
-  <li *ngFor="let childItem of childItems">
-    <app-new-nested-checkboxes
+  <img class="nested-checkboxes__icon"
+  *ngIf="imagePath"
+  [ngClass]="{'nested-checkboxes__icon--inactive': !imageActive}"
+  [src]="imagePath"
+  alt="{{treeProvider.getItemDisplayName(item)}}"
+  />
+  <div class="nested-checkboxes__selection">
+    <app-checkbox class="nested-checkboxes__checkbox"
+      [ngClass]="{'nested-checkboxes__checkbox--bold': firstInstance}"
+      [invertColors]="firstInstance"
+      [ngModel]="checkboxStates && checkboxStates[treeProvider.getItemID(item)]"
+      (ngModelChange)="updateCheckboxState($event)"
+      >
+      {{treeProvider.getItemDisplayName(item)}}
+    </app-checkbox>
+    <app-new-nested-checkboxes class="nested-checkboxes__child"
+      *ngFor="let childItem of childItems"
       [ngModel]="checkboxStates"
       (ngModelChange)="updateAllCheckboxStates($event)"
       [treeProvider]="treeProvider"
       [item]="childItem"
     ></app-new-nested-checkboxes>
-  </li>
-</ul>
+  </div>
+</div>

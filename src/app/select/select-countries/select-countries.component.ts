@@ -3,7 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { CountryService, Region } from 'src/app/country/country.service';
 import { SelectService } from '../select.service';
 import { RegionsModel } from 'src/app/shared/nested-checkboxes-group/nested-checkboxes-group.component';
-import { CheckboxState } from '../select-home/select-home.component';
+import { TreeProvider } from 'src/app/shared/new-nested-checkboxes/new-nested-checkboxes.component';
 
 @Component({
   selector: 'app-select-countries',
@@ -12,13 +12,13 @@ import { CheckboxState } from '../select-home/select-home.component';
 })
 export class SelectCountriesComponent implements OnInit {
   allCountriesSelected = true;
-  canStartQuiz = this.allCountriesSelected;
+  // canStartQuiz = this.allCountriesSelected;
   regions: Region[];
-  treeProvider = {
-    getChildItems: (place) => place.subregions,
-    getItemDisplayName: (place) => place.name
+  treeProvider: TreeProvider<any> = {
+    getChildItems: (place) => place.subregions || [], // TODO: revisit this later. see if we can enforce this in the treeprovier interface definition once it's no longer <any>
+    getItemDisplayName: (place) => place.name,
+    getItemID: (place) => place.name
   };
-  checkboxStates: _.Dictionary<CheckboxState> = {};
 
   constructor(
     private countryService: CountryService,
@@ -31,11 +31,10 @@ export class SelectCountriesComponent implements OnInit {
 
   onCountriesChange(model: RegionsModel) {
     this.selectService.updateCountries(model);
-    this.canStartQuiz = Boolean(model.current);
+    // this.canStartQuiz = Boolean(model.current);
   }
 
   onClick() {
     this.selectService.nextScreen('countries');
   }
-
 }

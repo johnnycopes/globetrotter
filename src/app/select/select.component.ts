@@ -25,7 +25,7 @@ import { SelectService, Selection } from './select.service';
 })
 export class SelectComponent implements OnInit, OnDestroy {
   @Output() selectionMade = new EventEmitter<Selection>();
-  screen = 'home';
+  screen = 'countries'; // TODO: change this back once testing is complete
   screenSubscription: Subscription;
   selection: Selection;
   selectionSubscription: Subscription;

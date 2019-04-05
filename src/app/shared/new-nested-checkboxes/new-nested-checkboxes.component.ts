@@ -15,6 +15,8 @@ export interface TreeProvider<T> {
   getItemID(node: T): string;
 }
 
+export type CheckboxStates = _.Dictionary<string>;
+
 @Component({
   selector: 'app-new-nested-checkboxes',
   templateUrl: './new-nested-checkboxes.component.html',
@@ -26,15 +28,21 @@ export interface TreeProvider<T> {
   }]
 })
 export class NewNestedCheckboxesComponent<T> implements OnInit, ControlValueAccessor {
-
   @Input() item: T;
   @Input() treeProvider: TreeProvider<T>;
+  @Input() imagePath?: string; // The file path of an image to be displayed next to the checkboxes
+  @Input() firstInstance: boolean;
   public childItems: T[];
-  private checkboxStates: _.Dictionary<string> = {}; // "checked", "unchecked", "indeterminate"
+  public imageActive: boolean;
+  private checkboxStates: CheckboxStates = {}; // "checked", "unchecked", "indeterminate"
   private onChangeFn: any;
 
   writeValue(obj: any): void {
     this.checkboxStates = obj;
+    if (this.firstInstance && this.checkboxStates) {
+      const itemID = this.treeProvider.getItemID(this.item);
+      this.updateImageState(itemID);
+    }
   }
 
   registerOnChange(fn: any): void {
@@ -62,9 +70,13 @@ export class NewNestedCheckboxesComponent<T> implements OnInit, ControlValueAcce
     }
     this.checkboxStates = newCheckboxStatesDict;
     this.onChangeFn(this.checkboxStates);
+
+    if (this.firstInstance) {
+      this.updateImageState(itemID);
+    }
   }
 
-  updateAllCheckboxStates(newStates: _.Dictionary<string>) {
+  updateAllCheckboxStates(newStates: CheckboxStates) {
     this.checkboxStates = newStates;
 
     const numberOfSelectedChildren = _.reduce(this.childItems, (accum, current) => {
@@ -84,6 +96,12 @@ export class NewNestedCheckboxesComponent<T> implements OnInit, ControlValueAcce
     }
 
     this.onChangeFn(this.checkboxStates);
+    this.updateImageState(id);
+  }
+
+  private updateImageState(id: string) {
+    const currentState = this.checkboxStates[id];
+    this.imageActive = currentState === 'checked';
   }
 
 }

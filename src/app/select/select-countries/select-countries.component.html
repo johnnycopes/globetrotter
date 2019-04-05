@@ -1,15 +1,3 @@
-<div>
-  <div *ngFor="let region of regions">
-    <img src="assets/icons/{{region.name}}.svg" width="100">
-    <br>
-    <app-new-nested-checkboxes
-      [item]="region"
-      [treeProvider]="treeProvider"
-    >
-    </app-new-nested-checkboxes>
-  </div>
-</div>
-
 <div class="select-countries">
   <div class="select-countries__form">
     <!-- <app-nested-checkboxes-group
@@ -20,6 +8,14 @@
       (modelChanged)="onCountriesChange($event)"
       >
     </app-nested-checkboxes-group> -->
+    <app-new-nested-checkboxes-group
+      [items]="regions"
+      [allChecked]="false"
+      [treeProvider]="treeProvider"
+      imagePath="assets/icons"
+      imageType="svg"
+      >
+    </app-new-nested-checkboxes-group>
   </div>
   <div class="select-countries__button">
     <app-button

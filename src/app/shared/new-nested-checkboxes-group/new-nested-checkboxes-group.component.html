@@ -1,0 +1,36 @@
+<div class="total">
+  <div class="total__tally">
+    <span class="total__tally-number">
+      <!-- {{model.current}} / {{model.total}}&nbsp; -->
+      0 / 0&nbsp;
+    </span>
+    <span class="total__tally-text">
+      possible countries selected.
+    </span>
+  </div>
+  <div class="total__buttons">
+    <app-button class="total__select-all"
+      buttonStyle="secondary"
+      buttonText="Select all"
+      (click)="onSelectAll()"
+      >
+    </app-button>
+    <app-button class="total__clear-all"
+      buttonStyle="secondary"
+      buttonText="Clear all"
+      (click)="onClearAll()"
+      >
+    </app-button>
+  </div>
+</div>
+<div class="items">
+  <app-new-nested-checkboxes class="item"
+    *ngFor="let item of items"
+    [item]="item"
+    [firstInstance]="true"
+    imagePath="{{imagePath}}/{{treeProvider.getItemDisplayName(item)}}.{{imageType}}"
+    [ngModel]="checkboxStates"
+    (ngModelChange)="updateCheckboxStates($event)"
+    [treeProvider]="treeProvider"
+  ></app-new-nested-checkboxes>
+</div>

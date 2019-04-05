@@ -1,0 +1,46 @@
+@import 'styles';
+
+.nested-checkboxes {
+  display: flex;
+  flex: 0 1 50%;
+  align-items: center;
+  position: relative;
+
+  &--padding {
+    padding: map-get($spacing, 16) 0;
+  }
+
+
+  &__icon {
+    $icon-size: map-get($spacing, 192);
+    width: $icon-size;
+    padding-right: 2rem;
+
+    &--inactive {
+      opacity: 0.4;
+    }
+  }
+
+  &__selection {
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+
+    @include large-desktop {
+      max-width: none;
+    }
+  }
+
+  &__checkbox {
+    position: relative;
+    margin-bottom: map-get($spacing, 4);
+
+    &--bold {
+      font-weight: map-get($font-weight, bold);
+    }
+  }
+
+  &__child {
+    margin-left: map-get($spacing, 24);
+  }
+}
