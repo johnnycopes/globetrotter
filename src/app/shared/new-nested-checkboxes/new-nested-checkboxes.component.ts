@@ -40,8 +40,7 @@ export class NewNestedCheckboxesComponent<T> implements OnInit, ControlValueAcce
   writeValue(obj: any): void {
     this.checkboxStates = obj;
     if (this.firstInstance && this.checkboxStates) {
-      const itemID = this.treeProvider.getItemID(this.item);
-      this.updateImageState(itemID);
+      this.updateImageState();
     }
   }
 
@@ -72,7 +71,7 @@ export class NewNestedCheckboxesComponent<T> implements OnInit, ControlValueAcce
     this.onChangeFn(this.checkboxStates);
 
     if (this.firstInstance) {
-      this.updateImageState(itemID);
+      this.updateImageState();
     }
   }
 
@@ -96,10 +95,11 @@ export class NewNestedCheckboxesComponent<T> implements OnInit, ControlValueAcce
     }
 
     this.onChangeFn(this.checkboxStates);
-    this.updateImageState(id);
+    this.updateImageState();
   }
 
-  private updateImageState(id: string) {
+  private updateImageState() {
+    const id = this.treeProvider.getItemID(this.item);
     const currentState = this.checkboxStates[id];
     this.imageActive = currentState === 'checked';
   }
