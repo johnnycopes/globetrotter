@@ -21,8 +21,8 @@ export class NewNestedCheckboxesGroupComponent<T> implements OnInit {
   ngOnInit() {
     if (this.allChecked) {
       this.makeAllItemsChecked();
-      this.modelChanged.emit(this.checkboxStates);
     }
+    this.modelChanged.emit(this.checkboxStates);
   }
 
   onSelectAll() {

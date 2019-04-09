@@ -11,9 +11,8 @@ import { TreeProvider, CheckboxStates } from 'src/app/shared/new-nested-checkbox
   styleUrls: ['./select-countries.component.scss']
 })
 export class SelectCountriesComponent implements OnInit {
-  allCountriesSelected = true;
-  canStartQuiz = this.allCountriesSelected;
   regions: Region[];
+  canStartQuiz: boolean;
   treeProvider: TreeProvider<any> = {
     getChildItems: (place) => place.subregions || [], // TODO: revisit this later. see if we can enforce this in the TreeProvider interface definition once it's no longer <any>
     getItemDisplayName: (place) => place.name,
