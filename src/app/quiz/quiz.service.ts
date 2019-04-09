@@ -79,19 +79,18 @@ export class QuizService extends CountryClass {
   }
 
   private selectCountries(selection: Selection): Country[] {
-    const countries = [];
     const quantity = selection.quantity;
-    _.forEach(selection.countries.regions, region => {
-      if (region.checkboxState !== 'unchecked') {
-        _.forEach(region.subregions, subregion => {
-          if (subregion.checkboxState === 'checked') {
-            countries.push(this.countriesBySubregion[subregion.name]);
-          }
+    const countries = _.reduce(selection.countries, (accum, value, placeName) => {
+      if (value === 'checked' && this.countriesBySubregion[placeName]) {
+        const countries = this.countriesBySubregion[placeName];
+        _.forEach(countries, country => {
+          accum.push(country);
         });
       }
-    });
+      return accum;
+    }, []);
+
     return _(countries)
-      .flatMap()
       .shuffle()
       .slice(0, quantity)
       .value();

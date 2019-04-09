@@ -1,17 +1,10 @@
 <div class="select-countries">
   <div class="select-countries__form">
-    <!-- <app-nested-checkboxes-group
-      [regions]="regions"
-      [allChecked]="allCountriesSelected"
-      imagePath="assets/icons"
-      imageType="svg"
-      (modelChanged)="onCountriesChange($event)"
-      >
-    </app-nested-checkboxes-group> -->
     <app-new-nested-checkboxes-group
       [items]="regions"
-      [allChecked]="true"
       [treeProvider]="treeProvider"
+      [allChecked]="true"
+      (modelChanged)="onCountriesChange($event)"
       imagePath="assets/icons"
       imageType="svg"
       >
@@ -27,5 +20,3 @@
     </app-button>
   </div>
 </div>
-
-

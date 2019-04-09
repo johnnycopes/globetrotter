@@ -10,32 +10,35 @@ import * as _ from 'lodash';
 export class NewNestedCheckboxesGroupComponent<T> implements OnInit {
   @Input() items: T[];
   @Input() treeProvider: TreeProvider<T>;
-  @Input() allChecked?: boolean = true; // Sets all checkboxes to be initially checked or unchecked
+  @Input() allChecked?: boolean; // If true, sets all checkboxes to be initially checked
   @Input() imagePath?: string; // The file path of an image to be displayed next to the nested-checkboxes component up until the name of the file itself (e.g. `assets/icons`)
   @Input() imageType?: string; // The extension that gets concatenated onto the end of the file path (e.g. `svg`)
   @Output() modelChanged = new EventEmitter<CheckboxStates>();
-
-  private checkboxStates: CheckboxStates = {};
+  public checkboxStates: CheckboxStates = {};
 
   constructor() { }
 
   ngOnInit() {
     if (this.allChecked) {
       this.makeAllItemsChecked();
+      this.modelChanged.emit(this.checkboxStates);
     }
   }
 
   onSelectAll() {
     this.checkboxStates = {};
     this.makeAllItemsChecked();
+    this.modelChanged.emit(this.checkboxStates);
   }
 
   onClearAll() {
     this.checkboxStates = {};
+    this.modelChanged.emit(this.checkboxStates);
   }
 
   updateCheckboxStates(checkboxStates: CheckboxStates) {
     this.checkboxStates = _.merge(this.checkboxStates, checkboxStates);
+    this.modelChanged.emit(this.checkboxStates);
   }
 
   private makeAllItemsChecked() {

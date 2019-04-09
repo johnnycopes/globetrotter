@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-
-import { RegionsModel } from '../shared/nested-checkboxes-group/nested-checkboxes-group.component';
+import { CheckboxStates } from '../shared/new-nested-checkboxes/new-nested-checkboxes.component';
 
 export interface Selection {
-  countries: RegionsModel;
+  countries: CheckboxStates;
   quantity: number | undefined;
 }
 
@@ -16,11 +15,7 @@ export class SelectService {
   selectionChanged = new Subject<Selection>();
   private selection: Selection = {
     quantity: 0,
-    countries: {
-      current: 0,
-      total: 0,
-      regions: {}
-    },
+    countries: {},
   };
 
   constructor() { }
@@ -42,7 +37,7 @@ export class SelectService {
     this.selectionChanged.next(this.selection);
   }
 
-  updateCountries(model: RegionsModel) {
+  updateCountries(model: CheckboxStates) {
     this.selection.countries = model;
     this.selectionChanged.next(this.selection);
   }

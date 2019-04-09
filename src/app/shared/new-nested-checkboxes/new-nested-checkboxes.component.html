@@ -18,10 +18,10 @@
     </app-checkbox>
     <app-new-nested-checkboxes class="nested-checkboxes__child"
       *ngFor="let childItem of childItems"
+      [item]="childItem"
+      [treeProvider]="treeProvider"
       [ngModel]="checkboxStates"
       (ngModelChange)="updateAllCheckboxStates($event)"
-      [treeProvider]="treeProvider"
-      [item]="childItem"
     ></app-new-nested-checkboxes>
   </div>
 </div>

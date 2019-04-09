@@ -9,10 +9,9 @@ import { SelectService } from '../select.service';
 })
 export class SelectQuantityComponent implements OnInit {
   quantities: RadioButtonsOption<number | undefined>[];
+  selectedQuantity: RadioButtonsOption<number | undefined>;
 
   constructor(private selectService: SelectService) { }
-
-  public currentlySelectedQuantity: RadioButtonsOption<number>;
 
   ngOnInit() {
     this.quantities = [
@@ -22,16 +21,11 @@ export class SelectQuantityComponent implements OnInit {
       { display: '20', value: 20 },
       { display: 'All', value: undefined }
     ];
-    this.currentlySelectedQuantity = this.quantities[0];
-  }
-
-  onQuantityChange(selectedOption: RadioButtonsOption<number>) {
-    this.currentlySelectedQuantity = selectedOption;
-    this.selectService.updateQuantity(this.currentlySelectedQuantity.value);
+    this.selectedQuantity = this.quantities[0];
   }
 
   onClick() {
+    this.selectService.updateQuantity(this.selectedQuantity.value);
     this.selectService.nextScreen('quantity');
   }
-
 }

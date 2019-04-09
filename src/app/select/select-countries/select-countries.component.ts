@@ -1,9 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import * as _ from 'lodash';
 
 import { CountryService, Region } from 'src/app/country/country.service';
 import { SelectService } from '../select.service';
-import { RegionsModel } from 'src/app/shared/nested-checkboxes-group/nested-checkboxes-group.component';
-import { TreeProvider } from 'src/app/shared/new-nested-checkboxes/new-nested-checkboxes.component';
+import { TreeProvider, CheckboxStates } from 'src/app/shared/new-nested-checkboxes/new-nested-checkboxes.component';
 
 @Component({
   selector: 'app-select-countries',
@@ -12,13 +12,14 @@ import { TreeProvider } from 'src/app/shared/new-nested-checkboxes/new-nested-ch
 })
 export class SelectCountriesComponent implements OnInit {
   allCountriesSelected = true;
-  // canStartQuiz = this.allCountriesSelected;
+  canStartQuiz = this.allCountriesSelected;
   regions: Region[];
   treeProvider: TreeProvider<any> = {
-    getChildItems: (place) => place.subregions || [], // TODO: revisit this later. see if we can enforce this in the treeprovier interface definition once it's no longer <any>
+    getChildItems: (place) => place.subregions || [], // TODO: revisit this later. see if we can enforce this in the TreeProvider interface definition once it's no longer <any>
     getItemDisplayName: (place) => place.name,
     getItemID: (place) => place.name
   };
+  private selectedCountries: CheckboxStates;
 
   constructor(
     private countryService: CountryService,
@@ -29,12 +30,15 @@ export class SelectCountriesComponent implements OnInit {
     this.regions = this.countryService.initializeData();
   }
 
-  onCountriesChange(model: RegionsModel) {
-    this.selectService.updateCountries(model);
-    // this.canStartQuiz = Boolean(model.current);
+  onCountriesChange(model: CheckboxStates) {
+    this.selectedCountries = model;
+    this.canStartQuiz = _(model)
+      .values()
+      .some(checkboxState => checkboxState === 'checked');
   }
 
   onClick() {
+    this.selectService.updateCountries(this.selectedCountries);
     this.selectService.nextScreen('countries');
   }
 }
