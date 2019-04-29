@@ -53,7 +53,6 @@ export class NewNestedCheckboxesComponent<T> implements OnInit, ControlValueAcce
   }
 
   ngOnInit() {
-    const itemID = this.treeProvider.getItemID(this.item);
     this.childItems = this.treeProvider.getChildItems(this.item);
   }
 

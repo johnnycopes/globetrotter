@@ -4,6 +4,7 @@ import * as _ from 'lodash';
 import { CountryService, Region } from 'src/app/country/country.service';
 import { SelectService } from '../select.service';
 import { TreeProvider, CheckboxStates } from 'src/app/shared/new-nested-checkboxes/new-nested-checkboxes.component';
+import { Place, PlacesTreeProvider } from 'src/app/model/places-tree-provider';
 
 @Component({
   selector: 'app-select-countries',
@@ -13,11 +14,7 @@ import { TreeProvider, CheckboxStates } from 'src/app/shared/new-nested-checkbox
 export class SelectCountriesComponent implements OnInit {
   regions: Region[];
   canStartQuiz: boolean;
-  treeProvider: TreeProvider<any> = {
-    getChildItems: (place) => place.subregions || [], // TODO: revisit this later. see if we can enforce this in the TreeProvider interface definition once it's no longer <any>
-    getItemDisplayName: (place) => place.name,
-    getItemID: (place) => place.name
-  };
+  treeProvider: TreeProvider<Place> = new PlacesTreeProvider();
   private selectedCountries: CheckboxStates;
 
   constructor(
@@ -31,9 +28,7 @@ export class SelectCountriesComponent implements OnInit {
 
   onCountriesChange(model: CheckboxStates) {
     this.selectedCountries = model;
-    this.canStartQuiz = _(model)
-      .values()
-      .some(checkboxState => checkboxState === 'checked');
+    this.canStartQuiz = _.some(model, checkboxState => checkboxState === 'checked');
   }
 
   onClick() {
