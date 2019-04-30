@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 import { CountryService, Region } from 'src/app/country/country.service';
 import { SelectService } from '../select.service';
 import { TreeProvider, CheckboxStates } from 'src/app/shared/new-nested-checkboxes/new-nested-checkboxes.component';
-import { Place, PlacesTreeProvider } from 'src/app/model/places-tree-provider';
+import { Place, PlacesTreeProvider } from 'src/app/model/places-tree-provider.class';
 
 @Component({
   selector: 'app-select-countries',

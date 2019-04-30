@@ -2,20 +2,14 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import * as _ from 'lodash';
 
-/*
-1. Make it implement ValueControlAccessor + add the required methods
-2. Add the providers property to the component's decorator definition
-3. Implement the writeValue and registerChange methods, and
-  handle calling the changed function appropriately, and test.
-*/
-
 export interface TreeProvider<T> {
   getChildItems(node: T): T[];
   getItemDisplayName(node: T): string;
   getItemID(node: T): string;
+  getItemTotal?(node: T): number;
 }
 
-export type CheckboxStates = _.Dictionary<string>;
+export type CheckboxStates = _.Dictionary<string>; // "checked", "unchecked", "indeterminate"
 
 @Component({
   selector: 'app-new-nested-checkboxes',
@@ -34,11 +28,18 @@ export class NewNestedCheckboxesComponent<T> implements OnInit, ControlValueAcce
   @Input() firstInstance: boolean;
   public childItems: T[];
   public imageActive: boolean;
-  private checkboxStates: CheckboxStates = {}; // "checked", "unchecked", "indeterminate"
+  private checkboxStates: CheckboxStates = {};
   private onChangeFn: any;
+
+  get current(): number {
+    const itemName = this.treeProvider.getItemID(this.item);
+    const itemTotal = this.treeProvider.getItemTotal(this.item);
+    return _.get(this.checkboxStates, itemName) === 'checked' ? itemTotal : 0;
+  }
 
   writeValue(obj: any): void {
     this.checkboxStates = obj;
+
     if (this.firstInstance && this.checkboxStates) {
       this.updateImageState();
     }
