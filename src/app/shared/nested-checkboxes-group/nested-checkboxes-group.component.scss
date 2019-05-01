@@ -4,7 +4,7 @@
   display: grid;
 }
 
-.total {
+.selection {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -15,7 +15,7 @@
     flex-direction: row;
   }
 
-  &__tally {
+  &__counter {
     display: flex;
     align-items: center;
     font-size: map-get($font-size, 36);
@@ -35,7 +35,7 @@
   }
 }
 
-.regions {
+.items {
   display: grid;
   grid-template-columns: 1fr;
   justify-items: center;

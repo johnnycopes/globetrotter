@@ -1,26 +1,32 @@
-<main class="region">
-  <img class="region__icon"
+<div class="nested-checkboxes"
+  [ngClass]="{'nested-checkboxes--padding': firstInstance}"
+  >
+  <img class="nested-checkboxes__image"
     *ngIf="imagePath"
-    [ngClass]="{'region__icon--inactive': imagePath && regionModel.checkboxState === 'unchecked'}"
+    [ngClass]="{'nested-checkboxes__image--inactive': !imageActive}"
     [src]="imagePath"
-    alt="{{region.name}}"
+    alt="{{itemDisplayName}}"
   />
-  <section class="region__wrapper">
-    <app-checkbox class="region__checkbox"
-      [invertColors]="true"
-      [value]="region.name"
-      [state]="regionModel.checkboxState"
-      (changed)="onRegionChange($event)"
+  <div class="nested-checkboxes__selection">
+    <app-checkbox class="nested-checkboxes__checkbox"
+      [ngClass]="{'nested-checkboxes__checkbox--bold': firstInstance}"
+      [invertColors]="firstInstance"
+      [ngModel]="checkboxStates && checkboxStates[itemID]"
+      (ngModelChange)="updateSelectedCheckboxState($event)"
       >
-      {{region.name}} ({{regionModel.current}} / {{regionModel.total}})
+      {{itemDisplayName}}
+      <ng-template [ngIf]="displayCounters">
+        (<ng-template [ngIf]="current !== undefined">{{current}} / </ng-template>{{total}})
+      </ng-template>
     </app-checkbox>
-    <app-checkbox class="subregion__checkbox"
-      *ngFor="let subregion of region.subregions"
-      [value]="subregion.name"
-      [state]="lookup(subregion).checkboxState"
-      (changed)="onSubregionChange($event, subregion)"
-      >
-      {{subregion.name}} ({{lookup(subregion).total}})
-    </app-checkbox>
-  </section>
-</main>
+    <app-nested-checkboxes class="nested-checkboxes__child"
+      *ngFor="let childItem of childItems"
+      [item]="childItem"
+      [firstInstance]="false"
+      [displayCounters]="displayCounters"
+      [treeProvider]="treeProvider"
+      [ngModel]="checkboxStates"
+      (ngModelChange)="updateAllCheckboxStates($event)"
+    ></app-nested-checkboxes>
+  </div>
+</div>

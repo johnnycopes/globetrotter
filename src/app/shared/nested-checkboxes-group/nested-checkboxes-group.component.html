@@ -1,20 +1,22 @@
-<div class="total">
-  <div class="total__tally">
-    <span class="total__tally-number">
-      {{model.current}} / {{model.total}}&nbsp;
+<div class="selection">
+  <div class="selection__counter"
+    *ngIf="displayCounters"
+    >
+    <span class="selection__counter-number">
+      {{current}} / {{total}}&nbsp;
     </span>
-    <span class="total__tally-text">
+    <span class="selection__counter-text">
       possible countries selected.
     </span>
   </div>
-  <div class="total__buttons">
-    <app-button class="total__select-all"
+  <div class="selection__buttons">
+    <app-button class="selection__select-all"
       buttonStyle="secondary"
       buttonText="Select all"
       (click)="onSelectAll()"
       >
     </app-button>
-    <app-button class="total__clear-all"
+    <app-button class="selection__clear-all"
       buttonStyle="secondary"
       buttonText="Clear all"
       (click)="onClearAll()"
@@ -22,12 +24,14 @@
     </app-button>
   </div>
 </div>
-<div class="regions">
-  <app-nested-checkboxes class="region"
-    *ngFor="let region of regions"
-    [region]="region"
-    [allChecked]="allChecked"
-    imagePath="{{imagePath}}/{{region.name}}.{{imageType}}"
-    (modelChanged)="onModelChange($event)"
+<div class="items">
+  <app-nested-checkboxes class="item"
+    *ngFor="let item of items"
+    [item]="item"
+    [treeProvider]="treeProvider"
+    [displayCounters]="displayCounters"
+    imagePath="{{imagePath}}/{{treeProvider.getItemDisplayName(item)}}.{{imageType}}"
+    [ngModel]="checkboxStates"
+    (ngModelChange)="updateCheckboxStates($event)"
   ></app-nested-checkboxes>
 </div>

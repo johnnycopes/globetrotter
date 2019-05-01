@@ -1,98 +1,138 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import * as _ from 'lodash';
 
-import { Region, Subregion } from 'src/app/country/country.service';
-
-export interface RegionModel {
-  name: string;
-  checkboxState: string;
-  current: number;
-  total: number;
-  subregions: _.Dictionary<SubregionModel>;
+export interface TreeProvider<T> {
+  getChildItems(node: T): T[];
+  getItemDisplayName(node: T): string;
+  getItemID(node: T): string;
+  getItemTotal?(node: T): number;
 }
 
-interface SubregionModel {
-  name: string;
-  checkboxState: string;
-  total: number;
-}
+export type CheckboxStates = _.Dictionary<string>; // "checked", "unchecked", "indeterminate"
 
 @Component({
   selector: 'app-nested-checkboxes',
   templateUrl: './nested-checkboxes.component.html',
-  styleUrls: ['./nested-checkboxes.component.scss']
+  styleUrls: ['./nested-checkboxes.component.scss'],
+  providers: [{
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: NestedCheckboxesComponent,
+    multi: true
+  }]
 })
-export class NestedCheckboxesComponent implements OnInit {
-  @Input() region: Region; // The data used to populate the component create the model
-  @Input() allChecked: boolean; // Sets all checkboxes to be selected or deselected from the start
-  @Input() imagePath?: string; // The file path of an image to be displayed next to the checkboxes
-  @Output() modelChanged = new EventEmitter<RegionModel>();
-  regionModel: RegionModel = {
-    name: '',
-    checkboxState: '',
-    current: 0,
-    total: 0,
-    subregions: {}
-  };
+export class NestedCheckboxesComponent<T> implements OnInit, ControlValueAccessor {
+  @Input() item: T;
+  @Input() treeProvider: TreeProvider<T>;
+  @Input() firstInstance: boolean = true;
+  @Input() displayCounters?: boolean;
+  @Input() imagePath?: string;
+  public itemID: string;
+  public itemDisplayName: string;
+  public childItems: T[];
+  public total: number;
+  private checkboxStates: CheckboxStates = {};
+  private onChangeFn: any;
 
-  constructor() { }
+  get current(): number | undefined {
+    if (this.displayCounters && this.checkboxStates && this.childItems.length) {
+      return this.setCurrent(this.item);
+    }
+  }
+
+  get imageActive(): boolean | undefined {
+    if (this.imagePath && this.checkboxStates) {
+      const currentState = this.checkboxStates[this.itemID];
+      return currentState === 'checked' || currentState === 'indeterminate';
+    }
+  }
 
   ngOnInit() {
-    this.initializeModel(this.allChecked);
+    this.itemID = this.treeProvider.getItemID(this.item);
+    this.itemDisplayName = this.treeProvider.getItemDisplayName(this.item);
+    this.childItems = this.treeProvider.getChildItems(this.item);
+    this.total = this.treeProvider.getItemTotal(this.item);
   }
 
-  initializeModel(allChecked: boolean) {
-    const model = this.regionModel;
-    model.name = this.region.name;
-    model.checkboxState = allChecked ? 'checked' : 'unchecked';
-    model.total = 0;
-    _.forEach(this.region.subregions, (subregion: Subregion) => {
-      model.subregions[subregion.name] = {
-        name: subregion.name,
-        checkboxState: allChecked ? 'checked' : 'unchecked',
-        total: subregion.countries.length
-      };
-      model.total += subregion.countries.length;
+  writeValue(obj: any): void {
+    this.checkboxStates = obj;
+  }
+
+  registerOnChange(fn: any): void {
+    this.onChangeFn = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+
+  }
+
+  updateSelectedCheckboxState(checkboxValue: string) {
+    const newCheckboxStatesDict = {...this.checkboxStates};
+    this.checkboxStates = this.setCheckboxStates(this.item, checkboxValue, newCheckboxStatesDict);
+    this.onChangeFn(this.checkboxStates);
+  }
+
+  updateAllCheckboxStates(newStates: CheckboxStates) {
+    this.checkboxStates = newStates;
+
+    const childCheckboxStateCounts = _.reduce(this.childItems, (accum, childItem) => {
+      const childID = this.treeProvider.getItemID(childItem);
+      const childCheckboxState = this.checkboxStates[childID] || "unchecked"; // set to "unchecked" if undefined
+      return {
+        ...accum,
+        [childCheckboxState]: accum[childCheckboxState] + 1
+      }
+    }, {
+      checked: 0,
+      indeterminate: 0,
+      unchecked: 0
     });
-    model.current = allChecked ? model.total : 0;
 
-    this.modelChanged.emit(model);
-  }
-
-  onRegionChange(newCheckboxState: string) {
-    const model = this.regionModel;
-    model.checkboxState = newCheckboxState;
-    this.region.subregions.forEach(subregion => {
-      model.subregions[subregion.name].checkboxState = newCheckboxState;
-    });
-    model.current = model.checkboxState === 'checked' ? model.total : 0;
-
-    this.modelChanged.emit(model);
-  }
-
-  onSubregionChange(newCheckboxState: string, subregion: Subregion) {
-    const model = this.regionModel;
-    const childModel = model.subregions[subregion.name];
-    childModel.checkboxState = newCheckboxState;
-    model.current = _.reduce(this.region.subregions, (accum, current) => {
-      const childModel = model.subregions[current.name];
-      return childModel.checkboxState === 'checked' ? accum + childModel.total : accum;
-    }, 0);
-
-    if (model.current === 0) {
-      model.checkboxState = 'unchecked';
+    const id = this.treeProvider.getItemID(this.item);
+    if (childCheckboxStateCounts.checked === this.childItems.length) {
+      this.checkboxStates[id] = 'checked';
     }
-    else if (model.current === model.total) {
-      model.checkboxState = 'checked';
+    else if (childCheckboxStateCounts.unchecked === this.childItems.length) {
+      this.checkboxStates[id] = 'unchecked';
     }
     else {
-      model.checkboxState = 'indeterminate';
+      this.checkboxStates[id] = 'indeterminate';
     }
 
-    this.modelChanged.emit(model);
+    this.onChangeFn(this.checkboxStates);
   }
 
-  lookup(subregion: Subregion): SubregionModel {
-    return this.regionModel.subregions[subregion.name];
+  private setCheckboxStates(item: T, checkboxValue: string, checkboxStates: CheckboxStates): CheckboxStates {
+    const itemID = this.treeProvider.getItemID(item);
+    checkboxStates[itemID] = checkboxValue;
+
+    const childItems = this.treeProvider.getChildItems(item);
+    if (childItems.length) {
+      for (let child of childItems) {
+        this.setCheckboxStates(child, checkboxValue, checkboxStates);
+      }
+    }
+
+    return checkboxStates;
   }
+
+  private setCurrent(item: T): number {
+    const checkboxState = this.checkboxStates[this.treeProvider.getItemID(item)];
+    if (checkboxState === 'checked') {
+      return this.total;
+    }
+    else {
+      const childItems = this.treeProvider.getChildItems(item);
+      return _.reduce(childItems, (accum, childItem) => {
+        const childCheckboxState = this.checkboxStates[this.treeProvider.getItemID(childItem)];
+        if (childCheckboxState === 'checked') {
+          return accum + this.treeProvider.getItemTotal(childItem);
+        }
+        else {
+          return accum + this.setCurrent(childItem);
+        }
+      }, 0);
+    }
+  }
+
 }

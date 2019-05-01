@@ -3,8 +3,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NestedCheckboxesGroupComponent } from './nested-checkboxes-group.component';
 
 describe('NestedCheckboxesGroupComponent', () => {
-  let component: NestedCheckboxesGroupComponent;
-  let fixture: ComponentFixture<NestedCheckboxesGroupComponent>;
+  let component: NestedCheckboxesGroupComponent<any>;
+  let fixture: ComponentFixture<NestedCheckboxesGroupComponent<any>>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

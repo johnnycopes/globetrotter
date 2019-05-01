@@ -1,59 +1,77 @@
-import { Component, Input, Output, EventEmitter, ViewChildren, QueryList, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, QueryList, ViewChildren } from '@angular/core';
 import * as _ from 'lodash';
 
-import { NestedCheckboxesComponent, RegionModel } from '../nested-checkboxes/nested-checkboxes.component';
-import { Region } from 'src/app/country/country.service';
-
-export interface RegionsModel {
-  current: number;
-  total: number;
-  regions: _.Dictionary<RegionModel>;
-}
+import { TreeProvider, CheckboxStates, NestedCheckboxesComponent } from '../nested-checkboxes/nested-checkboxes.component';
 
 @Component({
   selector: 'app-nested-checkboxes-group',
   templateUrl: './nested-checkboxes-group.component.html',
   styleUrls: ['./nested-checkboxes-group.component.scss']
 })
-export class NestedCheckboxesGroupComponent {
-  @Input() regions: Region[]; // The data to be iterated over and passed into the individual nested-checkboxes components, which each control their own model
-  @Input() allChecked?: boolean = true; // Sets all checkboxes to be selected or deselected from the start
+export class NestedCheckboxesGroupComponent<T> implements OnInit {
+  @Input() items: T[];
+  @Input() treeProvider: TreeProvider<T>;
+  @Input() allChecked?: boolean; // If true, sets all checkboxes to be initially checked
+  @Input() displayCounters: boolean;
   @Input() imagePath?: string; // The file path of an image to be displayed next to the nested-checkboxes component up until the name of the file itself (e.g. `assets/icons`)
   @Input() imageType?: string; // The extension that gets concatenated onto the end of the file path (e.g. `svg`)
-  @Output() modelChanged = new EventEmitter<RegionsModel>();
-  @ViewChildren(NestedCheckboxesComponent) nestedCheckboxesComponents: QueryList<NestedCheckboxesComponent>
-  model: RegionsModel = {
-    current: 0,
-    total: 0,
-    regions: {}
-  };
+  @Output() modelChanged = new EventEmitter<CheckboxStates>();
+  @ViewChildren(NestedCheckboxesComponent) nestedCheckboxesComponents: QueryList<NestedCheckboxesComponent<T>>;
+  public checkboxStates: CheckboxStates = {};
+  public current: number = 0;
+  public total: number;
 
   constructor() { }
 
+  ngOnInit() {
+    this.total = _.reduce(this.items, (accum, current) => accum + this.treeProvider.getItemTotal(current), 0);
+    if (this.allChecked) {
+      this.current = this.total;
+      this.makeAllItemsChecked();
+    }
+    this.modelChanged.emit(this.checkboxStates);
+  }
+
   onSelectAll() {
-    this.model.regions = {};
-    this.nestedCheckboxesComponents.forEach(instance => instance.initializeModel(true));
+    this.current = this.total;
+    this.checkboxStates = {};
+    this.makeAllItemsChecked();
+    this.modelChanged.emit(this.checkboxStates);
   }
 
   onClearAll() {
-    this.model.regions = {};
-    this.nestedCheckboxesComponents.forEach(instance => instance.initializeModel(false));
+    this.current = 0;
+    this.checkboxStates = {};
+    this.modelChanged.emit(this.checkboxStates);
   }
 
-  onModelChange(model: RegionModel) {
-    this.model.regions[model.name] = model;
+  updateCheckboxStates(checkboxStates: CheckboxStates) {
+    this.current = this.setCurrent();
+    this.checkboxStates = _.merge(this.checkboxStates, checkboxStates);
+    this.modelChanged.emit(this.checkboxStates);
+  }
 
-    // once all models have been sent up from the children components, calculate the tally of currently-selected and total options and emit the completed model a single time
-    if (Object.keys(this.model.regions).length === this.regions.length) {
-      const tally = _.reduce(this.model.regions, (accum, current) => {
-        accum.current += current.current;
-        accum.total += current.total;
-        return accum;
-      }, {current: 0, total: 0});
-      this.model.current = tally.current;
-      this.model.total = tally.total;
+  private makeAllItemsChecked() {
+    _.forEach(this.items, (item => {
+      this.makeItemChecked(item);
+    }));
+  }
 
-      this.modelChanged.emit(this.model);
+  private makeItemChecked(item: T) {
+    const id = this.treeProvider.getItemID(item);
+    this.checkboxStates[id] = 'checked';
+
+    const children = this.treeProvider.getChildItems(item);
+    if (!children.length) {
+      return;
     }
+
+    _.forEach(children, child => {
+      this.makeItemChecked(child);
+    });
+  }
+
+  private setCurrent() {
+    return this.nestedCheckboxesComponents.reduce((accum, component) => accum + component.current, 0);
   }
 }

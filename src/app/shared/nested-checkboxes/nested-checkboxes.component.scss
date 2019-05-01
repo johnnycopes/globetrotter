@@ -1,15 +1,19 @@
 @import 'styles';
 
-.region {
+.nested-checkboxes {
   display: flex;
   flex: 0 1 50%;
   align-items: center;
-  padding: map-get($spacing, 16) 0;
   position: relative;
 
-  &__icon {
-    $icon-size: map-get($spacing, 192);
-    width: $icon-size;
+  &--padding {
+    padding: map-get($spacing, 16) 0;
+  }
+
+
+  &__image {
+    $image-size: map-get($spacing, 192);
+    width: $image-size;
     padding-right: 2rem;
 
     &--inactive {
@@ -17,7 +21,7 @@
     }
   }
 
-  &__wrapper {
+  &__selection {
     display: flex;
     flex-direction: column;
     max-width: 300px;
@@ -28,16 +32,15 @@
   }
 
   &__checkbox {
-    font-weight: map-get($font-weight, bold);
     position: relative;
     margin-bottom: map-get($spacing, 4);
+
+    &--bold {
+      font-weight: map-get($font-weight, bold);
+    }
   }
-}
 
-.subregion {
-
-  &__checkbox {
-	  margin-bottom: map-get($spacing, 4);
+  &__child {
     margin-left: map-get($spacing, 24);
   }
 }

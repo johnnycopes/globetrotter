@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { CheckboxStates } from '../shared/new-nested-checkboxes/new-nested-checkboxes.component';
+import { CheckboxStates } from '../shared/nested-checkboxes/nested-checkboxes.component';
 
 export interface Selection {
   countries: CheckboxStates;
