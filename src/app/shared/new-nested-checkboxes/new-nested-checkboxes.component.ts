@@ -25,7 +25,7 @@ export class NewNestedCheckboxesComponent<T> implements OnInit, ControlValueAcce
   @Input() item: T;
   @Input() treeProvider: TreeProvider<T>;
   @Input() firstInstance: boolean = true;
-  @Input() displayCounts?: boolean = true;
+  @Input() displayCounters?: boolean = true;
   @Input() imagePath?: string;
   public itemID: string;
   public itemDisplayName: string;
@@ -35,13 +35,13 @@ export class NewNestedCheckboxesComponent<T> implements OnInit, ControlValueAcce
   private onChangeFn: any;
 
   get current(): number | undefined {
-    if (this.checkboxStates) {
+    if (this.displayCounters && this.checkboxStates && this.childItems.length) {
       return this.setCurrent(this.item);
     }
   }
 
   get imageActive(): boolean | undefined {
-    if (this.imagePath && this.firstInstance && this.checkboxStates) {
+    if (this.imagePath && this.checkboxStates) {
       const currentState = this.checkboxStates[this.itemID];
       return currentState === 'checked' || currentState === 'indeterminate';
     }
