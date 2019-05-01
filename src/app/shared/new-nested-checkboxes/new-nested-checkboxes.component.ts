@@ -24,25 +24,38 @@ export type CheckboxStates = _.Dictionary<string>; // "checked", "unchecked", "i
 export class NewNestedCheckboxesComponent<T> implements OnInit, ControlValueAccessor {
   @Input() item: T;
   @Input() treeProvider: TreeProvider<T>;
-  @Input() imagePath?: string; // The file path of an image to be displayed next to the checkboxes
-  @Input() firstInstance: boolean;
+  @Input() firstInstance: boolean = true;
+  @Input() displayCounts?: boolean = true;
+  @Input() imagePath?: string;
+  public itemID: string;
+  public itemDisplayName: string;
   public childItems: T[];
-  public imageActive: boolean;
+  public total: number;
   private checkboxStates: CheckboxStates = {};
   private onChangeFn: any;
 
-  get current(): number {
-    const itemName = this.treeProvider.getItemID(this.item);
-    const itemTotal = this.treeProvider.getItemTotal(this.item);
-    return _.get(this.checkboxStates, itemName) === 'checked' ? itemTotal : 0;
+  get current(): number | undefined {
+    if (this.checkboxStates) {
+      return this.setCurrent(this.item);
+    }
+  }
+
+  get imageActive(): boolean | undefined {
+    if (this.imagePath && this.firstInstance && this.checkboxStates) {
+      const currentState = this.checkboxStates[this.itemID];
+      return currentState === 'checked' || currentState === 'indeterminate';
+    }
+  }
+
+  ngOnInit() {
+    this.itemID = this.treeProvider.getItemID(this.item);
+    this.itemDisplayName = this.treeProvider.getItemDisplayName(this.item);
+    this.childItems = this.treeProvider.getChildItems(this.item);
+    this.total = this.treeProvider.getItemTotal(this.item);
   }
 
   writeValue(obj: any): void {
     this.checkboxStates = obj;
-
-    if (this.firstInstance && this.checkboxStates) {
-      this.updateImageState();
-    }
   }
 
   registerOnChange(fn: any): void {
@@ -53,41 +66,33 @@ export class NewNestedCheckboxesComponent<T> implements OnInit, ControlValueAcce
 
   }
 
-  ngOnInit() {
-    this.childItems = this.treeProvider.getChildItems(this.item);
-  }
-
-  updateCheckboxState(checkboxValue: string) {
+  updateSelectedCheckboxState(checkboxValue: string) {
     const newCheckboxStatesDict = {...this.checkboxStates};
-
-    const itemID = this.treeProvider.getItemID(this.item);
-    newCheckboxStatesDict[itemID] = checkboxValue;
-
-    for (let child of this.childItems) {
-      const childID = this.treeProvider.getItemID(child);
-      newCheckboxStatesDict[childID] = checkboxValue;
-    }
-    this.checkboxStates = newCheckboxStatesDict;
+    this.checkboxStates = this.setCheckboxStates(this.item, checkboxValue, newCheckboxStatesDict);
     this.onChangeFn(this.checkboxStates);
-
-    if (this.firstInstance) {
-      this.updateImageState();
-    }
   }
 
   updateAllCheckboxStates(newStates: CheckboxStates) {
     this.checkboxStates = newStates;
 
-    const numberOfSelectedChildren = _.reduce(this.childItems, (accum, current) => {
-      const id = this.treeProvider.getItemID(current);
-      return this.checkboxStates[id] === 'checked' ? accum + 1 : accum;
-    }, 0);
+    const childCheckboxStateCounts = _.reduce(this.childItems, (accum, childItem) => {
+      const childID = this.treeProvider.getItemID(childItem);
+      const childCheckboxState = this.checkboxStates[childID] || "unchecked"; // set to "unchecked" if undefined
+      return {
+        ...accum,
+        [childCheckboxState]: accum[childCheckboxState] + 1
+      }
+    }, {
+      checked: 0,
+      indeterminate: 0,
+      unchecked: 0
+    });
 
     const id = this.treeProvider.getItemID(this.item);
-    if (numberOfSelectedChildren === this.childItems.length) {
+    if (childCheckboxStateCounts.checked === this.childItems.length) {
       this.checkboxStates[id] = 'checked';
     }
-    else if (numberOfSelectedChildren === 0) {
+    else if (childCheckboxStateCounts.unchecked === this.childItems.length) {
       this.checkboxStates[id] = 'unchecked';
     }
     else {
@@ -95,13 +100,39 @@ export class NewNestedCheckboxesComponent<T> implements OnInit, ControlValueAcce
     }
 
     this.onChangeFn(this.checkboxStates);
-    this.updateImageState();
   }
 
-  private updateImageState() {
-    const id = this.treeProvider.getItemID(this.item);
-    const currentState = this.checkboxStates[id];
-    this.imageActive = currentState === 'checked';
+  private setCheckboxStates(item: T, checkboxValue: string, checkboxStates: CheckboxStates): CheckboxStates {
+    const itemID = this.treeProvider.getItemID(item);
+    checkboxStates[itemID] = checkboxValue;
+
+    const childItems = this.treeProvider.getChildItems(item);
+    if (childItems.length) {
+      for (let child of childItems) {
+        this.setCheckboxStates(child, checkboxValue, checkboxStates);
+      }
+    }
+
+    return checkboxStates;
+  }
+
+  private setCurrent(item: T): number {
+    const checkboxState = this.checkboxStates[this.treeProvider.getItemID(item)];
+    if (checkboxState === 'checked') {
+      return this.total;
+    }
+    else {
+      const childItems = this.treeProvider.getChildItems(item);
+      return _.reduce(childItems, (accum, childItem) => {
+        const childCheckboxState = this.checkboxStates[this.treeProvider.getItemID(childItem)];
+        if (childCheckboxState === 'checked') {
+          return accum + this.treeProvider.getItemTotal(childItem);
+        }
+        else {
+          return accum + this.setCurrent(childItem);
+        }
+      }, 0);
+    }
   }
 
 }

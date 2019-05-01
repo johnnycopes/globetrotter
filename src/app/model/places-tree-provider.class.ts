@@ -9,6 +9,8 @@ export class PlacesTreeProvider {
   getChildItems(place: Place): Place[] {
     if (isRegion(place)) {
       return place.subregions;
+    // } else if (isSubregion(place)) {
+    //   return place.countries;
     } else {
       return [];
     }
@@ -20,6 +22,7 @@ export class PlacesTreeProvider {
     } else if (isSubregion(place)) {
       return place.countries.length;
     } else {
+      // return 1;
       return null;
     }
   }

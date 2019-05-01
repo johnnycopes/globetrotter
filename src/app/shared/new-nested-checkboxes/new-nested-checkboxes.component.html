@@ -1,25 +1,25 @@
 <div class="nested-checkboxes"
   [ngClass]="{'nested-checkboxes--padding': firstInstance}"
   >
-  <img class="nested-checkboxes__icon"
+  <img class="nested-checkboxes__image"
     *ngIf="imagePath"
-    [ngClass]="{'nested-checkboxes__icon--inactive': !imageActive}"
+    [ngClass]="{'nested-checkboxes__image--inactive': !imageActive}"
     [src]="imagePath"
-    alt="{{treeProvider.getItemDisplayName(item)}}"
+    alt="{{itemDisplayName}}"
   />
   <div class="nested-checkboxes__selection">
     <app-checkbox class="nested-checkboxes__checkbox"
       [ngClass]="{'nested-checkboxes__checkbox--bold': firstInstance}"
       [invertColors]="firstInstance"
-      [ngModel]="checkboxStates && checkboxStates[treeProvider.getItemID(item)]"
-      (ngModelChange)="updateCheckboxState($event)"
+      [ngModel]="checkboxStates && checkboxStates[itemID]"
+      (ngModelChange)="updateSelectedCheckboxState($event)"
       >
-      {{treeProvider.getItemDisplayName(item)}}
-      ({{current}} / {{treeProvider.getItemTotal(item)}})
+      {{itemDisplayName}} ({{current}} / {{total}})
     </app-checkbox>
     <app-new-nested-checkboxes class="nested-checkboxes__child"
       *ngFor="let childItem of childItems"
       [item]="childItem"
+      [firstInstance]="false"
       [treeProvider]="treeProvider"
       [ngModel]="checkboxStates"
       (ngModelChange)="updateAllCheckboxStates($event)"

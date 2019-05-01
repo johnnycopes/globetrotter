@@ -11,9 +11,9 @@
   }
 
 
-  &__icon {
-    $icon-size: map-get($spacing, 192);
-    width: $icon-size;
+  &__image {
+    $image-size: map-get($spacing, 192);
+    width: $image-size;
     padding-right: 2rem;
 
     &--inactive {

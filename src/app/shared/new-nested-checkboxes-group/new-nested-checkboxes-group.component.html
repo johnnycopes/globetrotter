@@ -27,7 +27,6 @@
   <app-new-nested-checkboxes class="item"
     *ngFor="let item of items"
     [item]="item"
-    [firstInstance]="true"
     imagePath="{{imagePath}}/{{treeProvider.getItemDisplayName(item)}}.{{imageType}}"
     [ngModel]="checkboxStates"
     (ngModelChange)="updateCheckboxStates($event)"
