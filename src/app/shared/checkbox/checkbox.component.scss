@@ -1,18 +1,18 @@
 @import 'styles';
 
-span, label {
-  display: inline-block;
+:host {
+  position: relative;
 }
 
 // the <label> element of the checkbox is used as the container
 .checkbox {
-  position: relative;
-  padding-left: map-get($spacing, 32);
+  display: inline-block;
 
   // create a custom checkbox
   &__element {
     position: absolute;
-    top: 6px;
+    top: 50%;
+	  transform: translateY(-50%);
     left: 0;
     height: 20px;
     width: 20px;
@@ -84,6 +84,8 @@ span, label {
   // create a custom label
   &__label {
     color: map-get($color, medium);
+    font-family: $font-stack;
+    padding-left: map-get($spacing, 32);
 
     &--active {
       color: map-get($color, lightest);

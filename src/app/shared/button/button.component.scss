@@ -9,6 +9,7 @@
   background: map-get($color, lightest);
   font-family: $font-stack;
   font-size: map-get($font-size, 24);
+  border: map-get($border, thin) solid map-get($color, lightest);
   border-radius: map-get($border, radius);
   outline: none;
   cursor: pointer;
@@ -25,7 +26,6 @@
   &--secondary {
     color: map-get($color, lightest);
     background: map-get($color, darkest);
-    border: map-get($border, thin) solid map-get($color, lightest);
 
     &:hover {
       background: lighten(map-get($color, darkest), 10%);

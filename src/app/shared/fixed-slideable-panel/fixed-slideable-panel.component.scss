@@ -9,6 +9,8 @@
   background: map-get($color, dark);
   z-index: map-get($z-index, fixed-slideable-panel);
   transform: translateY(-100vh);
+  font-family: $font-stack;
+  color: map-get($color, lightest);
 
   &__wrapper {
     margin: 0 auto;
@@ -34,6 +36,8 @@
       width: 100%;
       height: 100%;
       display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
 
@@ -48,6 +52,8 @@
       width: 100%;
       height: 100%;
       display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
 

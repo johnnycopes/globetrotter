@@ -7,16 +7,16 @@
 *,
 *::before,
 *::after {
-	box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
   color: map-get($color, lightest);
   background: map-get($color, darkest);
   font-family: $font-stack;
-	font-size: map-get($font-size, 30);
-	font-weight: map-get($font-weight, normal);
+  font-size: map-get($font-size, 30);
+  font-weight: map-get($font-weight, normal);
   line-height: map-get($line-height, 1.5);
   min-height: 100vh;
-	position: relative;
+  position: relative;
 }

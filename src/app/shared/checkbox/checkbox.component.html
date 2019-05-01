@@ -7,10 +7,10 @@
     (change)="onChange()"
     type="checkbox"
     />
-  <span class="checkbox__element"></span>
-  <span class="checkbox__label"
+  <div class="checkbox__element"></div>
+  <div class="checkbox__label"
     [ngClass]="{'checkbox-label--active': state !== 'unchecked'}"
     >
     <ng-content></ng-content>
-  </span>
+  </div>
 </label>
