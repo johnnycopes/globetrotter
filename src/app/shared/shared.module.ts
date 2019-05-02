@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 
 import { ButtonComponent } from './button/button.component';
 import { CheckboxComponent } from './checkbox/checkbox.component';
+import { CounterComponent } from './counter/counter.component';
 import { FixedSlideablePanelComponent } from './fixed-slideable-panel/fixed-slideable-panel.component';
 import { FlipCardComponent } from './flip-card/flip-card.component';
 import { NestedCheckboxesComponent } from './nested-checkboxes/nested-checkboxes.component';
@@ -18,6 +19,7 @@ import { RadioButtonsComponent } from './radio-buttons/radio-buttons.component';
   declarations: [
     ButtonComponent,
     CheckboxComponent,
+    CounterComponent,
     FixedSlideablePanelComponent,
     FlipCardComponent,
     NestedCheckboxesComponent,
@@ -27,6 +29,7 @@ import { RadioButtonsComponent } from './radio-buttons/radio-buttons.component';
   exports: [
     ButtonComponent,
     CheckboxComponent,
+    CounterComponent,
     FixedSlideablePanelComponent,
     FlipCardComponent,
     NestedCheckboxesComponent,

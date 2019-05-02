@@ -25,7 +25,7 @@ export class NestedCheckboxesComponent<T> implements OnInit, ControlValueAccesso
   @Input() item: T;
   @Input() treeProvider: TreeProvider<T>;
   @Input() firstInstance: boolean = true;
-  @Input() displayCounters?: boolean;
+  @Input() showCounters?: boolean;
   @Input() imagePath?: string;
   public itemID: string;
   public itemDisplayName: string;
@@ -35,7 +35,7 @@ export class NestedCheckboxesComponent<T> implements OnInit, ControlValueAccesso
   private onChangeFn: any;
 
   get current(): number | undefined {
-    if (this.displayCounters && this.checkboxStates && this.childItems.length) {
+    if (this.showCounters && this.checkboxStates && this.childItems.length) {
       return this.setCurrent(this.item);
     }
   }

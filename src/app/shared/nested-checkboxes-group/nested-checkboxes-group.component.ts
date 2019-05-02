@@ -12,7 +12,8 @@ export class NestedCheckboxesGroupComponent<T> implements OnInit {
   @Input() items: T[];
   @Input() treeProvider: TreeProvider<T>;
   @Input() allChecked?: boolean; // If true, sets all checkboxes to be initially checked
-  @Input() displayCounters: boolean;
+  @Input() showCounters: boolean;
+  @Input() displayText: string;
   @Input() imagePath?: string; // The file path of an image to be displayed next to the nested-checkboxes component up until the name of the file itself (e.g. `assets/icons`)
   @Input() imageType?: string; // The extension that gets concatenated onto the end of the file path (e.g. `svg`)
   @Output() modelChanged = new EventEmitter<CheckboxStates>();
@@ -20,6 +21,10 @@ export class NestedCheckboxesGroupComponent<T> implements OnInit {
   public checkboxStates: CheckboxStates = {};
   public current: number = 0;
   public total: number;
+
+  get showInfoCounter() {
+    return this.showCounters || this.displayText;
+  }
 
   constructor() { }
 

@@ -14,16 +14,22 @@
       [ngModel]="checkboxStates && checkboxStates[itemID]"
       (ngModelChange)="updateSelectedCheckboxState($event)"
       >
-      {{itemDisplayName}}
-      <ng-template [ngIf]="displayCounters">
-        (<ng-template [ngIf]="current !== undefined">{{current}} / </ng-template>{{total}})
-      </ng-template>
+      <app-counter
+        [current]="current"
+        [total]="total"
+        [text]="itemDisplayName"
+        [boldText]="firstInstance"
+        [boldNumbers]="firstInstance"
+        [wrapNumbers]="true"
+        [textFirst]="true"
+        >
+      </app-counter>
     </app-checkbox>
     <app-nested-checkboxes class="nested-checkboxes__child"
       *ngFor="let childItem of childItems"
       [item]="childItem"
       [firstInstance]="false"
-      [displayCounters]="displayCounters"
+      [showCounters]="showCounters"
       [treeProvider]="treeProvider"
       [ngModel]="checkboxStates"
       (ngModelChange)="updateAllCheckboxStates($event)"

@@ -4,10 +4,11 @@
       [items]="regions"
       [treeProvider]="treeProvider"
       [allChecked]="true"
-      [displayCounters]="true"
-      (modelChanged)="onCountriesChange($event)"
+      [showCounters]="true"
+      displayText="possible countries selected."
       imagePath="assets/icons"
       imageType="svg"
+      (modelChanged)="onCountriesChange($event)"
       >
     </app-nested-checkboxes-group>
   </div>

@@ -4,9 +4,9 @@
   display: grid;
 }
 
-.selection {
+.top {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   flex-direction: column;
   margin-bottom: map-get($spacing, 24);
@@ -15,18 +15,16 @@
     flex-direction: row;
   }
 
+  &--space-between {
+    justify-content: space-between;
+  }
+
   &__counter {
-    display: flex;
-    align-items: center;
     font-size: map-get($font-size, 36);
     margin-bottom: map-get($spacing, 24);
 
     @include large-desktop {
       margin-bottom: 0;
-    }
-
-    &-number {
-      font-weight: map-get($font-weight, bold);
     }
   }
 

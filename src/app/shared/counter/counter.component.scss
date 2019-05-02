@@ -1,0 +1,30 @@
+@import 'styles';
+
+.counter {
+  display: flex;
+  flex-wrap: wrap;
+
+  &__numbers {
+    order: 1;
+  }
+
+  &__space {
+    order: 2;
+  }
+
+  &__text {
+    order: 3;
+  }
+
+  &--bold {
+    font-weight: map-get($font-weight, bold);
+  }
+
+  &--first {
+    order: 1;
+  }
+
+  &--last {
+    order: 3;
+  }
+}
