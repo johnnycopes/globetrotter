@@ -9,8 +9,7 @@ export class ButtonComponent {
   @Input() buttonText: string;
   @Input() buttonType = 'button';
   @Input() buttonStyle: string;
-  @Input() buttonSize?: string;
-  @Input() disabled?: boolean;
+  @Input() disabled: boolean;
   @Output() clicked = new EventEmitter<void>();
 
   constructor() { }
