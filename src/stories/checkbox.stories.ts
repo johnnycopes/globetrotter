@@ -2,52 +2,88 @@ import { storiesOf } from "@storybook/angular";
 import { action } from '@storybook/addon-actions';
 import {
   withKnobs,
-  text,
-  number,
   boolean,
-  array,
   select,
-  radios,
-  color,
-  date,
-  button,
 } from '@storybook/addon-knobs/angular';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
-import { CheckboxComponent } from "src/app/shared/checkbox/checkbox.component";
+import { CounterComponent } from 'src/app/shared/counter/counter.component';
+import { CheckboxComponent } from 'src/app/shared/checkbox/checkbox.component';
+
+const states = ['checked', 'unchecked', 'indeterminate'];
+const actions = {
+  onChange: action('changed!')
+};
 
 storiesOf('Checkbox', module)
   .addDecorator(withKnobs)
   .add('standard', () => {
-    const states = ['checked', 'unchecked', 'indeterminate'];
-    return {
-      component: CheckboxComponent,
-      props: {
-        state: select('state', states, states[2]),
-        invertColors: boolean('invertColors', false),
-        changed: action(`clicked!`)
-      }
-    };
-  })
-  .add('with label', () => {
-    const states = ['checked', 'unchecked', 'indeterminate'];
     return {
       moduleMetadata: {
-        declarations: [CheckboxComponent]
+        declarations: [CheckboxComponent],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA]
       },
       template: `
         <app-checkbox
-          [state]="state"
           [invertColors]="invertColors"
-          (changed)="onClick()"
+          [ngModel]="state"
+          (ngModelChange)="onChange($event)"
           >
-          {{label}}
         </app-checkbox>
       `,
       props: {
-        label: text('label', `I agree to the terms and conditions`),
-        state: select('state', states, 'checked'),
+        state: select('state', states, 'indeterminate'),
         invertColors: boolean('invertColors', false),
-        onClick: action(`clicked!`)
+        onChange: actions.onChange
+      }
+    };
+  })
+  .add('with text', () => {
+    return {
+      moduleMetadata: {
+        declarations: [CheckboxComponent],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      },
+      template: `
+        <app-checkbox
+          [invertColors]="invertColors"
+          ngModel="unchecked"
+          (ngModelChange)="onChange($event)"
+          >
+          I agree to the terms and conditions
+        </app-checkbox>
+      `,
+      props: {
+        state: select('state', states, 'indeterminate'),
+        invertColors: boolean('invertColors', true),
+        onChange: actions.onChange
+      }
+    };
+  })
+  .add('with counter', () => {
+    return {
+      moduleMetadata: {
+        declarations: [CheckboxComponent, CounterComponent],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      },
+      template: `
+        <app-checkbox
+          [invertColors]="invertColors"
+          ngModel="checked"
+          (ngModelChange)="onChange($event)"
+          >
+          <app-counter
+            [total]="15"
+            text="Western Asia"
+            [textFirst]="true"
+            [wrapNumbers]="true"
+            >
+          </app-counter>
+        </app-checkbox>
+      `,
+      props: {
+        invertColors: boolean('invertColors', false),
+        onChange: actions.onChange
       }
     };
   });

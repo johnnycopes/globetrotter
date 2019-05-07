@@ -9,12 +9,13 @@ import {
 
 import { ButtonComponent } from 'src/app/shared/button/button.component';
 
+const buttonText = 'Embark';
+const buttonStyles = ['primary', 'secondary'];
+const disabled = false;
+
 storiesOf('Button', module)
   .addDecorator(withKnobs)
-  .add('primary', () => {
-    const buttonText = 'Embark';
-    const buttonStyles = ['primary', 'secondary'];
-    const disabled = false;
+  .add('standard', () => {
     return {
       component: ButtonComponent,
       props: {
