@@ -3,7 +3,7 @@ import { themes } from '@storybook/theming';
 
 addParameters({
   options: {
-    name: 'Foo',
+    name: 'Globetrotter',
     theme: themes.dark,
     panelPosition: 'bottom'
   },
@@ -16,4 +16,3 @@ function loadStories() {
 }
 
 configure(loadStories, module);
-

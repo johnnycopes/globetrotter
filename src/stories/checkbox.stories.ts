@@ -1,4 +1,4 @@
-import { storiesOf } from "@storybook/angular";
+import { storiesOf, moduleMetadata } from "@storybook/angular";
 import { action } from '@storybook/addon-actions';
 import {
   withKnobs,
@@ -17,12 +17,14 @@ const actions = {
 
 storiesOf('Checkbox', module)
   .addDecorator(withKnobs)
+  .addDecorator(
+    moduleMetadata({
+      declarations: [CheckboxComponent, CounterComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    }),
+  )
   .add('standard', () => {
     return {
-      moduleMetadata: {
-        declarations: [CheckboxComponent],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA]
-      },
       template: `
         <app-checkbox
           [invertColors]="invertColors"
@@ -40,10 +42,6 @@ storiesOf('Checkbox', module)
   })
   .add('with text', () => {
     return {
-      moduleMetadata: {
-        declarations: [CheckboxComponent],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA]
-      },
       template: `
         <app-checkbox
           [invertColors]="invertColors"
@@ -62,10 +60,6 @@ storiesOf('Checkbox', module)
   })
   .add('with counter', () => {
     return {
-      moduleMetadata: {
-        declarations: [CheckboxComponent, CounterComponent],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA]
-      },
       template: `
         <app-checkbox
           [invertColors]="invertColors"

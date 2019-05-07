@@ -1,45 +1,61 @@
-import { storiesOf } from "@storybook/angular";
-import { action } from '@storybook/addon-actions';
+import { storiesOf, moduleMetadata } from "@storybook/angular";
 import {
   withKnobs,
-  text,
-  number,
-  boolean,
-  array,
-  select,
-  radios,
-  color,
-  date,
-  button,
+  select
 } from '@storybook/addon-knobs/angular';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 
 import { FixedSlideablePanelComponent } from "src/app/shared/fixed-slideable-panel/fixed-slideable-panel.component";
 
+const positions = ['offscreen', 'header', 'fullscreen'];
+
 storiesOf('FixedSlideablePanel', module)
   .addDecorator(withKnobs)
-  .add('header', () => {
-    const positions = ['offscreen', 'header', 'fullscreen'];
+  .addDecorator(
+    moduleMetadata({
+      imports: [BrowserAnimationsModule],
+      declarations: [FixedSlideablePanelComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    })
+  )
+  .add('adjustable', () => {
     return {
-      moduleMetadata: {
-        imports: [BrowserAnimationsModule],
-        declarations: [FixedSlideablePanelComponent],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA]
-      },
-      component: FixedSlideablePanelComponent,
       template: `
+        <p>Component hidden (offscreen)</p>
         <app-fixed-slideable-panel [position]="position">
           <app-fixed-slideable-panel-content>
-            I'm the fixed-slideable-panel body content
+            Content section (fullscreen)
           </app-fixed-slideable-panel-content>
           <app-fixed-slideable-panel-header>
-            I'm the fixed-slideable-panel header content
+            Header section (header)
           </app-fixed-slideable-panel-header>
         </app-fixed-slideable-panel>
       `,
       props: {
-        position: select('position', positions, 'header')
+        position: select('position', positions, 'offscreen')
       }
+    };
+  })
+  .add('header', () => {
+    return {
+      template: `
+        <app-fixed-slideable-panel position="header">
+          <app-fixed-slideable-panel-header>
+            Header only
+          </app-fixed-slideable-panel-header>
+        </app-fixed-slideable-panel>
+      `
+    };
+  })
+  .add('fullscreen', () => {
+    return {
+      template: `
+        <app-fixed-slideable-panel position="fullscreen">
+          <app-fixed-slideable-panel-content>
+            Content only
+          </app-fixed-slideable-panel-content>
+        </app-fixed-slideable-panel>
+      `
     };
   });

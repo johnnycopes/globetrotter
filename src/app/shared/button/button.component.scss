@@ -21,6 +21,10 @@
     &:hover {
       background: lighten(map-get($color, lightest), 10%);
     }
+
+    &:disabled {
+      background: map-get($color, medium);
+    }
   }
 
   &--secondary {
@@ -30,10 +34,14 @@
     &:hover {
       background: lighten(map-get($color, darkest), 10%);
     }
+
+    &:disabled {
+      color: map-get($color, medium);
+    }
   }
 
   &:disabled {
-    background: map-get($color, medium);
+    border-color: map-get($color, medium);
     cursor: not-allowed;
   }
 }

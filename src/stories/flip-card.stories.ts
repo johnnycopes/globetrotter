@@ -1,32 +1,27 @@
-import { storiesOf } from "@storybook/angular";
-import { action } from '@storybook/addon-actions';
+import { storiesOf, moduleMetadata } from "@storybook/angular";
 import {
   withKnobs,
-  text,
-  number,
   boolean,
-  array,
-  select,
-  radios,
-  color,
-  date,
-  button,
+  select
 } from '@storybook/addon-knobs/angular';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 
 import { FlipCardComponent } from "src/app/shared/flip-card/flip-card.component";
 
+const sides = ['front', 'back'];
+
 storiesOf('FlipCard', module)
   .addDecorator(withKnobs)
+  .addDecorator(
+    moduleMetadata({
+      imports: [BrowserAnimationsModule],
+      declarations: [FlipCardComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    })
+  )
   .add('standard', () => {
-    const sides = ['front', 'back'];
     return {
-      moduleMetadata: {
-        imports: [BrowserAnimationsModule],
-        declarations: [FlipCardComponent],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA]
-      },
       template: `
         <app-flip-card
           [side]="side"
