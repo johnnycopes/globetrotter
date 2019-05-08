@@ -10,7 +10,7 @@ import { FixedSlideablePanelComponent } from "src/app/shared/fixed-slideable-pan
 
 const positions = ['offscreen', 'header', 'fullscreen'];
 
-storiesOf('FixedSlideablePanel', module)
+storiesOf('Fixed Slideable Panel', module)
   .addDecorator(withKnobs)
   .addDecorator(
     moduleMetadata({

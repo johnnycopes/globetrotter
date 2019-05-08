@@ -1,17 +1,22 @@
-import { storiesOf, moduleMetadata } from "@storybook/angular";
+import { storiesOf, moduleMetadata } from '@storybook/angular';
+import { action } from '@storybook/addon-actions';
 import {
   withKnobs,
   boolean,
   select
 } from '@storybook/addon-knobs/angular';
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
-import { FlipCardComponent } from "src/app/shared/flip-card/flip-card.component";
+import { FlipCardComponent } from 'src/app/shared/flip-card/flip-card.component';
 
 const sides = ['front', 'back'];
+const guesses = ['none', 'correct', 'incorrect'];
+const actions = {
+  onFlip: action('flipped')
+};
 
-storiesOf('FlipCard', module)
+storiesOf('Flip Card', module)
   .addDecorator(withKnobs)
   .addDecorator(
     moduleMetadata({
@@ -24,20 +29,21 @@ storiesOf('FlipCard', module)
     return {
       template: `
         <app-flip-card
+          [canFlip]="canFlip"
           [side]="side"
+          [guess]="guess"
           [disabled]="disabled"
+          (flipped)="onFlip($event)"
           >
           <app-flip-card-front>
-            <img class="quiz-card__flag"
+            <img
               style="max-width: 200px;"
               [src]="country.flag"
               alt="Flag of {{country.name}}"
             />
           </app-flip-card-front>
           <app-flip-card-back>
-            <div class="quiz-card__country">
-              {{country.name}}
-            </div>
+            {{country.name}}
           </app-flip-card-back>
         </app-flip-card>
       `,
@@ -46,9 +52,11 @@ storiesOf('FlipCard', module)
           name: 'United States of America',
           flag: 'https://restcountries.eu/data/usa.svg'
         },
-        side: select('side', sides, 'side'),
+        side: select('side', sides, 'front'),
+        guess: select('guess', guesses, 'none'),
         canFlip: boolean('canFlip', true),
-        disabled: boolean('disabled', false)
-      },
+        disabled: boolean('disabled', false),
+        onFlip: actions.onFlip
+      }
     }
  });

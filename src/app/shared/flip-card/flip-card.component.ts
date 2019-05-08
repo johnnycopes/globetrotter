@@ -47,9 +47,9 @@ import {
   ]
 })
 export class FlipCardComponent implements OnInit {
-  @Input() canFlip = true; // Allows card to be flipped
-  @Input() side = 'front'; // The side of the card to display ('front' or 'back'). Clicking the card will toggle these options
+  @Input() side: string = 'front'; // The side of the card to display ('front' or 'back'). Clicking the card will toggle these options
   @Input() guess: string; // Values of 'correct' and 'incorrect' will trigger animations on the back side
+  @Input() canFlip: boolean = true; // Allows card to be flipped
   @Input() disabled: boolean; // Disables card flip both functionally and visually
   @Output() flipped = new EventEmitter<string>(); // Emits 'side' property value when card is flipped (on click)
 

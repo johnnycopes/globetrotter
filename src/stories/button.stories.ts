@@ -11,7 +11,9 @@ import { ButtonComponent } from 'src/app/shared/button/button.component';
 
 const buttonText = 'Embark';
 const buttonStyles = ['primary', 'secondary'];
-const disabled = false;
+const actions = {
+  clicked: action('clicked')
+};
 
 storiesOf('Button', module)
   .addDecorator(withKnobs)
@@ -21,8 +23,8 @@ storiesOf('Button', module)
       props: {
         buttonText: text('buttonText', buttonText),
         buttonStyle: select('buttonStyle', buttonStyles, 'primary'),
-        disabled: boolean('disabled', disabled),
-        clicked: action('clicked!')
+        disabled: boolean('disabled', false),
+        clicked: actions.clicked
       }
     }
   });

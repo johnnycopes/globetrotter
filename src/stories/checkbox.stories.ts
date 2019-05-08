@@ -5,22 +5,20 @@ import {
   boolean,
   select,
 } from '@storybook/addon-knobs/angular';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { CounterComponent } from 'src/app/shared/counter/counter.component';
 import { CheckboxComponent } from 'src/app/shared/checkbox/checkbox.component';
 
 const states = ['checked', 'unchecked', 'indeterminate'];
 const actions = {
-  onChange: action('changed!')
+  onChange: action('ngModelChanged')
 };
 
 storiesOf('Checkbox', module)
   .addDecorator(withKnobs)
   .addDecorator(
     moduleMetadata({
-      declarations: [CheckboxComponent, CounterComponent],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      declarations: [CheckboxComponent, CounterComponent]
     }),
   )
   .add('standard', () => {

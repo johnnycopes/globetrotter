@@ -24,6 +24,7 @@ export class SelectCountriesComponent implements OnInit {
 
   ngOnInit() {
     this.regions = this.countryService.initializeData();
+    console.log(this.regions);
   }
 
   onCountriesChange(model: CheckboxStates) {
