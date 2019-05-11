@@ -24,7 +24,7 @@ export type CheckboxStates = _.Dictionary<string>; // "checked", "unchecked", "i
 export class NestedCheckboxesComponent<T> implements OnInit, ControlValueAccessor {
   @Input() item: T;
   @Input() treeProvider: TreeProvider<T>;
-  @Input() firstInstance: boolean = true;
+  @Input() firstInstance: boolean = true; // TODO: make this recognized internally and not an input that the user of this component needs to worry about
   @Input() showCounters?: boolean;
   @Input() imagePath?: string;
   public itemID: string;
@@ -36,7 +36,7 @@ export class NestedCheckboxesComponent<T> implements OnInit, ControlValueAccesso
 
   get current(): number | undefined {
     if (this.showCounters && this.checkboxStates && this.childItems.length) {
-      return this.setCurrent(this.item);
+      return this.calculcateCurrent(this.item);
     }
   }
 
@@ -51,7 +51,7 @@ export class NestedCheckboxesComponent<T> implements OnInit, ControlValueAccesso
     this.itemID = this.treeProvider.getItemID(this.item);
     this.itemDisplayName = this.treeProvider.getItemDisplayName(this.item);
     this.childItems = this.treeProvider.getChildItems(this.item);
-    this.total = this.treeProvider.getItemTotal(this.item);
+    this.total = this.showCounters && this.treeProvider.getItemTotal(this.item);
   }
 
   writeValue(obj: any): void {
@@ -116,7 +116,7 @@ export class NestedCheckboxesComponent<T> implements OnInit, ControlValueAccesso
     return checkboxStates;
   }
 
-  private setCurrent(item: T): number {
+  private calculcateCurrent(item: T): number {
     const checkboxState = this.checkboxStates[this.treeProvider.getItemID(item)];
     if (checkboxState === 'checked') {
       return this.total;
@@ -129,7 +129,7 @@ export class NestedCheckboxesComponent<T> implements OnInit, ControlValueAccesso
           return accum + this.treeProvider.getItemTotal(childItem);
         }
         else {
-          return accum + this.setCurrent(childItem);
+          return accum + this.calculcateCurrent(childItem);
         }
       }, 0);
     }

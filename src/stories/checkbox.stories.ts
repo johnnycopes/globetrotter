@@ -21,7 +21,7 @@ storiesOf('Checkbox', module)
       declarations: [CheckboxComponent, CounterComponent]
     }),
   )
-  .add('standard', () => {
+  .add('alone', () => {
     return {
       template: `
         <app-checkbox
@@ -43,14 +43,13 @@ storiesOf('Checkbox', module)
       template: `
         <app-checkbox
           [invertColors]="invertColors"
-          ngModel="unchecked"
+          ngModel="checked"
           (ngModelChange)="onChange($event)"
           >
           I agree to the terms and conditions
         </app-checkbox>
       `,
       props: {
-        state: select('state', states, 'indeterminate'),
         invertColors: boolean('invertColors', true),
         onChange: actions.onChange
       }
@@ -65,8 +64,8 @@ storiesOf('Checkbox', module)
           (ngModelChange)="onChange($event)"
           >
           <app-counter
-            [total]="15"
-            text="Western Asia"
+            [total]="17"
+            text="Western Africa"
             [textFirst]="true"
             [wrapNumbers]="true"
             >

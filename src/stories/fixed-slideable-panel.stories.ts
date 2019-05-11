@@ -19,10 +19,9 @@ storiesOf('Fixed Slideable Panel', module)
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
   )
-  .add('adjustable', () => {
+  .add('offscreen', () => {
     return {
       template: `
-        <p>Component hidden (offscreen)</p>
         <app-fixed-slideable-panel [position]="position">
           <app-fixed-slideable-panel-content>
             Content section (fullscreen)
@@ -40,22 +39,28 @@ storiesOf('Fixed Slideable Panel', module)
   .add('header', () => {
     return {
       template: `
-        <app-fixed-slideable-panel position="header">
+        <app-fixed-slideable-panel [position]="position">
           <app-fixed-slideable-panel-header>
             Header only
           </app-fixed-slideable-panel-header>
         </app-fixed-slideable-panel>
-      `
+      `,
+      props: {
+        position: select('position', positions, 'header')
+      }
     };
   })
   .add('fullscreen', () => {
     return {
       template: `
-        <app-fixed-slideable-panel position="fullscreen">
+        <app-fixed-slideable-panel [position]="position">
           <app-fixed-slideable-panel-content>
             Content only
           </app-fixed-slideable-panel-content>
         </app-fixed-slideable-panel>
-      `
+      `,
+      props: {
+        position: select('position', positions, 'fullscreen')
+      }
     };
   });

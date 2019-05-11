@@ -2,6 +2,7 @@ import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { action } from '@storybook/addon-actions';
 import {
   withKnobs,
+  text,
   boolean,
   object
 } from '@storybook/addon-knobs/angular';
@@ -41,15 +42,17 @@ storiesOf('Nested Checkboxes', module)
           [item]="item"
           [treeProvider]="treeProvider"
           [showCounters]="showCounters"
+          [imagePath]="imagePath"
           [ngModel]="checkboxStates"
           (ngModelChange)="updateCheckboxStates($event)"
         ></app-nested-checkboxes>
       `,
       props: {
+        showCounters: boolean('showCounters', true),
+        imagePath: text('imagePath', 'assets/icons/Miscellaneous.svg'),
+        checkboxStates: object('checkboxStates', noneSelectedDict),
         item: object('item', mockItem),
         treeProvider: treeProvider,
-        showCounters: boolean('showCounters', true),
-        checkboxStates: object('checkboxStates', noneSelectedDict),
         updateCheckboxStates: actions.updateCheckboxStates
       },
     }
@@ -61,15 +64,17 @@ storiesOf('Nested Checkboxes', module)
           [item]="item"
           [treeProvider]="treeProvider"
           [showCounters]="showCounters"
+          [imagePath]="imagePath"
           [ngModel]="checkboxStates"
           (ngModelChange)="updateCheckboxStates($event)"
         ></app-nested-checkboxes>
       `,
       props: {
+        showCounters: boolean('showCounters', true),
+        imagePath: text('imagePath', 'assets/icons/Miscellaneous.svg'),
+        checkboxStates: object('checkboxStates', someSelectedDict),
         item: object('item', mockItem),
         treeProvider: treeProvider,
-        showCounters: boolean('showCounters', true),
-        checkboxStates: object('checkboxStates', someSelectedDict),
         updateCheckboxStates: actions.updateCheckboxStates
       },
     }
@@ -81,15 +86,17 @@ storiesOf('Nested Checkboxes', module)
           [item]="item"
           [treeProvider]="treeProvider"
           [showCounters]="showCounters"
+          [imagePath]="imagePath"
           [ngModel]="checkboxStates"
           (ngModelChange)="updateCheckboxStates($event)"
         ></app-nested-checkboxes>
       `,
       props: {
+        showCounters: boolean('showCounters', true),
+        imagePath: text('imagePath', 'assets/icons/Miscellaneous.svg'),
+        checkboxStates: object('checkboxStates', allSelectedDict),
         item: object('item', mockItem),
         treeProvider: treeProvider,
-        showCounters: boolean('showCounters', true),
-        checkboxStates: object('checkboxStates', allSelectedDict),
         updateCheckboxStates: actions.updateCheckboxStates
       },
     }
