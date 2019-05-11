@@ -10,14 +10,17 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CounterComponent } from 'src/app/shared/counter/counter.component';
 import { CheckboxComponent } from 'src/app/shared/checkbox/checkbox.component';
 import { NestedCheckboxesComponent } from 'src/app/shared/nested-checkboxes/nested-checkboxes.component';
-import { MockTreeProvider } from './mock-tree-provider.class';
-import { MOCK_REGION } from './mock-component-data';
+import { DefaultTreeProvider } from './mock-data/default-tree-provider.class';
+import { MOCK_NESTED_CHECKBOXES_DATA, SOME_SELECTED_DICT, ALL_SELECTED_DICT } from './mock-data/nested-checkboxes.data';
 
 const actions = {
   updateCheckboxStates: action('ngModelChange')
 };
-const treeProvider = new MockTreeProvider;
-const region = MOCK_REGION;
+const treeProvider = new DefaultTreeProvider;
+const mockItem = MOCK_NESTED_CHECKBOXES_DATA;
+const noneSelectedDict = {};
+const someSelectedDict = SOME_SELECTED_DICT;
+const allSelectedDict = ALL_SELECTED_DICT;
 
 storiesOf('Nested Checkboxes', module)
   .addDecorator(withKnobs)
@@ -31,7 +34,7 @@ storiesOf('Nested Checkboxes', module)
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
   )
-  .add('standard', () => {
+  .add('none selected', () => {
     return {
       template: `
         <app-nested-checkboxes
@@ -43,10 +46,50 @@ storiesOf('Nested Checkboxes', module)
         ></app-nested-checkboxes>
       `,
       props: {
-        item: object('item', region),
+        item: object('item', mockItem),
         treeProvider: treeProvider,
         showCounters: boolean('showCounters', true),
-        checkboxStates: object('checkboxStates', {}),
+        checkboxStates: object('checkboxStates', noneSelectedDict),
+        updateCheckboxStates: actions.updateCheckboxStates
+      },
+    }
+  })
+  .add('some selected', () => {
+    return {
+      template: `
+        <app-nested-checkboxes
+          [item]="item"
+          [treeProvider]="treeProvider"
+          [showCounters]="showCounters"
+          [ngModel]="checkboxStates"
+          (ngModelChange)="updateCheckboxStates($event)"
+        ></app-nested-checkboxes>
+      `,
+      props: {
+        item: object('item', mockItem),
+        treeProvider: treeProvider,
+        showCounters: boolean('showCounters', true),
+        checkboxStates: object('checkboxStates', someSelectedDict),
+        updateCheckboxStates: actions.updateCheckboxStates
+      },
+    }
+  })
+  .add('all selected', () => {
+    return {
+      template: `
+        <app-nested-checkboxes
+          [item]="item"
+          [treeProvider]="treeProvider"
+          [showCounters]="showCounters"
+          [ngModel]="checkboxStates"
+          (ngModelChange)="updateCheckboxStates($event)"
+        ></app-nested-checkboxes>
+      `,
+      props: {
+        item: object('item', mockItem),
+        treeProvider: treeProvider,
+        showCounters: boolean('showCounters', true),
+        checkboxStates: object('checkboxStates', allSelectedDict),
         updateCheckboxStates: actions.updateCheckboxStates
       },
     }

@@ -10,8 +10,8 @@
     >
     <span *ngIf="wrapNumbers">(</span>
     <span>
-      <ng-template [ngIf]="current !== undefined">{{current}} / </ng-template>
-      <ng-template [ngIf]="total !== undefined">{{total}}</ng-template>
+      <ng-container *ngIf="current !== undefined">{{current}} / </ng-container>
+      <ng-container *ngIf="total !== undefined">{{total}}</ng-container>
     </span>
     <span *ngIf="wrapNumbers">)</span>
   </span>
