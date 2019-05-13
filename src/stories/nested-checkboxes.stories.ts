@@ -12,10 +12,10 @@ import { CounterComponent } from 'src/app/shared/counter/counter.component';
 import { CheckboxComponent } from 'src/app/shared/checkbox/checkbox.component';
 import { NestedCheckboxesComponent } from 'src/app/shared/nested-checkboxes/nested-checkboxes.component';
 import { DefaultTreeProvider } from './mock-data/default-tree-provider.class';
-import { MOCK_NESTED_CHECKBOXES_DATA, SOME_SELECTED_DICT, ALL_SELECTED_DICT } from './mock-data/nested-checkboxes.data';
+import { MOCK_DATA, SOME_SELECTED_DICT, ALL_SELECTED_DICT } from './mock-data/nested-checkboxes.data';
 
 const treeProvider = new DefaultTreeProvider;
-const mockItem = MOCK_NESTED_CHECKBOXES_DATA;
+const mockItem = MOCK_DATA;
 const noneSelectedDict = {};
 const someSelectedDict = SOME_SELECTED_DICT;
 const allSelectedDict = ALL_SELECTED_DICT;

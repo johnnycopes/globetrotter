@@ -41,7 +41,7 @@ storiesOf('Counter', module)
     return {
       component: CounterComponent,
       props: {
-        text: text('text', 'possible options selected'),
+        text: text('text', 'possible countries selected.'),
         current: number('current', 250),
         total: number('total', 250),
         wrapNumbers: boolean('wrapNumbers', false),

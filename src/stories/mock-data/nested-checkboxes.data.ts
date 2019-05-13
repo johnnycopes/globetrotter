@@ -1,6 +1,6 @@
 import { DefaultItem } from "./default-tree-provider.class";
 
-export const MOCK_NESTED_CHECKBOXES_DATA: DefaultItem = {
+export const MOCK_DATA: DefaultItem = {
   name: "Earth",
   items: [
     {
