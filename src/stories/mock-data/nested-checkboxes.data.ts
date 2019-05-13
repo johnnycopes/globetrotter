@@ -1,42 +1,44 @@
-export const MOCK_NESTED_CHECKBOXES_DATA = {
-  name: "Level 1",
+import { DefaultItem } from "./default-tree-provider.class";
+
+export const MOCK_NESTED_CHECKBOXES_DATA: DefaultItem = {
+  name: "Earth",
   items: [
     {
-      name: "Level 2A",
+      name: "Asia",
       items: [
-        { name: "Level 3A #1" },
-        { name: "Level 3A #2" },
+        { name: "China" },
+        { name: "Taiwan" },
       ]
     },
     {
-      name: "Level 2B",
+      name: "Europe",
       items: [
-        { name: "Level 3B #1" },
-        { name: "Level 3B #2" },
-        { name: "Level 3B #3" },
+        { name: "Germany" },
+        { name: "Italy" },
+        { name: "Spain" },
       ]
     }
   ]
 };
 
 export const SOME_SELECTED_DICT = {
-  "Level 1": "indeterminate",
-  "Level 2A": "indeterminate",
-  "Level 2B": "indeterminate",
-  "Level 3A #1": "unchecked",
-  "Level 3A #2": "checked",
-  "Level 3B #1": "checked",
-  "Level 3B #2": "unchecked",
-  "Level 3B #3": "checked"
+  "Earth": "indeterminate",
+  "Asia": "indeterminate",
+  "Europe": "indeterminate",
+  "China": "unchecked",
+  "Taiwan": "checked",
+  "Germany": "checked",
+  "Italy": "unchecked",
+  "Spain": "checked"
 };
 
 export const ALL_SELECTED_DICT = {
-  "Level 1": "checked",
-  "Level 2A": "checked",
-  "Level 2B": "checked",
-  "Level 3A #1": "checked",
-  "Level 3A #2": "checked",
-  "Level 3B #1": "checked",
-  "Level 3B #2": "checked",
-  "Level 3B #3": "checked"
+  "Earth": "checked",
+  "Asia": "checked",
+  "Europe": "checked",
+  "China": "checked",
+  "Taiwan": "checked",
+  "Germany": "checked",
+  "Italy": "checked",
+  "Spain": "checked"
 };

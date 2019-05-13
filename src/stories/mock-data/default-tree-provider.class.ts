@@ -1,11 +1,11 @@
 import * as _ from 'lodash';
 
-type Item = {
+export type DefaultItem = {
   name: string;
-  items?: Item[];
+  items?: DefaultItem[];
 }
 export class DefaultTreeProvider {
-  getChildItems(item: Item): Item[] {
+  getChildItems(item: DefaultItem): DefaultItem[] {
     if (item.items) {
       return item.items;
     }
@@ -14,7 +14,7 @@ export class DefaultTreeProvider {
     }
   }
 
-  getItemTotal(item: Item): number {
+  getItemTotal(item: DefaultItem): number {
     if (!item.items) {
       return 1;
     }
@@ -23,11 +23,11 @@ export class DefaultTreeProvider {
     }, 0);
   }
 
-  getItemDisplayName(item: Item): string {
+  getItemDisplayName(item: DefaultItem): string {
     return item.name;
   }
 
-  getItemID(item: Item): string {
+  getItemID(item: DefaultItem): string {
     return item.name;
   }
 }

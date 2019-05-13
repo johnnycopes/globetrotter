@@ -20,12 +20,6 @@
     height: map-get($spacing, 192);
   }
 
-  &__input {
-    display: none;
-    position: absolute;
-    left: -100vh;
-  }
-
   &__label {
     width: 100%;
     height: 100%;
@@ -44,7 +38,14 @@
     }
   }
 
-  &__input:checked + .option__label {
+  &__input {
+    display: none;
+    position: absolute;
+    left: -100vh;
+    opacity: 0;
+  }
+
+  &__input:checked ~ .option__label {
     color: map-get($color, lightest);
     border: map-get($border, medium) solid map-get($color, lightest);
     font-weight: map-get($font-weight, bold);

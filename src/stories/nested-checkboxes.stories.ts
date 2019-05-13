@@ -14,14 +14,24 @@ import { NestedCheckboxesComponent } from 'src/app/shared/nested-checkboxes/nest
 import { DefaultTreeProvider } from './mock-data/default-tree-provider.class';
 import { MOCK_NESTED_CHECKBOXES_DATA, SOME_SELECTED_DICT, ALL_SELECTED_DICT } from './mock-data/nested-checkboxes.data';
 
-const actions = {
-  updateCheckboxStates: action('ngModelChange')
-};
 const treeProvider = new DefaultTreeProvider;
 const mockItem = MOCK_NESTED_CHECKBOXES_DATA;
 const noneSelectedDict = {};
 const someSelectedDict = SOME_SELECTED_DICT;
 const allSelectedDict = ALL_SELECTED_DICT;
+const actions = {
+  updateCheckboxStates: action('ngModelChange')
+};
+const template = `
+  <app-nested-checkboxes
+    [item]="item"
+    [treeProvider]="treeProvider"
+    [showCounters]="showCounters"
+    [imagePath]="imagePath"
+    [ngModel]="checkboxStates"
+    (ngModelChange)="updateCheckboxStates($event)"
+  ></app-nested-checkboxes>
+`;
 
 storiesOf('Nested Checkboxes', module)
   .addDecorator(withKnobs)
@@ -37,16 +47,7 @@ storiesOf('Nested Checkboxes', module)
   )
   .add('none selected', () => {
     return {
-      template: `
-        <app-nested-checkboxes
-          [item]="item"
-          [treeProvider]="treeProvider"
-          [showCounters]="showCounters"
-          [imagePath]="imagePath"
-          [ngModel]="checkboxStates"
-          (ngModelChange)="updateCheckboxStates($event)"
-        ></app-nested-checkboxes>
-      `,
+      template,
       props: {
         showCounters: boolean('showCounters', true),
         imagePath: text('imagePath', 'assets/icons/Miscellaneous.svg'),
@@ -59,16 +60,7 @@ storiesOf('Nested Checkboxes', module)
   })
   .add('some selected', () => {
     return {
-      template: `
-        <app-nested-checkboxes
-          [item]="item"
-          [treeProvider]="treeProvider"
-          [showCounters]="showCounters"
-          [imagePath]="imagePath"
-          [ngModel]="checkboxStates"
-          (ngModelChange)="updateCheckboxStates($event)"
-        ></app-nested-checkboxes>
-      `,
+      template,
       props: {
         showCounters: boolean('showCounters', true),
         imagePath: text('imagePath', 'assets/icons/Miscellaneous.svg'),
@@ -81,16 +73,7 @@ storiesOf('Nested Checkboxes', module)
   })
   .add('all selected', () => {
     return {
-      template: `
-        <app-nested-checkboxes
-          [item]="item"
-          [treeProvider]="treeProvider"
-          [showCounters]="showCounters"
-          [imagePath]="imagePath"
-          [ngModel]="checkboxStates"
-          (ngModelChange)="updateCheckboxStates($event)"
-        ></app-nested-checkboxes>
-      `,
+      template,
       props: {
         showCounters: boolean('showCounters', true),
         imagePath: text('imagePath', 'assets/icons/Miscellaneous.svg'),

@@ -1,0 +1,47 @@
+import { storiesOf, moduleMetadata } from "@storybook/angular";
+import { action } from '@storybook/addon-actions';
+import {
+  withKnobs,
+  object,
+  text
+} from '@storybook/addon-knobs/angular';
+
+import { RadioButtonsComponent, RadioButtonsOption } from "src/app/shared/radio-buttons/radio-buttons.component";
+
+const actions = {
+  onChange: action('ngModelChanged')
+};
+const options: RadioButtonsOption<number>[] = [
+  { 'display': '5', 'value': 5 },
+  { 'display': '10', 'value': 10 },
+  { 'display': '15', 'value': 15 },
+  { 'display': '20', 'value': 20 },
+  { 'display': 'All', 'value': undefined }
+];
+
+storiesOf('Radio Buttons', module)
+  .addDecorator(withKnobs)
+  .addDecorator(
+    moduleMetadata({
+      declarations: [RadioButtonsComponent]
+    }),
+  )
+  .add('none selected', () => {
+    return {
+      template: `
+        <app-radio-buttons
+          [text]="text"
+          [options]="options"
+          [ngModel]="selectedOption"
+          (ngModelChange)="onChange($event)"
+          >
+        </app-radio-buttons>
+      `,
+      props: {
+        text: text('text', 'Number of countries to include in the quiz:'),
+        selectedOption: object('selectedOption', {}),
+        options: object('options', options),
+        onChange: actions.onChange
+      }
+    };
+  });

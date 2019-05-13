@@ -6,8 +6,8 @@ import {
   select,
 } from '@storybook/addon-knobs/angular';
 
-import { CounterComponent } from 'src/app/shared/counter/counter.component';
 import { CheckboxComponent } from 'src/app/shared/checkbox/checkbox.component';
+import { CounterComponent } from 'src/app/shared/counter/counter.component';
 
 const states = ['checked', 'unchecked', 'indeterminate'];
 const actions = {

@@ -30,9 +30,10 @@
 
   // hide the default checkbox input
   .checkbox__input {
-    position: absolute;
-    opacity: 0;
     display: none;
+    position: absolute;
+    left: -100vh;
+    opacity: 0;
   }
 
   // make the label text brighter when selected
