@@ -1,10 +1,9 @@
 <button class="button"
   [ngClass]="{
     'button--primary': buttonStyle === 'primary',
-    'button--secondary': buttonStyle === 'secondary',
-    'button--huge': buttonSize === 'huge'
+    'button--secondary': buttonStyle === 'secondary'
   }"
-  [type]="buttonType || 'button'"
+  [type]="buttonType"
   [disabled]="disabled"
   (click)="onClick()"
   >

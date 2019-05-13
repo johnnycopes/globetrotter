@@ -12,7 +12,8 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "storybook": "start-storybook -s ./assets -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "deploy-storybook:win": "npm run build-storybook && cd storybook-static && surge . --domain https://globetrotter-components.surge.sh"
   },
   "jest": {
     "preset": "jest-preset-angular",

@@ -31,7 +31,7 @@ export class NestedCheckboxesComponent<T> implements OnInit, ControlValueAccesso
   public itemDisplayName: string;
   public childItems: T[];
   public total: number;
-  private checkboxStates: CheckboxStates = {};
+  public checkboxStates: CheckboxStates = {};
   private onChangeFn: any;
 
   get current(): number | undefined {
