@@ -60,7 +60,7 @@ storiesOf('Nested Checkboxes Group', module)
         items: object('item', mockItems),
         onModelChange: actions.onModelChange
       },
-    }
+    };
   })
   .add('all selected', () => {
     return {
@@ -75,5 +75,5 @@ storiesOf('Nested Checkboxes Group', module)
         items: object('item', mockItems),
         onModelChange: actions.onModelChange
       },
-    }
+    };
   });

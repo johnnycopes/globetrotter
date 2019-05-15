@@ -59,7 +59,7 @@ storiesOf('Flip Card', module)
         disabled: boolean('disabled', false),
         onFlip: actions.onFlip
       }
-    }
+    };
   })
   .add('back side', () => {
     return {
@@ -75,7 +75,7 @@ storiesOf('Flip Card', module)
         disabled: boolean('disabled', false),
         onFlip: actions.onFlip
       }
-    }
+    };
   })
   .add('correct guess', () => {
     return {
@@ -91,7 +91,7 @@ storiesOf('Flip Card', module)
         disabled: boolean('disabled', false),
         onFlip: actions.onFlip
       }
-    }
+    };
   })
   .add('incorrect guess', () => {
     return {
@@ -107,7 +107,7 @@ storiesOf('Flip Card', module)
         disabled: boolean('disabled', false),
         onFlip: actions.onFlip
       }
-    }
+    };
   })
   .add('disabled', () => {
     return {
@@ -123,5 +123,5 @@ storiesOf('Flip Card', module)
         disabled: boolean('disabled', true),
         onFlip: actions.onFlip
       }
-    }
+    };
   });

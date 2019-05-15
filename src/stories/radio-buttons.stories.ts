@@ -8,6 +8,7 @@ import {
 
 import { RadioButtonsComponent, RadioButtonsOption } from "src/app/shared/radio-buttons/radio-buttons.component";
 
+const sampleText = 'Number of countries to include in the quiz:';
 const actions = {
   onChange: action('ngModelChanged')
 };
@@ -18,6 +19,15 @@ const options: RadioButtonsOption<number>[] = [
   { 'display': '20', 'value': 20 },
   { 'display': 'All', 'value': undefined }
 ];
+const template = `
+  <app-radio-buttons
+    [text]="text"
+    [options]="options"
+    [ngModel]="selectedOption"
+    (ngModelChange)="onChange($event)"
+    >
+  </app-radio-buttons>
+`;
 
 storiesOf('Radio Buttons', module)
   .addDecorator(withKnobs)
@@ -28,18 +38,32 @@ storiesOf('Radio Buttons', module)
   )
   .add('none selected', () => {
     return {
-      template: `
-        <app-radio-buttons
-          [text]="text"
-          [options]="options"
-          [ngModel]="selectedOption"
-          (ngModelChange)="onChange($event)"
-          >
-        </app-radio-buttons>
-      `,
+      template,
       props: {
-        text: text('text', 'Number of countries to include in the quiz:'),
+        text: text('text', sampleText),
         selectedOption: object('selectedOption', {}),
+        options: object('options', options),
+        onChange: actions.onChange
+      }
+    };
+  })
+  .add('first selected', () => {
+    return {
+      template,
+      props: {
+        text: text('text', sampleText),
+        selectedOption: object('selectedOption', options[0]),
+        options: object('options', options),
+        onChange: actions.onChange
+      }
+    };
+  })
+  .add('last selected', () => {
+    return {
+      template,
+      props: {
+        text: text('text', sampleText),
+        selectedOption: object('selectedOption', options[options.length - 1]),
         options: object('options', options),
         onChange: actions.onChange
       }

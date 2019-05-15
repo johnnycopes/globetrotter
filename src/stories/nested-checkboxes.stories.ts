@@ -56,7 +56,7 @@ storiesOf('Nested Checkboxes', module)
         treeProvider: treeProvider,
         updateCheckboxStates: actions.updateCheckboxStates
       },
-    }
+    };
   })
   .add('some selected', () => {
     return {
@@ -69,7 +69,7 @@ storiesOf('Nested Checkboxes', module)
         treeProvider: treeProvider,
         updateCheckboxStates: actions.updateCheckboxStates
       },
-    }
+    };
   })
   .add('all selected', () => {
     return {

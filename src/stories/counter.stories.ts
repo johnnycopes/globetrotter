@@ -21,7 +21,7 @@ storiesOf('Counter', module)
         boldText: boolean('boldText', false),
         textFirst: boolean('textFirst', true)
       }
-    }
+    };
   })
   .add('with text before', () => {
     return {
@@ -35,7 +35,7 @@ storiesOf('Counter', module)
         boldText: boolean('boldText', false),
         textFirst: boolean('textFirst', true)
       }
-    }
+    };
   })
   .add('with text after', () => {
     return {
@@ -49,5 +49,5 @@ storiesOf('Counter', module)
         boldText: boolean('boldText', false),
         textFirst: boolean('textFirst', false)
       }
-    }
+    };
   });

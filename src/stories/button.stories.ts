@@ -36,5 +36,5 @@ storiesOf('Button', module)
         disabled: boolean('disabled', false),
         clicked: actions.clicked
       }
-    }
+    };
   });
