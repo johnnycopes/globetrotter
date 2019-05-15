@@ -79,7 +79,7 @@ export class QuizService extends CountryClass {
   }
 
   private selectCountries(selection: Selection): Country[] {
-    const quantity = selection.quantity;
+    const quantity = selection.quantity || undefined;
     const countries = _.reduce(selection.countries, (accum, value, placeName) => {
       if (value === 'checked' && this.countriesBySubregion[placeName]) {
         const countries = this.countriesBySubregion[placeName];

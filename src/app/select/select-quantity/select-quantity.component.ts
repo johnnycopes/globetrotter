@@ -19,7 +19,7 @@ export class SelectQuantityComponent implements OnInit {
       { display: '10', value: 10 },
       { display: '15', value: 15 },
       { display: '20', value: 20 },
-      { display: 'All', value: undefined }
+      { display: 'All', value: null }
     ];
     this.selectedQuantity = this.quantities[0];
   }
