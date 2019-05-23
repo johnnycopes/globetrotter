@@ -24,9 +24,10 @@
   &__selection {
     display: flex;
     flex-direction: column;
+    width: 300px;
 
     @include large-desktop {
-      max-width: none;
+      width: none;
     }
   }
 

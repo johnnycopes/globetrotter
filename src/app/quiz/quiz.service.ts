@@ -6,13 +6,7 @@ import { Country } from 'src/app/model/country.interface';
 import { Selection } from '../select/select.service';
 import { CountryClass } from 'src/app/country/country.class';
 import { CountryService } from 'src/app/country/country.service';
-
-export interface Quiz {
-  countries: Country[];
-  currentIndex: number;
-  guess: number;
-  accuracy: number;
-}
+import { Quiz } from '../model/quiz.class';
 
 @Injectable({
   providedIn: 'root'
@@ -36,12 +30,7 @@ export class QuizService extends CountryClass {
 
   createQuiz(selection: Selection): void {
     this.countries = this.selectCountries(selection);
-    this.quiz = {
-      countries: _.shuffle(this.countries),
-      currentIndex: 0,
-      guess: 1,
-      accuracy: 0
-    };
+    this.quiz = new Quiz(_.shuffle(this.countries));
     this.pushQuizUpdated();
   }
 
@@ -51,15 +40,22 @@ export class QuizService extends CountryClass {
 
   evaluateGuess(country: Country): boolean {
     const guessedCountry = country;
-    const currentCountry = this.quiz.countries[this.quiz.currentIndex];
+    const currentCountry = this.quiz.getCurrentCountry();
     return guessedCountry === currentCountry;
   }
 
   updateQuiz(correctGuess: boolean): void {
     if (correctGuess) {
-      this.onCorrectGuess();
+      this.quiz.nextCountry();
+      this.quizComplete = this.quiz.checkIfComplete();
+      if (this.quizComplete) {
+        this.quiz.calculateAccuracy();
+        this.pushQuizCompleted();
+      }
     }
-    this.incrementGuessCount();
+    if (!this.quizComplete) {
+      this.quiz.nextGuess();
+    }
     this.pushQuizUpdated();
   }
 
@@ -71,27 +67,12 @@ export class QuizService extends CountryClass {
     this.quizCompleted.next(this.quizComplete);
   }
 
-  private incrementGuessCount(): void {
-    if (!this.quizComplete) {
-      this.quiz.guess++;
-    }
-  }
-
-  private onCorrectGuess() {
-    this.quiz.currentIndex++;
-    if (this.quiz.currentIndex === this.quiz.countries.length) {
-      this.quiz.accuracy = Math.round((this.quiz.countries.length / this.quiz.guess) * 100);
-      this.quizComplete = true;
-      this.pushQuizCompleted();
-    }
-  }
-
   private selectCountries(selection: Selection): Country[] {
     const quantity = selection.quantity || undefined;
     const countries = _.reduce(selection.countries, (accum, value, placeName) => {
       if (value === 'checked' && this.countriesBySubregion[placeName]) {
-        const countries = this.countriesBySubregion[placeName];
-        return _.concat(accum, countries);
+        const selectedCountries = this.countriesBySubregion[placeName];
+        return _.concat(accum, selectedCountries);
       }
       return accum;
     }, []);
