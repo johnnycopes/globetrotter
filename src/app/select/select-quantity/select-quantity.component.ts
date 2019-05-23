@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core'
 ;
 import { RadioButtonsOption } from 'src/app/shared/radio-buttons/radio-buttons.component';
 import { SelectService } from '../select.service';
-import { Pages } from 'src/app/model/pages.enum';
 
 @Component({
   selector: 'app-select-quantity',

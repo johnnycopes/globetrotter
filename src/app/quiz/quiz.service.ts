@@ -11,7 +11,7 @@ export interface Quiz {
   countries: Country[];
   currentIndex: number;
   guess: number;
-  accuracy: number | undefined
+  accuracy: number;
 }
 
 @Injectable({
@@ -40,7 +40,7 @@ export class QuizService extends CountryClass {
       countries: _.shuffle(this.countries),
       currentIndex: 0,
       guess: 1,
-      accuracy: undefined
+      accuracy: 0
     };
     this.pushQuizUpdated();
   }
@@ -56,18 +56,10 @@ export class QuizService extends CountryClass {
   }
 
   updateQuiz(correctGuess: boolean): void {
-    let addGuess = true;
     if (correctGuess) {
-      this.quiz.currentIndex++;
-      if (this.quiz.currentIndex === this.quiz.countries.length) {
-        // if all cards have been guessed, calculate the user's score and display it. do not increment the guess counter
-        addGuess = false;
-        this.quiz.accuracy = Math.round((this.quiz.countries.length / this.quiz.guess) * 100);
-        this.quizComplete = true;
-        this.pushQuizCompleted();
-      }
+      this.onCorrectGuess();
     }
-    this.incrementGuessCount(addGuess);
+    this.incrementGuessCount();
     this.pushQuizUpdated();
   }
 
@@ -79,9 +71,18 @@ export class QuizService extends CountryClass {
     this.quizCompleted.next(this.quizComplete);
   }
 
-  private incrementGuessCount(shouldIncrement: boolean): void {
-    if (shouldIncrement) {
+  private incrementGuessCount(): void {
+    if (!this.quizComplete) {
       this.quiz.guess++;
+    }
+  }
+
+  private onCorrectGuess() {
+    this.quiz.currentIndex++;
+    if (this.quiz.currentIndex === this.quiz.countries.length) {
+      this.quiz.accuracy = Math.round((this.quiz.countries.length / this.quiz.guess) * 100);
+      this.quizComplete = true;
+      this.pushQuizCompleted();
     }
   }
 
@@ -90,9 +91,7 @@ export class QuizService extends CountryClass {
     const countries = _.reduce(selection.countries, (accum, value, placeName) => {
       if (value === 'checked' && this.countriesBySubregion[placeName]) {
         const countries = this.countriesBySubregion[placeName];
-        _.forEach(countries, country => {
-          accum.push(country);
-        });
+        return _.concat(accum, countries);
       }
       return accum;
     }, []);
