@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-
-import { Selection } from './select/select.service';
-import { QuizService } from './quiz/quiz.service';
 import { Subscription } from 'rxjs';
+
+import { Selection, SelectService } from './select/select.service';
+import { QuizService } from './quiz/quiz.service';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +14,10 @@ export class AppComponent implements OnInit, OnDestroy {
   quizCompleted = false;
   quizCompletedSubscription: Subscription;
 
-  constructor(private quizService: QuizService) { }
+  constructor(
+    private selectService: SelectService,
+    private quizService: QuizService
+  ) { }
 
   ngOnInit() {
     this.quizCompletedSubscription = this.quizService.quizCompleted.subscribe(
@@ -33,6 +36,7 @@ export class AppComponent implements OnInit, OnDestroy {
   reset() {
     this.selection = undefined;
     this.quizCompleted = false;
+    this.selectService.reset();
   }
 
   ngOnDestroy() {

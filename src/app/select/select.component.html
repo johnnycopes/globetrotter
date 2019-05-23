@@ -1,15 +1,16 @@
-<main class="select">
-  <div *ngIf="screen === 'home'"
+{{screen$ | async}}
+<main class="select" [ngSwitch]="screen">
+  <div *ngSwitchCase="Pages.home"
     @fadeIn
     >
     <app-select-home></app-select-home>
   </div>
-  <div *ngIf="screen === 'quantity'"
+  <div *ngSwitchCase="Pages.quantity"
     @fadeIn
     >
     <app-select-quantity></app-select-quantity>
   </div>
-  <div *ngIf="screen === 'countries'"
+  <div *ngSwitchCase="Pages.countries"
     @fadeIn
     >
     <app-select-countries></app-select-countries>

@@ -12,7 +12,7 @@ export class SelectHomeComponent {
   constructor(private selectService: SelectService) { }
 
   onClick() {
-    this.selectService.nextScreen('home');
+    this.selectService.nextScreen();
   }
 
 }

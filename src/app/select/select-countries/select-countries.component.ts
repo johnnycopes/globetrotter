@@ -33,6 +33,6 @@ export class SelectCountriesComponent implements OnInit {
 
   onClick() {
     this.selectService.updateCountries(this.selectedCountries);
-    this.selectService.nextScreen('countries');
+    this.selectService.nextScreen();
   }
 }

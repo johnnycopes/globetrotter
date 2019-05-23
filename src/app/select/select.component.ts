@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { Subscription } from 'rxjs';
 
 import { SelectService, Selection } from './select.service';
+import { Pages } from '../model/pages.enum';
 
 @Component({
   selector: 'app-select',
@@ -25,7 +26,8 @@ import { SelectService, Selection } from './select.service';
 })
 export class SelectComponent implements OnInit, OnDestroy {
   @Output() selectionMade = new EventEmitter<Selection>();
-  screen: string = 'home';
+  Pages: typeof Pages = Pages;
+  screen: string;
   screenSubscription: Subscription;
   selection: Selection;
   selectionSubscription: Subscription;
@@ -35,10 +37,8 @@ export class SelectComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.screenSubscription = this.selectService.screenChanged.subscribe(
       (screen) => {
-        if (screen !== 'quiz') {
-          this.screen = screen;
-        }
-        else if (screen === 'quiz') {
+        this.screen = screen;
+        if (this.screen === Pages.quiz) {
           this.selectionMade.emit(this.selection);
         }
       }

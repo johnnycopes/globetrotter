@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { CheckboxStates } from '../shared/nested-checkboxes/nested-checkboxes.component';
+import { Pages } from '../model/pages.enum';
 
 export interface Selection {
   countries: CheckboxStates;
@@ -11,34 +12,53 @@ export interface Selection {
   providedIn: 'root'
 })
 export class SelectService {
-  screenChanged = new Subject<string>();
-  selectionChanged = new Subject<Selection>();
-  private selection: Selection = {
-    quantity: 0,
-    countries: {},
-  };
+  private screen: string;
+  private selection: Selection;
+  screenChanged: BehaviorSubject<string>;
+  selectionChanged: BehaviorSubject<Selection>;
 
-  constructor() { }
-
-  nextScreen(currentScreen: string) {
-    if (currentScreen === 'home') {
-      this.screenChanged.next('quantity');
-    }
-    else if (currentScreen === 'quantity') {
-      this.screenChanged.next('countries');
-    }
-    else if (currentScreen === 'countries') {
-      this.screenChanged.next('quiz');
-    }
+  constructor() {
+    this.reset();
   }
 
-  updateQuantity(quantity: number) {
+  reset(): void {
+    this.screen = Pages.home;
+    this.selection = {
+      quantity: 0,
+      countries: {},
+    };
+    this.screenChanged = new BehaviorSubject<string>(this.screen);
+    this.selectionChanged = new BehaviorSubject<Selection>(this.selection);
+  }
+
+  nextScreen(): void {
+    if (this.screen === Pages.home) {
+      this.screen = Pages.quantity;
+    }
+    else if (this.screen === Pages.quantity) {
+      this.screen = Pages.countries;
+    }
+    else if (this.screen === Pages.countries) {
+      this.screen = Pages.quiz;
+    }
+    this.pushCurrentScreen();
+  }
+
+  updateQuantity(quantity: number): void {
     this.selection.quantity = quantity;
-    this.selectionChanged.next(this.selection);
+    this.pushCurrentSelection();
   }
 
-  updateCountries(model: CheckboxStates) {
+  updateCountries(model: CheckboxStates): void {
     this.selection.countries = model;
+    this.pushCurrentSelection();
+  }
+
+  private pushCurrentScreen(): void {
+    this.screenChanged.next(this.screen);
+  }
+
+  private pushCurrentSelection(): void {
     this.selectionChanged.next(this.selection);
   }
 }
