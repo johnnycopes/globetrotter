@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import * as _ from 'lodash';
 
 import { Country } from 'src/app/model/country.interface';
@@ -18,13 +18,20 @@ export interface Quiz {
   providedIn: 'root'
 })
 export class QuizService extends CountryClass {
-  quizUpdated = new Subject<void>();
-  quizCompleted = new Subject<void>();
   private countries: Country[];
   private quiz: Quiz;
+  private quizComplete: boolean;
+  quizUpdated = new BehaviorSubject<Quiz>(this.quiz);
+  quizCompleted = new BehaviorSubject<boolean>(this.quizComplete);
 
   constructor(countryService: CountryService) {
-    super(countryService)
+    super(countryService);
+    this.reset();
+  }
+
+  reset(): void {
+    this.quizComplete = false;
+    this.pushQuizCompleted();
   }
 
   createQuiz(selection: Selection): void {
@@ -35,16 +42,7 @@ export class QuizService extends CountryClass {
       guess: 1,
       accuracy: undefined
     };
-  }
-
-  getQuiz(): Quiz {
-    const quiz: Quiz = {
-      countries: this.quiz.countries,
-      currentIndex: this.quiz.currentIndex,
-      guess: this.quiz.guess,
-      accuracy: this.quiz.accuracy
-    };
-    return quiz;
+    this.pushQuizUpdated();
   }
 
   getCountries(): Country[] {
@@ -65,11 +63,20 @@ export class QuizService extends CountryClass {
         // if all cards have been guessed, calculate the user's score and display it. do not increment the guess counter
         addGuess = false;
         this.quiz.accuracy = Math.round((this.quiz.countries.length / this.quiz.guess) * 100);
-        this.quizCompleted.next();
+        this.quizComplete = true;
+        this.pushQuizCompleted();
       }
     }
     this.incrementGuessCount(addGuess);
-    this.quizUpdated.next();
+    this.pushQuizUpdated();
+  }
+
+  private pushQuizUpdated(): void {
+    this.quizUpdated.next(this.quiz);
+  }
+
+  private pushQuizCompleted(): void {
+    this.quizCompleted.next(this.quizComplete);
   }
 
   private incrementGuessCount(shouldIncrement: boolean): void {

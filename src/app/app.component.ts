@@ -11,7 +11,7 @@ import { QuizService } from './quiz/quiz.service';
 })
 export class AppComponent implements OnInit, OnDestroy {
   selection: Selection;
-  quizCompleted = false;
+  quizCompleted: boolean;
   quizCompletedSubscription: Subscription;
 
   constructor(
@@ -21,7 +21,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.quizCompletedSubscription = this.quizService.quizCompleted.subscribe(
-      () => this.quizCompleted = true
+      (quizCompleted) => this.quizCompleted = quizCompleted
     );
   }
 
@@ -35,7 +35,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   reset() {
     this.selection = undefined;
-    this.quizCompleted = false;
+    this.quizService.reset();
     this.selectService.reset();
   }
 

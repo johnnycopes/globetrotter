@@ -14,8 +14,8 @@ export interface Selection {
 export class SelectService {
   private screen: string;
   private selection: Selection;
-  screenChanged: BehaviorSubject<string>;
-  selectionChanged: BehaviorSubject<Selection>;
+  screenChanged = new BehaviorSubject<string>(this.screen);
+  selectionChanged = new BehaviorSubject<Selection>(this.selection);
 
   constructor() {
     this.reset();
@@ -27,8 +27,8 @@ export class SelectService {
       quantity: 0,
       countries: {},
     };
-    this.screenChanged = new BehaviorSubject<string>(this.screen);
-    this.selectionChanged = new BehaviorSubject<Selection>(this.selection);
+    this.pushScreen();
+    this.pushSelection();
   }
 
   nextScreen(): void {
@@ -41,24 +41,24 @@ export class SelectService {
     else if (this.screen === Pages.countries) {
       this.screen = Pages.quiz;
     }
-    this.pushCurrentScreen();
+    this.pushScreen();
   }
 
   updateQuantity(quantity: number): void {
     this.selection.quantity = quantity;
-    this.pushCurrentSelection();
+    this.pushSelection();
   }
 
   updateCountries(model: CheckboxStates): void {
     this.selection.countries = model;
-    this.pushCurrentSelection();
+    this.pushSelection();
   }
 
-  private pushCurrentScreen(): void {
+  private pushScreen(): void {
     this.screenChanged.next(this.screen);
   }
 
-  private pushCurrentSelection(): void {
+  private pushSelection(): void {
     this.selectionChanged.next(this.selection);
   }
 }

@@ -28,8 +28,8 @@ export class SelectComponent implements OnInit, OnDestroy {
   @Output() selectionMade = new EventEmitter<Selection>();
   Pages: typeof Pages = Pages;
   screen: string;
-  screenSubscription: Subscription;
   selection: Selection;
+  screenSubscription: Subscription;
   selectionSubscription: Subscription;
 
   constructor(private selectService: SelectService) { }

@@ -10,36 +10,38 @@ import { Country } from 'src/app/model/country.interface';
   styleUrls: ['./quiz-menu.component.scss']
 })
 export class QuizMenuComponent implements OnInit, OnDestroy {
-  quizSubscription: Subscription;
   position = 'header';
   countries: Country[];
   currentIndex: number;
   guess: number;
   accuracy: number;
+  quizSubscription: Subscription;
+  quizCompletedSubscription: Subscription;
 
   constructor(private quizService: QuizService) { }
 
   ngOnInit() {
-    this.getQuiz();
     this.quizSubscription = this.quizService.quizUpdated.subscribe(
-      () => this.getQuiz()
+      (quiz) => {
+        const { countries, currentIndex, guess, accuracy } = quiz;
+        this.countries = countries;
+        this.currentIndex = currentIndex;
+        this.guess = guess;
+        this.accuracy = accuracy;
+      }
+    );
+    this.quizCompletedSubscription = this.quizService.quizCompleted.subscribe(
+      (quizCompleted) => {
+        if (quizCompleted) {
+          this.position = 'fullscreen';
+        }
+      }
     );
   }
 
   ngOnDestroy() {
     this.quizSubscription.unsubscribe();
-  }
-
-  private getQuiz() {
-    const { countries, currentIndex, guess, accuracy } = this.quizService.getQuiz();
-    this.countries = countries;
-    this.currentIndex = currentIndex;
-    this.guess = guess;
-    this.accuracy = accuracy;
-
-    if (this.accuracy) {
-      this.position = 'fullscreen';
-    }
+    this.quizCompletedSubscription.unsubscribe();
   }
 
 }
