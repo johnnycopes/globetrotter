@@ -13,7 +13,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 })
 export class CheckboxComponent implements ControlValueAccessor {
   @Input() invertColors: boolean; // If true, swaps the colors used for the checkmark and the checkbox fill
-  public state: string = 'unchecked'; // Can either be 'checked', 'indeterminate', or 'unchecked'
+  public state: 'checked' | 'unchecked' | 'indeterminate' = 'unchecked';
   private onChangeFn: any;
 
   constructor() { }

@@ -24,7 +24,7 @@ export type CheckboxStates = _.Dictionary<string>; // "checked", "unchecked", "i
 export class NestedCheckboxesComponent<T> implements OnInit, ControlValueAccessor {
   @Input() item: T;
   @Input() treeProvider: TreeProvider<T>;
-  @Input() firstInstance: boolean = true; // TODO: make this recognized internally and not an input that the user of this component needs to worry about
+  @Input() firstInstance: boolean = true;
   @Input() showCounters?: boolean;
   @Input() imagePath?: string;
   public itemID: string;
@@ -46,6 +46,8 @@ export class NestedCheckboxesComponent<T> implements OnInit, ControlValueAccesso
       return currentState === 'checked' || currentState === 'indeterminate';
     }
   }
+
+  constructor() { }
 
   ngOnInit() {
     this.itemID = this.treeProvider.getItemID(this.item);

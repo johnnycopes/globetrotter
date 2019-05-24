@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core'
+import * as _ from 'lodash';
 ;
 import { RadioButtonsOption } from 'src/app/shared/radio-buttons/radio-buttons.component';
 import { SelectService } from '../select.service';
@@ -9,8 +10,8 @@ import { SelectService } from '../select.service';
   styleUrls: ['./select-quantity.component.scss']
 })
 export class SelectQuantityComponent implements OnInit {
-  quantities: RadioButtonsOption<number | undefined>[];
-  selectedQuantity: RadioButtonsOption<number | undefined>;
+  quantities: RadioButtonsOption<number | null>[];
+  selectedQuantity: RadioButtonsOption<number | null>;
 
   constructor(private selectService: SelectService) { }
 
@@ -22,7 +23,7 @@ export class SelectQuantityComponent implements OnInit {
       { display: '20', value: 20 },
       { display: 'All', value: null }
     ];
-    this.selectedQuantity = this.quantities[0];
+    this.selectedQuantity = _.clone(this.quantities[0]);
   }
 
   onClick() {

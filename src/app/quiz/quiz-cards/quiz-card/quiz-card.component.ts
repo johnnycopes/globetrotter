@@ -3,6 +3,7 @@ import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core
 import { Country } from 'src/app/model/country.interface';
 import { QuizService } from '../../quiz.service';
 import { FlipCardComponent } from 'src/app/shared/flip-card/flip-card.component';
+import { Animations } from 'src/app/model/animations.enum';
 
 @Component({
   selector: 'app-quiz-card',
@@ -15,37 +16,43 @@ export class QuizCardComponent {
   @Output() flipped = new EventEmitter<boolean>();
   @ViewChild(FlipCardComponent)
   private flipCardComponent: FlipCardComponent;
-  guess: string;
+  guess: 'correct' | 'incorrect' | '';
   disabled: boolean;
 
   constructor(private quizService: QuizService) { }
 
-  onFlip() {
-    // prevent all cards from being flipped
+  async onFlip() {
+    const isGuessCorrect = this.quizService.evaluateGuess(this.country);
     this.flipped.emit(true);
+    await this.wait(Animations.flipCard);
+    this.setCardGuess(isGuessCorrect)
+    await this.wait(Animations.displayCard);
+    this.resetCardGuess();
+    await this.wait(Animations.flipCard);
+    if (isGuessCorrect) {
+      this.disabled = true;
+      await this.wait(Animations.flipCard);
+      this.updateQuiz(isGuessCorrect);
+    }
+    else {
+      this.updateQuiz(isGuessCorrect);
+    }
+  }
 
-    // evaluate guess and pass it to the card after it finishes its flip animation
-    const correctGuess = this.quizService.evaluateGuess(this.country);
-    const correctGuessString = correctGuess ? 'correct' : 'incorrect';
-    setTimeout(() => this.guess = correctGuessString, 300);
+  private setCardGuess(correctGuess: boolean): void {
+    const guessString = correctGuess ? 'correct' : 'incorrect';
+    this.guess = guessString;
+  }
 
-    // flip the card back over and clear guess animation
-    setTimeout(() => {
-      this.flipCardComponent.flip();
-      this.guess = '';
-    }, 1500);
+  private resetCardGuess(): void {
+    this.flipCardComponent.flip();
+    this.guess = '';
+  }
 
-    // disable card if correct guess, update quiz, and allow all cards to be flipped
-    setTimeout(() => {
-      if (correctGuess) {
-        this.disabled = true;
-         // delay updates to allow disabled animation time to finish
-        setTimeout(() => this.updateQuiz(correctGuess), 300);
-      }
-      else {
-        this.updateQuiz(correctGuess);
-      }
-    }, 1800);
+  private wait(ms: number): Promise<void> {
+    return new Promise(resolve => {
+      setTimeout(() => resolve(), ms);
+    });
   }
 
   private updateQuiz(correctGuess: boolean) {

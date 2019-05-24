@@ -11,6 +11,7 @@ import {
 
 import { Country } from 'src/app/model/country.interface';
 import { QuizService } from '../quiz.service';
+import { Animations } from 'src/app/model/animations.enum';
 
 @Component({
   selector: 'app-quiz-cards',
@@ -19,13 +20,13 @@ import { QuizService } from '../quiz.service';
   animations: [
     trigger('stagger', [
       transition(':enter', [
-        query(':enter', stagger('100ms', [animateChild()]))
+        query(':enter', stagger(`${Animations.cardsStagger}ms`, [animateChild()]))
       ])
     ]),
     trigger('fadeIn', [
       transition(':enter', [
         style({ opacity: '0' }),
-        animate('400ms 600ms ease-in-out', style({ opacity: '1' }))
+        animate(`${Animations.cardsFadeIn}ms ${Animations.cardsFadeInDelay}ms ease-in`, style({ opacity: '1' }))
       ])
     ])
   ]

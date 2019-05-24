@@ -29,7 +29,7 @@
     font-size: map-get($font-size, 30);
     border: map-get($border, thin) solid map-get($color, medium);
     color: map-get($color, medium);
-    transition: map-get($transition, fast);
+    transition: map-get($transition, radio-buttons);
     border-radius: map-get($border, radius);
     cursor: pointer;
 

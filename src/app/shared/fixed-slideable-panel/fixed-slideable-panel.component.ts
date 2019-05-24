@@ -6,6 +6,7 @@ import {
   state,
   transition
 } from '@angular/animations';
+import { Animations } from 'src/app/model/animations.enum';
 
 @Component({
   selector: 'app-fixed-slideable-panel',
@@ -25,7 +26,7 @@ import {
         opacity: 1,
         transform: 'translateY(0)'
       })),
-      transition('* => *', animate('500ms ease-in-out'))
+      transition('* => *', animate(`${Animations.fixedSlideablePanel}ms ease-in-out`))
     ])
   ]
 })

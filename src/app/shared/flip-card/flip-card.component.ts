@@ -7,6 +7,8 @@ import {
   transition
 } from '@angular/animations';
 
+import { Animations } from 'src/app/model/animations.enum';
+
 @Component({
   selector: 'app-flip-card',
   templateUrl: './flip-card.component.html',
@@ -19,15 +21,15 @@ import {
       state('back', style({
         transform: 'rotateY(180deg)'
       })),
-      transition('front => back', animate('300ms ease-in')),
-      transition('back => front', animate('300ms ease-out'))
+      transition('front => back', animate(`${Animations.flipCard}ms ease-in`)),
+      transition('back => front', animate(`${Animations.flipCard}ms ease-out`))
     ]),
     trigger('disabled', [
       state('disabled', style({
         filter: 'grayscale(100%)',
         cursor: 'not-allowed'
       })),
-      transition('* => disabled', animate('300ms ease-in'))
+      transition('* => disabled', animate(`${Animations.flipCard}ms ease-in`))
     ]),
     trigger('guess', [
       state('none', style({
@@ -42,7 +44,7 @@ import {
         border: '20px solid crimson',
         padding: '0'
       })),
-      transition('* => *', animate('300ms ease-in'))
+      transition('* => *', animate(`${Animations.flipCard}ms ease-in`))
     ])
   ]
 })

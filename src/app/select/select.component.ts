@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs';
 
 import { SelectService, Selection } from './select.service';
 import { Pages } from '../model/pages.enum';
+import { Animations } from '../model/animations.enum';
 
 @Component({
   selector: 'app-select',
@@ -19,7 +20,7 @@ import { Pages } from '../model/pages.enum';
     trigger('fadeIn', [
       transition(':enter', [
         style({ opacity: '0' }),
-        animate('300ms ease-in', style({ opacity: '1' }))
+        animate(`${Animations.selectFadeIn}ms ease-in`, style({ opacity: '1' }))
       ])
     ])
   ]
@@ -29,7 +30,6 @@ export class SelectComponent implements OnInit, OnDestroy {
   screen: string;
   selection: Selection;
   private screenSubscription: Subscription;
-  private selectionSubscription: Subscription;
 
   constructor(private selectService: SelectService) { }
 
@@ -37,13 +37,9 @@ export class SelectComponent implements OnInit, OnDestroy {
     this.screenSubscription = this.selectService.screenChanged.subscribe(
       (screen) => this.screen = screen
     );
-    this.selectionSubscription = this.selectService.selectionChanged.subscribe(
-      (selection) => this.selection = selection
-    );
   }
 
   ngOnDestroy(): void {
     this.screenSubscription.unsubscribe();
-    this.selectionSubscription.unsubscribe();
   }
 }
