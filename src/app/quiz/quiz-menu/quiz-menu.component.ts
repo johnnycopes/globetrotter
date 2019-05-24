@@ -16,8 +16,8 @@ export class QuizMenuComponent implements OnInit, OnDestroy {
   guess: number;
   accuracy: number;
   quizCompleted: boolean;
-  quizSubscription: Subscription;
-  quizCompletedSubscription: Subscription;
+  private quizSubscription: Subscription;
+  private quizCompletedSubscription: Subscription;
 
   constructor(private quizService: QuizService) { }
 
@@ -29,8 +29,8 @@ export class QuizMenuComponent implements OnInit, OnDestroy {
     this.quizSubscription = this.quizService.quizUpdated.subscribe(
       (quiz) => {
         const { countries, currentIndex, guess, accuracy } = quiz;
-        this.countries = countries;
         this.currentCountry = quiz.getCurrentCountry();
+        this.countries = countries;
         this.currentIndex = currentIndex;
         this.guess = guess;
         this.accuracy = accuracy;

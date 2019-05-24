@@ -1,7 +1,7 @@
 <main class="app">
   <nav class="app__nav">
     <img class="app__nav-home"
-      *ngIf="selection"
+      *ngIf="quizStarted"
       src="assets/icons/Globetrotter.svg"
       [alt]="Home"
       (click)="reset()"
@@ -10,11 +10,7 @@
   <div class="app__content"
     [ngClass]="{'app__content--no-scroll': quizCompleted}"
     >
-    <app-select *ngIf="!selection"
-      (selectionMade)="onSelectionMade($event)"
-    ></app-select>
-    <app-quiz *ngIf="selection"
-      [selection]="selection"
-    ></app-quiz>
+    <app-select *ngIf="!quizStarted"></app-select>
+    <app-quiz *ngIf="quizStarted"></app-quiz>
   </div>
 </main>

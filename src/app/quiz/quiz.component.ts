@@ -1,6 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 
-import { Selection } from '../select/select.service';
+import { SelectService } from '../select/select.service';
 import { QuizService } from './quiz.service';
 
 @Component({
@@ -8,13 +9,21 @@ import { QuizService } from './quiz.service';
   templateUrl: './quiz.component.html',
   styleUrls: ['./quiz.component.scss']
 })
-export class QuizComponent implements OnInit {
-  @Input() selection: Selection;
+export class QuizComponent implements OnInit, OnDestroy {
+  private selectionSubscription: Subscription;
 
-  constructor(private quizService: QuizService) { }
+  constructor(
+    private selectService: SelectService,
+    private quizService: QuizService
+  ) { }
 
-  ngOnInit() {
-    this.quizService.createQuiz(this.selection);
+  ngOnInit(): void {
+    this.selectionSubscription = this.selectService.selectionChanged.subscribe(
+      (selection) => this.quizService.createQuiz(selection)
+    );
   }
 
+  ngOnDestroy(): void {
+    this.selectionSubscription.unsubscribe();
+  }
 }

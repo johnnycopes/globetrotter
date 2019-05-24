@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   trigger,
   style,
@@ -25,30 +25,24 @@ import { Pages } from '../model/pages.enum';
   ]
 })
 export class SelectComponent implements OnInit, OnDestroy {
-  @Output() selectionMade = new EventEmitter<Selection>();
   Pages: typeof Pages = Pages;
   screen: string;
   selection: Selection;
-  screenSubscription: Subscription;
-  selectionSubscription: Subscription;
+  private screenSubscription: Subscription;
+  private selectionSubscription: Subscription;
 
   constructor(private selectService: SelectService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.screenSubscription = this.selectService.screenChanged.subscribe(
-      (screen) => {
-        this.screen = screen;
-        if (this.screen === Pages.quiz) {
-          this.selectionMade.emit(this.selection);
-        }
-      }
+      (screen) => this.screen = screen
     );
     this.selectionSubscription = this.selectService.selectionChanged.subscribe(
       (selection) => this.selection = selection
     );
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.screenSubscription.unsubscribe();
     this.selectionSubscription.unsubscribe();
   }

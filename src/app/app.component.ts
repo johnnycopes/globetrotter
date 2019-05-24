@@ -1,8 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { Selection, SelectService } from './select/select.service';
+import { SelectService } from './select/select.service';
 import { QuizService } from './quiz/quiz.service';
+import { Pages } from './model/pages.enum';
 
 @Component({
   selector: 'app-root',
@@ -10,36 +11,41 @@ import { QuizService } from './quiz/quiz.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, OnDestroy {
-  selection: Selection;
+  quizStarted: boolean;
   quizCompleted: boolean;
-  quizCompletedSubscription: Subscription;
+  private screenChangedSubscription: Subscription;
+  private quizCompletedSubscription: Subscription;
 
   constructor(
     private selectService: SelectService,
     private quizService: QuizService
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
+    this.screenChangedSubscription = this.selectService.screenChanged.subscribe(
+      (screen) => {
+        this.quizStarted = screen === Pages.quiz;
+        if (this.quizStarted) {
+          this.onQuizStarted();
+        }
+      }
+    );
     this.quizCompletedSubscription = this.quizService.quizCompleted.subscribe(
       (quizCompleted) => this.quizCompleted = quizCompleted
     );
   }
 
-  onSelectionMade(selection: Selection) {
-    this.selection = {
-      countries: selection.countries,
-      quantity: selection.quantity
-    };
-    window.scrollTo(0, 0);
+  ngOnDestroy(): void {
+    this.screenChangedSubscription.unsubscribe();
+    this.quizCompletedSubscription.unsubscribe();
   }
 
-  reset() {
-    this.selection = undefined;
+  reset(): void {
     this.quizService.reset();
     this.selectService.reset();
   }
 
-  ngOnDestroy() {
-    this.quizCompletedSubscription.unsubscribe();
+  private onQuizStarted(): void {
+    window.scrollTo(0, 0);
   }
 }
