@@ -8,6 +8,8 @@ import {
 } from '@angular/animations';
 import { Animations } from 'src/app/model/animations.enum';
 
+export type FixedSlideablePanelPosition = 'offscreen' | 'header' | 'fullscreen';
+
 @Component({
   selector: 'app-fixed-slideable-panel',
   templateUrl: './fixed-slideable-panel.component.html',
@@ -31,7 +33,7 @@ import { Animations } from 'src/app/model/animations.enum';
   ]
 })
 export class FixedSlideablePanelComponent {
-  @Input() position: string;
+  @Input() position: FixedSlideablePanelPosition;
 
   constructor() { }
 

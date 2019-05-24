@@ -6,9 +6,9 @@ import {
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 
-import { FixedSlideablePanelComponent } from "src/app/shared/fixed-slideable-panel/fixed-slideable-panel.component";
+import { FixedSlideablePanelComponent, FixedSlideablePanelPosition } from "src/app/shared/fixed-slideable-panel/fixed-slideable-panel.component";
 
-const positions = ['offscreen', 'header', 'fullscreen'];
+const positions: FixedSlideablePanelPosition[] = ['offscreen', 'header', 'fullscreen'];
 
 storiesOf('Fixed Slideable Panel', module)
   .addDecorator(withKnobs)

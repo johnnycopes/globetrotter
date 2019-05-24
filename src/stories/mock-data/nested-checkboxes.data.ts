@@ -1,4 +1,4 @@
-import { DefaultItem } from "./default-tree-provider.class";
+import { DefaultItem } from "./default-item.interface";
 
 export const MOCK_DATA: DefaultItem = {
   name: "Earth",

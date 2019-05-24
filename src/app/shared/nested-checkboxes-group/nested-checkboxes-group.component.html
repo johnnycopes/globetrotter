@@ -1,10 +1,10 @@
 <div class="top"
-  [ngClass]="{'top--space-between': showInfoCounter}"
+  [ngClass]="{'top--space-between': showTopCounter}"
   >
   <app-counter class="top__counter"
-    *ngIf="showInfoCounter"
-    [current]="current"
-    [total]="total"
+    *ngIf="showTopCounter"
+    [current]="showCounters && current"
+    [total]="showCounters && total"
     [text]="displayText"
     [boldNumbers]="true"
     >
@@ -29,8 +29,9 @@
     *ngFor="let item of items"
     [item]="item"
     [treeProvider]="treeProvider"
+    [renderer]="renderer"
     [showCounters]="showCounters"
-    imagePath="{{imagePath}}/{{treeProvider.getItemDisplayName(item)}}.{{imageType}}"
+    [showImage]="showImages"
     [ngModel]="checkboxStates"
     (ngModelChange)="updateCheckboxStates($event)"
   ></app-nested-checkboxes>

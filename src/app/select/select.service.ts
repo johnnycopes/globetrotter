@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+
 import { CheckboxStates } from '../shared/nested-checkboxes/nested-checkboxes.component';
 import { Pages } from '../model/pages.enum';
 

@@ -37,11 +37,11 @@ export class QuizCardsComponent implements OnInit {
 
   constructor(private quizService: QuizService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.countries = this.quizService.getCountries();
   }
 
-  onFlip(cardFlipped: boolean) {
+  onFlip(cardFlipped: boolean): void {
     this.canFlipCards = !cardFlipped;
   }
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, QueryList, ViewChildren } from '@angular/core';
 import * as _ from 'lodash';
 
-import { TreeProvider, CheckboxStates, NestedCheckboxesComponent } from '../nested-checkboxes/nested-checkboxes.component';
+import { NestedCheckboxesComponent, TreeProvider, Renderer, CheckboxStates } from '../nested-checkboxes/nested-checkboxes.component';
 
 @Component({
   selector: 'app-nested-checkboxes-group',
@@ -11,18 +11,18 @@ import { TreeProvider, CheckboxStates, NestedCheckboxesComponent } from '../nest
 export class NestedCheckboxesGroupComponent<T> implements OnInit {
   @Input() items: T[];
   @Input() treeProvider: TreeProvider<T>;
+  @Input() renderer: Renderer<T>;
   @Input() allChecked?: boolean; // If true, sets all checkboxes to be initially checked
   @Input() showCounters: boolean;
+  @Input() showImages: boolean;
   @Input() displayText: string;
-  @Input() imagePath?: string; // The file path of an image to be displayed next to the nested-checkboxes component up until the name of the file itself (e.g. `assets/icons`)
-  @Input() imageType?: string; // The extension that gets concatenated onto the end of the file path (e.g. `svg`)
   @Output() modelChanged = new EventEmitter<CheckboxStates>();
   @ViewChildren(NestedCheckboxesComponent) nestedCheckboxesComponents: QueryList<NestedCheckboxesComponent<T>>;
-  public checkboxStates: CheckboxStates = {};
-  public current: number = 0;
-  public total: number;
+  checkboxStates: CheckboxStates = {};
+  current: number = 0;
+  total: number;
 
-  get showInfoCounter() {
+  get showTopCounter() {
     return this.showCounters || this.displayText;
   }
 

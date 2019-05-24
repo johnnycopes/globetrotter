@@ -1,9 +1,7 @@
 import * as _ from 'lodash';
 
-export type DefaultItem = {
-  name: string;
-  items?: DefaultItem[];
-}
+import { DefaultItem } from './default-item.interface';
+
 export class DefaultTreeProvider {
   getChildItems(item: DefaultItem): DefaultItem[] {
     if (item.items) {

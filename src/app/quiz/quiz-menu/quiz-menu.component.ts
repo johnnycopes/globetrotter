@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 
 import { QuizService } from '../quiz.service';
 import { Country } from 'src/app/model/country.interface';
+import { FixedSlideablePanelPosition } from 'src/app/shared/fixed-slideable-panel/fixed-slideable-panel.component';
 
 @Component({
   selector: 'app-quiz-menu',
@@ -21,7 +22,7 @@ export class QuizMenuComponent implements OnInit, OnDestroy {
 
   constructor(private quizService: QuizService) { }
 
-  get position(): string {
+  get position(): FixedSlideablePanelPosition {
     return this.quizCompleted ? 'fullscreen' : 'header';
   }
 

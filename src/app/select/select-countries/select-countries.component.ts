@@ -3,8 +3,10 @@ import * as _ from 'lodash';
 
 import { CountryService, Region } from 'src/app/country/country.service';
 import { SelectService } from '../select.service';
-import { CheckboxStates, TreeProvider } from 'src/app/shared/nested-checkboxes/nested-checkboxes.component';
-import { Place, PlacesTreeProvider } from 'src/app/model/places-tree-provider.class';
+import { CheckboxStates, TreeProvider, Renderer } from 'src/app/shared/nested-checkboxes/nested-checkboxes.component';
+import { Place } from 'src/app/model/place.type';
+import { PlacesTreeProvider } from 'src/app/model/places-tree-provider.class';
+import { PlacesRenderer } from 'src/app/model/places-renderer.class';
 
 @Component({
   selector: 'app-select-countries',
@@ -15,6 +17,7 @@ export class SelectCountriesComponent implements OnInit {
   regions: Region[];
   canStartQuiz: boolean;
   treeProvider: TreeProvider<Place> = new PlacesTreeProvider();
+  renderer: Renderer<Place> = new PlacesRenderer();
   private selectedCountries: CheckboxStates;
 
   constructor(
