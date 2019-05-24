@@ -5,7 +5,7 @@ import { Pages } from '../model/pages.enum';
 
 export interface Selection {
   countries: CheckboxStates;
-  quantity: number | undefined;
+  quantity: number | null;
 }
 
 @Injectable({

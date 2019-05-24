@@ -1,31 +1,47 @@
 import { Country } from "./country.interface";
 
 export class Quiz {
-  public currentIndex: number = 0;
-  public guess: number = 1;
-  public accuracy: number;
+  private _currentIndex: number = 0;
+  private _guess: number = 1;
+  private _accuracy: number;
 
   constructor(
-    public countries: Country[]
+    private _countries: Country[]
   ) { }
 
+  get currentIndex() {
+    return this._currentIndex;
+  }
+
+  get guess() {
+    return this._guess;
+  }
+
+  get accuracy() {
+    return this._accuracy;
+  }
+
+  get countries() {
+    return this._countries;
+  }
+
   calculateAccuracy(): void {
-    this.accuracy = Math.round((this.countries.length / this.guess) * 100);
+    this._accuracy = Math.round((this._countries.length / this._guess) * 100);
   }
 
   nextCountry(): void {
-    this.currentIndex++;
+    this._currentIndex++;
   }
 
   nextGuess(): void {
-    this.guess++;
+    this._guess++;
   }
 
   checkIfComplete(): boolean {
-    return this.currentIndex === this.countries.length;
+    return this._currentIndex === this._countries.length;
   }
 
   getCurrentCountry(): Country {
-    return this.countries[this.currentIndex];
+    return this._countries[this._currentIndex];
   }
 }

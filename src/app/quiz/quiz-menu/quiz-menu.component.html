@@ -11,13 +11,13 @@
   </app-fixed-slideable-panel-content>
   <app-fixed-slideable-panel-header>
     <div class="quiz-menu__progress"
-      *ngIf="!accuracy"
+      *ngIf="!quizCompleted"
       >
       <h4 class="quiz-menu__progress-tally">
         {{currentIndex}} / {{countries.length}}
       </h4>
       <p class="quiz-menu__progress-prompt">
-        {{countries[currentIndex]?.name}}
+        {{currentCountry?.name}}
       </p>
       <h4 class="quiz-menu__progress-guess">
         Guess #{{guess}}
