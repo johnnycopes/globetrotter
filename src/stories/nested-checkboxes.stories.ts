@@ -5,6 +5,7 @@ import {
   boolean,
   object
 } from '@storybook/addon-knobs/angular';
+import { withNotes } from '@storybook/addon-notes';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { CounterComponent } from 'src/app/shared/counter/counter.component';
@@ -13,7 +14,9 @@ import { NestedCheckboxesComponent } from 'src/app/shared/nested-checkboxes/nest
 import { DefaultTreeProvider } from './mock-data/default-tree-provider.class';
 import { DefaultRenderer } from './mock-data/default-renderer.class';
 import { MOCK_DATA, SOME_SELECTED_DICT, ALL_SELECTED_DICT } from './mock-data/nested-checkboxes.data';
+import { NESTED_CHECKBOXES_NOTES } from './notes/nested-checkboxes';
 
+const markdown = NESTED_CHECKBOXES_NOTES;
 const treeProvider = new DefaultTreeProvider;
 const renderer = new DefaultRenderer;
 const mockItem = MOCK_DATA;
@@ -36,6 +39,7 @@ const template = `
 `;
 
 storiesOf('Nested Checkboxes', module)
+  .addDecorator(withNotes)
   .addDecorator(withKnobs)
   .addDecorator(
     moduleMetadata({
@@ -60,7 +64,7 @@ storiesOf('Nested Checkboxes', module)
         updateCheckboxStates: actions.updateCheckboxStates
       },
     };
-  })
+  }, { notes: { markdown } })
   .add('some selected', () => {
     return {
       template,
@@ -74,7 +78,7 @@ storiesOf('Nested Checkboxes', module)
         updateCheckboxStates: actions.updateCheckboxStates
       },
     };
-  })
+  }, { notes: { markdown } })
   .add('all selected', () => {
     return {
       template,
@@ -88,4 +92,4 @@ storiesOf('Nested Checkboxes', module)
         updateCheckboxStates: actions.updateCheckboxStates
       },
     }
-  });
+  }, { notes: { markdown } });

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import {
   trigger,
   state,
@@ -8,6 +8,9 @@ import {
 } from '@angular/animations';
 
 import { Animations } from 'src/app/model/animations.enum';
+
+export type FlipCardSide = 'front' | 'back';
+export type FlipCardGuess = 'correct' | 'incorrect' | 'none';
 
 @Component({
   selector: 'app-flip-card',
@@ -48,26 +51,23 @@ import { Animations } from 'src/app/model/animations.enum';
     ])
   ]
 })
-export class FlipCardComponent implements OnInit {
-  @Input() side: string = 'front'; // The side of the card to display ('front' or 'back'). Clicking the card will toggle these options
-  @Input() guess: string; // Values of 'correct' and 'incorrect' will trigger animations on the back side
-  @Input() canFlip: boolean = true; // Allows card to be flipped
-  @Input() disabled: boolean; // Disables card flip both functionally and visually
-  @Output() flipped = new EventEmitter<string>(); // Emits 'side' property value when card is flipped (on click)
+export class FlipCardComponent {
+  @Input() side: FlipCardSide = 'front';
+  @Input() guess: FlipCardGuess;
+  @Input() canFlip: boolean = true;
+  @Input() disabled: boolean;
+  @Output() flipped = new EventEmitter<FlipCardSide>();
 
   constructor() { }
 
-  ngOnInit() {
-  }
-
-  onClick() {
+  onClick(): void {
     if (this.canFlip && !this.disabled) {
       this.flip();
       this.flipped.emit(this.side);
     }
   }
 
-  flip() {
+  flip(): void {
     this.side = this.side === 'front' ? 'back' : 'front';
   }
 }

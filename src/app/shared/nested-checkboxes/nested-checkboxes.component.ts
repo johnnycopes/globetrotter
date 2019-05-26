@@ -34,12 +34,12 @@ export class NestedCheckboxesComponent<T> implements OnInit, ControlValueAccesso
   @Input() firstInstance: boolean = true;
   @Input() showCounters?: boolean;
   @Input() showImage?: boolean;
-  itemID: string;
-  itemDisplayName: string;
-  childItems: T[];
-  total: number;
-  imagePath: string;
-  checkboxStates: CheckboxStates = {};
+  public itemID: string;
+  public itemDisplayName: string;
+  public childItems: T[];
+  public total: number;
+  public imagePath: string;
+  public checkboxStates: CheckboxStates = {};
   private onChangeFn: any;
 
   get current(): number | undefined {
@@ -57,7 +57,7 @@ export class NestedCheckboxesComponent<T> implements OnInit, ControlValueAccesso
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.itemID = this.treeProvider.getItemID(this.item);
     this.itemDisplayName = this.treeProvider.getItemDisplayName(this.item);
     this.childItems = this.treeProvider.getChildItems(this.item);
@@ -77,13 +77,13 @@ export class NestedCheckboxesComponent<T> implements OnInit, ControlValueAccesso
 
   }
 
-  updateSelectedCheckboxState(checkboxState: CheckboxState) {
+  updateSelectedCheckboxState(checkboxState: CheckboxState): void {
     const newCheckboxStatesDict = {...this.checkboxStates};
     this.checkboxStates = this.setCheckboxStates(this.item, checkboxState, newCheckboxStatesDict);
     this.onChangeFn(this.checkboxStates);
   }
 
-  updateAllCheckboxStates(newStates: CheckboxStates) {
+  updateAllCheckboxStates(newStates: CheckboxStates): void {
     this.checkboxStates = newStates;
 
     const childCheckboxStateCounts = _.reduce(this.childItems, (accum, childItem) => {

@@ -44,4 +44,8 @@
     border-color: map-get($color, medium);
     cursor: not-allowed;
   }
+
+  &__text {
+    min-height: 40px; // prevent collapse if no text
+  }
 }

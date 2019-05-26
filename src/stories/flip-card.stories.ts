@@ -8,10 +8,10 @@ import {
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
-import { FlipCardComponent } from 'src/app/shared/flip-card/flip-card.component';
+import { FlipCardComponent, FlipCardSide, FlipCardGuess } from 'src/app/shared/flip-card/flip-card.component';
 
-const sides = ['front', 'back'];
-const guesses = ['none', 'correct', 'incorrect'];
+const sides: FlipCardSide[] = ['front', 'back'];
+const guesses: FlipCardGuess[] = ['none', 'correct', 'incorrect'];
 const actions = {
   onFlip: action('flipped')
 };
@@ -24,14 +24,13 @@ const template = `
     (flipped)="onFlip($event)"
     >
     <app-flip-card-front>
-      <img
+      <img src="https://restcountries.eu/data/usa.svg"
         style="max-width: 200px;"
-        [src]="country.flag"
-        alt="Flag of {{country.name}}"
+        alt="USA flag"
       />
     </app-flip-card-front>
     <app-flip-card-back>
-      {{country.name}}
+      United States of America
     </app-flip-card-back>
   </app-flip-card>
 `;
@@ -49,10 +48,6 @@ storiesOf('Flip Card', module)
     return {
       template,
       props: {
-        country: {
-          name: 'United States of America',
-          flag: 'https://restcountries.eu/data/usa.svg'
-        },
         side: select('side', sides, 'front'),
         guess: select('guess', guesses, 'none'),
         canFlip: boolean('canFlip', true),
@@ -65,10 +60,6 @@ storiesOf('Flip Card', module)
     return {
       template,
       props: {
-        country: {
-          name: 'United States of America',
-          flag: 'https://restcountries.eu/data/usa.svg'
-        },
         side: select('side', sides, 'back'),
         guess: select('guess', guesses, 'none'),
         canFlip: boolean('canFlip', true),
@@ -81,10 +72,6 @@ storiesOf('Flip Card', module)
     return {
       template,
       props: {
-        country: {
-          name: 'United States of America',
-          flag: 'https://restcountries.eu/data/usa.svg'
-        },
         side: select('side', sides, 'back'),
         guess: select('guess', guesses, 'correct'),
         canFlip: boolean('canFlip', true),
@@ -97,10 +84,6 @@ storiesOf('Flip Card', module)
     return {
       template,
       props: {
-        country: {
-          name: 'United States of America',
-          flag: 'https://restcountries.eu/data/usa.svg'
-        },
         side: select('side', sides, 'back'),
         guess: select('guess', guesses, 'incorrect'),
         canFlip: boolean('canFlip', true),
@@ -113,10 +96,6 @@ storiesOf('Flip Card', module)
     return {
       template,
       props: {
-        country: {
-          name: 'United States of America',
-          flag: 'https://restcountries.eu/data/usa.svg'
-        },
         side: select('side', sides, 'front'),
         guess: select('guess', guesses, 'none'),
         canFlip: boolean('canFlip', false),

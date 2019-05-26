@@ -14,7 +14,7 @@ export type CheckboxState = 'checked' | 'unchecked' | 'indeterminate';
   }]
 })
 export class CheckboxComponent implements ControlValueAccessor {
-  @Input() invertColors: boolean; // If true, swaps the colors used for the checkmark and the checkbox fill
+  @Input() invertColors: boolean;
   public state: CheckboxState = 'unchecked';
   private onChangeFn: any;
 

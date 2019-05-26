@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core
 
 import { Country } from 'src/app/model/country.interface';
 import { QuizService } from '../../quiz.service';
-import { FlipCardComponent } from 'src/app/shared/flip-card/flip-card.component';
+import { FlipCardComponent, FlipCardGuess } from 'src/app/shared/flip-card/flip-card.component';
 import { Animations } from 'src/app/model/animations.enum';
 
 @Component({
@@ -16,8 +16,8 @@ export class QuizCardComponent {
   @Output() flipped = new EventEmitter<boolean>();
   @ViewChild(FlipCardComponent)
   private flipCardComponent: FlipCardComponent;
-  guess: 'correct' | 'incorrect' | '';
-  disabled: boolean;
+  public guess: FlipCardGuess;
+  public disabled: boolean;
 
   constructor(private quizService: QuizService) { }
 
@@ -40,13 +40,12 @@ export class QuizCardComponent {
   }
 
   private setCardGuess(correctGuess: boolean): void {
-    const guessString = correctGuess ? 'correct' : 'incorrect';
-    this.guess = guessString;
+    this.guess = correctGuess ? 'correct' : 'incorrect';
   }
 
   private resetCardGuess(): void {
     this.flipCardComponent.flip();
-    this.guess = '';
+    this.guess = 'none';
   }
 
   private wait(ms: number): Promise<void> {

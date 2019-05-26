@@ -1,5 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
+export type ButtonStyle = 'primary' | 'secondary';
+
 @Component({
   selector: 'app-button',
   templateUrl: './button.component.html',
@@ -8,7 +10,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 export class ButtonComponent {
   @Input() buttonText: string;
   @Input() buttonType: string = 'button';
-  @Input() buttonStyle: string;
+  @Input() buttonStyle: ButtonStyle;
   @Input() disabled: boolean;
   @Output() clicked = new EventEmitter<void>();
 

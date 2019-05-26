@@ -5,7 +5,7 @@
 - **Application**: https://globetrotter.surge.sh
 - **Component library**: https://globetrotter-components.surge.sh
 
-This is a geography quiz! Test yourself on the national flags from any part(s) of the world that you choose and see receive a score based on your answers. The application is built with [Angular](https://angular.io/) and the component library is built with [Storybook](https://storybook.js.org/).
+This is a geography quiz! Test yourself on the national flags from any part(s) of the world that you choose and receive a score based on your answers. The application is built with [Angular](https://angular.io/) and the component library is built with [Storybook](https://storybook.js.org/).
 
 #### Local installation:
 
