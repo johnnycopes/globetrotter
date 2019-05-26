@@ -14,7 +14,7 @@ const actions = {
   onChange: action('ngModelChanged')
 };
 
-storiesOf('Checkbox', module)
+storiesOf('Shared | Checkbox', module)
   .addDecorator(withKnobs)
   .addDecorator(
     moduleMetadata({

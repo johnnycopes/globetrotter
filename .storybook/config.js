@@ -4,7 +4,6 @@ import GlobetrotterTheme from './globetrotter-theme';
 
 addParameters({
   options: {
-    name: 'Globetrotter',
     theme: GlobetrotterTheme,
     panelPosition: 'bottom'
   }

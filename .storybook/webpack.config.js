@@ -1,10 +1,18 @@
-const path = require('path');
+module.exports = async ({ config, mode }) => {
+  config.devServer = {
+    stats: 'errors-only' // suppresses warnings in the terminal
+  };
 
-module.exports = {
-  devServer: { stats: 'errors-only' }, // suppress unhelpful interface import warnings
-  resolve: {
-    alias: {
-      styles: path.resolve(__dirname, '../src/scss/styles.scss')
-    }
-  }
+  config.module.rules.push({
+    test: /\.stories\.ts?$/,
+    loaders: [
+      {
+        loader: require.resolve('@storybook/addon-storysource/loader'),
+        options: { parser: 'typescript' },
+      },
+    ],
+    enforce: 'pre',
+  });
+
+  return config;
 };

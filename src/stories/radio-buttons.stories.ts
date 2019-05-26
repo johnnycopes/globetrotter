@@ -29,7 +29,7 @@ const template = `
   </app-radio-buttons>
 `;
 
-storiesOf('Radio Buttons', module)
+storiesOf('Shared | Radio Buttons', module)
   .addDecorator(withKnobs)
   .addDecorator(
     moduleMetadata({

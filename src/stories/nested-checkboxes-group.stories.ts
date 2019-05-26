@@ -38,7 +38,7 @@ const template = `
   </app-nested-checkboxes-group>
 `;
 
-storiesOf('Nested Checkboxes Group', module)
+storiesOf('Shared | Nested Checkboxes Group', module)
   .addDecorator(withKnobs)
   .addDecorator(
     moduleMetadata({

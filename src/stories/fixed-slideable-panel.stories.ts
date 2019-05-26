@@ -20,7 +20,7 @@ const template = `
   </app-fixed-slideable-panel>
 `;
 
-storiesOf('Fixed Slideable Panel', module)
+storiesOf('Shared | Fixed Slideable Panel', module)
   .addDecorator(withKnobs)
   .addDecorator(
     moduleMetadata({

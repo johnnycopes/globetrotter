@@ -35,7 +35,7 @@ const template = `
   </app-flip-card>
 `;
 
-storiesOf('Flip Card', module)
+storiesOf('Shared | Flip Card', module)
   .addDecorator(withKnobs)
   .addDecorator(
     moduleMetadata({
