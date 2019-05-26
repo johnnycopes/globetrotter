@@ -5,14 +5,30 @@
   (flipped)="onFlip()"
   >
   <app-flip-card-front>
-    <img class="quiz-card__flag"
+    <img *ngIf="showFlagOnFront"
+      class="quiz-card__flag"
       [src]="country.flag"
       alt="Flag of {{country.name}}"
     />
+    <h3 *ngIf="!showFlagOnFront"
+      class="quiz-card__name"
+      >
+      <ng-container *ngIf="showCountryOnFront">
+        {{country.name}}
+      </ng-container>
+      <ng-container *ngIf="showCapitalOnFront">
+        {{country.capital}}
+      </ng-container>
+    </h3>
   </app-flip-card-front>
   <app-flip-card-back>
-    <h3 class="quiz-card__country">
-      {{country.name}}
+    <h3 class="quiz-card__name">
+      <ng-container *ngIf="showFlagOnFront || showCapitalOnFront">
+        {{country.name}}
+      </ng-container>
+      <ng-container *ngIf="showCountryOnFront">
+        {{country.capital}}
+      </ng-container>
     </h3>
   </app-flip-card-back>
 </app-flip-card>

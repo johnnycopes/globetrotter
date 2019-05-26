@@ -1,0 +1,12 @@
+@import 'styles';
+
+.select-type {
+
+  &__form {
+    margin-bottom: map-get($spacing, 64);
+  }
+
+  &__button {
+    text-align: center;
+  }
+}

@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { QuizService } from '../quiz.service';
+import { QuizTypes } from 'src/app/model/quiz-types.enum';
 import { Country } from 'src/app/model/country.interface';
 import { FixedSlideablePanelPosition } from 'src/app/shared/fixed-slideable-panel/fixed-slideable-panel.component';
 
@@ -11,12 +12,13 @@ import { FixedSlideablePanelPosition } from 'src/app/shared/fixed-slideable-pane
   styleUrls: ['./quiz-menu.component.scss']
 })
 export class QuizMenuComponent implements OnInit, OnDestroy {
-  countries: Country[];
-  currentCountry: Country;
-  currentIndex: number;
-  guess: number;
-  accuracy: number;
-  quizCompleted: boolean;
+  public countries: Country[];
+  public currentCountry: Country;
+  public currentIndex: number;
+  public guess: number;
+  public accuracy: number;
+  public quizCompleted: boolean;
+  public showCurrentCountryName: boolean;
   private quizSubscription: Subscription;
   private quizCompletedSubscription: Subscription;
 
@@ -27,6 +29,7 @@ export class QuizMenuComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.showCurrentCountryName = this.quizService.getQuizType() !== QuizTypes.countriesCapitals;
     this.quizSubscription = this.quizService.quizUpdated.subscribe(
       (quiz) => {
         const { countries, currentIndex, guess, accuracy } = quiz;

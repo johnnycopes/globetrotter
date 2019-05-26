@@ -7,12 +7,14 @@ import { Selection } from '../select/select.service';
 import { CountryClass } from 'src/app/country/country.class';
 import { CountryService } from 'src/app/country/country.service';
 import { Quiz } from '../model/quiz.class';
+import { QuizTypes } from '../model/quiz-types.enum';
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuizService extends CountryClass {
   private countries: Country[];
+  private quizType: QuizTypes;
   private quiz: Quiz;
   private quizComplete: boolean;
   quizUpdated = new BehaviorSubject<Quiz>(this.quiz);
@@ -28,14 +30,19 @@ export class QuizService extends CountryClass {
     this.pushQuizCompleted();
   }
 
-  createQuiz(selection: Selection): void {
+  initializeQuiz(selection: Selection): void {
+    this.quizType = selection.type;
     this.countries = this.selectCountries(selection);
     this.quiz = new Quiz(_.shuffle(this.countries));
     this.pushQuizUpdated();
   }
 
   getCountries(): Country[] {
-    return this.countries.slice();
+    return this.countries;
+  }
+
+  getQuizType(): QuizTypes {
+    return this.quizType;
   }
 
   evaluateGuess(country: Country): boolean {

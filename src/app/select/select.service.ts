@@ -3,8 +3,10 @@ import { BehaviorSubject } from 'rxjs';
 
 import { CheckboxStates } from '../shared/nested-checkboxes/nested-checkboxes.component';
 import { Pages } from '../model/pages.enum';
+import { QuizTypes } from '../model/quiz-types.enum';
 
 export interface Selection {
+  type: QuizTypes;
   countries: CheckboxStates;
   quantity: number | null;
 }
@@ -25,6 +27,7 @@ export class SelectService {
   reset(): void {
     this.screen = Pages.home;
     this.selection = {
+      type: QuizTypes.flagsCountries,
       quantity: 0,
       countries: {},
     };
@@ -34,6 +37,9 @@ export class SelectService {
 
   nextScreen(): void {
     if (this.screen === Pages.home) {
+      this.screen = Pages.type;
+    }
+    else if (this.screen === Pages.type) {
       this.screen = Pages.quantity;
     }
     else if (this.screen === Pages.quantity) {
@@ -43,6 +49,11 @@ export class SelectService {
       this.screen = Pages.quiz;
     }
     this.pushScreen();
+  }
+
+  updateType(type: QuizTypes): void {
+    this.selection.type = type;
+    this.pushSelection();
   }
 
   updateQuantity(quantity: number): void {

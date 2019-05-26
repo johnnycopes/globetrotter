@@ -9,6 +9,7 @@ import {
 } from '@storybook/addon-knobs/angular';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
+import { ButtonComponent } from 'src/app/shared/button/button.component';
 import { CounterComponent } from 'src/app/shared/counter/counter.component';
 import { CheckboxComponent } from 'src/app/shared/checkbox/checkbox.component';
 import { NestedCheckboxesComponent } from 'src/app/shared/nested-checkboxes/nested-checkboxes.component';
@@ -43,6 +44,7 @@ storiesOf('Shared | Nested Checkboxes Group', module)
   .addDecorator(
     moduleMetadata({
       declarations: [
+        ButtonComponent,
         CheckboxComponent,
         CounterComponent,
         NestedCheckboxesComponent,

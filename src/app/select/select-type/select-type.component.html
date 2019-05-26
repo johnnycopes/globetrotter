@@ -1,0 +1,18 @@
+<div class="select-type">
+  <div class="select-type__form">
+    <app-radio-buttons
+      text="Type of quiz:"
+      [options]="types"
+      [(ngModel)]="selectedType"
+      >
+    </app-radio-buttons>
+  </div>
+  <div class="select-type__button">
+    <app-button
+      buttonStyle="primary"
+      buttonText="Next"
+      (clicked)="onClick()"
+      >
+    </app-button>
+  </div>
+</div>

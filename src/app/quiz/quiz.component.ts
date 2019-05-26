@@ -19,7 +19,7 @@ export class QuizComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.selectionSubscription = this.selectService.selectionChanged.subscribe(
-      (selection) => this.quizService.createQuiz(selection)
+      (selection) => this.quizService.initializeQuiz(selection)
     );
   }
 

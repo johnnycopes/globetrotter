@@ -4,6 +4,11 @@
     >
     <app-select-home></app-select-home>
   </div>
+  <div *ngSwitchCase="Pages.type"
+    @fadeIn
+    >
+    <app-select-type></app-select-type>
+  </div>
   <div *ngSwitchCase="Pages.quantity"
     @fadeIn
     >

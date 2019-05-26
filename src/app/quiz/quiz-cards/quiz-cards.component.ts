@@ -12,6 +12,7 @@ import {
 import { Country } from 'src/app/model/country.interface';
 import { QuizService } from '../quiz.service';
 import { Animations } from 'src/app/model/animations.enum';
+import { QuizTypes } from 'src/app/model/quiz-types.enum';
 
 @Component({
   selector: 'app-quiz-cards',
@@ -32,13 +33,15 @@ import { Animations } from 'src/app/model/animations.enum';
   ]
 })
 export class QuizCardsComponent implements OnInit {
-  countries: Country[];
-  canFlipCards = true;
+  public countries: Country[];
+  public quizType: QuizTypes;
+  public canFlipCards = true;
 
   constructor(private quizService: QuizService) { }
 
   ngOnInit(): void {
     this.countries = this.quizService.getCountries();
+    this.quizType = this.quizService.getQuizType();
   }
 
   onFlip(cardFlipped: boolean): void {

@@ -19,7 +19,12 @@
         {{currentIndex}} / {{countries.length}}
       </h4>
       <p class="quiz-menu__progress-prompt">
-        {{currentCountry.name}}
+        <ng-container *ngIf="showCurrentCountryName">
+          {{currentCountry.name}}
+        </ng-container>
+        <ng-container *ngIf="!showCurrentCountryName">
+          {{currentCountry.capital}}
+        </ng-container>
       </p>
       <h4 class="quiz-menu__progress-guess">
         Guess #{{guess}}
