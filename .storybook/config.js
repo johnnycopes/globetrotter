@@ -1,12 +1,13 @@
 import { addParameters, configure } from '@storybook/angular';
-import { themes } from '@storybook/theming';
+
+import GlobetrotterTheme from './globetrotter-theme';
 
 addParameters({
   options: {
     name: 'Globetrotter',
-    theme: themes.dark,
+    theme: GlobetrotterTheme,
     panelPosition: 'bottom'
-  },
+  }
 });
 
 // automatically import all files ending in *.stories.ts
