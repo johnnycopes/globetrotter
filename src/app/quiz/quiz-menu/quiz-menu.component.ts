@@ -12,14 +12,14 @@ import { FixedSlideablePanelPosition } from 'src/app/shared/fixed-slideable-pane
   styleUrls: ['./quiz-menu.component.scss']
 })
 export class QuizMenuComponent implements OnInit, OnDestroy {
-  public countries: Country[];
-  public currentCountry: Country;
-  public currentIndex: number;
-  public guess: number;
-  public accuracy: number;
-  public quizType: QuizTypes;
-  public quizCompleted: boolean;
-  public promptTemplate: TemplateRef<any>;
+  countries: Country[];
+  currentCountry: Country;
+  currentIndex: number;
+  guess: number;
+  accuracy: number;
+  quizType: QuizTypes;
+  quizCompleted: boolean;
+  promptTemplate: TemplateRef<any>;
   @ViewChild('countryTemplate') countryTemplate: TemplateRef<any>;
   @ViewChild('capitalTemplate') capitalTemplate: TemplateRef<any>;
   private quizSubscription: Subscription;

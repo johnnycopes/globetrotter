@@ -2,8 +2,9 @@ import { storiesOf, moduleMetadata } from "@storybook/angular";
 import { action } from '@storybook/addon-actions';
 import {
   withKnobs,
-  object,
-  text
+  text,
+  boolean,
+  object
 } from '@storybook/addon-knobs/angular';
 
 import { RadioButtonsComponent, RadioButtonsOption } from "src/app/shared/radio-buttons/radio-buttons.component";
@@ -22,6 +23,7 @@ const options: RadioButtonsOption<number>[] = [
 const template = `
   <app-radio-buttons
     [text]="text"
+    [stackedVertically]="stackedVertically"
     [options]="options"
     [ngModel]="selectedOption"
     (ngModelChange)="onChange($event)"
@@ -41,6 +43,7 @@ storiesOf('Shared | Radio Buttons', module)
       template,
       props: {
         text: text('text', sampleText),
+        stackedVertically: boolean('stackedVertically', false),
         selectedOption: object('selectedOption', {}),
         options: object('options', options),
         onChange: actions.onChange
@@ -52,6 +55,7 @@ storiesOf('Shared | Radio Buttons', module)
       template,
       props: {
         text: text('text', sampleText),
+        stackedVertically: boolean('stackedVertically', false),
         selectedOption: object('selectedOption', options[0]),
         options: object('options', options),
         onChange: actions.onChange
@@ -63,7 +67,20 @@ storiesOf('Shared | Radio Buttons', module)
       template,
       props: {
         text: text('text', sampleText),
+        stackedVertically: boolean('stackedVertically', false),
         selectedOption: object('selectedOption', options[options.length - 1]),
+        options: object('options', options),
+        onChange: actions.onChange
+      }
+    };
+  })
+  .add('stacked vertically', () => {
+    return {
+      template,
+      props: {
+        text: text('text', sampleText),
+        stackedVertically: boolean('stackedVertically', true),
+        selectedOption: object('selectedOption', options[0]),
         options: object('options', options),
         onChange: actions.onChange
       }

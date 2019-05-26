@@ -4,8 +4,11 @@
   <div class="text">
     {{text}}
   </div>
-  <div class="options">
+  <div class="options"
+    [ngClass]="{'options--stacked-vertically': stackedVertically}"
+    >
     <div class="option"
+      [ngClass]="{'option--stacked-vertically': stackedVertically}"
       *ngFor="let option of options"
       >
       <input class="option__input"

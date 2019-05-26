@@ -19,6 +19,7 @@ export interface RadioButtonsOption<T> {
 export class RadioButtonsComponent<T> implements ControlValueAccessor {
   @Input() options: RadioButtonsOption<T>[];
   @Input() text: string;
+  @Input() stackedVertically: boolean;
   public model: RadioButtonsOption<T>;
   private onChangeFn: any;
 

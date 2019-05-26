@@ -1,8 +1,9 @@
 <div class="select-type">
   <div class="select-type__form">
     <app-radio-buttons
-      text="Type of quiz:"
+      text="What type of quiz would you like to take?"
       [options]="types"
+      [stackedVertically]="true"
       [(ngModel)]="selectedType"
       >
     </app-radio-buttons>

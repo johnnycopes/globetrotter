@@ -11,7 +11,7 @@ export class SelectHomeComponent {
 
   constructor(private selectService: SelectService) { }
 
-  onClick() {
+  onClick(): void {
     this.selectService.nextScreen();
   }
 

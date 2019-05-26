@@ -9,6 +9,12 @@
 .options {
   display: flex;
   justify-content: space-between;
+
+  &--stacked-vertically {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 .option {
@@ -18,6 +24,20 @@
   @include large-desktop {
     width: map-get($spacing, 192);
     height: map-get($spacing, 192);
+  }
+
+  &--stacked-vertically {
+    width: map-get($spacing, 384);
+    height: map-get($spacing, 128);
+    margin-bottom: map-get($spacing, 32);
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    @include large-desktop {
+      width: map-get($spacing, 512);
+    }
   }
 
   &__label {

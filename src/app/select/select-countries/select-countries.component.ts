@@ -25,16 +25,16 @@ export class SelectCountriesComponent implements OnInit {
     private selectService: SelectService
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.regions = this.countryService.initializeData();
   }
 
-  onCountriesChange(model: CheckboxStates) {
+  onCountriesChange(model: CheckboxStates): void {
     this.selectedCountries = model;
     this.canStartQuiz = _.some(model, checkboxState => checkboxState === 'checked');
   }
 
-  onClick() {
+  onClick(): void {
     this.selectService.updateCountries(this.selectedCountries);
     this.selectService.nextScreen();
   }
