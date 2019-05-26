@@ -1,10 +1,12 @@
-import { Component, Input, Output, EventEmitter, ViewChild, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, OnInit, TemplateRef } from '@angular/core';
 
 import { Country } from 'src/app/model/country.interface';
 import { QuizService } from '../../quiz.service';
 import { FlipCardComponent, FlipCardGuess } from 'src/app/shared/flip-card/flip-card.component';
 import { Animations } from 'src/app/model/animations.enum';
 import { QuizTypes } from 'src/app/model/quiz-types.enum';
+
+type CardTemplates = _.Dictionary<TemplateRef<any>>;
 
 @Component({
   selector: 'app-quiz-card',
@@ -16,23 +18,22 @@ export class QuizCardComponent implements OnInit {
   @Input() canFlip: boolean;
   @Input() type: QuizTypes;
   @Output() flipped = new EventEmitter<boolean>();
-  @ViewChild(FlipCardComponent)
-  private flipCardComponent: FlipCardComponent;
+  @ViewChild('flagTemplate') public flagTemplate: TemplateRef<any>;
+  @ViewChild('countryTemplate') public countryTemplate: TemplateRef<any>;
+  @ViewChild('capitalTemplate') public capitalTemplate: TemplateRef<any>;
+  @ViewChild(FlipCardComponent) private flipCardComponent: FlipCardComponent;
   public guess: FlipCardGuess;
   public disabled: boolean;
-  public showFlagOnFront: boolean;
-  public showCountryOnFront: boolean;
-  public showCapitalOnFront: boolean;
+  public templates: CardTemplates;
+  public templatesDict: _.Dictionary<CardTemplates>;
 
   ngOnInit(): void {
-    this.showFlagOnFront = this.type === QuizTypes.flagsCountries;
-    this.showCountryOnFront = this.type === QuizTypes.countriesCapitals;
-    this.showCapitalOnFront = this.type === QuizTypes.capitalsCountries;
+    this.setCardTemplates();
   }
 
   constructor(private quizService: QuizService) { }
 
-  async onFlip() {
+  async onFlip(): Promise<void> {
     const isGuessCorrect = this.quizService.evaluateGuess(this.country);
     this.flipped.emit(true);
     await this.wait(Animations.flipCard);
@@ -63,6 +64,24 @@ export class QuizCardComponent implements OnInit {
     return new Promise(resolve => {
       setTimeout(() => resolve(), ms);
     });
+  }
+
+  private setCardTemplates(): void {
+    this.templatesDict = {
+      [QuizTypes.flagsCountries]: {
+        front: this.flagTemplate,
+        back: this.countryTemplate
+      },
+      [QuizTypes.capitalsCountries]: {
+        front: this.capitalTemplate,
+        back: this.countryTemplate
+      },
+      [QuizTypes.countriesCapitals]: {
+        front: this.countryTemplate,
+        back: this.capitalTemplate
+      }
+    };
+    this.templates = this.templatesDict[this.type];
   }
 
   private updateQuiz(correctGuess: boolean) {

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, TemplateRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { QuizService } from '../quiz.service';
@@ -17,8 +17,11 @@ export class QuizMenuComponent implements OnInit, OnDestroy {
   public currentIndex: number;
   public guess: number;
   public accuracy: number;
+  public quizType: QuizTypes;
   public quizCompleted: boolean;
-  public showCurrentCountryName: boolean;
+  public promptTemplate: TemplateRef<any>;
+  @ViewChild('countryTemplate') countryTemplate: TemplateRef<any>;
+  @ViewChild('capitalTemplate') capitalTemplate: TemplateRef<any>;
   private quizSubscription: Subscription;
   private quizCompletedSubscription: Subscription;
 
@@ -29,7 +32,7 @@ export class QuizMenuComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.showCurrentCountryName = this.quizService.getQuizType() !== QuizTypes.countriesCapitals;
+    this.setPromptTemplate();
     this.quizSubscription = this.quizService.quizUpdated.subscribe(
       (quiz) => {
         const { countries, currentIndex, guess, accuracy } = quiz;
@@ -50,4 +53,13 @@ export class QuizMenuComponent implements OnInit, OnDestroy {
     this.quizCompletedSubscription.unsubscribe();
   }
 
+  private setPromptTemplate(): void {
+    this.quizType = this.quizService.getQuizType();
+    if (this.quizType === QuizTypes.countriesCapitals) {
+      this.promptTemplate = this.capitalTemplate;
+    }
+    else {
+      this.promptTemplate = this.countryTemplate;
+    }
+  }
 }
