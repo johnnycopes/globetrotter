@@ -1,6 +1,8 @@
 <app-fixed-slideable-panel [position]="position">
   <app-fixed-slideable-panel-content>
-    <div class="quiz-menu__outcome">
+    <div class="quiz-menu__outcome"
+      *ngIf="quizCompleted"
+      >
       <p class="quiz-menu__outcome-text">
         Quiz complete! You scored
       </p>

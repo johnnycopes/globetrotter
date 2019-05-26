@@ -30,7 +30,7 @@ const template = `
     [allChecked]="allChecked"
     [showCounters]="showCounters"
     [showImages]="showImages"
-    [displayText]="displayText"
+    [text]="text"
     (modelChanged)="onModelChange($event)"
     >
   </app-nested-checkboxes-group>
@@ -56,7 +56,7 @@ storiesOf('Nested Checkboxes Group', module)
         allChecked: boolean('allChecked', false),
         showCounters: boolean('showCounters', true),
         showImages: boolean('showImages', true),
-        displayText: text('displayText', 'possible countries selected.'),
+        text: text('text', 'possible countries selected.'),
         treeProvider,
         renderer,
         items: object('item', mockItems),
@@ -71,7 +71,7 @@ storiesOf('Nested Checkboxes Group', module)
         allChecked: boolean('allChecked', true),
         showCounters: boolean('showCounters', true),
         showImages: boolean('showImages', true),
-        displayText: text('displayText', 'possible countries selected.'),
+        text: text('text', 'possible countries selected.'),
         treeProvider,
         renderer,
         items: object('item', mockItems),

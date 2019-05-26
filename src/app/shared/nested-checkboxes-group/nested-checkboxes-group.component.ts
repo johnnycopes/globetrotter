@@ -12,23 +12,23 @@ export class NestedCheckboxesGroupComponent<T> implements OnInit {
   @Input() items: T[];
   @Input() treeProvider: TreeProvider<T>;
   @Input() renderer: Renderer<T>;
-  @Input() allChecked?: boolean; // If true, sets all checkboxes to be initially checked
+  @Input() allChecked?: boolean;
   @Input() showCounters: boolean;
   @Input() showImages: boolean;
-  @Input() displayText: string;
+  @Input() text: string;
   @Output() modelChanged = new EventEmitter<CheckboxStates>();
   @ViewChildren(NestedCheckboxesComponent) nestedCheckboxesComponents: QueryList<NestedCheckboxesComponent<T>>;
-  checkboxStates: CheckboxStates = {};
-  current: number = 0;
-  total: number;
+  public checkboxStates: CheckboxStates = {};
+  public current: number = 0;
+  public total: number;
 
   get showTopCounter() {
-    return this.showCounters || this.displayText;
+    return this.showCounters || this.text;
   }
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.total = _.reduce(this.items, (accum, current) => accum + this.treeProvider.getItemTotal(current), 0);
     if (this.allChecked) {
       this.current = this.total;
@@ -37,32 +37,32 @@ export class NestedCheckboxesGroupComponent<T> implements OnInit {
     this.modelChanged.emit(this.checkboxStates);
   }
 
-  onSelectAll() {
+  onSelectAll(): void {
     this.current = this.total;
     this.checkboxStates = {};
     this.makeAllItemsChecked();
     this.modelChanged.emit(this.checkboxStates);
   }
 
-  onClearAll() {
+  onClearAll(): void {
     this.current = 0;
     this.checkboxStates = {};
     this.modelChanged.emit(this.checkboxStates);
   }
 
-  updateCheckboxStates(checkboxStates: CheckboxStates) {
+  updateCheckboxStates(checkboxStates: CheckboxStates): void {
     this.current = this.setCurrent();
     this.checkboxStates = _.merge(this.checkboxStates, checkboxStates);
     this.modelChanged.emit(this.checkboxStates);
   }
 
-  private makeAllItemsChecked() {
+  private makeAllItemsChecked(): void {
     _.forEach(this.items, (item => {
       this.makeItemChecked(item);
     }));
   }
 
-  private makeItemChecked(item: T) {
+  private makeItemChecked(item: T): void {
     const id = this.treeProvider.getItemID(item);
     this.checkboxStates[id] = 'checked';
 
@@ -76,7 +76,7 @@ export class NestedCheckboxesGroupComponent<T> implements OnInit {
     });
   }
 
-  private setCurrent() {
+  private setCurrent(): number {
     return this.nestedCheckboxesComponents.reduce((accum, component) => accum + component.current, 0);
   }
 }

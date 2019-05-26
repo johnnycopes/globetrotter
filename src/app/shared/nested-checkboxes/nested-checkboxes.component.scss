@@ -6,11 +6,6 @@
   align-items: center;
   position: relative;
 
-  &--padding {
-    padding: map-get($spacing, 16) 0;
-  }
-
-
   &__image {
     $image-size: map-get($spacing, 192);
     width: $image-size;
@@ -24,11 +19,6 @@
   &__selection {
     display: flex;
     flex-direction: column;
-    width: 300px;
-
-    @include large-desktop {
-      width: none;
-    }
   }
 
   &__checkbox {

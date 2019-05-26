@@ -1,5 +1,13 @@
 @import 'styles';
 
+@mixin ng-content-slot {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .fixed-slideable-panel {
   position: fixed;
   top: 0;
@@ -13,6 +21,7 @@
   color: map-get($color, lightest);
 
   &__wrapper {
+    height: 100%;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -20,24 +29,11 @@
   }
 
   &__content {
-    /*
-      set the height of the outcome section of the full-screen menu panel
-      to be 100vh, then subtract the header height to allow for the header
-      to fit on the bottom and set the padding-top to the header height to
-      push it down so the content of the outcome section sits perfectly in
-      the center of the screen
-    */
-    height: calc(100vh - #{map-get($spacing, 128)});
-    padding-top: map-get($spacing, 128);
+    height: 100%;
     width: 100%;
 
-      // make ng-content slots take up their maximum allowed space
     & ::ng-deep > * {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      @include ng-content-slot();
     }
   }
 
@@ -47,13 +43,11 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: absolute;
+    bottom: 0;
 
     & ::ng-deep > * {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      @include ng-content-slot();
     }
   }
 

@@ -1,12 +1,16 @@
-<main class="fixed-slideable-panel"
+<div class="fixed-slideable-panel"
   [@position]="position"
   >
   <div class="fixed-slideable-panel__wrapper">
-    <section class="fixed-slideable-panel__content">
+    <div class="fixed-slideable-panel__content"
+      *ngIf="position === 'fullscreen'"
+      >
       <ng-content select="app-fixed-slideable-panel-content"></ng-content>
-    </section>
-    <nav class="fixed-slideable-panel__header">
+    </div>
+    <div class="fixed-slideable-panel__header"
+      *ngIf="position === 'header'"
+      >
       <ng-content select="app-fixed-slideable-panel-header"></ng-content>
-    </nav>
+    </div>
   </div>
-</main>
+</div>

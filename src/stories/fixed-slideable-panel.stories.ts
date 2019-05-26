@@ -9,6 +9,16 @@ import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { FixedSlideablePanelComponent, FixedSlideablePanelPosition } from "src/app/shared/fixed-slideable-panel/fixed-slideable-panel.component";
 
 const positions: FixedSlideablePanelPosition[] = ['offscreen', 'header', 'fullscreen'];
+const template = `
+  <app-fixed-slideable-panel [position]="position">
+    <app-fixed-slideable-panel-content>
+      Content section (fullscreen)
+    </app-fixed-slideable-panel-content>
+    <app-fixed-slideable-panel-header>
+      Header section (header)
+    </app-fixed-slideable-panel-header>
+  </app-fixed-slideable-panel>
+`;
 
 storiesOf('Fixed Slideable Panel', module)
   .addDecorator(withKnobs)
@@ -21,16 +31,7 @@ storiesOf('Fixed Slideable Panel', module)
   )
   .add('offscreen', () => {
     return {
-      template: `
-        <app-fixed-slideable-panel [position]="position">
-          <app-fixed-slideable-panel-content>
-            Content section (fullscreen)
-          </app-fixed-slideable-panel-content>
-          <app-fixed-slideable-panel-header>
-            Header section (header)
-          </app-fixed-slideable-panel-header>
-        </app-fixed-slideable-panel>
-      `,
+      template,
       props: {
         position: select('position', positions, 'offscreen')
       }
@@ -38,13 +39,7 @@ storiesOf('Fixed Slideable Panel', module)
   })
   .add('header', () => {
     return {
-      template: `
-        <app-fixed-slideable-panel [position]="position">
-          <app-fixed-slideable-panel-header>
-            Header only
-          </app-fixed-slideable-panel-header>
-        </app-fixed-slideable-panel>
-      `,
+      template,
       props: {
         position: select('position', positions, 'header')
       }
@@ -52,13 +47,7 @@ storiesOf('Fixed Slideable Panel', module)
   })
   .add('fullscreen', () => {
     return {
-      template: `
-        <app-fixed-slideable-panel [position]="position">
-          <app-fixed-slideable-panel-content>
-            Content only
-          </app-fixed-slideable-panel-content>
-        </app-fixed-slideable-panel>
-      `,
+      template,
       props: {
         position: select('position', positions, 'fullscreen')
       }

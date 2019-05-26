@@ -43,3 +43,12 @@
     justify-items: left;
   }
 }
+
+.item {
+  padding: map-get($spacing, 16) 0;
+  width: 500px;
+
+  @include large-desktop {
+    width: 100%;
+  }
+}
