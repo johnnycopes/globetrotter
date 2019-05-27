@@ -1,11 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-counter',
   templateUrl: './counter.component.html',
   styleUrls: ['./counter.component.scss']
 })
-export class CounterComponent implements OnInit {
+export class CounterComponent {
   @Input() text: string;
   @Input() current: number;
   @Input() total: number;
@@ -15,8 +15,5 @@ export class CounterComponent implements OnInit {
   @Input() textFirst: boolean;
 
   constructor() { }
-
-  ngOnInit() {
-  }
 
 }

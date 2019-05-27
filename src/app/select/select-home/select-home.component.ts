@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { SelectService } from '../select.service';
+import { SelectService } from 'src/app/core/select/select.service';
 
 @Component({
   selector: 'app-select-home',

@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { SelectService } from '../select/select.service';
-import { QuizService } from './quiz.service';
+import { SelectService } from '../core/select/select.service';
+import { QuizService } from '../core/quiz/quiz.service';
 
 @Component({
   selector: 'app-quiz',

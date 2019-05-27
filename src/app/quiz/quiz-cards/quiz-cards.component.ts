@@ -13,9 +13,9 @@ import { Subscription } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
 
 import { Country } from 'src/app/model/country.interface';
-import { QuizService } from '../quiz.service';
 import { Animations } from 'src/app/model/animations.enum';
 import { QuizTypes } from 'src/app/model/quiz-types.enum';
+import { QuizService } from 'src/app/core/quiz/quiz.service';
 
 @Component({
   selector: 'app-quiz-cards',
@@ -36,9 +36,9 @@ import { QuizTypes } from 'src/app/model/quiz-types.enum';
   ]
 })
 export class QuizCardsComponent implements OnInit, OnDestroy {
-  public countries: Country[];
-  public quizType: QuizTypes;
-  public canFlipCards = true;
+  countries: Country[];
+  quizType: QuizTypes;
+  canFlipCards = true;
   private quizSubscription: Subscription;
 
   constructor(private quizService: QuizService) { }

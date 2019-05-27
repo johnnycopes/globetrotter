@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import * as _ from 'lodash';
 
-import { SelectService } from './select.service';
+import { SelectService } from '../core/select/select.service';
 import { Pages } from 'src/app/model/pages.enum';
 import { SelectHomeComponent } from './select-home/select-home.component';
 import { SelectTypeComponent } from './select-type/select-type.component';

@@ -1,10 +1,10 @@
 import { Component, Input, Output, EventEmitter, ViewChild, OnInit, TemplateRef } from '@angular/core';
 
 import { Country } from 'src/app/model/country.interface';
-import { QuizService } from '../../quiz.service';
 import { FlipCardComponent, FlipCardGuess } from 'src/app/shared/flip-card/flip-card.component';
 import { Animations } from 'src/app/model/animations.enum';
 import { QuizTypes } from 'src/app/model/quiz-types.enum';
+import { QuizService } from 'src/app/core/quiz/quiz.service';
 
 type CardTemplates = _.Dictionary<TemplateRef<any>>;
 
@@ -18,14 +18,14 @@ export class QuizCardComponent implements OnInit {
   @Input() canFlip: boolean;
   @Input() type: QuizTypes;
   @Output() flipped = new EventEmitter<boolean>();
-  @ViewChild('flagTemplate') public flagTemplate: TemplateRef<any>;
-  @ViewChild('countryTemplate') public countryTemplate: TemplateRef<any>;
-  @ViewChild('capitalTemplate') public capitalTemplate: TemplateRef<any>;
+  @ViewChild('flagTemplate') flagTemplate: TemplateRef<any>;
+  @ViewChild('countryTemplate') countryTemplate: TemplateRef<any>;
+  @ViewChild('capitalTemplate') capitalTemplate: TemplateRef<any>;
   @ViewChild(FlipCardComponent) private flipCardComponent: FlipCardComponent;
-  public guess: FlipCardGuess;
-  public disabled: boolean;
-  public templates: CardTemplates;
-  public templatesDict: _.Dictionary<CardTemplates>;
+  guess: FlipCardGuess;
+  disabled: boolean;
+  templates: CardTemplates;
+  templatesDict: _.Dictionary<CardTemplates>;
 
   ngOnInit(): void {
     this.setCardTemplates();

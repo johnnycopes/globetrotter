@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy, ViewChild, TemplateRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { QuizService } from '../quiz.service';
 import { QuizTypes } from 'src/app/model/quiz-types.enum';
 import { Country } from 'src/app/model/country.interface';
 import { FixedSlideablePanelPosition } from 'src/app/shared/fixed-slideable-panel/fixed-slideable-panel.component';
+import { QuizService } from 'src/app/core/quiz/quiz.service';
 
 @Component({
   selector: 'app-quiz-menu',

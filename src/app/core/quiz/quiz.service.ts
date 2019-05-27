@@ -3,10 +3,10 @@ import { BehaviorSubject } from 'rxjs';
 import * as _ from 'lodash';
 
 import { Country } from 'src/app/model/country.interface';
-import { CountryClass } from 'src/app/country/country.class';
-import { CountryService } from 'src/app/country/country.service';
+import { CountryClass } from 'src/app/core/country/country.class';
+import { CountryService } from 'src/app/core/country/country.service';
 import { Selection } from 'src/app/model/selection.interface';
-import { Quiz } from '../model/quiz.class';
+import { Quiz } from 'src/app/model/quiz.class';
 
 @Injectable({
   providedIn: 'root'

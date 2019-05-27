@@ -1,4 +1,4 @@
-import { Country } from '../model/country.interface';
+import { Country } from 'src/app/model/country.interface';
 import { CountryService } from './country.service';
 
 export abstract class CountryClass {

@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { SelectService } from './select/select.service';
-import { QuizService } from './quiz/quiz.service';
+import { SelectService } from 'src/app/core/select/select.service';
+import { QuizService } from 'src/app/core/quiz/quiz.service';
 import { Pages } from './model/pages.enum';
 
 @Component({

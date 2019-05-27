@@ -20,7 +20,7 @@ export class RadioButtonsComponent<T> implements ControlValueAccessor {
   @Input() options: RadioButtonsOption<T>[];
   @Input() text: string;
   @Input() stackedVertically: boolean;
-  public model: RadioButtonsOption<T>;
+  model: RadioButtonsOption<T>;
   private onChangeFn: any;
 
   constructor() { }
@@ -33,9 +33,7 @@ export class RadioButtonsComponent<T> implements ControlValueAccessor {
     this.onChangeFn = fn;
   }
 
-  registerOnTouched(fn: any): void {
-
-  }
+  registerOnTouched(fn: any): void { }
 
   onChange(): void {
     this.onChangeFn(this.model);

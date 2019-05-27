@@ -1,7 +1,8 @@
 import * as _ from 'lodash';
 
-import { Region, Subregion } from '../country/country.service';
 import { Place } from './place.type';
+import { Region } from './region.interface';
+import { Subregion } from './subregion.interface';
 
 export class PlacesTreeProvider {
   getChildItems(place: Place): Place[] {

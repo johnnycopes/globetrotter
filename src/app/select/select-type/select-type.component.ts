@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as _ from 'lodash';
 
-import { SelectService } from '../select.service';
+import { SelectService } from 'src/app/core/select/select.service';
 import { QuizTypes } from 'src/app/model/quiz-types.enum';
 import { RadioButtonsOption } from 'src/app/shared/radio-buttons/radio-buttons.component';
 

@@ -15,7 +15,7 @@ export type CheckboxState = 'checked' | 'unchecked' | 'indeterminate';
 })
 export class CheckboxComponent implements ControlValueAccessor {
   @Input() invertColors: boolean;
-  public state: CheckboxState = 'unchecked';
+  state: CheckboxState = 'unchecked';
   private onChangeFn: any;
 
   constructor() { }
@@ -28,11 +28,9 @@ export class CheckboxComponent implements ControlValueAccessor {
     this.onChangeFn = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: any): void { }
 
-  }
-
-  onChange() {
+  onChange(): void {
     this.state = this.state !== 'checked' ? 'checked' : 'unchecked';
     this.onChangeFn(this.state);
   }

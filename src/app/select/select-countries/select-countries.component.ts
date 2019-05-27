@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import * as _ from 'lodash';
 
-import { CountryService, Region } from 'src/app/country/country.service';
-import { SelectService } from '../select.service';
+import { CountryService } from 'src/app/core/country/country.service';
+import { SelectService } from 'src/app/core/select/select.service';
 import { CheckboxStates, TreeProvider, Renderer } from 'src/app/shared/nested-checkboxes/nested-checkboxes.component';
 import { Place } from 'src/app/model/place.type';
+import { Region } from 'src/app/model/region.interface';
 import { PlacesTreeProvider } from 'src/app/model/places-tree-provider.class';
 import { PlacesRenderer } from 'src/app/model/places-renderer.class';
 

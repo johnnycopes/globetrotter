@@ -69,7 +69,7 @@ storiesOf('Shared | Button Screen', module)
         </app-button-screen>
       `,
       props: {
-        buttonText: text('buttonText', 'Embark'),
+        buttonText: text('buttonText', 'Next'),
         buttonDisabled: boolean('buttonDisabled', false),
         actions: action.onClick
       }

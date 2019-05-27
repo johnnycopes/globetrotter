@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-import { Selection } from '../model/selection.interface';
-import { QuizTypes } from '../model/quiz-types.enum';
-import { Pages } from '../model/pages.enum';
-import { CheckboxStates } from '../shared/nested-checkboxes/nested-checkboxes.component';
+import { Selection } from 'src/app/model/selection.interface';
+import { Pages } from 'src/app/model/pages.enum';
+import { QuizTypes } from 'src/app/model/quiz-types.enum';
+import { CheckboxStates } from 'src/app/shared/nested-checkboxes/nested-checkboxes.component';
+
 
 @Injectable({
   providedIn: 'root'

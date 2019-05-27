@@ -1,17 +1,9 @@
 import { Injectable } from '@angular/core';
-import { COUNTRIES } from '../model/countries.model';
-import { Country } from '../model/country.interface';
 import * as _ from 'lodash';
 
-export interface Region {
-  name: string;
-  subregions: Subregion[];
-}
-
-export interface Subregion {
-  name: string;
-  countries: Country[];
-}
+import { COUNTRIES } from 'src/app/model/countries.data';
+import { Country } from 'src/app/model/country.interface';
+import { Region } from 'src/app/model/region.interface';
 
 @Injectable({
   providedIn: 'root'

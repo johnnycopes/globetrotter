@@ -18,9 +18,9 @@ export class NestedCheckboxesGroupComponent<T> implements OnInit {
   @Input() text: string;
   @Output() modelChanged = new EventEmitter<CheckboxStates>();
   @ViewChildren(NestedCheckboxesComponent) nestedCheckboxesComponents: QueryList<NestedCheckboxesComponent<T>>;
-  public checkboxStates: CheckboxStates = {};
-  public current: number = 0;
-  public total: number;
+  checkboxStates: CheckboxStates = {};
+  current: number = 0;
+  total: number;
 
   get showTopCounter() {
     return this.showCounters || this.text;

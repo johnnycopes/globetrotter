@@ -1,7 +1,7 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA, } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 
+import { CoreModule } from './core/core.module';
 import { QuizModule } from './quiz/quiz.module';
 import { SelectModule } from './select/select.module';
 
@@ -14,7 +14,7 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule,
+    CoreModule,
     QuizModule,
     SelectModule
   ],
