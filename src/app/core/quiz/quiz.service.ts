@@ -3,7 +3,6 @@ import { BehaviorSubject } from 'rxjs';
 import * as _ from 'lodash';
 
 import { Country } from 'src/app/model/country.interface';
-import { CountryClass } from 'src/app/core/country/country.class';
 import { CountryService } from 'src/app/core/country/country.service';
 import { Selection } from 'src/app/model/selection.interface';
 import { Quiz } from 'src/app/model/quiz.class';
@@ -11,14 +10,13 @@ import { Quiz } from 'src/app/model/quiz.class';
 @Injectable({
   providedIn: 'root'
 })
-export class QuizService extends CountryClass {
+export class QuizService {
   private quiz: Quiz;
   private quizComplete: boolean;
   quizUpdated = new BehaviorSubject<Quiz>(this.quiz);
   quizCompleted = new BehaviorSubject<boolean>(this.quizComplete);
 
-  constructor(countryService: CountryService) {
-    super(countryService);
+  constructor(private countryService: CountryService) {
     this.reset();
   }
 
@@ -30,7 +28,7 @@ export class QuizService extends CountryClass {
   initializeQuiz(selection: Selection): void {
     this.quiz = new Quiz(
       selection.type,
-      this.selectCountries(selection)
+      this.getCountries(selection)
     );
     this.pushQuizUpdated();
   }
@@ -54,27 +52,15 @@ export class QuizService extends CountryClass {
     this.pushQuizUpdated();
   }
 
+  private getCountries(selection: Selection): Country[] {
+    return this.countryService.getCountriesFromSelection(selection);
+  }
+
   private pushQuizUpdated(): void {
     this.quizUpdated.next(this.quiz);
   }
 
   private pushQuizCompleted(): void {
     this.quizCompleted.next(this.quizComplete);
-  }
-
-  private selectCountries(selection: Selection): Country[] {
-    const quantity = selection.quantity || undefined;
-    const countries = _.reduce(selection.countries, (accum, value, placeName) => {
-      if (value === 'checked' && this.countriesBySubregion[placeName]) {
-        const selectedCountries = this.countriesBySubregion[placeName];
-        return _.concat(accum, selectedCountries);
-      }
-      return accum;
-    }, []);
-
-    return _(countries)
-      .shuffle()
-      .slice(0, quantity)
-      .value();
   }
 }

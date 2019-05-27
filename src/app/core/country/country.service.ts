@@ -4,97 +4,102 @@ import * as _ from 'lodash';
 import { COUNTRIES } from 'src/app/model/countries.data';
 import { Country } from 'src/app/model/country.interface';
 import { Region } from 'src/app/model/region.interface';
+import { Selection } from 'src/app/model/selection.interface';
+
+enum ValidRegions {
+  Asia = 'Asia',
+  Africa = 'Africa',
+  Americas = 'Americas',
+  Europe = 'Europe',
+  Oceania = 'Oceania'
+};
 
 @Injectable({
   providedIn: 'root'
 })
 export class CountryService {
-  private _countries: Country[] = COUNTRIES;
-  private _totalCountries: number;
-  private _countriesByRegion: _.Dictionary<Country[]>;
-  private _countriesBySubregion: _.Dictionary<Country[]>;
-  private _subregionsByRegion: _.Dictionary<string[]>;
-  private _regions: string[];
-  private _subregions: string[];
-  private readonly validRegions = ['Asia', 'Africa', 'Americas', 'Europe', 'Oceania'];
+  private countries: Country[] = COUNTRIES;
+  private countriesBySubregion: _.Dictionary<Country[]>;
+  private subregionsByRegion: _.Dictionary<string[]>;
+  private formattedData: Region[];
 
   constructor() {
-    this.standarizeCountries();
-    this._totalCountries = this.countries.length;
-    this._countriesByRegion = _.groupBy(this.countries, 'region');
-    this._countriesBySubregion = _.groupBy(this.countries, 'subregion');
-    this._subregionsByRegion = this.groupSubregionsByRegion();
-    this._regions = Object.keys(this._subregionsByRegion);
-    this._subregions = Object.keys(this._countriesBySubregion);
+    this.initializeData();
   }
 
-  get countries(): Country[] {
-    return this._countries;
+  get data(): Region[] {
+    return this.formattedData;
   }
 
-  get totalCountries(): number {
-    return this._totalCountries;
-  }
-
-  get countriesByRegion(): _.Dictionary<Country[]> {
-    return this._countriesByRegion;
-  }
-
-  get countriesBySubregion(): _.Dictionary<Country[]> {
-    return this._countriesBySubregion;
-  }
-
-  get subregionsByRegion(): _.Dictionary<string[]> {
-    return this._subregionsByRegion;
-  }
-
-  get regions(): string[] {
-    return this._regions;
-  }
-
-  get subregions(): string[] {
-    return this._subregions;
-  }
-
-  initializeData(): Region[] {
-    const data = [];
-    _.forEach(this._regions, region => {
-      const regionData = {
-        name: region,
-        subregions: []
-      };
-      _.forEach(this._subregionsByRegion[region], subregion => {
-        const subregionData = {
-          name: subregion,
-          countries: this._countriesBySubregion[subregion]
-        };
-        regionData.subregions.push(subregionData);
-      });
-      data.push(regionData);
-    });
-    return data;
-  }
-
-  private groupSubregionsByRegion(): _.Dictionary<string[]> {
-    return _.reduce(this.countries, (accum, value) => {
-      const region = value.region;
-      const subregion = value.subregion;
-      if (!accum[region]) {
-        accum[region] = [];
-      }
-      if (!accum[region].includes(subregion)) {
-        accum[region].push(subregion);
+  getCountriesFromSelection(selection: Selection): Country[] {
+    const quantity = selection.quantity || undefined;
+    const countries = _.reduce(selection.countries, (accum, checkboxState, placeName) => {
+      if (checkboxState === 'checked' && this.countriesBySubregion[placeName]) {
+        const selectedCountries = this.countriesBySubregion[placeName];
+        return _.concat(accum, selectedCountries);
       }
       return accum;
+    }, []);
+    return _(countries)
+      .shuffle()
+      .slice(0, quantity)
+      .value();
+  }
+
+  private initializeData(): void {
+    this.countries = this.standardizeCountries(this.countries);
+    this.countriesBySubregion = _.groupBy(this.countries, 'subregion');
+    this.subregionsByRegion = this.groupSubregionsByRegion(this.countriesBySubregion);
+    this.formattedData = this.createFormattedData();
+  }
+
+  private standardizeCountries(countries: Country[]): Country[] {
+    return _.map(countries, country => {
+      const hasValidRegion = country.region in ValidRegions;
+      if (!hasValidRegion) {
+        return {
+          ...country,
+          region: 'Miscellaneous',
+          subregion: 'N/A'
+        };
+      }
+      return country;
+    });
+  }
+
+  private groupSubregionsByRegion(countriesBySubregion: _.Dictionary<Country[]>): _.Dictionary<string[]> {
+    return _.reduce(countriesBySubregion, (accum, countries, subregion) => {
+      const region = _.get(countries, '[0].region', 'ERROR');
+      if (!accum[region]) {
+        return {
+          ...accum,
+          [region]: [subregion]
+        };
+      }
+      else {
+        const subregions = accum[region].slice();
+        return {
+          ...accum,
+          [region]: [...subregions, subregion]
+        };
+      }
     }, {});
   }
 
-  private standarizeCountries() {
-    _.forEach(this._countries, (country) => {
-      if (!this.validRegions.includes(country.region)) {
-        country.region = 'Miscellaneous';
-        country.subregion = 'N/A';
-      }
-    });
+  private createFormattedData(): Region[] {
+    return _.reduce(this.subregionsByRegion, (accum, subregions, region) => {
+      const subregionsData = _.map(subregions, subregion => {
+        return {
+          name: subregion,
+          countries: this.countriesBySubregion[subregion]
+        };
+      });
+      const regionData = {
+        name: region,
+        subregions: subregionsData
+      };
+      const regions = accum.slice();
+      return [...regions, regionData];
+    }, []);
   }
 }

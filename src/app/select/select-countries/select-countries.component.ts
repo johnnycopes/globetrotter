@@ -29,7 +29,7 @@ export class SelectCountriesComponent implements OnInit {
 
   ngOnInit(): void {
     this.canStartQuiz = this.allChecked;
-    this.regions = this.countryService.initializeData();
+    this.regions = this.countryService.data;
   }
 
   onCountriesChange(model: CheckboxStates): void {
