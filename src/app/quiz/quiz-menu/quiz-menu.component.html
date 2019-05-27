@@ -16,10 +16,11 @@
       *ngIf="!quizCompleted"
       >
       <h4 class="quiz-menu__progress-tally">
-        {{currentIndex}} / {{countries.length}}
+        {{currentIndex}} / {{totalCountries}}
       </h4>
       <p class="quiz-menu__progress-prompt">
-        <ng-container *ngTemplateOutlet="promptTemplate"></ng-container>
+        <ng-container *ngTemplateOutlet="promptTemplate">
+        </ng-container>
       </p>
       <h4 class="quiz-menu__progress-guess">
         Guess #{{guess}}

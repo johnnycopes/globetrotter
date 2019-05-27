@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   trigger,
   style,
@@ -8,6 +8,9 @@ import {
   stagger,
   animateChild
 } from '@angular/animations';
+import * as _ from 'lodash';
+import { Subscription } from 'rxjs';
+import { distinctUntilChanged } from 'rxjs/operators';
 
 import { Country } from 'src/app/model/country.interface';
 import { QuizService } from '../quiz.service';
@@ -32,16 +35,29 @@ import { QuizTypes } from 'src/app/model/quiz-types.enum';
     ])
   ]
 })
-export class QuizCardsComponent implements OnInit {
+export class QuizCardsComponent implements OnInit, OnDestroy {
   public countries: Country[];
   public quizType: QuizTypes;
   public canFlipCards = true;
+  private quizSubscription: Subscription;
 
   constructor(private quizService: QuizService) { }
 
   ngOnInit(): void {
-    this.countries = this.quizService.getCountries();
-    this.quizType = this.quizService.getQuizType();
+    this.quizSubscription = this.quizService.quizUpdated
+      .pipe(
+        distinctUntilChanged()
+      )
+      .subscribe(
+        quiz => {
+          this.quizType = quiz.type;
+          this.countries = _.shuffle(quiz.countries);
+        }
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.quizSubscription.unsubscribe();
   }
 
   onFlip(cardFlipped: boolean): void {

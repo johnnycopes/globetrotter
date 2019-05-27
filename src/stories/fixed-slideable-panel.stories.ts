@@ -1,12 +1,12 @@
-import { storiesOf, moduleMetadata } from "@storybook/angular";
+import { storiesOf, moduleMetadata } from '@storybook/angular';
 import {
   withKnobs,
   select
 } from '@storybook/addon-knobs/angular';
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
-import { FixedSlideablePanelComponent, FixedSlideablePanelPosition } from "src/app/shared/fixed-slideable-panel/fixed-slideable-panel.component";
+import { FixedSlideablePanelComponent, FixedSlideablePanelPosition } from 'src/app/shared/fixed-slideable-panel/fixed-slideable-panel.component';
 
 const positions: FixedSlideablePanelPosition[] = ['offscreen', 'header', 'fullscreen'];
 const template = `

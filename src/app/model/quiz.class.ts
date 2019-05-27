@@ -1,4 +1,7 @@
-import { Country } from "./country.interface";
+import { Selection } from './selection.interface';
+import { Country } from './country.interface';
+import { QuizTypes } from './quiz-types.enum';
+import { QuizQuantity } from './quiz-quantity.type';
 
 export class Quiz {
   private _currentIndex: number = 0;
@@ -6,23 +9,36 @@ export class Quiz {
   private _accuracy: number;
 
   constructor(
+    private _type: QuizTypes,
     private _countries: Country[]
   ) { }
 
-  get currentIndex() {
+  get currentIndex(): number {
     return this._currentIndex;
   }
 
-  get guess() {
+  get guess(): number {
     return this._guess;
   }
 
-  get accuracy() {
+  get accuracy(): number {
     return this._accuracy;
   }
 
-  get countries() {
+  get type(): QuizTypes {
+    return this._type;
+  }
+
+  get countries(): Country[] {
     return this._countries;
+  }
+
+  get currentCountry(): Country {
+    return this._countries[this._currentIndex];
+  }
+
+  get isComplete(): boolean {
+    return this._currentIndex === this._countries.length;
   }
 
   calculateAccuracy(): void {
@@ -35,13 +51,5 @@ export class Quiz {
 
   nextGuess(): void {
     this._guess++;
-  }
-
-  checkIfComplete(): boolean {
-    return this._currentIndex === this._countries.length;
-  }
-
-  getCurrentCountry(): Country {
-    return this._countries[this._currentIndex];
   }
 }

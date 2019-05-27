@@ -1,6 +1,6 @@
-import { Currency } from "./currency.interface";
-import { Language } from "./language.interface";
-import { RegionalBloc } from "./regional-bloc.interface";
+import { Currency } from './currency.interface';
+import { Language } from './language.interface';
+import { RegionalBloc } from './regional-bloc.interface';
 
 export interface Country {
   name: string;

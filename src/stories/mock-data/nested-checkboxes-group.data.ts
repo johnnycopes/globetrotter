@@ -1,28 +1,28 @@
-import { DefaultItem } from "./default-item.interface";
+import { DefaultItem } from './default-item.interface';
 
 export const MOCK_DATA: DefaultItem[] = [
   {
-    name: "Africa",
+    name: 'Africa',
     items: [
       {
-        name: "Northern Africa",
+        name: 'Northern Africa',
         items: [
-          { name: "Morocco" },
-          { name: "Egypt" }
+          { name: 'Morocco' },
+          { name: 'Egypt' }
         ]
       },
 
     ]
   },
   {
-    name: "Europe",
+    name: 'Europe',
     items: [
       {
-        name: "Western Europe",
+        name: 'Western Europe',
         items: [
-          { name: "Germany" },
-          { name: "Italy" },
-          { name: "Spain" }
+          { name: 'Germany' },
+          { name: 'Italy' },
+          { name: 'Spain' }
         ]
       }
     ]

@@ -3,6 +3,7 @@ import * as _ from 'lodash';
 ;
 import { SelectService } from '../select.service';
 import { RadioButtonsOption } from 'src/app/shared/radio-buttons/radio-buttons.component';
+import { QuizQuantity } from 'src/app/model/quiz-quantity.type';
 
 @Component({
   selector: 'app-select-quantity',
@@ -10,8 +11,8 @@ import { RadioButtonsOption } from 'src/app/shared/radio-buttons/radio-buttons.c
   styleUrls: ['./select-quantity.component.scss']
 })
 export class SelectQuantityComponent implements OnInit {
-  quantities: RadioButtonsOption<number | null>[];
-  selectedQuantity: RadioButtonsOption<number | null>;
+  quantities: RadioButtonsOption<QuizQuantity>[];
+  selectedQuantity: RadioButtonsOption<QuizQuantity>;
 
   constructor(private selectService: SelectService) { }
 

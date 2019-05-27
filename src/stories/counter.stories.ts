@@ -1,11 +1,11 @@
-import { storiesOf } from "@storybook/angular";
+import { storiesOf } from '@storybook/angular';
 import {
   withKnobs,
   text,
   number,
   boolean,
 } from '@storybook/addon-knobs/angular';
-import { CounterComponent } from "src/app/shared/counter/counter.component";
+import { CounterComponent } from 'src/app/shared/counter/counter.component';
 
 storiesOf('Shared | Counter', module)
   .addDecorator(withKnobs)

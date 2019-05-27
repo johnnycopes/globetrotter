@@ -7,14 +7,11 @@ import { CountryClass } from 'src/app/country/country.class';
 import { CountryService } from 'src/app/country/country.service';
 import { Selection } from 'src/app/model/selection.interface';
 import { Quiz } from '../model/quiz.class';
-import { QuizTypes } from '../model/quiz-types.enum';
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuizService extends CountryClass {
-  private countries: Country[];
-  private quizType: QuizTypes;
   private quiz: Quiz;
   private quizComplete: boolean;
   quizUpdated = new BehaviorSubject<Quiz>(this.quiz);
@@ -31,30 +28,21 @@ export class QuizService extends CountryClass {
   }
 
   initializeQuiz(selection: Selection): void {
-    this.quizType = selection.type;
-    this.countries = this.selectCountries(selection);
-    this.quiz = new Quiz(_.shuffle(this.countries));
+    this.quiz = new Quiz(
+      selection.type,
+      this.selectCountries(selection)
+    );
     this.pushQuizUpdated();
   }
 
-  getCountries(): Country[] {
-    return this.countries;
-  }
-
-  getQuizType(): QuizTypes {
-    return this.quizType;
-  }
-
-  evaluateGuess(country: Country): boolean {
-    const guessedCountry = country;
-    const currentCountry = this.quiz.getCurrentCountry();
-    return guessedCountry === currentCountry;
+  evaluateGuess(guessedCountry: Country): boolean {
+    return guessedCountry === this.quiz.currentCountry;
   }
 
   updateQuiz(correctGuess: boolean): void {
     if (correctGuess) {
       this.quiz.nextCountry();
-      this.quizComplete = this.quiz.checkIfComplete();
+      this.quizComplete = this.quiz.isComplete;
       if (this.quizComplete) {
         this.quiz.calculateAccuracy();
         this.pushQuizCompleted();
