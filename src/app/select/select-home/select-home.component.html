@@ -1,4 +1,7 @@
-<main class="select-home">
+<app-button-screen
+  buttonText="Embark"
+  (clicked)="onClick()"
+  >
   <h1 class="title">
     Globetrotter
   </h1>
@@ -9,12 +12,4 @@
       alt="Globetrotter logo"
     />
   </div>
-  <app-button
-    buttonStyle="primary"
-    buttonType="submit"
-    buttonText="Embark"
-    (clicked)="onClick()"
-    >
-  </app-button>
-</main>
-
+</app-button-screen>

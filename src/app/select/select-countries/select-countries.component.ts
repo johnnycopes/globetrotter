@@ -15,6 +15,7 @@ import { PlacesRenderer } from 'src/app/model/places-renderer.class';
 })
 export class SelectCountriesComponent implements OnInit {
   regions: Region[];
+  allChecked: boolean = true;
   canStartQuiz: boolean;
   treeProvider: TreeProvider<Place> = new PlacesTreeProvider();
   renderer: Renderer<Place> = new PlacesRenderer();
@@ -26,6 +27,7 @@ export class SelectCountriesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.canStartQuiz = this.allChecked;
     this.regions = this.countryService.initializeData();
   }
 

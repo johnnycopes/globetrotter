@@ -14,11 +14,11 @@ const actions = {
   onChange: action('ngModelChanged')
 };
 const options: RadioButtonsOption<number>[] = [
-  { 'display': '5', 'value': 5 },
-  { 'display': '10', 'value': 10 },
-  { 'display': '15', 'value': 15 },
-  { 'display': '20', 'value': 20 },
-  { 'display': 'All', 'value': null }
+  { display: '5', value: 5 },
+  { display: '10', value: 10 },
+  { display: '15', value: 15 },
+  { display: '20', value: 20 },
+  { display: 'All', value: null }
 ];
 const template = `
   <app-radio-buttons

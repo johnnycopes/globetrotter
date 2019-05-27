@@ -1,0 +1,12 @@
+@import 'styles';
+
+.button-screen {
+
+  &__content {
+    margin-bottom: map-get($spacing, 64);
+  }
+
+  &__button {
+    text-align: center;
+  }
+}

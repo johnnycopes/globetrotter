@@ -1,7 +1,5 @@
-import { Selection } from './selection.interface';
 import { Country } from './country.interface';
 import { QuizTypes } from './quiz-types.enum';
-import { QuizQuantity } from './quiz-quantity.type';
 
 export class Quiz {
   private _currentIndex: number = 0;

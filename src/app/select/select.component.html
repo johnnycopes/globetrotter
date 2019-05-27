@@ -1,24 +1,3 @@
-<main class="select"
-  [ngSwitch]="screen"
-  >
-  <div *ngSwitchCase="Pages.home"
-    @fadeIn
-    >
-    <app-select-home></app-select-home>
-  </div>
-  <div *ngSwitchCase="Pages.type"
-    @fadeIn
-    >
-    <app-select-type></app-select-type>
-  </div>
-  <div *ngSwitchCase="Pages.quantity"
-    @fadeIn
-    >
-    <app-select-quantity></app-select-quantity>
-  </div>
-  <div *ngSwitchCase="Pages.countries"
-    @fadeIn
-    >
-    <app-select-countries></app-select-countries>
-  </div>
+<main class="select">
+  <ng-container *ngComponentOutlet="pageComponent"></ng-container>
 </main>

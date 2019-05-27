@@ -16,7 +16,7 @@ export class SelectQuantityComponent implements OnInit {
 
   constructor(private selectService: SelectService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.quantities = [
       { display: '5', value: 5 },
       { display: '10', value: 10 },
@@ -27,7 +27,7 @@ export class SelectQuantityComponent implements OnInit {
     this.selectedQuantity = _.clone(this.quantities[0]);
   }
 
-  onClick() {
+  onClick(): void {
     this.selectService.updateQuantity(this.selectedQuantity.value);
     this.selectService.nextScreen();
   }

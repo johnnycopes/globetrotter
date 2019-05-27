@@ -1,24 +1,17 @@
-<div class="select-countries">
-  <div class="select-countries__form">
-    <app-nested-checkboxes-group
-      [items]="regions"
-      [treeProvider]="treeProvider"
-      [renderer]="renderer"
-      [allChecked]="true"
-      [showCounters]="true"
-      [showImages]="true"
-      text="possible countries are selected."
-      (modelChanged)="onCountriesChange($event)"
-      >
-    </app-nested-checkboxes-group>
-  </div>
-  <div class="select-countries__button">
-    <app-button
-      buttonStyle="primary"
-      buttonText="Launch"
-      [disabled]="!canStartQuiz"
-      (clicked)="onClick()"
-      >
-    </app-button>
-  </div>
-</div>
+<app-button-screen
+  buttonText="Launch"
+  [buttonDisabled]="!canStartQuiz"
+  (clicked)="onClick()"
+  >
+  <app-nested-checkboxes-group
+    [items]="regions"
+    [treeProvider]="treeProvider"
+    [renderer]="renderer"
+    [allChecked]="allChecked"
+    [showCounters]="true"
+    [showImages]="true"
+    text="possible countries are selected."
+    (modelChanged)="onCountriesChange($event)"
+    >
+  </app-nested-checkboxes-group>
+</app-button-screen>

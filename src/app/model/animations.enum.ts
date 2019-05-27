@@ -5,5 +5,5 @@ export enum Animations {
   displayCard = 1200,
   flipCard = 300,
   fixedSlideablePanel = 500,
-  selectFadeIn = 300
+  buttonScreenFadeIn = 300
 };

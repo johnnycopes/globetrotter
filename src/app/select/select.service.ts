@@ -10,9 +10,9 @@ import { CheckboxStates } from '../shared/nested-checkboxes/nested-checkboxes.co
   providedIn: 'root'
 })
 export class SelectService {
-  private screen: string;
+  private screen: Pages;
   private selection: Selection;
-  screenChanged = new BehaviorSubject<string>(this.screen);
+  screenChanged = new BehaviorSubject<Pages>(this.screen);
   selectionChanged = new BehaviorSubject<Selection>(this.selection);
 
   constructor() {

@@ -29,6 +29,12 @@ import { SelectTypeComponent } from './select-type/select-type.component';
     SelectHomeComponent,
     SelectQuantityComponent,
     SelectTypeComponent
+  ],
+  entryComponents: [
+    SelectCountriesComponent,
+    SelectHomeComponent,
+    SelectQuantityComponent,
+    SelectTypeComponent
   ]
 })
 export class SelectModule { }

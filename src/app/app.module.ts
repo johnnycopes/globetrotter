@@ -3,7 +3,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA, } from '@angular/core';
 
 import { QuizModule } from './quiz/quiz.module';
-import { SharedModule } from './shared/shared.module';
 import { SelectModule } from './select/select.module';
 
 import { AppComponent } from './app.component';
@@ -17,8 +16,7 @@ import { AppComponent } from './app.component';
     BrowserModule,
     BrowserAnimationsModule,
     QuizModule,
-    SelectModule,
-    SharedModule
+    SelectModule
   ],
   providers: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

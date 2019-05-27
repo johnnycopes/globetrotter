@@ -1,19 +1,12 @@
-<div class="select-type">
-  <div class="select-type__form">
-    <app-radio-buttons
-      text="Which type of quiz would you like to take?"
-      [options]="types"
-      [stackedVertically]="true"
-      [(ngModel)]="selectedType"
-      >
-    </app-radio-buttons>
-  </div>
-  <div class="select-type__button">
-    <app-button
-      buttonStyle="primary"
-      buttonText="Next"
-      (clicked)="onClick()"
-      >
-    </app-button>
-  </div>
-</div>
+<app-button-screen
+  buttonText="Next"
+  (clicked)="onClick()"
+  >
+  <app-radio-buttons
+    text="Which type of quiz would you like to take?"
+    [options]="types"
+    [stackedVertically]="true"
+    [(ngModel)]="selectedType"
+    >
+  </app-radio-buttons>
+</app-button-screen>

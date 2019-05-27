@@ -11,7 +11,7 @@ import { ButtonComponent, ButtonStyle } from 'src/app/shared/button/button.compo
 
 const buttonStyles: ButtonStyle[] = ['primary', 'secondary'];
 const actions = {
-  clicked: action('clicked')
+  onClick: action('clicked')
 };
 
 storiesOf('Shared | Button', module)
@@ -23,7 +23,7 @@ storiesOf('Shared | Button', module)
         buttonText: text('buttonText', 'Embark'),
         buttonStyle: select('buttonStyle', buttonStyles, 'primary'),
         disabled: boolean('disabled', false),
-        clicked: actions.clicked
+        clicked: actions.onClick
       }
     }
   })
@@ -34,7 +34,7 @@ storiesOf('Shared | Button', module)
         buttonText: text('buttonText', 'Select All'),
         buttonStyle: select('buttonStyle', buttonStyles, 'secondary'),
         disabled: boolean('disabled', false),
-        clicked: actions.clicked
+        clicked: actions.onClick
       }
     };
   });

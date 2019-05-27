@@ -1,18 +1,11 @@
-<div class="select-quantity">
-  <div class="select-quantity__form">
-    <app-radio-buttons
-      text="How many countries would you like to include in the quiz?"
-      [options]="quantities"
-      [(ngModel)]="selectedQuantity"
-      >
-    </app-radio-buttons>
-  </div>
-  <div class="select-quantity__button">
-    <app-button
-      buttonStyle="primary"
-      buttonText="Next"
-      (clicked)="onClick()"
-      >
-    </app-button>
-  </div>
-</div>
+<app-button-screen
+  buttonText="Next"
+  (clicked)="onClick()"
+  >
+  <app-radio-buttons
+    text="How many countries would you like to include in the quiz?"
+    [options]="quantities"
+    [(ngModel)]="selectedQuantity"
+    >
+  </app-radio-buttons>
+</app-button-screen>
