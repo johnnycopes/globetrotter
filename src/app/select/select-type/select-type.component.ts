@@ -17,7 +17,7 @@ export class SelectTypeComponent implements OnInit {
   constructor(private selectService: SelectService) { }
 
   ngOnInit(): void {
-    this.types = _.map(QuizTypes, (quizType, index) => {
+    this.types = _.map(QuizTypes, quizType => {
       return {
         display: this.formatDisplayText(quizType),
         value: quizType

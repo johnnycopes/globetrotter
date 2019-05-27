@@ -3,9 +3,9 @@ import { BehaviorSubject } from 'rxjs';
 import * as _ from 'lodash';
 
 import { Country } from 'src/app/model/country.interface';
-import { Selection } from '../select/select.service';
 import { CountryClass } from 'src/app/country/country.class';
 import { CountryService } from 'src/app/country/country.service';
+import { Selection } from 'src/app/model/selection.interface';
 import { Quiz } from '../model/quiz.class';
 import { QuizTypes } from '../model/quiz-types.enum';
 

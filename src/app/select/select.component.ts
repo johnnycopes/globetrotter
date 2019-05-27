@@ -8,9 +8,9 @@ import {
 import * as _ from 'lodash';
 import { Subscription } from 'rxjs';
 
-import { SelectService, Selection } from './select.service';
-import { Pages } from '../model/pages.enum';
-import { Animations } from '../model/animations.enum';
+import { SelectService } from './select.service';
+import { Pages } from 'src/app/model/pages.enum';
+import { Animations } from 'src/app/model/animations.enum';
 
 @Component({
   selector: 'app-select',
@@ -28,7 +28,6 @@ import { Animations } from '../model/animations.enum';
 export class SelectComponent implements OnInit, OnDestroy {
   Pages: typeof Pages = Pages;
   screen: string;
-  selection: Selection;
   private screenSubscription: Subscription;
 
   constructor(private selectService: SelectService) { }

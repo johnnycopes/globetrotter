@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core'
 import * as _ from 'lodash';
 ;
-import { RadioButtonsOption } from 'src/app/shared/radio-buttons/radio-buttons.component';
 import { SelectService } from '../select.service';
+import { RadioButtonsOption } from 'src/app/shared/radio-buttons/radio-buttons.component';
 
 @Component({
   selector: 'app-select-quantity',

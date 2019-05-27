@@ -1,15 +1,10 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-import { CheckboxStates } from '../shared/nested-checkboxes/nested-checkboxes.component';
-import { Pages } from '../model/pages.enum';
+import { Selection } from '../model/selection.interface';
 import { QuizTypes } from '../model/quiz-types.enum';
-
-export interface Selection {
-  type: QuizTypes;
-  countries: CheckboxStates;
-  quantity: number | null;
-}
+import { Pages } from '../model/pages.enum';
+import { CheckboxStates } from '../shared/nested-checkboxes/nested-checkboxes.component';
 
 @Injectable({
   providedIn: 'root'
@@ -61,8 +56,8 @@ export class SelectService {
     this.pushSelection();
   }
 
-  updateCountries(model: CheckboxStates): void {
-    this.selection.countries = model;
+  updateCountries(countries: CheckboxStates): void {
+    this.selection.countries = countries;
     this.pushSelection();
   }
 
