@@ -35,8 +35,12 @@ export class Quiz {
     return this._countries[this._currentIndex];
   }
 
+  get isInProgress(): boolean {
+    return this._countries.length > 0;
+  }
+
   get isComplete(): boolean {
-    return (this._currentIndex > 0 && this._currentIndex === this._countries.length);
+    return (this.isInProgress && this._currentIndex === this._countries.length);
   }
 
   handleGuess(correctGuess: boolean): void {
