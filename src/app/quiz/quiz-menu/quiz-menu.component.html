@@ -1,41 +1,31 @@
-<!-- <span style="position: fixed; z-index: 9999;">{{(currentCountry$ | async).name}}</span> -->
-<app-fixed-slideable-panel [position]="menuPosition$ | async">
+<app-fixed-slideable-panel *ngIf="quiz$ | async as quiz"
+  [position]="menuPosition$ | async"
+  >
   <app-fixed-slideable-panel-content>
     <div class="quiz-menu__outcome"
-      *ngIf="quizCompleted$ | async"
+      *ngIf="quiz.isComplete"
       >
       <p class="quiz-menu__outcome-text">
         Quiz complete! You scored
       </p>
       <h1 class="quiz-menu__outcome-accuracy">
-        {{accuracy$ | async}}%
+        {{quiz.accuracy}}%
       </h1>
     </div>
   </app-fixed-slideable-panel-content>
   <app-fixed-slideable-panel-header>
     <div class="quiz-menu__progress"
-      *ngIf="!(quizCompleted$ | async)"
+      *ngIf="!quiz.isComplete"
       >
       <h4 class="quiz-menu__progress-tally">
-        {{currentIndex$ | async}} / {{totalCountries$ | async}}
+        {{quiz.currentIndex}} / {{quiz.countries.length}}
       </h4>
       <p class="quiz-menu__progress-prompt">
-        <ng-container *ngTemplateOutlet="promptTemplate$ | async">
-        </ng-container>
+        {{prompt$ | async}}
       </p>
       <h4 class="quiz-menu__progress-guess">
-        Guess #{{guess$ | async}}
+        Guess #{{quiz.guess}}
       </h4>
     </div>
   </app-fixed-slideable-panel-header>
 </app-fixed-slideable-panel>
-
-
-
-<ng-template #countryTemplate>
-  {{(currentCountry$ | async).name}}
-</ng-template>
-
-<ng-template #capitalTemplate>
-  {{(currentCountry$ | async).capital}}
-</ng-template>

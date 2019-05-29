@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, distinctUntilKeyChanged } from 'rxjs/operators';
+import * as _ from 'lodash';
 
-import { QuizTypes } from 'src/app/model/quiz-types.enum';
-import { Country } from 'src/app/model/country.interface';
-import { FixedSlideablePanelPosition } from 'src/app/shared/fixed-slideable-panel/fixed-slideable-panel.component';
 import { QuizService } from 'src/app/core/quiz/quiz.service';
+import { QuizTypes } from 'src/app/model/quiz-types.enum';
+import { FixedSlideablePanelPosition } from 'src/app/shared/fixed-slideable-panel/fixed-slideable-panel.component';
 
 @Component({
   selector: 'app-quiz-menu',
@@ -13,58 +13,26 @@ import { QuizService } from 'src/app/core/quiz/quiz.service';
   styleUrls: ['./quiz-menu.component.scss']
 })
 export class QuizMenuComponent implements OnInit {
-  currentIndex$: Observable<number>;
-  guess$: Observable<number>;
-  currentCountry$: Observable<Country>;
-  totalCountries$: Observable<number>;
-  accuracy$: Observable<number>;
-  quizCompleted$: Observable<boolean>;
+  quiz$ = this.quizService.quiz$;
   menuPosition$: Observable<FixedSlideablePanelPosition>;
-  promptTemplate$: Observable<TemplateRef<any>>;
-  @ViewChild('countryTemplate') countryTemplate: TemplateRef<any>;
-  @ViewChild('capitalTemplate') capitalTemplate: TemplateRef<any>;
+  prompt$: Observable<string>;
 
   constructor(private quizService: QuizService) { }
 
   ngOnInit(): void {
-    this.currentIndex$ = this.quizService.quiz$.pipe(
-      map(quiz => quiz.currentIndex)
+    this.menuPosition$ = this.quiz$.pipe(
+      // distinctUntilKeyChanged('isComplete'), // TODO: find out why this doesn't work
+      map(quiz => quiz.isComplete ? 'fullscreen' : 'header'),
     );
-    this.guess$ = this.quizService.quiz$.pipe(
-      map(quiz => quiz.guess)
+    this.prompt$ = this.quiz$.pipe(
+      map(quiz => {
+        if (quiz.type === QuizTypes.countriesCapitals) {
+          return _.get(quiz, 'currentCountry.capital');
+        }
+        else {
+          return _.get(quiz, 'currentCountry.name');
+        }
+      })
     );
-    this.accuracy$ = this.quizService.quiz$.pipe(
-      distinctUntilKeyChanged('accuracy'),
-      map(quiz => quiz.accuracy)
-    );
-    this.currentCountry$ = this.quizService.quiz$.pipe(
-      // distinctUntilKeyChanged('currentCountry'), // TODO: figure out why this won't work
-      map(quiz => quiz.currentCountry)
-    );
-    this.totalCountries$ = this.quizService.quiz$.pipe(
-      distinctUntilKeyChanged('countries'),
-      map(quiz => quiz.countries.length)
-    );
-    this.quizCompleted$ = this.quizService.quiz$.pipe(
-      // distinctUntilKeyChanged('isComplete'), // TODO: figure out why this won't work
-      map(quiz => quiz.isComplete)
-    );
-    this.menuPosition$ = this.quizService.quiz$.pipe(
-      // distinctUntilKeyChanged('isComplete'), // TODO: figure out why this won't work
-      map(quiz => quiz.isComplete ? 'fullscreen' : 'header')
-    );
-    this.promptTemplate$ = this.quizService.quiz$.pipe(
-      distinctUntilKeyChanged('type'),
-      map(quiz => this.setPromptTemplate(quiz.type))
-    );
-  }
-
-  private setPromptTemplate(quizType: QuizTypes): TemplateRef<any> {
-    if (quizType === QuizTypes.countriesCapitals) {
-      return this.capitalTemplate;
-    }
-    else {
-      return this.countryTemplate;
-    }
   }
 }

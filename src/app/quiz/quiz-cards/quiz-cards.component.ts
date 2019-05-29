@@ -8,9 +8,9 @@ import {
   stagger,
   animateChild
 } from '@angular/animations';
-import * as _ from 'lodash';
 import { Observable } from 'rxjs';
 import { distinctUntilKeyChanged, map } from 'rxjs/operators';
+import * as _ from 'lodash';
 
 import { Country } from 'src/app/model/country.interface';
 import { Animations } from 'src/app/model/animations.enum';
@@ -49,7 +49,7 @@ export class QuizCardsComponent implements OnInit {
     );
     this.countries$ = this.quizService.quiz$.pipe(
       distinctUntilKeyChanged('countries'),
-      map(quiz => quiz.countries)
+      map(quiz => _.shuffle(quiz.countries))
     );
   }
 
