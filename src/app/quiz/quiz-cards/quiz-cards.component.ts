@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   trigger,
   style,
@@ -9,8 +9,8 @@ import {
   animateChild
 } from '@angular/animations';
 import * as _ from 'lodash';
-import { Subscription } from 'rxjs';
-import { distinctUntilChanged } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { distinctUntilKeyChanged, map } from 'rxjs/operators';
 
 import { Country } from 'src/app/model/country.interface';
 import { Animations } from 'src/app/model/animations.enum';
@@ -35,29 +35,22 @@ import { QuizService } from 'src/app/core/quiz/quiz.service';
     ])
   ]
 })
-export class QuizCardsComponent implements OnInit, OnDestroy {
-  countries: Country[];
-  quizType: QuizTypes;
+export class QuizCardsComponent implements OnInit {
   canFlipCards = true;
-  private quizSubscription: Subscription;
+  quizType$: Observable<QuizTypes>;
+  countries$: Observable<Country[]>;
 
   constructor(private quizService: QuizService) { }
 
   ngOnInit(): void {
-    this.quizSubscription = this.quizService.quizUpdated
-      .pipe(
-        distinctUntilChanged()
-      )
-      .subscribe(
-        quiz => {
-          this.quizType = quiz.type;
-          this.countries = _.shuffle(quiz.countries);
-        }
+    this.quizType$ = this.quizService.quiz$.pipe(
+      distinctUntilKeyChanged('type'),
+      map(quiz => quiz.type)
     );
-  }
-
-  ngOnDestroy(): void {
-    this.quizSubscription.unsubscribe();
+    this.countries$ = this.quizService.quiz$.pipe(
+      distinctUntilKeyChanged('countries'),
+      map(quiz => quiz.countries)
+    );
   }
 
   onFlip(cardFlipped: boolean): void {

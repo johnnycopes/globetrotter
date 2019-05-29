@@ -8,7 +8,7 @@
     />
   </nav>
   <div class="app__content"
-    [ngClass]="{'app__content--no-scroll': quizCompleted}"
+    [ngClass]="{'app__content--no-scroll': (quizCompleted$ | async)}"
     >
     <app-select *ngIf="!quizStarted"></app-select>
     <app-quiz *ngIf="quizStarted"></app-quiz>

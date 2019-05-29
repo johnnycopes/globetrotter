@@ -11,56 +11,32 @@ import { Quiz } from 'src/app/model/quiz.class';
   providedIn: 'root'
 })
 export class QuizService {
-  private quiz: Quiz;
-  private quizComplete: boolean;
-  quizUpdated = new BehaviorSubject<Quiz>(this.quiz);
-  quizCompleted = new BehaviorSubject<boolean>(this.quizComplete);
+  private quizSubject = new BehaviorSubject<Quiz>(new Quiz());
+  public quiz$ = this.quizSubject.asObservable();
 
-  constructor(private countryService: CountryService) {
-    this.reset();
+  constructor(private countryService: CountryService) { }
+
+  private get quiz(): Quiz {
+    return this.quizSubject.value;
   }
 
   reset(): void {
-    this.quizComplete = false;
-    this.pushQuizCompleted();
+    const emptyQuiz = new Quiz([])
+    this.quizSubject.next(emptyQuiz);
   }
 
   initializeQuiz(selection: Selection): void {
-    this.quiz = new Quiz(
-      selection.type,
-      this.getCountries(selection)
-    );
-    this.pushQuizUpdated();
+    const countries = this.countryService.getCountriesFromSelection(selection);
+    const newQuiz = new Quiz(selection.type, countries);
+    this.quizSubject.next(newQuiz);
+  }
+
+  updateQuiz(correctGuess: boolean): void {
+    this.quiz.handleGuess(correctGuess);
+    this.quizSubject.next(this.quiz);
   }
 
   evaluateGuess(guessedCountry: Country): boolean {
     return guessedCountry === this.quiz.currentCountry;
-  }
-
-  updateQuiz(correctGuess: boolean): void {
-    if (correctGuess) {
-      this.quiz.nextCountry();
-      this.quizComplete = this.quiz.isComplete;
-      if (this.quizComplete) {
-        this.quiz.calculateAccuracy();
-        this.pushQuizCompleted();
-      }
-    }
-    if (!this.quizComplete) {
-      this.quiz.nextGuess();
-    }
-    this.pushQuizUpdated();
-  }
-
-  private getCountries(selection: Selection): Country[] {
-    return this.countryService.getCountriesFromSelection(selection);
-  }
-
-  private pushQuizUpdated(): void {
-    this.quizUpdated.next(this.quiz);
-  }
-
-  private pushQuizCompleted(): void {
-    this.quizCompleted.next(this.quizComplete);
   }
 }

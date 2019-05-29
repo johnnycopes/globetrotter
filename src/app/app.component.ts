@@ -1,5 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
+import { map, distinctUntilKeyChanged } from 'rxjs/operators';
+import * as _ from 'lodash';
 
 import { SelectService } from 'src/app/core/select/select.service';
 import { QuizService } from 'src/app/core/quiz/quiz.service';
@@ -12,9 +14,8 @@ import { Pages } from './model/pages.enum';
 })
 export class AppComponent implements OnInit, OnDestroy {
   quizStarted: boolean;
-  quizCompleted: boolean;
   private screenChangedSubscription: Subscription;
-  private quizCompletedSubscription: Subscription;
+  public quizCompleted$: Observable<boolean>;
 
   constructor(
     private selectService: SelectService,
@@ -22,6 +23,10 @@ export class AppComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.quizCompleted$ = this.quizService.quiz$.pipe(
+      distinctUntilKeyChanged('isComplete'),
+      map(quiz => _.get(quiz, 'isComplete', false))
+    );
     this.screenChangedSubscription = this.selectService.screenChanged.subscribe(
       (screen) => {
         this.quizStarted = screen === Pages.quiz;
@@ -30,14 +35,10 @@ export class AppComponent implements OnInit, OnDestroy {
         }
       }
     );
-    this.quizCompletedSubscription = this.quizService.quizCompleted.subscribe(
-      (quizCompleted) => this.quizCompleted = quizCompleted
-    );
   }
 
   ngOnDestroy(): void {
     this.screenChangedSubscription.unsubscribe();
-    this.quizCompletedSubscription.unsubscribe();
   }
 
   reset(): void {

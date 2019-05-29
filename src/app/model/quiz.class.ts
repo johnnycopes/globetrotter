@@ -7,8 +7,8 @@ export class Quiz {
   private _accuracy: number;
 
   constructor(
-    private _type: QuizTypes,
-    private _countries: Country[]
+    private _type: QuizTypes = QuizTypes.flagsCountries,
+    private _countries: Country[] = []
   ) { }
 
   get currentIndex(): number {
@@ -36,18 +36,30 @@ export class Quiz {
   }
 
   get isComplete(): boolean {
-    return this._currentIndex === this._countries.length;
+    return (this._currentIndex > 0 && this._currentIndex === this._countries.length);
   }
 
-  calculateAccuracy(): void {
+  handleGuess(correctGuess: boolean): void {
+    if (correctGuess) {
+      this.nextCountry();
+    }
+    if (this.isComplete) {
+      this.calculateAccuracy();
+    }
+    else {
+      this.nextGuess();
+    }
+  }
+
+  private calculateAccuracy(): void {
     this._accuracy = Math.round((this._countries.length / this._guess) * 100);
   }
 
-  nextCountry(): void {
+  private nextCountry(): void {
     this._currentIndex++;
   }
 
-  nextGuess(): void {
+  private nextGuess(): void {
     this._guess++;
   }
 }
