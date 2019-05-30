@@ -21,7 +21,7 @@ export class QuizService {
   }
 
   reset(): void {
-    const emptyQuiz = new Quiz()
+    const emptyQuiz = new Quiz();
     this.quizSubject.next(emptyQuiz);
   }
 

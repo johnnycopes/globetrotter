@@ -2,8 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import * as _ from 'lodash';
 
-import { SelectService } from '../core/select/select.service';
 import { Pages } from 'src/app/model/pages.enum';
+import { PageService } from '../core/page/page.service';
 import { SelectHomeComponent } from './select-home/select-home.component';
 import { SelectTypeComponent } from './select-type/select-type.component';
 import { SelectQuantityComponent } from './select-quantity/select-quantity.component';
@@ -16,7 +16,7 @@ import { SelectCountriesComponent } from './select-countries/select-countries.co
 })
 export class SelectComponent implements OnInit, OnDestroy {
   pageComponent: any;
-  private screenSubscription: Subscription;
+  private pageSubscription: Subscription;
   private pageComponentsDict: _.Dictionary<any> = {
     [Pages.home]: SelectHomeComponent,
     [Pages.type]: SelectTypeComponent,
@@ -24,15 +24,15 @@ export class SelectComponent implements OnInit, OnDestroy {
     [Pages.countries]: SelectCountriesComponent
   };
 
-  constructor(private selectService: SelectService) { }
+  constructor(private pageService: PageService) { }
 
   ngOnInit(): void {
-    this.screenSubscription = this.selectService.screenChanged.subscribe(
-      (screen) => this.pageComponent = this.pageComponentsDict[screen]
+    this.pageSubscription = this.pageService.pages$.subscribe(
+      page => this.pageComponent = this.pageComponentsDict[page]
     );
   }
 
   ngOnDestroy(): void {
-    this.screenSubscription.unsubscribe();
+    this.pageSubscription.unsubscribe();
   }
 }

@@ -11,62 +11,49 @@ import { CheckboxStates } from 'src/app/shared/nested-checkboxes/nested-checkbox
   providedIn: 'root'
 })
 export class SelectService {
-  private screen: Pages;
-  private selection: Selection;
-  screenChanged = new BehaviorSubject<Pages>(this.screen);
-  selectionChanged = new BehaviorSubject<Selection>(this.selection);
+  private selectionSubject = new BehaviorSubject<Selection>({
+    type: QuizTypes.flagsCountries,
+    quantity: 0,
+    countries: {},
+  });
+  public selection$ = this.selectionSubject.asObservable();
 
-  constructor() {
-    this.reset();
+  private get selection(): Selection {
+    return this.selectionSubject.value;
   }
 
+  constructor() { }
+
   reset(): void {
-    this.screen = Pages.home;
-    this.selection = {
+    const emptySelection = {
       type: QuizTypes.flagsCountries,
       quantity: 0,
       countries: {},
     };
-    this.pushScreen();
-    this.pushSelection();
-  }
-
-  nextScreen(): void {
-    if (this.screen === Pages.home) {
-      this.screen = Pages.type;
-    }
-    else if (this.screen === Pages.type) {
-      this.screen = Pages.quantity;
-    }
-    else if (this.screen === Pages.quantity) {
-      this.screen = Pages.countries;
-    }
-    else if (this.screen === Pages.countries) {
-      this.screen = Pages.quiz;
-    }
-    this.pushScreen();
+    this.selectionSubject.next(emptySelection);
   }
 
   updateType(type: QuizTypes): void {
-    this.selection.type = type;
-    this.pushSelection();
+    const updatedSelection = {
+      ...this.selection,
+      type
+    };
+    this.selectionSubject.next(updatedSelection);
   }
 
   updateQuantity(quantity: number): void {
-    this.selection.quantity = quantity;
-    this.pushSelection();
+    const updatedSelection = {
+      ...this.selection,
+      quantity
+    };
+    this.selectionSubject.next(updatedSelection);
   }
 
   updateCountries(countries: CheckboxStates): void {
-    this.selection.countries = countries;
-    this.pushSelection();
-  }
-
-  private pushScreen(): void {
-    this.screenChanged.next(this.screen);
-  }
-
-  private pushSelection(): void {
-    this.selectionChanged.next(this.selection);
+    const updatedSelection = {
+      ...this.selection,
+      countries
+    };
+    this.selectionSubject.next(updatedSelection);
   }
 }

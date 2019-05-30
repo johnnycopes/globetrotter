@@ -16,6 +16,11 @@ export class QuizMenuComponent implements OnInit {
   quiz$ = this.quizService.quiz$;
   menuPosition$: Observable<FixedSlideablePanelPosition>;
   prompt$: Observable<string>;
+  private promptDict: _.Dictionary<string> = {
+    [QuizTypes.flagsCountries]: 'name',
+    [QuizTypes.capitalsCountries]: 'name',
+    [QuizTypes.countriesCapitals]: 'capital'
+  };
 
   constructor(private quizService: QuizService) { }
 
@@ -25,13 +30,10 @@ export class QuizMenuComponent implements OnInit {
       map(quiz => quiz.isComplete ? 'fullscreen' : 'header'),
     );
     this.prompt$ = this.quiz$.pipe(
+      // distinctUntilKeyChanged('currentCountry'), // TODO: find out why this doesn't work
       map(quiz => {
-        if (quiz.type === QuizTypes.countriesCapitals) {
-          return _.get(quiz, 'currentCountry.capital');
-        }
-        else {
-          return _.get(quiz, 'currentCountry.name');
-        }
+        const key = this.promptDict[quiz.type];
+        return _.get(quiz, `currentCountry.${key}`);
       })
     );
   }

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { SelectService } from 'src/app/core/select/select.service';
+import { PageService } from 'src/app/core/page/page.service';
 
 @Component({
   selector: 'app-select-home',
@@ -9,10 +9,10 @@ import { SelectService } from 'src/app/core/select/select.service';
 })
 export class SelectHomeComponent {
 
-  constructor(private selectService: SelectService) { }
+  constructor(private pageService: PageService) { }
 
   onClick(): void {
-    this.selectService.nextScreen();
+    this.pageService.nextPage();
   }
 
 }

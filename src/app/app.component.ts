@@ -3,8 +3,9 @@ import { Subscription, Observable } from 'rxjs';
 import { map, distinctUntilKeyChanged } from 'rxjs/operators';
 import * as _ from 'lodash';
 
-import { SelectService } from 'src/app/core/select/select.service';
 import { QuizService } from 'src/app/core/quiz/quiz.service';
+import { SelectService } from './core/select/select.service';
+import { PageService } from './core/page/page.service';
 import { Pages } from './model/pages.enum';
 
 @Component({
@@ -14,10 +15,11 @@ import { Pages } from './model/pages.enum';
 })
 export class AppComponent implements OnInit, OnDestroy {
   quizStarted: boolean;
-  private screenChangedSubscription: Subscription;
+  private pagesSubscription: Subscription;
   public quizCompleted$: Observable<boolean>;
 
   constructor(
+    private pageService: PageService,
     private selectService: SelectService,
     private quizService: QuizService
   ) { }
@@ -27,9 +29,9 @@ export class AppComponent implements OnInit, OnDestroy {
       distinctUntilKeyChanged('isComplete'),
       map(quiz => _.get(quiz, 'isComplete', false))
     );
-    this.screenChangedSubscription = this.selectService.screenChanged.subscribe(
-      (screen) => {
-        this.quizStarted = screen === Pages.quiz;
+    this.pagesSubscription = this.pageService.pages$.subscribe(
+      page => {
+        this.quizStarted = page === Pages.quiz;
         if (this.quizStarted) {
           this.onQuizStarted();
         }
@@ -38,10 +40,11 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.screenChangedSubscription.unsubscribe();
+    this.pagesSubscription.unsubscribe();
   }
 
   reset(): void {
+    this.pageService.reset();
     this.quizService.reset();
     this.selectService.reset();
   }

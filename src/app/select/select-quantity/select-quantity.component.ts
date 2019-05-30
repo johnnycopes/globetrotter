@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import * as _ from 'lodash';
 ;
+import { PageService } from 'src/app/core/page/page.service';
 import { SelectService } from 'src/app/core/select/select.service';
 import { RadioButtonsOption } from 'src/app/shared/radio-buttons/radio-buttons.component';
 import { QuizQuantity } from 'src/app/model/quiz-quantity.type';
@@ -14,7 +15,10 @@ export class SelectQuantityComponent implements OnInit {
   quantities: RadioButtonsOption<QuizQuantity>[];
   selectedQuantity: RadioButtonsOption<QuizQuantity>;
 
-  constructor(private selectService: SelectService) { }
+  constructor(
+    private pageService: PageService,
+    private selectService: SelectService
+  ) { }
 
   ngOnInit(): void {
     this.quantities = [
@@ -29,6 +33,6 @@ export class SelectQuantityComponent implements OnInit {
 
   onClick(): void {
     this.selectService.updateQuantity(this.selectedQuantity.value);
-    this.selectService.nextScreen();
+    this.pageService.nextPage();
   }
 }
