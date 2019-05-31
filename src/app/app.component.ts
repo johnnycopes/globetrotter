@@ -27,7 +27,7 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.quizCompleted$ = this.quizService.quiz$.pipe(
       distinctUntilKeyChanged('isComplete'),
-      map(quiz => _.get(quiz, 'isComplete', false))
+      map(quiz => quiz.isComplete)
     );
     this.pagesSubscription = this.pageService.pages$.subscribe(
       page => {

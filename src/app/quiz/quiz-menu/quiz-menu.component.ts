@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map, distinctUntilKeyChanged } from 'rxjs/operators';
+import { map, distinctUntilChanged } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 import { QuizService } from 'src/app/core/quiz/quiz.service';
@@ -26,15 +26,15 @@ export class QuizMenuComponent implements OnInit {
 
   ngOnInit(): void {
     this.menuPosition$ = this.quiz$.pipe(
-      // distinctUntilKeyChanged('isComplete'), // TODO: find out why this doesn't work
-      map(quiz => quiz.isComplete ? 'fullscreen' : 'header'),
+      map(quiz => quiz.isComplete ? 'fullscreen' : 'header' as FixedSlideablePanelPosition),
+      distinctUntilChanged(),
     );
     this.prompt$ = this.quiz$.pipe(
-      // distinctUntilKeyChanged('currentCountry'), // TODO: find out why this doesn't work
       map(quiz => {
         const key = this.promptDict[quiz.type];
         return _.get(quiz, `currentCountry.${key}`);
-      })
+      }),
+      distinctUntilChanged()
     );
   }
 }
