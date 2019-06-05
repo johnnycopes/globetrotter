@@ -2,36 +2,36 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 import { Pages } from 'src/app/model/pages.enum';
+import { StoreService } from '../store/store.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PageService {
-  private pagesSubject = new BehaviorSubject<Pages>(Pages.home);
-  public pages$ = this.pagesSubject.asObservable();
 
-  constructor() { }
+  constructor(
+    private storeService: StoreService
+  ) { }
 
   reset(): void {
-    this.pagesSubject.next(Pages.home);
-  }
-
-  private get page(): Pages {
-    return this.pagesSubject.value;
+    this.storeService.set(['page'], Pages.home);
   }
 
   nextPage(): void {
-    if (this.page === Pages.home) {
-      this.pagesSubject.next(Pages.type);
-    }
-    else if (this.page === Pages.type) {
-      this.pagesSubject.next(Pages.quantity);
-    }
-    else if (this.page === Pages.quantity) {
-      this.pagesSubject.next(Pages.countries);
-    }
-    else if (this.page === Pages.countries) {
-      this.pagesSubject.next(Pages.quiz);
-    }
+    this.storeService.transform(['page'], (page) => {
+      if (page === Pages.home) {
+        return Pages.type;
+      }
+      else if (page === Pages.type) {
+        return Pages.quantity;
+      }
+      else if (page === Pages.quantity) {
+        return Pages.countries;
+      }
+      else if (page === Pages.countries) {
+        return Pages.quiz;
+      }
+    });
+
   }
 }
