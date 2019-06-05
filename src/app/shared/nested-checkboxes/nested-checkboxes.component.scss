@@ -7,12 +7,20 @@
   position: relative;
 
   &__image {
-    $image-size: map-get($spacing, 192);
-    width: $image-size;
-    padding-right: 2rem;
+    width: map-get($spacing, 96);
+    padding-right: map-get($spacing, 8);
 
     &--inactive {
       opacity: 0.4;
+    }
+
+    @include mobile {
+      width: map-get($spacing, 128);
+    }
+
+    @include tablet {
+      width: map-get($spacing, 192);
+      padding-right: map-get($spacing, 32);
     }
   }
 

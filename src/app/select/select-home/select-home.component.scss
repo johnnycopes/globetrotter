@@ -5,7 +5,7 @@
   text-align: center;
   margin-bottom: map-get($spacing, 24);
 
-  @include large-desktop {
+  @include desktop {
     font-size: map-get($font-size, 128);
   }
 }

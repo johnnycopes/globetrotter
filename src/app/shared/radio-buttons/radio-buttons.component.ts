@@ -1,5 +1,8 @@
-import { Component, Input, } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
+
+import { Breakpoints } from 'src/app/model/breakpoints.enum';
 
 export interface RadioButtonsOption<T> {
   display: string;
@@ -16,14 +19,17 @@ export interface RadioButtonsOption<T> {
     multi: true
   }]
 })
-export class RadioButtonsComponent<T> implements ControlValueAccessor {
+export class RadioButtonsComponent<T> implements OnInit, ControlValueAccessor {
   @Input() options: RadioButtonsOption<T>[];
   @Input() text: string;
-  @Input() stackedVertically: boolean;
+  @Input() alwaysStackedVertically: boolean;
+  stackedVertically: boolean = true;
   model: RadioButtonsOption<T>;
   private onChangeFn: any;
 
-  constructor() { }
+  constructor(
+    public breakpointObserver: BreakpointObserver
+  ) { }
 
   writeValue(obj: any): void {
     this.model = obj;
@@ -35,8 +41,28 @@ export class RadioButtonsComponent<T> implements ControlValueAccessor {
 
   registerOnTouched(fn: any): void { }
 
+  ngOnInit(): void {
+    this.setBreakpoint();
+  }
+
   onChange(): void {
     this.onChangeFn(this.model);
+  }
+
+  private setBreakpoint() {
+    if (this.alwaysStackedVertically) {
+      return;
+    }
+    this.breakpointObserver
+      .observe([Breakpoints.tablet])
+      .subscribe((state: BreakpointState) => {
+        if (state.matches) {
+          this.stackedVertically = false;
+        }
+        else {
+          this.stackedVertically = true;
+        }
+      });
   }
 
 }

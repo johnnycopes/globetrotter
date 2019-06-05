@@ -1,14 +1,14 @@
 @import 'styles';
 
 .button {
-  padding: map-get($spacing, 16) 0;
-  width: map-get($spacing, 192);
+  padding: map-get($spacing, 8) 0;
+  width: map-get($spacing, 128);
   border: none;
   text-decoration: none;
-  color: map-get($color,  darkest);
+  color: map-get($color, darkest);
   background: map-get($color, lightest);
   font-family: $font-stack;
-  font-size: map-get($font-size, 24);
+  font-size: map-get($font-size, 20);
   border: map-get($border, thin) solid map-get($color, lightest);
   border-radius: map-get($border, radius);
   outline: none;
@@ -46,6 +46,16 @@
   }
 
   &__text {
-    min-height: 40px; // prevent collapse if no text
+    min-height: 33.7px; // prevent collapse if no text
+
+    @include tablet {
+      min-height: 40px;
+    }
+  }
+
+  @include tablet {
+    padding: map-get($spacing, 16) 0;
+    width: map-get($spacing, 192);
+    font-size: map-get($font-size, 24);
   }
 }

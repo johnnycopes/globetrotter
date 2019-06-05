@@ -2,6 +2,6 @@
 
 .select {
   padding: map-get($spacing, 48) 0;
-  max-width: map-get($breakpoints, large-desktop);
+  max-width: map-get($breakpoints, desktop);
   margin: 0 auto;
 }

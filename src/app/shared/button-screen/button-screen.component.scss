@@ -3,7 +3,11 @@
 .button-screen {
 
   &__content {
-    margin-bottom: map-get($spacing, 64);
+    margin-bottom: map-get($spacing, 32);
+
+    @include tablet {
+      margin-bottom: map-get($spacing, 64);
+    }
   }
 
   &__button {

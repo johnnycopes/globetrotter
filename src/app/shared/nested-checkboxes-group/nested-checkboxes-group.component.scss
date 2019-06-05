@@ -11,7 +11,7 @@
   flex-direction: column;
   margin-bottom: map-get($spacing, 24);
 
-  @include large-desktop {
+  @include desktop {
     flex-direction: row;
   }
 
@@ -20,10 +20,15 @@
   }
 
   &__counter {
-    font-size: map-get($font-size, 36);
-    margin-bottom: map-get($spacing, 24);
+    font-size: map-get($font-size, 24);
+    margin-bottom: map-get($spacing, 12);
 
-    @include large-desktop {
+    @include tablet {
+      font-size: map-get($font-size, 36);
+      margin-bottom: map-get($spacing, 24);
+    }
+
+    @include desktop {
       margin-bottom: 0;
     }
   }
@@ -38,17 +43,24 @@
   grid-template-columns: 1fr;
   justify-items: center;
 
-  @include large-desktop {
+  @include desktop {
     grid-template-columns: 1fr 1fr;
     justify-items: left;
   }
 }
 
 .item {
-  padding: map-get($spacing, 16) 0;
-  width: 500px;
+  padding: map-get($spacing, 8) 0;
+  max-width: 500px;
+  width: 100%;
 
-  @include large-desktop {
+  @include tablet {
+    padding: map-get($spacing, 16) 0;
+  }
+
+  @include desktop {
+    max-width: none;
+    min-width: 500px;
     width: 100%;
   }
 }

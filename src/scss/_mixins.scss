@@ -1,9 +1,25 @@
+// Keep this in-sync with the Breakpoints enum in breakpoints.enum.ts
 $breakpoints: (
-  large-desktop: 1200px
+  all: 0px,
+  mobile: 400px,
+  tablet: 750px,
+  desktop: 1200px
 );
 
-@mixin large-desktop {
-  @media (min-width: #{map-get($breakpoints, large-desktop)}) {
+@mixin mobile {
+  @media (min-width: #{map-get($breakpoints, mobile)}) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: #{map-get($breakpoints, tablet)}) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: #{map-get($breakpoints, desktop)}) {
     @content;
   }
 }
