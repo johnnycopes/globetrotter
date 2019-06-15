@@ -5,8 +5,6 @@ import { Selection } from 'src/app/model/selection.interface';
 import { QuizTypes } from 'src/app/model/quiz-types.enum';
 import { CheckboxStates } from 'src/app/shared/nested-checkboxes/nested-checkboxes.component';
 import { StoreService } from '../store/store.service';
-import { Store } from '../utility/store.class';
-
 
 @Injectable({
   providedIn: 'root'
