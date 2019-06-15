@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 import { COUNTRIES } from 'src/app/model/countries.data';
 import { Country } from 'src/app/model/country.interface';
 import { Region } from 'src/app/model/region.interface';
-import { Selection } from 'src/app/model/selection.interface';
+import { Selection } from 'src/app/model/selection.class';
 
 enum ValidRegions {
   Asia = 'Asia',

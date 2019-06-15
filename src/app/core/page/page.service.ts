@@ -1,26 +1,29 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { StoreService } from '../store/store.service';
 import { Pages } from 'src/app/model/pages.enum';
+import { Store } from '../utility/store.class';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PageService {
+  private readonly store: Store;
 
-  constructor(private storeService: StoreService) { }
+  constructor() {
+    this.store = new Store({ page: Pages.home });
+  }
 
   reset(): void {
-    this.storeService.set(['page'], Pages.home);
+    this.store.set(['page'], Pages.home);
   }
 
   getPage(): Observable<Pages> {
-    return this.storeService.get(['page']);
+    return this.store.get(['page']);
   }
 
   nextPage(): void {
-    this.storeService.transform(['page'], (page) => {
+    this.store.transform(['page'], (page) => {
       if (page === Pages.home) {
         return Pages.type;
       }

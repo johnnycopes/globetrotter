@@ -2,41 +2,32 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import * as _ from 'lodash';
 
-import { StoreService } from '../store/store.service';
 import { CountryService } from 'src/app/core/country/country.service';
 import { Country } from 'src/app/model/country.interface';
-import { Selection } from 'src/app/model/selection.interface';
-import { Quiz } from 'src/app/model/quiz.interface';
-import { QuizTypes } from 'src/app/model/quiz-types.enum';
+import { Selection } from 'src/app/model/selection.class';
+import { Quiz } from 'src/app/model/quiz.class';
+import { Store } from '../utility/store.class';
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuizService {
+  private readonly store: Store;
 
-  constructor(
-    private storeService: StoreService,
-    private countryService: CountryService
-  ) { }
+  constructor(private countryService: CountryService) {
+    this.store = new Store({ quiz: new Quiz() });
+  }
 
   private get quiz(): Quiz {
-    return this.storeService.data.quiz;
+    return this.store.data.quiz;
   }
 
   reset(): void {
-    const newQuiz: Quiz = {
-      type: QuizTypes.flagsCountries,
-      currentIndex: 0,
-      guess: 1,
-      accuracy: 100,
-      countries: [],
-      isComplete: false
-    };
-    this.storeService.set(['quiz'], newQuiz);
+    this.store.set(['quiz'], new Quiz());
   }
 
   getQuiz(): Observable<Quiz> {
-    return this.storeService.get(['quiz']);
+    return this.store.get(['quiz']);
   }
 
   initializeQuiz(selection: Selection): void {
@@ -47,7 +38,7 @@ export class QuizService {
       countries,
       type
     };
-    this.storeService.set(['quiz'], updatedQuiz);
+    this.store.set(['quiz'], updatedQuiz);
   }
 
   updateQuiz(correctGuess: boolean): void {
@@ -62,7 +53,7 @@ export class QuizService {
     if (!this.quiz.isComplete) {
       updatedQuiz.guess = this.quiz.guess + 1;
     }
-    this.storeService.set(['quiz'], updatedQuiz);
+    this.store.set(['quiz'], updatedQuiz);
   }
 
   evaluateGuess(guessedCountry: Country): boolean {

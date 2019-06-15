@@ -3,7 +3,6 @@ import { map, distinctUntilChanged } from "rxjs/operators";
 import * as _ from 'lodash';
 
 export class Store {
-
   public data$: BehaviorSubject<any>;
 
   constructor(initialState: any) {
