@@ -31,7 +31,7 @@ export class NestedCheckboxesComponent<T> implements OnInit, ControlValueAccesso
   @Input() item: T;
   @Input() treeProvider: TreeProvider<T>;
   @Input() renderer: Renderer<T>;
-  @Input() firstInstance: boolean = true;
+  @Input() isRoot: boolean = true;
   @Input() showCounters?: boolean;
   @Input() showImage?: boolean;
   public itemID: string;

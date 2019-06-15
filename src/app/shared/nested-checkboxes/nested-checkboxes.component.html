@@ -7,8 +7,8 @@
   />
   <div class="nested-checkboxes__selection">
     <app-checkbox class="nested-checkboxes__checkbox"
-      [ngClass]="{'nested-checkboxes__checkbox--bold': firstInstance}"
-      [invertColors]="firstInstance"
+      [ngClass]="{'nested-checkboxes__checkbox--bold': isRoot}"
+      [invertColors]="isRoot"
       [ngModel]="checkboxStates && checkboxStates[itemID]"
       (ngModelChange)="updateSelectedCheckboxState($event)"
       >
@@ -16,8 +16,8 @@
         [current]="current"
         [total]="total"
         [text]="itemDisplayName"
-        [boldText]="firstInstance"
-        [boldNumbers]="firstInstance"
+        [boldText]="isRoot"
+        [boldNumbers]="isRoot"
         [wrapNumbers]="true"
         [textFirst]="true"
         >
@@ -26,7 +26,7 @@
     <app-nested-checkboxes class="nested-checkboxes__child"
       *ngFor="let childItem of childItems"
       [item]="childItem"
-      [firstInstance]="false"
+      [isRoot]="false"
       [showCounters]="showCounters"
       [treeProvider]="treeProvider"
       [renderer]="renderer"

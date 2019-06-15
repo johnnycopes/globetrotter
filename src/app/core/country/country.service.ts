@@ -2,29 +2,25 @@ import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
 
 import { COUNTRIES } from 'src/app/model/countries.data';
+import { COUNTRY_STATUSES } from 'src/app/model/country-statuses.data';
 import { Country } from 'src/app/model/country.interface';
 import { Region } from 'src/app/model/region.interface';
 import { Selection } from 'src/app/model/selection.class';
-
-enum ValidRegions {
-  Asia = 'Asia',
-  Africa = 'Africa',
-  Americas = 'Americas',
-  Europe = 'Europe',
-  Oceania = 'Oceania'
-};
 
 @Injectable({
   providedIn: 'root'
 })
 export class CountryService {
-  private countries: Country[] = COUNTRIES;
+  private countries: Country[];
   private countriesBySubregion: _.Dictionary<Country[]>;
   private subregionsByRegion: _.Dictionary<string[]>;
   private formattedData: Region[];
 
   constructor() {
-    this.initializeData();
+    this.countries = _.filter(COUNTRIES, country => COUNTRY_STATUSES[country.name]);
+    this.countriesBySubregion = _.groupBy(this.countries, 'subregion');
+    this.subregionsByRegion = this.groupSubregionsByRegion(this.countriesBySubregion);
+    this.formattedData = this.createFormattedData();
   }
 
   get data(): Region[] {
@@ -44,27 +40,6 @@ export class CountryService {
       .shuffle()
       .slice(0, quantity)
       .value();
-  }
-
-  private initializeData(): void {
-    this.countries = this.standardizeCountries(this.countries);
-    this.countriesBySubregion = _.groupBy(this.countries, 'subregion');
-    this.subregionsByRegion = this.groupSubregionsByRegion(this.countriesBySubregion);
-    this.formattedData = this.createFormattedData();
-  }
-
-  private standardizeCountries(countries: Country[]): Country[] {
-    return _.map(countries, country => {
-      const hasValidRegion = country.region in ValidRegions;
-      if (!hasValidRegion) {
-        return {
-          ...country,
-          region: 'Miscellaneous',
-          subregion: 'N/A'
-        };
-      }
-      return country;
-    });
   }
 
   private groupSubregionsByRegion(countriesBySubregion: _.Dictionary<Country[]>): _.Dictionary<string[]> {
