@@ -45,12 +45,12 @@ export class QuizService {
     const updatedQuiz = _.assign({}, this.quiz);
     if (correctGuess) {
       updatedQuiz.currentIndex = this.quiz.currentIndex + 1;
-      if (updatedQuiz.currentIndex >= updatedQuiz.countries.length) {
+      if (updatedQuiz.currentIndex >= this.quiz.countries.length) {
         updatedQuiz.accuracy = this.calculateAccuracy();
         updatedQuiz.isComplete = true;
       }
     }
-    if (!this.quiz.isComplete) {
+    if (!updatedQuiz.isComplete) {
       updatedQuiz.guess = this.quiz.guess + 1;
     }
     this.store.set(['quiz'], updatedQuiz);

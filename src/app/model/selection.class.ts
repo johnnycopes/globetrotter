@@ -3,7 +3,7 @@ import { CheckboxStates } from '../shared/nested-checkboxes/nested-checkboxes.co
 import { QuizQuantity } from './quiz-quantity.type';
 
 export class Selection {
-  type: QuizTypes = QuizTypes.flagsCountries;
-  countries: CheckboxStates = {};
-  quantity: QuizQuantity = 0;
+  type: QuizTypes;
+  countries: CheckboxStates;
+  quantity: QuizQuantity;
 }
