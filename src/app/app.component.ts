@@ -1,6 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription, Observable } from 'rxjs';
-import { map, distinctUntilKeyChanged } from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map, tap, distinctUntilChanged } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 import { QuizService } from 'src/app/core/quiz/quiz.service';
@@ -13,10 +13,9 @@ import { Pages } from './model/pages.enum';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit, OnDestroy {
-  quizStarted: boolean;
-  private pagesSubscription: Subscription;
-  public quizCompleted$: Observable<boolean>;
+export class AppComponent implements OnInit {
+  quizStarted$: Observable<boolean>;
+  quizCompleted$: Observable<boolean>;
 
   constructor(
     private pageService: PageService,
@@ -25,31 +24,23 @@ export class AppComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.quizCompleted$ = this.quizService.quiz$.pipe(
-      distinctUntilKeyChanged('isComplete'),
-      map(quiz => quiz.isComplete)
+    this.quizCompleted$ = this.quizService.getQuiz().pipe(
+      map(quiz => quiz.isComplete),
+      distinctUntilChanged()
     );
-    this.pagesSubscription = this.pageService.pages$.subscribe(
-      page => {
-        this.quizStarted = page === Pages.quiz;
-        if (this.quizStarted) {
-          this.onQuizStarted();
+    this.quizStarted$ = this.pageService.getPage().pipe(
+      map(page => page === Pages.quiz),
+      tap(quizStarted => {
+        if (quizStarted) {
+          window.scrollTo(0, 0);
         }
-      }
+      })
     );
-  }
-
-  ngOnDestroy(): void {
-    this.pagesSubscription.unsubscribe();
   }
 
   reset(): void {
     this.pageService.reset();
     this.quizService.reset();
     this.selectService.reset();
-  }
-
-  private onQuizStarted(): void {
-    window.scrollTo(0, 0);
   }
 }

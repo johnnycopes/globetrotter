@@ -27,7 +27,7 @@ export class SelectComponent implements OnInit, OnDestroy {
   constructor(private pageService: PageService) { }
 
   ngOnInit(): void {
-    this.pageSubscription = this.pageService.pages$.subscribe(
+    this.pageSubscription = this.pageService.getPage().subscribe(
       page => this.pageComponent = this.pageComponentsDict[page]
     );
   }

@@ -1,7 +1,7 @@
 <main class="app">
   <nav class="app__nav">
     <img class="app__nav-home"
-      *ngIf="quizStarted"
+      *ngIf="quizStarted$ | async"
       src="assets/icons/Globetrotter.svg"
       [alt]="Home"
       (click)="reset()"
@@ -10,7 +10,9 @@
   <div class="app__content"
     [ngClass]="{'app__content--no-scroll': (quizCompleted$ | async)}"
     >
-    <app-select *ngIf="!quizStarted"></app-select>
-    <app-quiz *ngIf="quizStarted"></app-quiz>
+    <app-quiz *ngIf="quizStarted$ | async; else select"></app-quiz>
+    <ng-template #select>
+      <app-select></app-select>
+    </ng-template>
   </div>
 </main>

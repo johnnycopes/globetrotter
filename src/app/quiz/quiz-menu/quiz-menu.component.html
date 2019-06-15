@@ -1,4 +1,4 @@
-<app-fixed-slideable-panel *ngIf="quiz$ | async as quiz"
+<app-fixed-slideable-panel *ngIf="(quiz$ | async) as quiz"
   [position]="menuPosition$ | async"
   >
   <app-fixed-slideable-panel-content>
@@ -18,7 +18,7 @@
       *ngIf="!quiz.isComplete"
       >
       <h4 class="quiz-menu__progress-tally">
-        {{quiz.currentIndex}} / {{quiz.countries.length}}
+        {{quiz.currentIndex}} / {{quiz.countries?.length}}
       </h4>
       <p class="quiz-menu__progress-prompt">
         {{prompt$ | async}}

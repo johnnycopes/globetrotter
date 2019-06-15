@@ -1,27 +1,19 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { Selection } from 'src/app/model/selection.interface';
 import { QuizTypes } from 'src/app/model/quiz-types.enum';
 import { CheckboxStates } from 'src/app/shared/nested-checkboxes/nested-checkboxes.component';
+import { StoreService } from '../store/store.service';
+import { Store } from '../utility/store.class';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class SelectService {
-  private selectionSubject = new BehaviorSubject<Selection>({
-    type: QuizTypes.flagsCountries,
-    quantity: 0,
-    countries: {},
-  });
-  public selection$ = this.selectionSubject.asObservable();
 
-  private get selection(): Selection {
-    return this.selectionSubject.value;
-  }
-
-  constructor() { }
+  constructor(private storeService: StoreService) { }
 
   reset(): void {
     const emptySelection = {
@@ -29,30 +21,22 @@ export class SelectService {
       quantity: 0,
       countries: {},
     };
-    this.selectionSubject.next(emptySelection);
+    this.storeService.set(['selection'], emptySelection);
+  }
+
+  getSelection(): Observable<Selection> {
+    return this.storeService.get(['selection']);
   }
 
   updateType(type: QuizTypes): void {
-    const updatedSelection = {
-      ...this.selection,
-      type
-    };
-    this.selectionSubject.next(updatedSelection);
+    this.storeService.set(['selection', 'type'], type);
   }
 
   updateQuantity(quantity: number): void {
-    const updatedSelection = {
-      ...this.selection,
-      quantity
-    };
-    this.selectionSubject.next(updatedSelection);
+    this.storeService.set(['selection', 'quantity'], quantity);
   }
 
   updateCountries(countries: CheckboxStates): void {
-    const updatedSelection = {
-      ...this.selection,
-      countries
-    };
-    this.selectionSubject.next(updatedSelection);
+    this.storeService.set(['selection', 'countries'], countries);
   }
 }

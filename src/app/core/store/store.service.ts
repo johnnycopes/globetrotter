@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 
 import { Store } from '../utility/store.class';
-import { Quiz } from 'src/app/model/quiz.class';
 import { Pages } from 'src/app/model/pages.enum';
 import { QuizTypes } from 'src/app/model/quiz-types.enum';
 
@@ -12,7 +11,14 @@ export class StoreService extends Store {
 
   constructor() {
     const state = {
-      quiz: new Quiz(),
+      quiz: {
+        type: QuizTypes.flagsCountries,
+        currentIndex: 0,
+        guess: 1,
+        countries: [],
+        isInProgress: false,
+        isComplete: false
+      },
       page: Pages.home,
       selection: {
         type: QuizTypes.flagsCountries,
@@ -22,4 +28,5 @@ export class StoreService extends Store {
     };
     super(state);
   }
+
 }

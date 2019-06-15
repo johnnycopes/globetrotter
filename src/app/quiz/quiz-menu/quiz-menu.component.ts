@@ -13,7 +13,7 @@ import { FixedSlideablePanelPosition } from 'src/app/shared/fixed-slideable-pane
   styleUrls: ['./quiz-menu.component.scss']
 })
 export class QuizMenuComponent implements OnInit {
-  quiz$ = this.quizService.quiz$;
+  quiz$ = this.quizService.getQuiz();
   menuPosition$: Observable<FixedSlideablePanelPosition>;
   prompt$: Observable<string>;
   private promptDict: _.Dictionary<string> = {
@@ -27,12 +27,13 @@ export class QuizMenuComponent implements OnInit {
   ngOnInit(): void {
     this.menuPosition$ = this.quiz$.pipe(
       map(quiz => quiz.isComplete ? 'fullscreen' : 'header' as FixedSlideablePanelPosition),
-      distinctUntilChanged(),
+      distinctUntilChanged()
     );
     this.prompt$ = this.quiz$.pipe(
       map(quiz => {
+        const currentCountry = quiz.countries[quiz.currentIndex];
         const key = this.promptDict[quiz.type];
-        return _.get(quiz, `currentCountry.${key}`);
+        return _.get(currentCountry, key, '');
       }),
       distinctUntilChanged()
     );

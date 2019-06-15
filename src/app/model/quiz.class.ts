@@ -1,10 +1,16 @@
 import { Country } from './country.interface';
 import { QuizTypes } from './quiz-types.enum';
 
-export class Quiz {
+class Quiz {
   private _currentIndex: number = 0;
   private _guess: number = 1;
   private _accuracy: number;
+  private keyDict: _.Dictionary<string> = {
+    [QuizTypes.flagsCountries]: 'name',
+    [QuizTypes.capitalsCountries]: 'name',
+    [QuizTypes.countriesCapitals]: 'capital'
+  };
+
 
   constructor(
     private _type: QuizTypes = QuizTypes.flagsCountries,
@@ -35,6 +41,11 @@ export class Quiz {
     return this._countries[this._currentIndex];
   }
 
+  get prompt(): string {
+    const key = this.keyDict[this._type];
+    return this.currentCountry[key];
+  }
+
   get isInProgress(): boolean {
     return this._countries.length > 0;
   }
@@ -43,16 +54,24 @@ export class Quiz {
     return (this.isInProgress && this._currentIndex === this._countries.length);
   }
 
-  handleGuess(correctGuess: boolean): void {
+  handleGuess(correctGuess: boolean): Quiz {
+    const newQuiz = new Quiz(this.type, this.countries);
+
+    newQuiz._currentIndex = this._currentIndex;
+    newQuiz._accuracy = this._accuracy;
+    newQuiz._guess = this._guess;
+
     if (correctGuess) {
-      this.nextCountry();
+      newQuiz.nextCountry();
     }
-    if (this.isComplete) {
-      this.calculateAccuracy();
+    if (newQuiz.isComplete) {
+      newQuiz.calculateAccuracy();
     }
     else {
-      this.nextGuess();
+      newQuiz.nextGuess();
     }
+    return newQuiz;
+
   }
 
   private calculateAccuracy(): void {

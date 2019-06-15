@@ -1,35 +1,35 @@
-import { Observable, BehaviorSubject, Subject } from "rxjs";
-import * as _ from 'lodash';
+import { Observable, BehaviorSubject } from "rxjs";
 import { map, distinctUntilChanged } from "rxjs/operators";
+import * as _ from 'lodash';
 
 export class Store {
 
-  private subject$: BehaviorSubject<any>;
+  public data$: BehaviorSubject<any>;
 
   constructor(initialState: any) {
-    this.subject$ = new BehaviorSubject(initialState);
+    this.data$ = new BehaviorSubject(initialState);
+  }
+
+  get data(): any {
+    return this.data$.value;
   }
 
   get(path: string[]): Observable<any> {
-    return this.subject$.pipe(
+    return this.data$.pipe(
       map((state) => _.get(state, path)),
       distinctUntilChanged()
     );
   }
 
   set(path: string[], value: any): void {
-    _.set(this.subject$.value, path, value);
-    this.subject$.next(this.subject$.value);
-  }
-
-  get data(): any {
-      return this.subject$.value;
+    _.set(this.data$.value, path, value);
+    this.data$.next(this.data$.value);
   }
 
   transform(path: string[], transformer: (value: any) => any): void {
     const oldValue = _.get(this.data, path);
     const newValue = transformer(oldValue);
     _.set(this.data, path, newValue);
-    this.subject$.next(this.data);
+    this.data$.next(this.data);
   }
 }

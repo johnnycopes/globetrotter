@@ -1,20 +1,22 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Observable } from 'rxjs';
 
-import { Pages } from 'src/app/model/pages.enum';
 import { StoreService } from '../store/store.service';
+import { Pages } from 'src/app/model/pages.enum';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PageService {
 
-  constructor(
-    private storeService: StoreService
-  ) { }
+  constructor(private storeService: StoreService) { }
 
   reset(): void {
     this.storeService.set(['page'], Pages.home);
+  }
+
+  getPage(): Observable<Pages> {
+    return this.storeService.get(['page']);
   }
 
   nextPage(): void {

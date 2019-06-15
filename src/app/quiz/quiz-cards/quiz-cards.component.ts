@@ -9,7 +9,7 @@ import {
   animateChild
 } from '@angular/animations';
 import { Observable } from 'rxjs';
-import { distinctUntilKeyChanged, map } from 'rxjs/operators';
+import { map, distinctUntilKeyChanged, distinctUntilChanged} from 'rxjs/operators';
 import * as _ from 'lodash';
 
 import { Country } from 'src/app/model/country.interface';
@@ -37,19 +37,20 @@ import { QuizService } from 'src/app/core/quiz/quiz.service';
 })
 export class QuizCardsComponent implements OnInit {
   canFlipCards = true;
+  quiz$ = this.quizService.getQuiz();
   quizType$: Observable<QuizTypes>;
   countries$: Observable<Country[]>;
 
   constructor(private quizService: QuizService) { }
 
   ngOnInit(): void {
-    this.quizType$ = this.quizService.quiz$.pipe(
-      distinctUntilKeyChanged('type'),
-      map(quiz => quiz.type)
+    this.quizType$ = this.quiz$.pipe(
+      map(quiz => quiz.type),
+      distinctUntilChanged(),
     );
-    this.countries$ = this.quizService.quiz$.pipe(
+    this.countries$ = this.quiz$.pipe(
       distinctUntilKeyChanged('countries'),
-      map(quiz => _.shuffle(quiz.countries))
+      map(quiz => _.shuffle(quiz.countries)),
     );
   }
 
