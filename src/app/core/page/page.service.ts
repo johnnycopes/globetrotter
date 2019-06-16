@@ -11,7 +11,9 @@ export class PageService {
   private readonly store: Store;
 
   constructor() {
-    this.store = new Store({ page: Pages.home });
+    this.store = new Store({
+      page: Pages.home
+    });
   }
 
   reset(): void {

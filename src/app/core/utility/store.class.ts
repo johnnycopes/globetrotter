@@ -13,9 +13,9 @@ export class Store {
     return this.data$.value;
   }
 
-  get(path: string[]): Observable<any> {
+  get(path?: string[]): Observable<any> {
     return this.data$.pipe(
-      map((state) => _.get(state, path)),
+      map(state => _.get(state, path)),
       distinctUntilChanged()
     );
   }

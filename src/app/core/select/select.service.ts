@@ -13,7 +13,9 @@ export class SelectService {
   private readonly store: Store;
 
   constructor() {
-    this.store = new Store({ selection: new Selection() });
+    this.store = new Store({
+      selection: new Selection()
+    });
   }
 
   reset(): void {

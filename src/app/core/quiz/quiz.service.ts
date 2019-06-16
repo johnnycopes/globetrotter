@@ -15,7 +15,9 @@ export class QuizService {
   private readonly store: Store;
 
   constructor(private countryService: CountryService) {
-    this.store = new Store({ quiz: new Quiz() });
+    this.store = new Store({
+      quiz: new Quiz()
+    });
   }
 
   private get quiz(): Quiz {
@@ -33,12 +35,8 @@ export class QuizService {
   initializeQuiz(selection: Selection): void {
     const countries = this.countryService.getCountriesFromSelection(selection);
     const type = selection.type;
-    const updatedQuiz = {
-      ...this.quiz,
-      countries,
-      type
-    };
-    this.store.set(['quiz'], updatedQuiz);
+    this.store.set(['quiz', 'countries'], countries);
+    this.store.set(['quiz', 'type'], type);
   }
 
   updateQuiz(correctGuess: boolean): void {
