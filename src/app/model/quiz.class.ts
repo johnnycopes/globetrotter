@@ -6,6 +6,6 @@ export class Quiz {
   guess: number = 1;
   accuracy: number;
   type: QuizTypes;
-  countries: Country[];
+  countries: Country[] = [];
   isComplete: boolean = false;
 };

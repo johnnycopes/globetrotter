@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import * as _ from 'lodash';
 
+import { Store } from 'src/app/model/store.class';
 import { CountryService } from 'src/app/core/country/country.service';
 import { Country } from 'src/app/model/country.interface';
 import { Selection } from 'src/app/model/selection.class';
 import { Quiz } from 'src/app/model/quiz.class';
-import { Store } from '../utility/store.class';
 
 @Injectable({
   providedIn: 'root'
@@ -15,43 +15,43 @@ export class QuizService {
   private readonly store: Store;
 
   constructor(private countryService: CountryService) {
-    this.store = new Store({
-      quiz: new Quiz()
-    });
+    this.store = new Store(new Quiz());
   }
 
-  private get quiz(): Quiz {
-    return this.store.data.quiz;
+  private get quiz() {
+    return this.store.data;
   }
 
   reset(): void {
-    this.store.set(['quiz'], new Quiz());
+    this.store.set([], new Quiz());
   }
 
   getQuiz(): Observable<Quiz> {
-    return this.store.get(['quiz']);
+    return this.store.get([]);
   }
 
   initializeQuiz(selection: Selection): void {
     const countries = this.countryService.getCountriesFromSelection(selection);
     const type = selection.type;
-    this.store.set(['quiz', 'countries'], countries);
-    this.store.set(['quiz', 'type'], type);
+    this.store.set(['countries'], countries);
+    this.store.set(['type'], type);
   }
 
   updateQuiz(correctGuess: boolean): void {
-    const updatedQuiz = _.assign({}, this.quiz);
-    if (correctGuess) {
-      updatedQuiz.currentIndex = this.quiz.currentIndex + 1;
-      if (updatedQuiz.currentIndex >= this.quiz.countries.length) {
-        updatedQuiz.accuracy = this.calculateAccuracy();
-        updatedQuiz.isComplete = true;
+    this.store.transform([], (quiz: Quiz) => {
+      const updatedQuiz = _.assign({}, quiz);
+      if (correctGuess) {
+        updatedQuiz.currentIndex = quiz.currentIndex + 1;
+        if (updatedQuiz.currentIndex >= quiz.countries.length) {
+          updatedQuiz.accuracy = this.calculateAccuracy(quiz);
+          updatedQuiz.isComplete = true;
+        }
       }
-    }
-    if (!updatedQuiz.isComplete) {
-      updatedQuiz.guess = this.quiz.guess + 1;
-    }
-    this.store.set(['quiz'], updatedQuiz);
+      if (!updatedQuiz.isComplete) {
+        updatedQuiz.guess = quiz.guess + 1;
+      }
+      return updatedQuiz;
+    });
   }
 
   evaluateGuess(guessedCountry: Country): boolean {
@@ -59,7 +59,7 @@ export class QuizService {
     return guessedCountry === currentCountry;
   }
 
-  private calculateAccuracy(): number {
-    return Math.round((this.quiz.countries.length / this.quiz.guess) * 100);
+  private calculateAccuracy(quiz: Quiz): number {
+    return Math.round((quiz.countries.length / quiz.guess) * 100);
   }
 }

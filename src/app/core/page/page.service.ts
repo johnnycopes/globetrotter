@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
+import { Store } from 'src/app/model/store.class';
 import { Pages } from 'src/app/model/pages.enum';
-import { Store } from '../utility/store.class';
 
 @Injectable({
   providedIn: 'root'
