@@ -18,7 +18,7 @@
       *ngIf="!quiz.isComplete"
       >
       <h4 class="quiz-menu__progress-tally">
-        {{quiz.currentIndex}} / {{quiz.countries?.length}}
+        {{quiz.countriesGuessed}} / {{quiz.totalCountries}}
       </h4>
       <p class="quiz-menu__progress-prompt">
         {{prompt$ | async}}

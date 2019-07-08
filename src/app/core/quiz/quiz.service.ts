@@ -18,7 +18,7 @@ export class QuizService {
     this.store = new Store(new Quiz());
   }
 
-  private get quiz() {
+  private get quiz(): Quiz {
     return this.store.data;
   }
 
@@ -34,6 +34,7 @@ export class QuizService {
     const countries = this.countryService.getCountriesFromSelection(selection);
     const type = selection.type;
     this.store.set(['countries'], countries);
+    this.store.set(['totalCountries'], countries.length);
     this.store.set(['type'], type);
   }
 
@@ -41,12 +42,17 @@ export class QuizService {
     this.store.transform([], (quiz: Quiz) => {
       const updatedQuiz = _.assign({}, quiz);
       if (correctGuess) {
-        updatedQuiz.currentIndex = quiz.currentIndex + 1;
-        if (updatedQuiz.currentIndex >= quiz.countries.length) {
+        updatedQuiz.countries = this.removeGuessedCountry(quiz.countries);
+        updatedQuiz.countriesGuessed = quiz.countriesGuessed + 1;
+        if (!updatedQuiz.countries.length) {
           updatedQuiz.accuracy = this.calculateAccuracy(quiz);
           updatedQuiz.isComplete = true;
         }
       }
+      else {
+        updatedQuiz.countries = this.moveGuessedCountryToEnd(quiz.countries);
+      }
+
       if (!updatedQuiz.isComplete) {
         updatedQuiz.guess = quiz.guess + 1;
       }
@@ -55,11 +61,22 @@ export class QuizService {
   }
 
   evaluateGuess(guessedCountry: Country): boolean {
-    const currentCountry = this.quiz.countries[this.quiz.currentIndex];
+    const currentCountry = _.head(this.quiz.countries);
     return guessedCountry === currentCountry;
   }
 
+  private moveGuessedCountryToEnd(countries: Country[]): Country[] {
+    const guessedCountry = _.head(countries);
+    const updatedCountries = this.removeGuessedCountry(countries);
+    updatedCountries.push(guessedCountry);
+    return updatedCountries;
+  }
+
+  private removeGuessedCountry(countries: Country[]): Country[] {
+    return _.slice(countries, 1);
+  }
+
   private calculateAccuracy(quiz: Quiz): number {
-    return Math.round((quiz.countries.length / quiz.guess) * 100);
+    return Math.round((quiz.totalCountries / quiz.guess) * 100);
   }
 }

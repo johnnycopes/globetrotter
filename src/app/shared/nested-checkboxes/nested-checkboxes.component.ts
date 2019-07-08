@@ -40,7 +40,7 @@ export class NestedCheckboxesComponent<T> implements OnInit, ControlValueAccesso
   public total: number;
   public imagePath: string;
   public checkboxStates: CheckboxStates = {};
-  private onChangeFn: any;
+  private onChangeFn: (value: CheckboxStates) => void;
 
   get current(): number | undefined {
     if (this.showCounters && this.checkboxStates && this.childItems.length) {
@@ -65,15 +65,17 @@ export class NestedCheckboxesComponent<T> implements OnInit, ControlValueAccesso
     this.imagePath = this.showImage && this.renderer.getImagePath(this.item);
   }
 
-  writeValue(obj: any): void {
-    this.checkboxStates = obj;
+  writeValue(value: CheckboxStates): void {
+    this.checkboxStates = value;
   }
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: (value: CheckboxStates) => void): void {
     this.onChangeFn = fn;
   }
 
-  registerOnTouched(fn: any): void { }
+  registerOnTouched(fn: (value: CheckboxStates) => void): void {
+    //
+  }
 
   updateSelectedCheckboxState(checkboxState: CheckboxState): void {
     const newCheckboxStatesDict = {...this.checkboxStates};

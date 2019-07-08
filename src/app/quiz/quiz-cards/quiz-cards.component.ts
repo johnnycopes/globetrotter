@@ -9,7 +9,7 @@ import {
   animateChild
 } from '@angular/animations';
 import { Observable } from 'rxjs';
-import { map, distinctUntilKeyChanged, distinctUntilChanged} from 'rxjs/operators';
+import { map, first, distinctUntilChanged} from 'rxjs/operators';
 import * as _ from 'lodash';
 
 import { Country } from 'src/app/model/country.interface';
@@ -46,11 +46,11 @@ export class QuizCardsComponent implements OnInit {
   ngOnInit(): void {
     this.quizType$ = this.quiz$.pipe(
       map(quiz => quiz.type),
-      distinctUntilChanged(),
+      distinctUntilChanged()
     );
     this.countries$ = this.quiz$.pipe(
-      distinctUntilKeyChanged('countries'),
       map(quiz => _.shuffle(quiz.countries)),
+      first()
     );
   }
 

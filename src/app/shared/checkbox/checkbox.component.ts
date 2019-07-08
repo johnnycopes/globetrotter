@@ -16,19 +16,19 @@ export type CheckboxState = 'checked' | 'unchecked' | 'indeterminate';
 export class CheckboxComponent implements ControlValueAccessor {
   @Input() invertColors: boolean;
   state: CheckboxState = 'unchecked';
-  private onChangeFn: any;
+  private onChangeFn: (value: CheckboxState) => void;
 
   constructor() { }
 
-  writeValue(obj: any): void {
-    this.state = obj;
+  writeValue(value: CheckboxState): void {
+    this.state = value;
   }
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: (value: CheckboxState) => void): void {
     this.onChangeFn = fn;
   }
 
-  registerOnTouched(fn: any): void { }
+  registerOnTouched(fn: (value: CheckboxState) => void): void { }
 
   onChange(): void {
     this.state = this.state !== 'checked' ? 'checked' : 'unchecked';
