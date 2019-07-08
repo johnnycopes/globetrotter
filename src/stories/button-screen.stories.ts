@@ -55,6 +55,7 @@ storiesOf('Shared | Button Screen', module)
         <app-button-screen
           [buttonText]="buttonText"
           [buttonDisabled]="buttonDisabled"
+          (clicked)="onClick($event)"
           >
           <app-radio-buttons
             text="Choose an option:"
@@ -71,7 +72,7 @@ storiesOf('Shared | Button Screen', module)
       props: {
         buttonText: text('buttonText', 'Next'),
         buttonDisabled: boolean('buttonDisabled', false),
-        actions: action.onClick
+        onClick: actions.onClick
       }
     };
   });
