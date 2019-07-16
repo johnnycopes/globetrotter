@@ -1,12 +1,8 @@
-<app-button-screen
-  buttonText="Next"
-  (clicked)="onClick()"
+<app-radio-buttons
+  text="Which type of quiz would you like to take?"
+  [options]="types"
+  [alwaysStackedVertically]="true"
+  [ngModel]="selectedType"
+  (ngModelChange)="onChange($event)"
   >
-  <app-radio-buttons
-    text="Which type of quiz would you like to take?"
-    [options]="types"
-    [alwaysStackedVertically]="true"
-    [(ngModel)]="selectedType"
-    >
-  </app-radio-buttons>
-</app-button-screen>
+</app-radio-buttons>

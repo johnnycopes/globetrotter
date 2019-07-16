@@ -25,20 +25,6 @@ export class PageService {
   }
 
   nextPage(): void {
-    this.store.transform(['page'], (page) => {
-      if (page === Pages.home) {
-        return Pages.type;
-      }
-      else if (page === Pages.type) {
-        return Pages.quantity;
-      }
-      else if (page === Pages.quantity) {
-        return Pages.countries;
-      }
-      else if (page === Pages.countries) {
-        return Pages.quiz;
-      }
-    });
-
+    this.store.transform(['page'], () => Pages.quiz);
   }
 }

@@ -1,0 +1,17 @@
+<div class="controls">
+  <ul class="tabs">
+    <li class="tab"
+      *ngFor="let tab of tabs"
+      [ngClass]="{'tab--selected': tab.selected}"
+      (click)="selectTab(tab)"
+      >
+      {{tab.title}}
+    </li>
+  </ul>
+  <div class="controls__slot">
+    <ng-content select="[app-tab-panel-controls]"></ng-content>
+  </div>
+</div>
+<div class="content">
+  <ng-content select="[app-tab-panel-content]"></ng-content>
+</div>

@@ -1,11 +1,7 @@
-<app-button-screen
-  buttonText="Next"
-  (clicked)="onClick()"
+<app-radio-buttons
+  text="How many countries would you like to include in the quiz?"
+  [options]="quantities"
+  [ngModel]="selectedQuantity"
+  (ngModelChange)="onChange($event)"
   >
-  <app-radio-buttons
-    text="How many countries would you like to include in the quiz?"
-    [options]="quantities"
-    [(ngModel)]="selectedQuantity"
-    >
-  </app-radio-buttons>
-</app-button-screen>
+</app-radio-buttons>

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import * as _ from 'lodash';
 
 import { SelectService } from 'src/app/core/select/select.service';
-import { PageService } from 'src/app/core/page/page.service';
 import { QuizTypes } from 'src/app/model/quiz-types.enum';
 import { RadioButtonsOption } from 'src/app/shared/radio-buttons/radio-buttons.component';
 
@@ -15,10 +14,7 @@ export class SelectTypeComponent implements OnInit {
   types: RadioButtonsOption<QuizTypes>[];
   selectedType: RadioButtonsOption<QuizTypes>;
 
-  constructor(
-    private pageService: PageService,
-    private selectService: SelectService
-  ) { }
+  constructor(private selectService: SelectService) { }
 
   ngOnInit(): void {
     this.types = _.map(QuizTypes, quizType => {
@@ -28,11 +24,12 @@ export class SelectTypeComponent implements OnInit {
       };
     });
     this.selectedType = _.clone(this.types[0]);
+    this.selectService.updateType(this.selectedType.value);
   }
 
-  onClick(): void {
+  onChange(event: RadioButtonsOption<QuizTypes>): void {
+    this.selectedType = event;
     this.selectService.updateType(this.selectedType.value);
-    this.pageService.nextPage();
   }
 
   private formatDisplayText(text: QuizTypes): string {

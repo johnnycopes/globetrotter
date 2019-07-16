@@ -54,7 +54,6 @@
   }
 
   @include tablet {
-    padding: map-get($spacing, 16) 0;
     width: map-get($spacing, 192);
     font-size: map-get($font-size, 24);
   }

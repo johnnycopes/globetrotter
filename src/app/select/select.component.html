@@ -1,3 +1,21 @@
-<main class="select">
-  <ng-container *ngComponentOutlet="pageComponent"></ng-container>
-</main>
+<app-tab-panel>
+  <div app-tab-panel-controls>
+    <app-button class="launch"
+      buttonText="Launch"
+      buttonStyle="primary"
+      (clicked)="onLaunch()"
+      >
+    </app-button>
+  </div>
+  <div app-tab-panel-content>
+    <app-tab title="Type">
+      <app-select-type></app-select-type>
+    </app-tab>
+    <app-tab title="Quantity">
+      <app-select-quantity></app-select-quantity>
+    </app-tab>
+    <app-tab title="Countries">
+      <app-select-countries></app-select-countries>
+    </app-tab>
+  </div>
+</app-tab-panel>

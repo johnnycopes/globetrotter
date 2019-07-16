@@ -1,7 +1,5 @@
 @import 'styles';
 
-.select {
-  padding: map-get($spacing, 48) 0;
-  max-width: map-get($breakpoints, desktop);
-  margin: 0 auto;
+:host {
+  min-height: 100vh;
 }

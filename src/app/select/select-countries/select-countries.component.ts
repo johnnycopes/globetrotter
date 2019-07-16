@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as _ from 'lodash';
 
-import { PageService } from 'src/app/core/page/page.service';
 import { CountryService } from 'src/app/core/country/country.service';
 import { SelectService } from 'src/app/core/select/select.service';
 import { CheckboxStates, TreeProvider, Renderer } from 'src/app/shared/nested-checkboxes/nested-checkboxes.component';
@@ -24,7 +23,6 @@ export class SelectCountriesComponent implements OnInit {
   private selectedCountries: CheckboxStates;
 
   constructor(
-    private pageService: PageService,
     private countryService: CountryService,
     private selectService: SelectService
   ) { }
@@ -36,11 +34,7 @@ export class SelectCountriesComponent implements OnInit {
 
   onCountriesChange(model: CheckboxStates): void {
     this.selectedCountries = model;
-    this.canStartQuiz = _.some(model, checkboxState => checkboxState === 'checked');
-  }
-
-  onClick(): void {
     this.selectService.updateCountries(this.selectedCountries);
-    this.pageService.nextPage();
+    this.canStartQuiz = _.some(model, checkboxState => checkboxState === 'checked');
   }
 }

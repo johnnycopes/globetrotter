@@ -1,17 +1,11 @@
-<app-button-screen
-  buttonText="Launch"
-  [buttonDisabled]="!canStartQuiz"
-  (clicked)="onClick()"
+<app-nested-checkboxes-group
+  [items]="regions"
+  [treeProvider]="treeProvider"
+  [renderer]="renderer"
+  [allChecked]="allChecked"
+  [showCounters]="true"
+  [showImages]="true"
+  text="possible countries are selected."
+  (modelChanged)="onCountriesChange($event)"
   >
-  <app-nested-checkboxes-group
-    [items]="regions"
-    [treeProvider]="treeProvider"
-    [renderer]="renderer"
-    [allChecked]="allChecked"
-    [showCounters]="true"
-    [showImages]="true"
-    text="possible countries are selected."
-    (modelChanged)="onCountriesChange($event)"
-    >
-  </app-nested-checkboxes-group>
-</app-button-screen>
+</app-nested-checkboxes-group>
