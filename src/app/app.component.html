@@ -1,11 +1,12 @@
 <main class="app">
   <nav class="app__nav">
-    <img class="app__nav-home"
+    <app-icon class="app__home"
       *ngIf="quizStarted$ | async"
-      src="assets/icons/Globetrotter.svg"
-      [alt]="Home"
-      (click)="reset()"
-    />
+      path="assets/icons/Globetrotter.svg"
+      description="Home"
+      (clicked)="reset()"
+      >
+    </app-icon>
   </nav>
   <div class="app__content"
     [ngClass]="{'app__content--no-scroll': (quizCompleted$ | async)}"

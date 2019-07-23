@@ -8,12 +8,7 @@
     bottom: map-get($spacing, 24);
     z-index: map-get($z-index, app-menu);
     cursor: pointer;
-
-    &-home {
-      width: map-get($spacing, 48);
-    }
   }
-
 
   &__content {
     @include quiz-width;

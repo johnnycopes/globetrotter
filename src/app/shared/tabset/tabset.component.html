@@ -1,5 +1,10 @@
-<app-fixed-slideable-panel [position]="position">
+<app-fixed-slideable-panel class="controls"
+  [position]="position"
+  >
   <div app-fixed-slideable-panel-header>
+    <div class="controls__left">
+      <ng-content select="[app-tabset-controls-left]"></ng-content>
+    </div>
     <ul class="tabs">
       <li class="tab"
         *ngFor="let tab of tabs"
@@ -9,8 +14,8 @@
         {{tab.title}}
       </li>
     </ul>
-    <div class="controls__slot">
-      <ng-content select="[app-tabset-controls]"></ng-content>
+    <div class="controls__right">
+      <ng-content select="[app-tabset-controls-right]"></ng-content>
     </div>
   </div>
 </app-fixed-slideable-panel>
