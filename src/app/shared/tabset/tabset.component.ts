@@ -1,12 +1,15 @@
-import { Component, AfterContentInit, ContentChildren, QueryList } from '@angular/core';
+import { Component, AfterContentInit, ContentChildren, QueryList, Input } from '@angular/core';
+
 import { TabComponent } from '../tab/tab.component';
+import { FixedSlideablePanelPosition } from '../fixed-slideable-panel/fixed-slideable-panel.component';
 
 @Component({
-  selector: 'app-tab-panel',
-  templateUrl: './tab-panel.component.html',
-  styleUrls: ['./tab-panel.component.scss']
+  selector: 'app-tabset',
+  templateUrl: './tabset.component.html',
+  styleUrls: ['./tabset.component.scss']
 })
-export class TabPanelComponent implements AfterContentInit {
+export class TabsetComponent implements AfterContentInit {
+  @Input() position: FixedSlideablePanelPosition = 'header';
   @ContentChildren(TabComponent) tabs: QueryList<TabComponent>;
 
   constructor() { }

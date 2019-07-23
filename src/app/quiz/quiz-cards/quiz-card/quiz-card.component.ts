@@ -5,6 +5,7 @@ import { FlipCardComponent, FlipCardGuess } from 'src/app/shared/flip-card/flip-
 import { Animations } from 'src/app/model/animations.enum';
 import { QuizTypes } from 'src/app/model/quiz-types.enum';
 import { QuizService } from 'src/app/core/quiz/quiz.service';
+import { UtilityService } from 'src/app/core/utility/utility.service';
 
 type CardTemplates = _.Dictionary<TemplateRef<any>>;
 
@@ -31,19 +32,22 @@ export class QuizCardComponent implements OnInit {
     this.setCardTemplates();
   }
 
-  constructor(private quizService: QuizService) { }
+  constructor(
+    private quizService: QuizService,
+    private utilityService: UtilityService
+  ) { }
 
   async onFlip(): Promise<void> {
     const isGuessCorrect = this.quizService.evaluateGuess(this.country);
     this.flipped.emit(true);
-    await this.wait(Animations.flipCard);
+    await this.utilityService.wait(Animations.flipCard);
     this.setCardGuess(isGuessCorrect)
-    await this.wait(Animations.displayCard);
+    await this.utilityService.wait(Animations.displayCard);
     this.resetCardGuess();
-    await this.wait(Animations.flipCard);
+    await this.utilityService.wait(Animations.flipCard);
     if (isGuessCorrect) {
       this.disabled = true;
-      await this.wait(Animations.flipCard);
+      await this.utilityService.wait(Animations.flipCard);
       this.updateQuiz(isGuessCorrect);
     }
     else {
@@ -58,12 +62,6 @@ export class QuizCardComponent implements OnInit {
   private resetCardGuess(): void {
     this.flipCardComponent.flip();
     this.guess = 'none';
-  }
-
-  private wait(ms: number): Promise<void> {
-    return new Promise(resolve => {
-      setTimeout(() => resolve(), ms);
-    });
   }
 
   private setCardTemplates(): void {

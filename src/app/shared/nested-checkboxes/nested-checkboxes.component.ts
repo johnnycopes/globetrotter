@@ -34,12 +34,12 @@ export class NestedCheckboxesComponent<T> implements OnInit, ControlValueAccesso
   @Input() isRoot: boolean = true;
   @Input() showCounters?: boolean;
   @Input() showImage?: boolean;
-  public itemID: string;
-  public itemDisplayName: string;
-  public childItems: T[];
-  public total: number;
-  public imagePath: string;
-  public checkboxStates: CheckboxStates = {};
+  itemID: string;
+  itemDisplayName: string;
+  childItems: T[];
+  total: number;
+  imagePath: string;
+  checkboxStates: CheckboxStates = {};
   private onChangeFn: (value: CheckboxStates) => void;
 
   get current(): number | undefined {

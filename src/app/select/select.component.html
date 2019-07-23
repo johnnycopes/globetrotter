@@ -1,5 +1,5 @@
-<app-tab-panel>
-  <div app-tab-panel-controls>
+<app-tabset [position]="position">
+  <div app-tabset-controls>
     <app-button class="launch"
       buttonText="Launch"
       buttonStyle="primary"
@@ -7,7 +7,7 @@
       >
     </app-button>
   </div>
-  <div app-tab-panel-content>
+  <div app-tabset-content>
     <app-tab title="Type">
       <app-select-type></app-select-type>
     </app-tab>
@@ -18,4 +18,4 @@
       <app-select-countries></app-select-countries>
     </app-tab>
   </div>
-</app-tab-panel>
+</app-tabset>

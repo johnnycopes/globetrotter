@@ -1,7 +1,7 @@
 <app-fixed-slideable-panel *ngIf="(quiz$ | async) as quiz"
   [position]="menuPosition$ | async"
   >
-  <app-fixed-slideable-panel-content>
+  <div app-fixed-slideable-panel-content>
     <div class="quiz-menu__outcome"
       *ngIf="quiz.isComplete"
       >
@@ -12,8 +12,8 @@
         {{quiz.accuracy}}%
       </h1>
     </div>
-  </app-fixed-slideable-panel-content>
-  <app-fixed-slideable-panel-header>
+  </div>
+  <div app-fixed-slideable-panel-header>
     <div class="quiz-menu__progress"
       *ngIf="!quiz.isComplete"
       >
@@ -27,5 +27,5 @@
         Guess #{{quiz.guess}}
       </h4>
     </div>
-  </app-fixed-slideable-panel-header>
+  </div>
 </app-fixed-slideable-panel>

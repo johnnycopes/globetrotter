@@ -5,12 +5,12 @@
     <div class="fixed-slideable-panel__content"
       *ngIf="position === 'fullscreen'"
       >
-      <ng-content select="app-fixed-slideable-panel-content"></ng-content>
+      <ng-content select="[app-fixed-slideable-panel-content]"></ng-content>
     </div>
     <div class="fixed-slideable-panel__header"
       *ngIf="position === 'header'"
       >
-      <ng-content select="app-fixed-slideable-panel-header"></ng-content>
+      <ng-content select="[app-fixed-slideable-panel-header]"></ng-content>
     </div>
   </div>
 </div>

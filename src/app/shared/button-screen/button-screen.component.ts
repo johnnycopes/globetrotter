@@ -16,7 +16,7 @@ import { Animations } from 'src/app/model/animations.enum';
     trigger('fadeIn', [
       transition(':enter', [
         style({ opacity: '0' }),
-        animate(`${Animations.buttonScreenFadeIn}ms ease-in`, style({ opacity: '1' }))
+        animate(`${Animations.screenTransition}ms ease-in`, style({ opacity: '1' }))
       ])
     ])
   ]

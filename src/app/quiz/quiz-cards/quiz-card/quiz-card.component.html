@@ -4,12 +4,12 @@
   [disabled]="disabled"
   (flipped)="onFlip()"
   >
-  <app-flip-card-front>
+  <div app-flip-card-front>
     <ng-container *ngTemplateOutlet="templates.front"></ng-container>
-  </app-flip-card-front>
-  <app-flip-card-back>
+  </div>
+  <div app-flip-card-back>
     <ng-container *ngTemplateOutlet="templates.back"></ng-container>
-  </app-flip-card-back>
+  </div>
 </app-flip-card>
 
 

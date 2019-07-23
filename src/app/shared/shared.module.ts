@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ButtonComponent } from './button/button.component';
 import { ButtonScreenComponent } from './button-screen/button-screen.component';
@@ -12,7 +11,7 @@ import { FlipCardComponent } from './flip-card/flip-card.component';
 import { NestedCheckboxesComponent } from './nested-checkboxes/nested-checkboxes.component';
 import { NestedCheckboxesGroupComponent } from './nested-checkboxes-group/nested-checkboxes-group.component';
 import { RadioButtonsComponent } from './radio-buttons/radio-buttons.component';
-import { TabPanelComponent } from './tab-panel/tab-panel.component';
+import { TabsetComponent } from './tabset/tabset.component';
 import { TabComponent } from './tab/tab.component';
 
 @NgModule({
@@ -30,7 +29,7 @@ import { TabComponent } from './tab/tab.component';
     NestedCheckboxesComponent,
     NestedCheckboxesGroupComponent,
     RadioButtonsComponent,
-    TabPanelComponent,
+    TabsetComponent,
     TabComponent,
   ],
   exports: [
@@ -43,8 +42,8 @@ import { TabComponent } from './tab/tab.component';
     NestedCheckboxesComponent,
     NestedCheckboxesGroupComponent,
     RadioButtonsComponent,
-    TabPanelComponent,
+    TabsetComponent,
     TabComponent,
-  ],
+  ]
 })
 export class SharedModule { }
