@@ -1,43 +1,47 @@
 @import 'styles';
 
-.quiz-menu {
+.outcome {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  @include quiz-width;
+}
 
-  &__outcome {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    @include quiz-width;
+.home {
+  position: absolute;
+  top: map-get($spacing, 64);
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 
-    &-text {
-      font-size: map-get($font-size, 36);
-      margin-bottom: map-get($spacing, 16);
-    }
+.text {
+  font-size: map-get($font-size, 36);
+  margin-bottom: map-get($spacing, 16);
+}
 
-    &-accuracy {
-      font-size: map-get($font-size, 128);
-    }
-  }
+.accuracy {
+  font-size: map-get($font-size, 128);
+}
 
-  &__progress {
-    display: flex;
-    align-items: center;
-    @include quiz-width;
+.progress {
+  display: flex;
+  align-items: center;
+  @include quiz-width;
+}
 
-    &-tally {
-      text-align: left;
-      flex: 0 0 20%;
-    }
+.tally {
+  text-align: left;
+  flex: 0 0 20%;
+}
 
-    &-prompt {
-      text-align: center;
-      flex: 0 0 60%;
-      font-weight: map-get($font-weight, bold);
-    }
+.prompt {
+  text-align: center;
+  flex: 0 0 60%;
+  font-weight: map-get($font-weight, bold);
+}
 
-    &-guess {
-      text-align: right;
-      flex: 0 0 20%;
-    }
-  }
+.guess {
+  text-align: right;
+  flex: 0 0 20%;
 }

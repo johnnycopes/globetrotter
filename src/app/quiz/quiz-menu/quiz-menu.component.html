@@ -2,28 +2,29 @@
   [position]="menuPosition$ | async"
   >
   <div app-fixed-slideable-panel-content>
-    <div class="quiz-menu__outcome"
+    <div class="outcome"
       *ngIf="quiz.isComplete"
       >
-      <p class="quiz-menu__outcome-text">
+      <app-logo class="home"></app-logo>
+      <p class="text">
         Quiz complete! You scored
       </p>
-      <h1 class="quiz-menu__outcome-accuracy">
+      <h1 class="accuracy">
         {{quiz.accuracy}}%
       </h1>
     </div>
   </div>
   <div app-fixed-slideable-panel-header>
-    <div class="quiz-menu__progress"
+    <div class="progress"
       *ngIf="!quiz.isComplete"
       >
-      <h4 class="quiz-menu__progress-tally">
+      <h4 class="tally">
         {{quiz.countriesGuessed}} / {{quiz.totalCountries}}
       </h4>
-      <p class="quiz-menu__progress-prompt">
+      <p class="prompt">
         {{prompt$ | async}}
       </p>
-      <h4 class="quiz-menu__progress-guess">
+      <h4 class="guess">
         Guess #{{quiz.guess}}
       </h4>
     </div>

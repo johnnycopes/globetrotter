@@ -1,19 +1,7 @@
 <main class="app">
-  <nav class="app__nav">
-    <app-icon class="app__home"
-      *ngIf="quizStarted$ | async"
-      path="assets/icons/Globetrotter.svg"
-      description="Home"
-      (clicked)="reset()"
-      >
-    </app-icon>
-  </nav>
   <div class="app__content"
     [ngClass]="{'app__content--no-scroll': (quizCompleted$ | async)}"
     >
-    <app-quiz *ngIf="quizStarted$ | async; else select"></app-quiz>
-    <ng-template #select>
-      <app-select></app-select>
-    </ng-template>
+    <router-outlet></router-outlet>
   </div>
 </main>

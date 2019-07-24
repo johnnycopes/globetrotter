@@ -22,7 +22,7 @@ import { Animations } from 'src/app/model/animations.enum';
   ]
 })
 export class TabComponent {
-  @Input() title: string;
+  @Input() name: string;
   @Input() selected: boolean;
 
   constructor() { }

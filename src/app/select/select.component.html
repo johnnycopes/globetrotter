@@ -1,10 +1,6 @@
 <app-tabset [position]="position">
   <div app-tabset-controls-left>
-    <app-icon class="home"
-      path="assets/icons/Globetrotter.svg"
-      description="Home"
-      >
-    </app-icon>
+    <app-logo></app-logo>
   </div>
   <div app-tabset-controls-right>
     <app-button class="launch"
@@ -15,13 +11,13 @@
     </app-button>
   </div>
   <div app-tabset-content>
-    <app-tab title="Type">
+    <app-tab name="Type">
       <app-select-type></app-select-type>
     </app-tab>
-    <app-tab title="Quantity">
+    <app-tab name="Quantity">
       <app-select-quantity></app-select-quantity>
     </app-tab>
-    <app-tab title="Countries">
+    <app-tab name="Countries">
       <app-select-countries></app-select-countries>
     </app-tab>
   </div>
