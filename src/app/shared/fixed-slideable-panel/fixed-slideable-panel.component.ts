@@ -6,6 +6,7 @@ import {
   state,
   transition
 } from '@angular/animations';
+
 import { Animations } from 'src/app/model/animations.enum';
 
 export type FixedSlideablePanelPosition = 'offscreen' | 'header' | 'fullscreen';
@@ -17,15 +18,12 @@ export type FixedSlideablePanelPosition = 'offscreen' | 'header' | 'fullscreen';
   animations: [
     trigger('position', [
       state('offscreen', style({
-        opacity: 0,
         transform: 'translateY(-100vh)'
       })),
       state('header', style({
-        opacity: 1,
         transform: 'translateY(calc(-100vh + 128px))' // this value must kept in sync with the header height in SCSS
       })),
       state('fullscreen', style({
-        opacity: 1,
         transform: 'translateY(0)'
       })),
       transition('* => *', animate(`${Animations.fixedSlideablePanel}ms ease-in-out`))

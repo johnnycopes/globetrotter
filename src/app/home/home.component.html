@@ -1,6 +1,5 @@
-<app-button-screen
-  buttonText="Embark"
-  (clicked)="onClick()"
+<div class="home"
+  @fadeIn
   >
   <h1 class="title">
     Globetrotter
@@ -12,4 +11,10 @@
       alt="Globetrotter logo"
     />
   </div>
-</app-button-screen>
+  <app-button
+    buttonStyle="primary"
+    buttonText="Embark"
+    (clicked)="onClick()"
+    >
+  </app-button>
+</div>

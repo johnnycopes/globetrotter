@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { ButtonComponent } from './button/button.component';
-import { ButtonScreenComponent } from './button-screen/button-screen.component';
 import { CheckboxComponent } from './checkbox/checkbox.component';
 import { CounterComponent } from './counter/counter.component';
 import { FixedSlideablePanelComponent } from './fixed-slideable-panel/fixed-slideable-panel.component';
@@ -23,7 +22,6 @@ import { TabComponent } from './tab/tab.component';
   ],
   declarations: [
     ButtonComponent,
-    ButtonScreenComponent,
     CheckboxComponent,
     CounterComponent,
     FixedSlideablePanelComponent,
@@ -38,7 +36,6 @@ import { TabComponent } from './tab/tab.component';
   ],
   exports: [
     ButtonComponent,
-    ButtonScreenComponent,
     CheckboxComponent,
     CounterComponent,
     FixedSlideablePanelComponent,

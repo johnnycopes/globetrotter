@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import * as _ from 'lodash';
 
-import { Router } from '@angular/router';
 import { FixedSlideablePanelPosition } from '../shared/fixed-slideable-panel/fixed-slideable-panel.component';
 import { UtilityService } from '../core/utility/utility.service';
 import { Animations } from 'src/app/model/animations.enum';
+import { TabsVisibility } from '../shared/tabset/tabset.component';
 
 @Component({
   selector: 'app-select',
@@ -12,7 +13,8 @@ import { Animations } from 'src/app/model/animations.enum';
   styleUrls: ['./select.component.scss']
 })
 export class SelectComponent {
-  position: FixedSlideablePanelPosition = 'header';
+  controlsPosition: FixedSlideablePanelPosition = 'header';
+  tabsVisibility: TabsVisibility = 'visible';
 
   constructor(
     private router: Router,
@@ -20,7 +22,9 @@ export class SelectComponent {
   ) { }
 
   async onLaunch(): Promise<void> {
-    this.position = 'offscreen';
+    this.tabsVisibility = 'invisible';
+    await this.utilityService.wait(Animations.fixedSlideablePanel);
+    this.controlsPosition = 'offscreen';
     await this.utilityService.wait(Animations.fixedSlideablePanel);
     this.router.navigate(['quiz']);
   }

@@ -1,5 +1,5 @@
 <app-fixed-slideable-panel class="controls"
-  [position]="position"
+  [position]="controlsPosition"
   >
   <div app-fixed-slideable-panel-header>
     <div class="controls__left">
@@ -20,6 +20,9 @@
   </div>
 </app-fixed-slideable-panel>
 
-<div class="content">
+<div class="content"
+  [@visibility]="tabsVisibility"
+  @fadeIn
+  >
   <ng-content select="[app-tabset-content]"></ng-content>
 </div>
