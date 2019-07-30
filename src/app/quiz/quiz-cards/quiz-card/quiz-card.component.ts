@@ -1,4 +1,5 @@
-import { Component, Input, Output, EventEmitter, ViewChild, OnInit, TemplateRef } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, OnInit, TemplateRef, OnDestroy } from '@angular/core';
+import * as _ from 'lodash';
 
 import { Country } from 'src/app/model/country.interface';
 import { FlipCardComponent, FlipCardGuess } from 'src/app/shared/flip-card/flip-card.component';
@@ -6,6 +7,7 @@ import { Animations } from 'src/app/model/animations.enum';
 import { QuizTypes } from 'src/app/model/quiz-types.enum';
 import { QuizService } from 'src/app/core/quiz/quiz.service';
 import { UtilityService } from 'src/app/core/utility/utility.service';
+import { Subscription } from 'rxjs';
 
 type CardTemplates = _.Dictionary<TemplateRef<any>>;
 
@@ -14,7 +16,7 @@ type CardTemplates = _.Dictionary<TemplateRef<any>>;
   templateUrl: './quiz-card.component.html',
   styleUrls: ['./quiz-card.component.scss']
 })
-export class QuizCardComponent implements OnInit {
+export class QuizCardComponent implements OnInit, OnDestroy {
   @Input() country: Country;
   @Input() canFlip: boolean;
   @Input() type: QuizTypes;
@@ -27,9 +29,18 @@ export class QuizCardComponent implements OnInit {
   disabled: boolean;
   templates: CardTemplates;
   templatesDict: _.Dictionary<CardTemplates>;
+  private currentCountry: Country;
+  private currentCountrySubscription: Subscription;
 
   ngOnInit(): void {
     this.setCardTemplates();
+    this.currentCountrySubscription = this.quizService.getQuiz().subscribe(
+      quiz => this.currentCountry = _.head(quiz.countries)
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.currentCountrySubscription.unsubscribe();
   }
 
   constructor(
@@ -38,7 +49,7 @@ export class QuizCardComponent implements OnInit {
   ) { }
 
   async onFlip(): Promise<void> {
-    const isGuessCorrect = this.quizService.evaluateGuess(this.country);
+    const isGuessCorrect = this.country === this.currentCountry;
     this.flipped.emit(true);
     await this.utilityService.wait(Animations.flipCard);
     this.setCardGuess(isGuessCorrect)

@@ -18,10 +18,6 @@ export class QuizService {
     this.store = new Store(new Quiz());
   }
 
-  private get quiz(): Quiz {
-    return this.store.data;
-  }
-
   reset(): void {
     this.store.set([], new Quiz());
   }
@@ -58,11 +54,6 @@ export class QuizService {
       }
       return updatedQuiz;
     });
-  }
-
-  evaluateGuess(guessedCountry: Country): boolean {
-    const currentCountry = _.head(this.quiz.countries);
-    return guessedCountry === currentCountry;
   }
 
   private moveGuessedCountryToEnd(countries: Country[]): Country[] {
