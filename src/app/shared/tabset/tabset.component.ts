@@ -43,10 +43,6 @@ export class TabsetComponent implements AfterContentInit {
 
   constructor() { }
 
-  ngAfterViewInit() {
-    console.log(this.tabsTemplate);
-  }
-
   ngAfterContentInit(): void {
     const selectedTab = this.tabs.find(tab => tab.selected);
 

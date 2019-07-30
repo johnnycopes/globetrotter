@@ -30,7 +30,7 @@ import { QuizService } from 'src/app/core/quiz/quiz.service';
     trigger('fadeIn', [
       transition(':enter', [
         style({ opacity: '0' }),
-        animate(`${Animations.cardsFadeIn}ms ${Animations.fixedSlideablePanel}ms ease-in`, style({ opacity: '1' }))
+        animate(`${Animations.cardsFadeIn}ms ${Animations.cardsFadeInDelay}ms ease-in`, style({ opacity: '1' }))
       ])
     ])
   ]
