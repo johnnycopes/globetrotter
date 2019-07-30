@@ -3,3 +3,41 @@
 :host {
   min-height: 100vh;
 }
+
+.controls {
+  margin: 0 map-get($spacing, 48);
+}
+
+.logo {
+  flex: 1;
+}
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  flex: 1;
+  width: 100%;
+}
+
+.tab {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  height: 100%;
+  padding: 0 map-get($spacing, 24);
+  cursor: pointer;
+
+  &--selected {
+    font-weight: map-get($font-weight, bold);
+  }
+}
+
+.launch {
+  flex: 1;
+  text-align: right;
+}
+
+.content {
+  margin-top: map-get($spacing, 128);
+}

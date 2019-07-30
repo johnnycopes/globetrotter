@@ -5,7 +5,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  @include quiz-width;
 }
 
 .home {
@@ -25,23 +24,30 @@
 }
 
 .progress {
-  display: flex;
-  align-items: center;
-  @include quiz-width;
+  margin: 0 map-get($spacing, 48);
 }
 
-.tally {
+.logo {
   text-align: left;
-  flex: 0 0 20%;
+  flex: 1;
 }
 
 .prompt {
   text-align: center;
-  flex: 0 0 60%;
+  flex: 1;
   font-weight: map-get($font-weight, bold);
 }
 
-.guess {
+.details {
   text-align: right;
-  flex: 0 0 20%;
+  flex: 1;
+  font-size: map-get($font-size, 20);
+
+  @include tablet {
+    font-size: map-get($font-size, 24);
+  }
+
+  &__tally {
+    margin-bottom: map-get($spacing, 16);
+  }
 }

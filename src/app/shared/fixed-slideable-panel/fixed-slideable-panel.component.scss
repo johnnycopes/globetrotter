@@ -18,8 +18,7 @@
   transform: translateY(-100vh);
   font-family: $font-stack;
   color: map-get($color, lightest);
-  background: map-get($color, darkest);
-  border-bottom: map-get($border, thin) solid map-get($color, dark);
+  background: map-get($color, dark);
 
   &__wrapper {
     height: 100%;

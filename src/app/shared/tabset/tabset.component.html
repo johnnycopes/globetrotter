@@ -1,25 +1,23 @@
-<app-fixed-slideable-panel class="controls"
-  [position]="controlsPosition"
-  >
-  <div app-fixed-slideable-panel-header>
-    <div class="controls__left">
-      <ng-content select="[app-tabset-controls-left]"></ng-content>
-    </div>
-    <ul class="tabs">
-      <li class="tab"
-        *ngFor="let tab of tabs"
-        [ngClass]="{'tab--selected': tab.selected}"
-        (click)="selectTab(tab)"
-        >
-        {{tab.name}}
-      </li>
-    </ul>
-    <div class="controls__right">
-      <ng-content select="[app-tabset-controls-right]"></ng-content>
-    </div>
-  </div>
-</app-fixed-slideable-panel>
+<ng-template #defaultTabsTemplate>
+  <ul class="tabs">
+    <li class="tab"
+      *ngFor="let tab of tabs"
+      [ngClass]="{'tab--selected': tab.selected}"
+      (click)="selectTab(tab)"
+      >
+      {{tab.name}}
+    </li>
+  </ul>
+</ng-template>
 
+<ng-container *ngTemplateOutlet="
+  tabsTemplate ? tabsTemplate : defaultTabsTemplate;
+  context: {
+    tabs: this.tabs,
+    selectTab: this.selectTab
+  }"
+  >
+</ng-container>
 <div class="content"
   [@visibility]="tabsVisibility"
   @fadeIn

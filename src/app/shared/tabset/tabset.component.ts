@@ -1,4 +1,4 @@
-import { Component, AfterContentInit, ContentChildren, QueryList, Input } from '@angular/core';
+import { Component, AfterContentInit, ContentChildren, QueryList, Input, TemplateRef } from '@angular/core';
 import {
   trigger,
   style,
@@ -38,9 +38,14 @@ export type TabsVisibility = 'visible' | 'invisible';
 export class TabsetComponent implements AfterContentInit {
   @Input() controlsPosition: FixedSlideablePanelPosition = 'header';
   @Input() tabsVisibility: TabsVisibility = 'invisible';
+  @Input() tabsTemplate: TemplateRef<any>;
   @ContentChildren(TabComponent) tabs: QueryList<TabComponent>;
 
   constructor() { }
+
+  ngAfterViewInit() {
+    console.log(this.tabsTemplate);
+  }
 
   ngAfterContentInit(): void {
     const selectedTab = this.tabs.find(tab => tab.selected);

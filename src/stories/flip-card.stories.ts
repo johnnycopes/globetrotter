@@ -6,7 +6,6 @@ import {
   select
 } from '@storybook/addon-knobs/angular';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { FlipCardComponent, FlipCardSide, FlipCardGuess } from 'src/app/shared/flip-card/flip-card.component';
 
@@ -23,15 +22,15 @@ const template = `
     [disabled]="disabled"
     (flipped)="onFlip($event)"
     >
-    <app-flip-card-front>
+    <div app-flip-card-front>
       <img src="https://restcountries.eu/data/usa.svg"
         style="max-width: 200px;"
         alt="USA flag"
       />
-    </app-flip-card-front>
-    <app-flip-card-back>
+    </div>
+    <div app-flip-card-back>
       United States of America
-    </app-flip-card-back>
+    </div>
   </app-flip-card>
 `;
 
@@ -40,8 +39,7 @@ storiesOf('Shared | Flip Card', module)
   .addDecorator(
     moduleMetadata({
       imports: [BrowserAnimationsModule],
-      declarations: [FlipCardComponent],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      declarations: [FlipCardComponent]
     })
   )
   .add('front side', () => {

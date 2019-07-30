@@ -4,19 +4,18 @@ import {
   select
 } from '@storybook/addon-knobs/angular';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { FixedSlideablePanelComponent, FixedSlideablePanelPosition } from 'src/app/shared/fixed-slideable-panel/fixed-slideable-panel.component';
 
 const positions: FixedSlideablePanelPosition[] = ['offscreen', 'header', 'fullscreen'];
 const template = `
   <app-fixed-slideable-panel [position]="position">
-    <app-fixed-slideable-panel-content>
+    <div app-fixed-slideable-panel-content>
       Content section (fullscreen)
-    </app-fixed-slideable-panel-content>
-    <app-fixed-slideable-panel-header>
+    </div>
+    <div app-fixed-slideable-panel-header>
       Header section (header)
-    </app-fixed-slideable-panel-header>
+    </div>
   </app-fixed-slideable-panel>
 `;
 
@@ -25,8 +24,7 @@ storiesOf('Shared | Fixed Slideable Panel', module)
   .addDecorator(
     moduleMetadata({
       imports: [BrowserAnimationsModule],
-      declarations: [FixedSlideablePanelComponent],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      declarations: [FixedSlideablePanelComponent]
     })
   )
   .add('offscreen', () => {

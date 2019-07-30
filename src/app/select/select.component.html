@@ -1,19 +1,37 @@
-<app-tabset
-  [controlsPosition]="controlsPosition"
+<ng-template #selectTabsTemplate
+  let-tabs="tabs"
+  >
+  <app-fixed-slideable-panel [position]="controlsPosition">
+    <div class="controls"
+      app-fixed-slideable-panel-header
+      >
+      <app-logo class="logo"></app-logo>
+      <ul class="tabs">
+        <li class="tab"
+          *ngFor="let tab of tabs"
+          [ngClass]="{'tab--selected': tab.selected}"
+          (click)="tabset.selectTab(tab)"
+          >
+          {{tab.name}}
+        </li>
+      </ul>
+      <app-button class="launch"
+        buttonText="Launch"
+        buttonStyle="primary"
+        (clicked)="onLaunch()"
+        >
+      </app-button>
+    </div>
+  </app-fixed-slideable-panel>
+</ng-template>
+
+<app-tabset #tabset
+  [tabsTemplate]="selectTabsTemplate"
   [tabsVisibility]="tabsVisibility"
   >
-  <div app-tabset-controls-left>
-    <app-logo></app-logo>
-  </div>
-  <div app-tabset-controls-right>
-    <app-button class="launch"
-      buttonText="Launch"
-      buttonStyle="primary"
-      (clicked)="onLaunch()"
-      >
-    </app-button>
-  </div>
-  <div app-tabset-content>
+  <div class="content"
+    app-tabset-content
+    >
     <app-tab name="Type">
       <app-select-type></app-select-type>
     </app-tab>
