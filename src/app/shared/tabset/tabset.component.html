@@ -1,9 +1,9 @@
-<ng-template #defaultTabsTemplate>
+<ng-template #defaultControlsTemplate>
   <ul class="tabs">
     <li class="tab"
       *ngFor="let tab of tabs"
       [ngClass]="{'tab--selected': tab.selected}"
-      (click)="selectTab(tab)"
+      (click)="onSelectTab(tab)"
       >
       {{tab.name}}
     </li>
@@ -11,7 +11,7 @@
 </ng-template>
 
 <ng-container *ngTemplateOutlet="
-  tabsTemplate ? tabsTemplate : defaultTabsTemplate;
+  controlsTemplate ? controlsTemplate : defaultControlsTemplate;
   context: {
     tabs: this.tabs,
     selectTab: this.selectTab
@@ -19,7 +19,7 @@
   >
 </ng-container>
 <div class="content"
-  [@visibility]="tabsVisibility"
+  [@visibility]="contentVisibility"
   @fadeIn
   >
   <ng-content select="[app-tabset-content]"></ng-content>

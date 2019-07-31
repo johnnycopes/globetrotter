@@ -7,11 +7,10 @@ import {
   transition
 } from '@angular/animations';
 
-import { TabComponent } from '../tab/tab.component';
-import { FixedSlideablePanelPosition } from '../fixed-slideable-panel/fixed-slideable-panel.component';
+import { TabComponent } from './tab/tab.component';
 import { Animations } from 'src/app/model/animations.enum';
 
-export type TabsVisibility = 'visible' | 'invisible';
+export type TabsetContentVisibility = 'visible' | 'invisible';
 
 @Component({
   selector: 'app-tabset',
@@ -36,9 +35,8 @@ export type TabsVisibility = 'visible' | 'invisible';
   ]
 })
 export class TabsetComponent implements AfterContentInit {
-  @Input() controlsPosition: FixedSlideablePanelPosition = 'header';
-  @Input() tabsVisibility: TabsVisibility = 'invisible';
-  @Input() tabsTemplate: TemplateRef<any>;
+  @Input() controlsTemplate: TemplateRef<any>;
+  @Input() contentVisibility: TabsetContentVisibility = 'invisible';
   @ContentChildren(TabComponent) tabs: QueryList<TabComponent>;
 
   constructor() { }
@@ -51,7 +49,7 @@ export class TabsetComponent implements AfterContentInit {
     }
   }
 
-  selectTab(tab: TabComponent) {
+  onSelectTab(tab: TabComponent) {
     this.tabs.forEach(tab => tab.selected = false);
     tab.selected = true;
   }

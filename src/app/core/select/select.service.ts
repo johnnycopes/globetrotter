@@ -35,4 +35,8 @@ export class SelectService {
   updateCountries(countries: CheckboxStates): void {
     this.store.set(['countries'], countries);
   }
+
+  updateCanStartQuiz(canStartQuiz: boolean): void {
+    this.store.set(['canStartQuiz'], canStartQuiz);
+  }
 }

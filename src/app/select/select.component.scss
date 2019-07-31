@@ -41,4 +41,5 @@
 .content {
   position: relative;
   top: map-get($spacing, 128);
+  margin-bottom: map-get($spacing, 48);
 }

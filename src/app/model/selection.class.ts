@@ -6,4 +6,5 @@ export class Selection {
   type: QuizTypes;
   countries: CheckboxStates;
   quantity: QuizQuantity;
+  canStartQuiz: boolean;
 }

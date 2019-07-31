@@ -17,10 +17,8 @@ import { PlacesRenderer } from 'src/app/model/places-renderer.class';
 export class SelectCountriesComponent implements OnInit {
   regions: Region[];
   allChecked: boolean = true;
-  canStartQuiz: boolean;
   treeProvider: TreeProvider<Place> = new PlacesTreeProvider();
   renderer: Renderer<Place> = new PlacesRenderer();
-  private selectedCountries: CheckboxStates;
 
   constructor(
     private countryService: CountryService,
@@ -28,13 +26,13 @@ export class SelectCountriesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.canStartQuiz = this.allChecked;
     this.regions = this.countryService.data;
+    this.selectService.updateCanStartQuiz(this.allChecked);
   }
 
   onCountriesChange(model: CheckboxStates): void {
-    this.selectedCountries = model;
-    this.selectService.updateCountries(this.selectedCountries);
-    this.canStartQuiz = _.some(model, checkboxState => checkboxState === 'checked');
+    this.selectService.updateCountries(model);
+    const canStartQuiz = _.some(model, checkboxState => checkboxState === 'checked');
+    this.selectService.updateCanStartQuiz(canStartQuiz);
   }
 }

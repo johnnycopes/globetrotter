@@ -13,7 +13,7 @@ import { NestedCheckboxesComponent } from './nested-checkboxes/nested-checkboxes
 import { NestedCheckboxesGroupComponent } from './nested-checkboxes-group/nested-checkboxes-group.component';
 import { RadioButtonsComponent } from './radio-buttons/radio-buttons.component';
 import { TabsetComponent } from './tabset/tabset.component';
-import { TabComponent } from './tab/tab.component';
+import { TabComponent } from './tabset/tab/tab.component';
 
 @NgModule({
   imports: [

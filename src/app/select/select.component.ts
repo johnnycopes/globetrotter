@@ -1,30 +1,42 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { map, distinctUntilChanged } from 'rxjs/operators';
 import * as _ from 'lodash';
 
-import { FixedSlideablePanelPosition } from '../shared/fixed-slideable-panel/fixed-slideable-panel.component';
+import { SelectService } from '../core/select/select.service';
 import { UtilityService } from '../core/utility/utility.service';
 import { Animations } from 'src/app/model/animations.enum';
-import { TabsVisibility } from '../shared/tabset/tabset.component';
+import { FixedSlideablePanelPosition } from '../shared/fixed-slideable-panel/fixed-slideable-panel.component';
+import { TabsetContentVisibility } from '../shared/tabset/tabset.component';
 
 @Component({
   selector: 'app-select',
   templateUrl: './select.component.html',
   styleUrls: ['./select.component.scss']
 })
-export class SelectComponent {
-  controlsPosition: FixedSlideablePanelPosition = 'header';
-  tabsVisibility: TabsVisibility = 'visible';
+export class SelectComponent implements OnInit {
+  tabsetControlsPosition: FixedSlideablePanelPosition = 'header';
+  tabsetContentVisibility: TabsetContentVisibility = 'visible';
+  canStartQuiz$: Observable<boolean>;
 
   constructor(
-    private router: Router,
-    private utilityService: UtilityService
+    private selectService: SelectService,
+    private utilityService: UtilityService,
+    private router: Router
   ) { }
 
+  ngOnInit(): void {
+    this.canStartQuiz$ = this.selectService.getSelection().pipe(
+      map(selection => selection.canStartQuiz),
+      distinctUntilChanged()
+    );
+  }
+
   async onLaunch(): Promise<void> {
-    this.tabsVisibility = 'invisible';
+    this.tabsetContentVisibility = 'invisible';
     await this.utilityService.wait(Animations.fixedSlideablePanel);
-    this.controlsPosition = 'offscreen';
+    this.tabsetControlsPosition = 'offscreen';
     await this.utilityService.wait(Animations.fixedSlideablePanel);
     this.router.navigate(['quiz']);
   }
