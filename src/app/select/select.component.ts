@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { map, distinctUntilChanged } from 'rxjs/operators';
 import * as _ from 'lodash';
 
@@ -15,10 +15,12 @@ import { TabsetContentVisibility } from '../shared/tabset/tabset.component';
   templateUrl: './select.component.html',
   styleUrls: ['./select.component.scss']
 })
-export class SelectComponent implements OnInit {
+export class SelectComponent implements OnInit, OnDestroy {
   tabsetControlsPosition: FixedSlideablePanelPosition = 'header';
   tabsetContentVisibility: TabsetContentVisibility = 'visible';
   canStartQuiz$: Observable<boolean>;
+  private selectionSubscription: Subscription;
+  private queryParams: _.Dictionary<string> = {};
 
   constructor(
     private selectService: SelectService,
@@ -31,6 +33,13 @@ export class SelectComponent implements OnInit {
       map(selection => selection.canStartQuiz),
       distinctUntilChanged()
     );
+    this.selectionSubscription = this.selectService.getSelection().subscribe(
+      selection => this.queryParams = this.selectService.mapSelectionToQueryParams(selection)
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.selectionSubscription.unsubscribe();
   }
 
   async onLaunch(): Promise<void> {
@@ -38,6 +47,6 @@ export class SelectComponent implements OnInit {
     await this.utilityService.wait(Animations.fixedSlideablePanel);
     this.tabsetControlsPosition = 'offscreen';
     await this.utilityService.wait(Animations.fixedSlideablePanel);
-    this.router.navigate(['quiz']);
+    this.router.navigate(['quiz'], { queryParams: this.queryParams });
   }
 }
