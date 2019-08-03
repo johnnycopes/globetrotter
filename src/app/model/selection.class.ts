@@ -1,10 +1,13 @@
 import { QuizTypes } from './quiz-types.enum';
-import { CheckboxStates } from '../shared/nested-checkboxes/nested-checkboxes.component';
 import { QuizQuantity } from './quiz-quantity.type';
+import { CheckboxStates } from '../shared/nested-checkboxes/nested-checkboxes.component';
 
 export class Selection {
-  type: QuizTypes;
-  countries: CheckboxStates;
-  quantity: QuizQuantity;
-  canStartQuiz: boolean;
+
+  constructor(
+    public type: QuizTypes,
+    public quantity: QuizQuantity,
+    public countries: CheckboxStates
+  ) { }
+
 }

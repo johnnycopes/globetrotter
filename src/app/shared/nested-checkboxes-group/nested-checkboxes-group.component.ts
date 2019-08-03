@@ -1,26 +1,31 @@
-import { Component, OnInit, Input, Output, EventEmitter, QueryList, ViewChildren } from '@angular/core';
+import { Component, Input, QueryList, ViewChildren } from '@angular/core';
 import * as _ from 'lodash';
 
 import { NestedCheckboxesComponent, TreeProvider, Renderer, CheckboxStates } from '../nested-checkboxes/nested-checkboxes.component';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'app-nested-checkboxes-group',
   templateUrl: './nested-checkboxes-group.component.html',
-  styleUrls: ['./nested-checkboxes-group.component.scss']
+  styleUrls: ['./nested-checkboxes-group.component.scss'],
+  providers: [{
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: NestedCheckboxesGroupComponent,
+    multi: true
+  }]
 })
-export class NestedCheckboxesGroupComponent<T> implements OnInit {
+export class NestedCheckboxesGroupComponent<T> implements ControlValueAccessor {
   @Input() items: T[];
   @Input() treeProvider: TreeProvider<T>;
   @Input() renderer: Renderer<T>;
-  @Input() allChecked?: boolean;
   @Input() showCounters: boolean;
   @Input() showImages: boolean;
   @Input() text: string;
-  @Output() modelChanged = new EventEmitter<CheckboxStates>();
   @ViewChildren(NestedCheckboxesComponent) nestedCheckboxesComponents: QueryList<NestedCheckboxesComponent<T>>;
   checkboxStates: CheckboxStates = {};
   current: number = 0;
   total: number;
+  private onChangeFn: (value: CheckboxStates) => void;
 
   get showTopCounter() {
     return this.showCounters || this.text;
@@ -28,32 +33,39 @@ export class NestedCheckboxesGroupComponent<T> implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
-    this.total = _.reduce(this.items, (accum, current) => accum + this.treeProvider.getItemTotal(current), 0);
-    if (this.allChecked) {
-      this.current = this.total;
-      this.makeAllItemsChecked();
+  writeValue(value: CheckboxStates): void {
+    this.checkboxStates = value;
+    if (this.nestedCheckboxesComponents) {
+      this.current = this.getCurrent();
+      this.total = this.getTotal();
     }
-    this.modelChanged.emit(this.checkboxStates);
+  }
+
+  registerOnChange(fn: (value: CheckboxStates) => void): void {
+    this.onChangeFn = fn;
+  }
+
+  registerOnTouched(fn: (value: CheckboxStates) => void): void {
+    //
   }
 
   onSelectAll(): void {
     this.current = this.total;
     this.checkboxStates = {};
     this.makeAllItemsChecked();
-    this.modelChanged.emit(this.checkboxStates);
+    this.onChangeFn(this.checkboxStates);
   }
 
   onClearAll(): void {
     this.current = 0;
     this.checkboxStates = {};
-    this.modelChanged.emit(this.checkboxStates);
+    this.onChangeFn(this.checkboxStates);
   }
 
   updateCheckboxStates(checkboxStates: CheckboxStates): void {
-    this.current = this.setCurrent();
+    this.current = this.getCurrent();
     this.checkboxStates = _.merge(this.checkboxStates, checkboxStates);
-    this.modelChanged.emit(this.checkboxStates);
+    this.onChangeFn(this.checkboxStates);
   }
 
   private makeAllItemsChecked(): void {
@@ -76,7 +88,15 @@ export class NestedCheckboxesGroupComponent<T> implements OnInit {
     });
   }
 
-  private setCurrent(): number {
-    return this.nestedCheckboxesComponents.reduce((accum, component) => accum + component.current, 0);
+  private getCurrent(): number {
+    return this.nestedCheckboxesComponents.reduce((accum, component) => {
+      return accum + component.current;
+    }, 0);
+  }
+
+  private getTotal(): number {
+   return _.reduce(this.items, (accum, current) => {
+      return accum + this.treeProvider.getItemTotal(current);
+    }, 0);
   }
 }

@@ -6,6 +6,7 @@ import * as _ from 'lodash';
 
 import { SelectService } from '../core/select/select.service';
 import { UtilityService } from '../core/utility/utility.service';
+import { Selection } from '../model/selection.class';
 import { Animations } from 'src/app/model/animations.enum';
 import { FixedSlideablePanelPosition } from '../shared/fixed-slideable-panel/fixed-slideable-panel.component';
 import { TabsetContentVisibility } from '../shared/tabset/tabset.component';
@@ -18,9 +19,10 @@ import { TabsetContentVisibility } from '../shared/tabset/tabset.component';
 export class SelectComponent implements OnInit, OnDestroy {
   tabsetControlsPosition: FixedSlideablePanelPosition = 'header';
   tabsetContentVisibility: TabsetContentVisibility = 'visible';
-  canStartQuiz$: Observable<boolean>;
+  canStartQuiz: boolean;
+  private queryParams: _.Dictionary<string>;
+  private selection: Selection;
   private selectionSubscription: Subscription;
-  private queryParams: _.Dictionary<string> = {};
 
   constructor(
     private selectService: SelectService,
@@ -29,12 +31,11 @@ export class SelectComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.canStartQuiz$ = this.selectService.getSelection().pipe(
-      map(selection => selection.canStartQuiz),
-      distinctUntilChanged()
-    );
     this.selectionSubscription = this.selectService.getSelection().subscribe(
-      selection => this.queryParams = this.selectService.mapSelectionToQueryParams(selection)
+      selection => {
+        this.selection = selection;
+        this.canStartQuiz = _.some(this.selection.countries, checkboxState => checkboxState === 'checked');
+      }
     );
   }
 
@@ -47,6 +48,7 @@ export class SelectComponent implements OnInit, OnDestroy {
     await this.utilityService.wait(Animations.fixedSlideablePanel);
     this.tabsetControlsPosition = 'offscreen';
     await this.utilityService.wait(Animations.fixedSlideablePanel);
+    this.queryParams = this.selectService.mapSelectionToQueryParams(this.selection);
     this.router.navigate(['quiz'], { queryParams: this.queryParams });
   }
 }

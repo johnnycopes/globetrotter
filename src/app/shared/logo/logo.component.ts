@@ -19,7 +19,6 @@ export class LogoComponent {
 
   reset(): void {
     this.quizService.reset();
-    this.selectService.reset();
     this.router.navigate(['']);
   }
 }

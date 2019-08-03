@@ -2,10 +2,10 @@
   [items]="regions"
   [treeProvider]="treeProvider"
   [renderer]="renderer"
-  [allChecked]="allChecked"
   [showCounters]="true"
   [showImages]="true"
   text="possible countries are selected."
-  (modelChanged)="onCountriesChange($event)"
+  [ngModel]="checkboxStates$ | async"
+  (ngModelChange)="onCountriesChange($event)"
   >
 </app-nested-checkboxes-group>

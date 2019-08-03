@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 import { SelectService } from 'src/app/core/select/select.service';
@@ -12,24 +14,32 @@ import { RadioButtonsOption } from 'src/app/shared/radio-buttons/radio-buttons.c
 })
 export class SelectTypeComponent implements OnInit {
   types: RadioButtonsOption<QuizTypes>[];
-  selectedType: RadioButtonsOption<QuizTypes>;
+  selectedType$: Observable<RadioButtonsOption<QuizTypes>>;
 
   constructor(private selectService: SelectService) { }
 
   ngOnInit(): void {
     this.types = _.map(QuizTypes, quizType => {
-      return {
+      const type = {
         display: this.formatDisplayText(quizType),
         value: quizType
       };
+      return type;
     });
-    this.selectedType = _.clone(this.types[0]);
-    this.selectService.updateType(this.selectedType.value);
+    this.selectedType$ = this.selectService.getSelection().pipe(
+      map(selection => {
+        const quizType = selection.type;
+        const selectedType = {
+          display: this.formatDisplayText(quizType),
+          value: quizType
+        };
+        return selectedType;
+      })
+    );
   }
 
-  onChange(event: RadioButtonsOption<QuizTypes>): void {
-    this.selectedType = event;
-    this.selectService.updateType(this.selectedType.value);
+  onChange(selectedType: RadioButtonsOption<QuizTypes>): void {
+    this.selectService.updateType(selectedType.value);
   }
 
   private formatDisplayText(text: QuizTypes): string {

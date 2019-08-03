@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core'
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import * as _ from 'lodash';
 ;
 import { SelectService } from 'src/app/core/select/select.service';
@@ -12,7 +14,7 @@ import { QuizQuantity } from 'src/app/model/quiz-quantity.type';
 })
 export class SelectQuantityComponent implements OnInit {
   quantities: RadioButtonsOption<QuizQuantity>[];
-  selectedQuantity: RadioButtonsOption<QuizQuantity>;
+  selectedQuantity$: Observable<RadioButtonsOption<QuizQuantity>>;
 
   constructor(private selectService: SelectService) { }
 
@@ -24,12 +26,19 @@ export class SelectQuantityComponent implements OnInit {
       { display: '20', value: 20 },
       { display: 'All', value: null }
     ];
-    this.selectedQuantity = _.clone(this.quantities[0]);
-    this.selectService.updateQuantity(this.selectedQuantity.value);
+    this.selectedQuantity$ = this.selectService.getSelection().pipe(
+      map(selection => {
+        const quizQuantity = selection.quantity;
+        const selectedQuantity = {
+          display: _.toString(quizQuantity),
+          value: quizQuantity
+        };
+        return selectedQuantity;
+      })
+    );
   }
 
-  onChange(event: RadioButtonsOption<QuizQuantity>): void {
-    this.selectedQuantity = event;
-    this.selectService.updateQuantity(this.selectedQuantity.value);
+  onChange(selectedQuantity: RadioButtonsOption<QuizQuantity>): void {
+    this.selectService.updateQuantity(selectedQuantity.value);
   }
 }

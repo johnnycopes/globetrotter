@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 import { CountryService } from 'src/app/core/country/country.service';
@@ -16,7 +18,7 @@ import { PlacesRenderer } from 'src/app/model/places-renderer.class';
 })
 export class SelectCountriesComponent implements OnInit {
   regions: Region[];
-  allChecked: boolean = true;
+  checkboxStates$: Observable<CheckboxStates>;
   treeProvider: TreeProvider<Place> = new PlacesTreeProvider();
   renderer: Renderer<Place> = new PlacesRenderer();
 
@@ -27,12 +29,12 @@ export class SelectCountriesComponent implements OnInit {
 
   ngOnInit(): void {
     this.regions = this.countryService.data;
-    this.selectService.updateCanStartQuiz(this.allChecked);
+    this.checkboxStates$ = this.selectService.getSelection().pipe(
+      map(selection => selection.countries)
+    );
   }
 
   onCountriesChange(model: CheckboxStates): void {
     this.selectService.updateCountries(model);
-    const canStartQuiz = _.some(model, checkboxState => checkboxState === 'checked');
-    this.selectService.updateCanStartQuiz(canStartQuiz);
   }
 }

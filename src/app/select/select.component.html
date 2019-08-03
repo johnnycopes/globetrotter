@@ -18,7 +18,7 @@
       <app-button class="launch"
         buttonText="Launch"
         buttonStyle="primary"
-        [disabled]="!(canStartQuiz$ | async)"
+        [disabled]="!canStartQuiz"
         (clicked)="onLaunch()"
         >
       </app-button>

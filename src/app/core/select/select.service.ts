@@ -6,6 +6,8 @@ import { Store } from 'src/app/model/store.class';
 import { Selection } from 'src/app/model/selection.class';
 import { QuizTypes } from 'src/app/model/quiz-types.enum';
 import { CheckboxStates } from 'src/app/shared/nested-checkboxes/nested-checkboxes.component';
+import { QuizQuantity } from 'src/app/model/quiz-quantity.type';
+import { CountryService } from '../country/country.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,12 +15,15 @@ import { CheckboxStates } from 'src/app/shared/nested-checkboxes/nested-checkbox
 export class SelectService {
   private readonly store: Store;
 
-  constructor() {
-    this.store = new Store(new Selection());
-  }
-
-  reset(): void {
-    this.store.set([], new Selection());
+  constructor(private countryService: CountryService) {
+    const type: QuizTypes = QuizTypes.flagsCountries;
+    const quantity: QuizQuantity = 5;
+    const countries: CheckboxStates = this.mapCountriesToCheckboxStates();
+    this.store = new Store(new Selection(
+      type,
+      quantity,
+      countries
+    ));
   }
 
   getSelection(): Observable<Selection> {
@@ -37,8 +42,14 @@ export class SelectService {
     this.store.set(['countries'], countries);
   }
 
-  updateCanStartQuiz(canStartQuiz: boolean): void {
-    this.store.set(['canStartQuiz'], canStartQuiz);
+  mapCountriesToCheckboxStates(): CheckboxStates {
+    return _.reduce(this.countryService.data, (accum, region) => {
+      accum[region.name] = 'checked';
+      _.forEach(region.subregions, subregion => {
+        accum[subregion.name] = 'checked';
+      })
+      return accum;
+    }, {});
   }
 
   mapSelectionToQueryParams(selection: Selection): _.Dictionary<string> {
@@ -66,8 +77,7 @@ export class SelectService {
     const selection: Selection = {
       type,
       quantity,
-      countries,
-      canStartQuiz: true
+      countries
     };
     return selection;
   }
