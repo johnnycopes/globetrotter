@@ -7,7 +7,7 @@ import {
   transition
 } from '@angular/animations';
 
-import { Animations } from 'src/app/model/animations.enum';
+import { Animation } from 'src/app/model/animation.enum';
 
 export type FlipCardSide = 'front' | 'back';
 export type FlipCardGuess = 'correct' | 'incorrect' | 'none';
@@ -24,15 +24,15 @@ export type FlipCardGuess = 'correct' | 'incorrect' | 'none';
       state('back', style({
         transform: 'rotateY(180deg)'
       })),
-      transition('front => back', animate(`${Animations.flipCard}ms ease-in`)),
-      transition('back => front', animate(`${Animations.flipCard}ms ease-out`))
+      transition('front => back', animate(`${Animation.flipCard}ms ease-in`)),
+      transition('back => front', animate(`${Animation.flipCard}ms ease-out`))
     ]),
     trigger('disabled', [
       state('disabled', style({
         filter: 'grayscale(100%)',
         cursor: 'not-allowed'
       })),
-      transition('* => disabled', animate(`${Animations.flipCard}ms ease-in`))
+      transition('* => disabled', animate(`${Animation.flipCard}ms ease-in`))
     ]),
     trigger('guess', [
       state('none', style({
@@ -47,7 +47,7 @@ export type FlipCardGuess = 'correct' | 'incorrect' | 'none';
         border: '20px solid crimson',
         padding: '0'
       })),
-      transition('* => *', animate(`${Animations.flipCard}ms ease-in`))
+      transition('* => *', animate(`${Animation.flipCard}ms ease-in`))
     ])
   ]
 })

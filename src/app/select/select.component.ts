@@ -7,7 +7,7 @@ import * as _ from 'lodash';
 import { SelectService } from '../core/select/select.service';
 import { UtilityService } from '../core/utility/utility.service';
 import { Selection } from '../model/selection.class';
-import { Animations } from 'src/app/model/animations.enum';
+import { Animation } from 'src/app/model/animation.enum';
 import { FixedSlideablePanelPosition } from '../shared/fixed-slideable-panel/fixed-slideable-panel.component';
 import { TabsetContentVisibility } from '../shared/tabset/tabset.component';
 
@@ -45,9 +45,9 @@ export class SelectComponent implements OnInit, OnDestroy {
 
   async onLaunch(): Promise<void> {
     this.tabsetContentVisibility = 'invisible';
-    await this.utilityService.wait(Animations.fixedSlideablePanel);
+    await this.utilityService.wait(Animation.fixedSlideablePanel);
     this.tabsetControlsPosition = 'offscreen';
-    await this.utilityService.wait(Animations.fixedSlideablePanel);
+    await this.utilityService.wait(Animation.fixedSlideablePanel);
     this.queryParams = this.selectService.mapSelectionToQueryParams(this.selection);
     this.router.navigate(['quiz'], { queryParams: this.queryParams });
   }

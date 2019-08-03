@@ -13,8 +13,8 @@ import { map, first, distinctUntilChanged} from 'rxjs/operators';
 import * as _ from 'lodash';
 
 import { Country } from 'src/app/model/country.interface';
-import { Animations } from 'src/app/model/animations.enum';
-import { QuizTypes } from 'src/app/model/quiz-types.enum';
+import { Animation } from 'src/app/model/animation.enum';
+import { QuizType } from 'src/app/model/quiz-type.enum';
 import { QuizService } from 'src/app/core/quiz/quiz.service';
 
 @Component({
@@ -24,13 +24,13 @@ import { QuizService } from 'src/app/core/quiz/quiz.service';
   animations: [
     trigger('stagger', [
       transition(':enter', [
-        query(':enter', stagger(`${Animations.cardsStagger}ms`, [animateChild()]))
+        query(':enter', stagger(`${Animation.cardsStagger}ms`, [animateChild()]))
       ])
     ]),
     trigger('fadeIn', [
       transition(':enter', [
         style({ opacity: '0' }),
-        animate(`${Animations.cardsFadeIn}ms ${Animations.cardsFadeInDelay}ms ease-in`, style({ opacity: '1' }))
+        animate(`${Animation.cardsFadeIn}ms ${Animation.cardsFadeInDelay}ms ease-in`, style({ opacity: '1' }))
       ])
     ])
   ]
@@ -38,7 +38,7 @@ import { QuizService } from 'src/app/core/quiz/quiz.service';
 export class QuizCardsComponent implements OnInit {
   canFlipCards = true;
   quiz$ = this.quizService.getQuiz();
-  quizType$: Observable<QuizTypes>;
+  quizType$: Observable<QuizType>;
   countries$: Observable<Country[]>;
 
   constructor(private quizService: QuizService) { }

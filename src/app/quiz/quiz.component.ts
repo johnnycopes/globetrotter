@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import * as _ from 'lodash';
 
-import { QuizService } from '../core/quiz/quiz.service';
 import { ActivatedRoute } from '@angular/router';
+import { QuizService } from '../core/quiz/quiz.service';
 import { SelectService } from '../core/select/select.service';
 
 @Component({
@@ -27,6 +27,7 @@ export class QuizComponent implements OnInit {
           countries: queryParams.get('countries')
         };
         const selection = this.selectService.mapQueryParamsToSelection(params);
+        this.selectService.updateSelection(selection);
         this.quizService.initializeQuiz(selection);
       }
     );

@@ -4,7 +4,7 @@ import { map, distinctUntilChanged } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 import { QuizService } from 'src/app/core/quiz/quiz.service';
-import { QuizTypes } from 'src/app/model/quiz-types.enum';
+import { QuizType } from 'src/app/model/quiz-type.enum';
 import { FixedSlideablePanelPosition } from 'src/app/shared/fixed-slideable-panel/fixed-slideable-panel.component';
 
 @Component({
@@ -17,9 +17,9 @@ export class QuizMenuComponent implements OnInit {
   menuPosition$: Observable<FixedSlideablePanelPosition>;
   prompt$: Observable<string>;
   private promptDict: _.Dictionary<string> = {
-    [QuizTypes.flagsCountries]: 'name',
-    [QuizTypes.capitalsCountries]: 'name',
-    [QuizTypes.countriesCapitals]: 'capital'
+    [QuizType.flagsCountries]: 'name',
+    [QuizType.capitalsCountries]: 'name',
+    [QuizType.countriesCapitals]: 'capital'
   };
 
   constructor(private quizService: QuizService) { }

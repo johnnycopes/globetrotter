@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 import { SelectService } from 'src/app/core/select/select.service';
-import { QuizTypes } from 'src/app/model/quiz-types.enum';
+import { QuizType } from 'src/app/model/quiz-type.enum';
 import { RadioButtonsOption } from 'src/app/shared/radio-buttons/radio-buttons.component';
 
 @Component({
@@ -13,13 +13,13 @@ import { RadioButtonsOption } from 'src/app/shared/radio-buttons/radio-buttons.c
   styleUrls: ['./select-type.component.scss']
 })
 export class SelectTypeComponent implements OnInit {
-  types: RadioButtonsOption<QuizTypes>[];
-  selectedType$: Observable<RadioButtonsOption<QuizTypes>>;
+  types: RadioButtonsOption<QuizType>[];
+  selectedType$: Observable<RadioButtonsOption<QuizType>>;
 
   constructor(private selectService: SelectService) { }
 
   ngOnInit(): void {
-    this.types = _.map(QuizTypes, quizType => {
+    this.types = _.map(QuizType, quizType => {
       const type = {
         display: this.formatDisplayText(quizType),
         value: quizType
@@ -38,11 +38,11 @@ export class SelectTypeComponent implements OnInit {
     );
   }
 
-  onChange(selectedType: RadioButtonsOption<QuizTypes>): void {
+  onChange(selectedType: RadioButtonsOption<QuizType>): void {
     this.selectService.updateType(selectedType.value);
   }
 
-  private formatDisplayText(text: QuizTypes): string {
+  private formatDisplayText(text: QuizType): string {
     const textAsArray = _
       .chain(text)
       .toLower()

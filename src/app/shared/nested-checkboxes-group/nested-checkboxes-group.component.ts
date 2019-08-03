@@ -1,4 +1,4 @@
-import { Component, Input, QueryList, ViewChildren } from '@angular/core';
+import { Component, Input, ViewChildren, QueryList } from '@angular/core';
 import * as _ from 'lodash';
 
 import { NestedCheckboxesComponent, TreeProvider, Renderer, CheckboxStates } from '../nested-checkboxes/nested-checkboxes.component';
@@ -23,22 +23,27 @@ export class NestedCheckboxesGroupComponent<T> implements ControlValueAccessor {
   @Input() text: string;
   @ViewChildren(NestedCheckboxesComponent) nestedCheckboxesComponents: QueryList<NestedCheckboxesComponent<T>>;
   checkboxStates: CheckboxStates = {};
-  current: number = 0;
+  showTopCounter: boolean;
   total: number;
   private onChangeFn: (value: CheckboxStates) => void;
 
-  get showTopCounter() {
-    return this.showCounters || this.text;
+  get current(): number {
+    if (this.showTopCounter && this.checkboxStates && this.nestedCheckboxesComponents) {
+      return this.nestedCheckboxesComponents.reduce((accum, component) => {
+        return accum + component.current;
+      }, 0);
+    }
   }
 
   constructor() { }
 
+  ngOnInit(): void {
+    this.showTopCounter = this.showCounters && !!this.text;
+    this.total = this.showTopCounter && this.getTotal();
+  }
+
   writeValue(value: CheckboxStates): void {
     this.checkboxStates = value;
-    if (this.nestedCheckboxesComponents) {
-      this.current = this.getCurrent();
-      this.total = this.getTotal();
-    }
   }
 
   registerOnChange(fn: (value: CheckboxStates) => void): void {
@@ -50,20 +55,17 @@ export class NestedCheckboxesGroupComponent<T> implements ControlValueAccessor {
   }
 
   onSelectAll(): void {
-    this.current = this.total;
     this.checkboxStates = {};
     this.makeAllItemsChecked();
     this.onChangeFn(this.checkboxStates);
   }
 
   onClearAll(): void {
-    this.current = 0;
     this.checkboxStates = {};
     this.onChangeFn(this.checkboxStates);
   }
 
   updateCheckboxStates(checkboxStates: CheckboxStates): void {
-    this.current = this.getCurrent();
     this.checkboxStates = _.merge(this.checkboxStates, checkboxStates);
     this.onChangeFn(this.checkboxStates);
   }
@@ -86,12 +88,6 @@ export class NestedCheckboxesGroupComponent<T> implements ControlValueAccessor {
     _.forEach(children, child => {
       this.makeItemChecked(child);
     });
-  }
-
-  private getCurrent(): number {
-    return this.nestedCheckboxesComponents.reduce((accum, component) => {
-      return accum + component.current;
-    }, 0);
   }
 
   private getTotal(): number {

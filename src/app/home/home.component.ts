@@ -7,7 +7,7 @@ import {
   transition
 } from '@angular/animations';
 
-import { Animations } from '../model/animations.enum';
+import { Animation } from '../model/animation.enum';
 
 @Component({
   selector: 'app-home',
@@ -17,7 +17,7 @@ import { Animations } from '../model/animations.enum';
     trigger('fadeIn', [
       transition(':enter', [
         style({ opacity: '0' }),
-        animate(`${Animations.screenTransition}ms ease-in`, style({ opacity: '1' }))
+        animate(`${Animation.screenTransition}ms ease-in`, style({ opacity: '1' }))
       ])
     ])
   ]

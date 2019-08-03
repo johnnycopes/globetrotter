@@ -4,10 +4,10 @@ import * as _ from 'lodash';
 
 import { Store } from 'src/app/model/store.class';
 import { Selection } from 'src/app/model/selection.class';
-import { QuizTypes } from 'src/app/model/quiz-types.enum';
+import { CountryService } from '../country/country.service';
+import { QuizType } from 'src/app/model/quiz-type.enum';
 import { CheckboxStates } from 'src/app/shared/nested-checkboxes/nested-checkboxes.component';
 import { QuizQuantity } from 'src/app/model/quiz-quantity.type';
-import { CountryService } from '../country/country.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,9 +16,9 @@ export class SelectService {
   private readonly store: Store;
 
   constructor(private countryService: CountryService) {
-    const type: QuizTypes = QuizTypes.flagsCountries;
-    const quantity: QuizQuantity = 5;
-    const countries: CheckboxStates = this.mapCountriesToCheckboxStates();
+    const type = QuizType.flagsCountries;
+    const quantity = 5;
+    const countries = this.mapCountriesToCheckboxStates();
     this.store = new Store(new Selection(
       type,
       quantity,
@@ -30,7 +30,14 @@ export class SelectService {
     return this.store.get([]);
   }
 
-  updateType(type: QuizTypes): void {
+  updateSelection(selection: Selection): void {
+    const { type, quantity, countries } = selection;
+    this.updateType(type);
+    this.updateQuantity(quantity);
+    this.updateCountries(countries);
+  }
+
+  updateType(type: QuizType): void {
     this.store.set(['type'], type);
   }
 
@@ -68,8 +75,8 @@ export class SelectService {
   }
 
   mapQueryParamsToSelection(queryParams: _.Dictionary<string>): Selection {
-    const type = QuizTypes[_.camelCase(queryParams.type)];
-    const quantity = _.toNumber(queryParams.quantity);
+    const type = QuizType[_.camelCase(queryParams.type)];
+    const quantity = this.convertQuantityParamToQuizQuantity(queryParams.quantity);
     const countries = _.reduce(queryParams.countries.split(','), (accum, current) => {
       accum[current] = 'checked';
       return accum;
@@ -80,5 +87,27 @@ export class SelectService {
       countries
     };
     return selection;
+  }
+
+  private convertQuantityParamToQuizQuantity(quantityParam: string): QuizQuantity {
+    const paramAsNumber = _.toNumber(quantityParam);
+    if (!quantityParam) {
+      return null;
+    }
+    else if (this.isQuizQuantity(paramAsNumber)) {
+      return paramAsNumber;
+    }
+    else {
+      return 5;
+    }
+  }
+
+  private isQuizQuantity(quantityParm: number): quantityParm is QuizQuantity {
+    const isValid =
+      quantityParm === 5 ||
+      quantityParm === 10 ||
+      quantityParm === 15 ||
+      quantityParm === 20;
+    return isValid;
   }
 }
