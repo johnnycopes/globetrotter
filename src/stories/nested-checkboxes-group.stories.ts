@@ -1,6 +1,5 @@
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { action } from '@storybook/addon-actions';
-import { withNotes } from '@storybook/addon-notes';
 import {
   withKnobs,
   text,
@@ -43,7 +42,6 @@ const template = `
 `;
 
 storiesOf('Shared | Nested Checkboxes Group', module)
-  .addDecorator(withNotes)
   .addDecorator(withKnobs)
   .addDecorator(
     moduleMetadata({

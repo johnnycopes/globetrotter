@@ -5,7 +5,6 @@ import {
   boolean,
   object
 } from '@storybook/addon-knobs/angular';
-import { withNotes } from '@storybook/addon-notes';
 
 import { CounterComponent } from 'src/app/shared/counter/counter.component';
 import { CheckboxComponent } from 'src/app/shared/checkbox/checkbox.component';
@@ -38,7 +37,6 @@ const template = `
 `;
 
 storiesOf('Shared | Nested Checkboxes', module)
-  .addDecorator(withNotes)
   .addDecorator(withKnobs)
   .addDecorator(
     moduleMetadata({

@@ -12,10 +12,8 @@
 
 <ng-container *ngTemplateOutlet="
   controlsTemplate ? controlsTemplate : defaultControlsTemplate;
-  context: {
-    tabs: this.tabs,
-    selectTab: this.selectTab
-  }"
+  context: { tabs: this.tabs }
+  "
   >
 </ng-container>
 <div class="content"
