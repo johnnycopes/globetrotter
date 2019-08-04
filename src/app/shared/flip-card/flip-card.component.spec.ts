@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { FlipCardComponent } from './flip-card.component';
 
@@ -9,10 +8,7 @@ describe('FlipCardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FlipCardComponent ],
-      schemas: [
-        CUSTOM_ELEMENTS_SCHEMA
-      ]
+      declarations: [ FlipCardComponent ]
     })
     .compileComponents();
   }));

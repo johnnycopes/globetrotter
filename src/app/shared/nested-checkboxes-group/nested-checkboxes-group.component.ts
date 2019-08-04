@@ -23,9 +23,12 @@ export class NestedCheckboxesGroupComponent<T> implements ControlValueAccessor {
   @Input() text: string;
   @ViewChildren(NestedCheckboxesComponent) nestedCheckboxesComponents: QueryList<NestedCheckboxesComponent<T>>;
   checkboxStates: CheckboxStates = {};
-  showTopCounter: boolean;
   total: number;
   private onChangeFn: (value: CheckboxStates) => void;
+
+  get showTopCounter(): boolean {
+    return this.showCounters && !!this.text;
+  }
 
   get current(): number {
     if (this.showTopCounter && this.checkboxStates && this.nestedCheckboxesComponents) {
@@ -38,7 +41,6 @@ export class NestedCheckboxesGroupComponent<T> implements ControlValueAccessor {
   constructor() { }
 
   ngOnInit(): void {
-    this.showTopCounter = this.showCounters && !!this.text;
     this.total = this.showTopCounter && this.getTotal();
   }
 

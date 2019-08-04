@@ -1,10 +1,11 @@
 <div class="nested-checkboxes">
-  <img class="nested-checkboxes__image"
-    *ngIf="imagePath"
+  <app-icon class="nested-checkboxes__image"
+    *ngIf="showImage"
     [ngClass]="{'nested-checkboxes__image--inactive': !imageActive}"
-    [src]="imagePath"
-    alt="{{itemDisplayName}}"
-  />
+    [path]="imagePath"
+    [description]="itemDisplayName"
+    >
+  </app-icon>
   <div class="nested-checkboxes__selection">
     <app-checkbox class="nested-checkboxes__checkbox"
       [ngClass]="{'nested-checkboxes__checkbox--bold': isRoot}"

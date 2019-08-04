@@ -6,15 +6,15 @@ import {
   object
 } from '@storybook/addon-knobs/angular';
 import { withNotes } from '@storybook/addon-notes';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { CounterComponent } from 'src/app/shared/counter/counter.component';
 import { CheckboxComponent } from 'src/app/shared/checkbox/checkbox.component';
+import { IconComponent } from 'src/app/shared/icon/icon.component';
 import { NestedCheckboxesComponent } from 'src/app/shared/nested-checkboxes/nested-checkboxes.component';
 import { DefaultTreeProvider } from './mock-data/default-tree-provider.class';
 import { DefaultRenderer } from './mock-data/default-renderer.class';
 import { MOCK_DATA, SOME_SELECTED_DICT, ALL_SELECTED_DICT } from './mock-data/nested-checkboxes.data';
-import * as markdown from './notes/nested-checkboxes.md';
+import markdown from './notes/nested-checkboxes.md';
 
 const treeProvider = new DefaultTreeProvider;
 const renderer = new DefaultRenderer;
@@ -45,9 +45,9 @@ storiesOf('Shared | Nested Checkboxes', module)
       declarations: [
         CheckboxComponent,
         CounterComponent,
+        IconComponent,
         NestedCheckboxesComponent
-      ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      ]
     })
   )
   .add('none selected', () => {

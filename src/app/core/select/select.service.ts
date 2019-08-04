@@ -14,6 +14,10 @@ import { QuizQuantity } from 'src/app/model/quiz-quantity.type';
 })
 export class SelectService {
   private readonly store: Store;
+  private readonly paramDict = {
+    checked: '_c',
+    indeterminate: '_i'
+  };
 
   constructor(private countryService: CountryService) {
     const type = QuizType.flagsCountries;
@@ -63,30 +67,43 @@ export class SelectService {
     const type = _.toString(selection.type);
     const quantity = _.toString(selection.quantity);
     const countries = _(selection.countries)
-      .pickBy(state => state === 'checked')
-      .keys()
+      .pickBy((state) => state !== 'unchecked')
+      .map((value, key) => {
+        if (value === 'checked') {
+          return key + this.paramDict.checked;
+        } else if (value === 'indeterminate') {
+          return key + this.paramDict.indeterminate;
+        } else {
+          return;
+        }
+      })
       .join(',');
-    const queryParams: _.Dictionary<string> = {
+    return {
       type,
       quantity,
       countries
     };
-    return queryParams;
   }
 
   mapQueryParamsToSelection(queryParams: _.Dictionary<string>): Selection {
     const type = QuizType[_.camelCase(queryParams.type)];
     const quantity = this.convertQuantityParamToQuizQuantity(queryParams.quantity);
     const countries = _.reduce(queryParams.countries.split(','), (accum, current) => {
-      accum[current] = 'checked';
+      if (current.includes(this.paramDict.checked)) {
+        const updatedKey = _.replace(current, this.paramDict.checked, '');
+        accum[updatedKey] = 'checked';
+      }
+      else if (current.includes(this.paramDict.indeterminate)) {
+        const updatedKey = _.replace(current, this.paramDict.indeterminate, '');
+        accum[updatedKey] = 'indeterminate';
+      }
       return accum;
     }, {});
-    const selection: Selection = {
+    return {
       type,
       quantity,
       countries
     };
-    return selection;
   }
 
   private convertQuantityParamToQuizQuantity(quantityParam: string): QuizQuantity {
