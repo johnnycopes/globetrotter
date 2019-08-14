@@ -2,6 +2,9 @@
   <div class="app__content"
     [ngClass]="{'app__content--no-scroll': (quizCompleted$ | async)}"
     >
-    <router-outlet></router-outlet>
+    <app-loader *ngIf="appLoading$ | async; else route"></app-loader>
+    <ng-template #route>
+      <router-outlet></router-outlet>
+    </ng-template>
   </div>
 </main>

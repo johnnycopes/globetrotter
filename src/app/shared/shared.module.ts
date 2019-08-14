@@ -8,6 +8,7 @@ import { CounterComponent } from './counter/counter.component';
 import { FixedSlideablePanelComponent } from './fixed-slideable-panel/fixed-slideable-panel.component';
 import { FlipCardComponent } from './flip-card/flip-card.component';
 import { IconComponent } from './icon/icon.component';
+import { LoaderComponent } from './loader/loader.component';
 import { LogoComponent } from './logo/logo.component';
 import { NestedCheckboxesComponent } from './nested-checkboxes/nested-checkboxes.component';
 import { NestedCheckboxesGroupComponent } from './nested-checkboxes-group/nested-checkboxes-group.component';
@@ -27,6 +28,7 @@ import { TabComponent } from './tabset/tab/tab.component';
     FixedSlideablePanelComponent,
     FlipCardComponent,
     IconComponent,
+    LoaderComponent,
     LogoComponent,
     NestedCheckboxesComponent,
     NestedCheckboxesGroupComponent,
@@ -41,6 +43,7 @@ import { TabComponent } from './tabset/tab/tab.component';
     FixedSlideablePanelComponent,
     FlipCardComponent,
     IconComponent,
+    LoaderComponent,
     LogoComponent,
     NestedCheckboxesComponent,
     NestedCheckboxesGroupComponent,

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import * as _ from 'lodash';
 
-import { COUNTRIES } from 'src/app/model/countries.data';
 import { COUNTRY_STATUSES } from 'src/app/model/country-statuses.data';
 import { Country } from 'src/app/model/country.interface';
 import { Region } from 'src/app/model/region.interface';
@@ -15,12 +15,10 @@ export class CountryService {
   private countriesBySubregion: _.Dictionary<Country[]>;
   private subregionsByRegion: _.Dictionary<string[]>;
   private formattedData: Region[];
+  private readonly countriesApiUrl = 'https://restcountries.eu/rest/v2/all';
 
-  constructor() {
-    this.countries = _.filter(COUNTRIES, country => COUNTRY_STATUSES[country.name]);
-    this.countriesBySubregion = _.groupBy(this.countries, 'subregion');
-    this.subregionsByRegion = this.groupSubregionsByRegion(this.countriesBySubregion);
-    this.formattedData = this.createFormattedData();
+  constructor(private http: HttpClient) {
+    this.setCountryData();
   }
 
   get data(): Region[] {
@@ -40,6 +38,15 @@ export class CountryService {
       .shuffle()
       .slice(0, quantity)
       .value();
+  }
+
+  private setCountryData(): void {
+    this.http.get<Country[]>(this.countriesApiUrl).subscribe(countries => {
+      this.countries = _.filter(countries, country => COUNTRY_STATUSES[country.name]);
+      this.countriesBySubregion = _.groupBy(this.countries, 'subregion');
+      this.subregionsByRegion = this.groupSubregionsByRegion(this.countriesBySubregion);
+      this.formattedData = this.createFormattedData();
+    });
   }
 
   private groupSubregionsByRegion(countriesBySubregion: _.Dictionary<Country[]>): _.Dictionary<string[]> {
