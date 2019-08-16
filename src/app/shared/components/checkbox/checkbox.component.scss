@@ -1,0 +1,96 @@
+@import 'styles';
+
+:host {
+  display: inline-block;
+  position: relative;
+}
+
+// the <label> element of the checkbox is used as the container
+.checkbox {
+  display: inline-block;
+
+  // create a custom checkbox
+  &__element {
+    position: absolute;
+    top: 50%;
+	  transform: translateY(-50%);
+    left: 0;
+    height: 20px;
+    width: 20px;
+    border: map-get($border, thin) solid map-get($color, medium);
+    user-select: none;
+    border-radius: map-get($border, radius);
+
+    // create a custom checkmark
+    &::after {
+      content: "";
+      position: absolute;
+      display: none;
+    }
+  }
+
+  // hide the default checkbox input
+  .checkbox__input {
+    display: none;
+    position: absolute;
+    left: -100vh;
+    opacity: 0;
+  }
+
+  // make the label text brighter when selected
+  .checkbox__input:indeterminate ~ .checkbox__label,
+  .checkbox__input:checked ~ .checkbox__label {
+    color: map-get($color, lightest);
+  }
+
+  // style the custom checkbox when the default checkbox input is indeterminate/checked
+  .checkbox__input:indeterminate ~ .checkbox__element,
+  .checkbox__input:checked ~ .checkbox__element {
+    border-color: map-get($color, lightest);
+  }
+
+  // style the custom checkbox when the default checkbox input is indeterminate
+  .checkbox__input:indeterminate ~ .checkbox__element::after {
+    display: block;
+    left: 50%;
+    top: 50%;
+    width: 8px;
+    transform: translate(-50%, -50%);
+    border-top: map-get($border, thin) solid map-get($color, lightest);
+  }
+
+  // style the custom checkmark when the default checkbox input is checked
+  .checkbox__input:checked ~ .checkbox__element::after {
+    display: block;
+    left: 4px;
+    top: 0px;
+    width: 8px;
+    height: 13px;
+    border: solid map-get($color, lightest);
+    border-width: 0 map-get($border, thin) map-get($border, thin) 0;
+    transform: rotate(45deg);
+  }
+
+  &--inverted {
+    .checkbox__input:indeterminate ~ .checkbox__element,
+    .checkbox__input:checked ~ .checkbox__element {
+      background: map-get($color, lightest);
+    }
+
+    .checkbox__input:indeterminate ~ .checkbox__element::after,
+    .checkbox__input:checked ~ .checkbox__element::after {
+      border-color: map-get($color, darkest);
+    }
+  }
+
+  // create a custom label
+  &__label {
+    color: map-get($color, medium);
+    font-family: $font-stack;
+    padding-left: map-get($spacing, 32);
+
+    &--active {
+      color: map-get($color, lightest);
+    }
+  }
+}

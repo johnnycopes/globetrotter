@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { HomeComponent } from './home/home.component';
-import { SelectComponent } from './select/select.component';
-import { QuizComponent } from './quiz/quiz.component';
+import { HomeComponent } from './features/home/home.component';
+import { SelectComponent } from './features/select/select.component';
+import { QuizComponent } from './features/quiz/quiz.component';
 
 const routes: Routes = [
   { path: 'select', component: SelectComponent },

@@ -5,7 +5,7 @@ import {
   text,
 } from '@storybook/addon-knobs/angular';
 
-import { IconComponent } from 'src/app/shared/icon/icon.component';
+import { IconComponent } from 'src/app/shared/components/icon/icon.component';
 
 const actions = {
   onClick: action('clicked')

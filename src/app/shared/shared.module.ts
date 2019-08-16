@@ -2,19 +2,19 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { ButtonComponent } from './button/button.component';
-import { CheckboxComponent } from './checkbox/checkbox.component';
-import { CounterComponent } from './counter/counter.component';
-import { FixedSlideablePanelComponent } from './fixed-slideable-panel/fixed-slideable-panel.component';
-import { FlipCardComponent } from './flip-card/flip-card.component';
-import { IconComponent } from './icon/icon.component';
-import { LoaderComponent } from './loader/loader.component';
-import { LogoComponent } from './logo/logo.component';
-import { NestedCheckboxesComponent } from './nested-checkboxes/nested-checkboxes.component';
-import { NestedCheckboxesGroupComponent } from './nested-checkboxes-group/nested-checkboxes-group.component';
-import { RadioButtonsComponent } from './radio-buttons/radio-buttons.component';
-import { TabsetComponent } from './tabset/tabset.component';
-import { TabComponent } from './tabset/tab/tab.component';
+import { ButtonComponent } from './components/button/button.component';
+import { CheckboxComponent } from './components/checkbox/checkbox.component';
+import { CounterComponent } from './components/counter/counter.component';
+import { FixedSlideablePanelComponent } from './components/fixed-slideable-panel/fixed-slideable-panel.component';
+import { FlipCardComponent } from './components/flip-card/flip-card.component';
+import { IconComponent } from './components/icon/icon.component';
+import { LoaderComponent } from './components/loader/loader.component';
+import { LogoComponent } from './components/logo/logo.component';
+import { NestedCheckboxesComponent } from './components/nested-checkboxes/nested-checkboxes.component';
+import { NestedCheckboxesGroupComponent } from './components/nested-checkboxes-group/nested-checkboxes-group.component';
+import { RadioButtonsComponent } from './components/radio-buttons/radio-buttons.component';
+import { TabsetComponent } from './components/tabset/tabset.component';
+import { TabComponent } from './components/tabset/tab/tab.component';
 
 @NgModule({
   imports: [

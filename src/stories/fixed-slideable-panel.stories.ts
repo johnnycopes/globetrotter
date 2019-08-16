@@ -5,7 +5,7 @@ import {
 } from '@storybook/addon-knobs/angular';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { FixedSlideablePanelComponent, FixedSlideablePanelPosition } from 'src/app/shared/fixed-slideable-panel/fixed-slideable-panel.component';
+import { FixedSlideablePanelComponent, FixedSlideablePanelPosition } from 'src/app/shared/components/fixed-slideable-panel/fixed-slideable-panel.component';
 
 const positions: FixedSlideablePanelPosition[] = ['offscreen', 'header', 'fullscreen'];
 const template = `

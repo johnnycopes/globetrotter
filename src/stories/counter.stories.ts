@@ -5,7 +5,7 @@ import {
   number,
   boolean,
 } from '@storybook/addon-knobs/angular';
-import { CounterComponent } from 'src/app/shared/counter/counter.component';
+import { CounterComponent } from 'src/app/shared/components/counter/counter.component';
 
 storiesOf('Shared | Counter', module)
   .addDecorator(withKnobs)

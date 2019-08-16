@@ -5,8 +5,8 @@ import {
 } from '@storybook/addon-knobs/angular';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { TabsetComponent, TabsetContentVisibility } from 'src/app/shared/tabset/tabset.component';
-import { TabComponent } from 'src/app/shared/tabset/tab/tab.component';
+import { TabsetComponent, TabsetContentVisibility } from 'src/app/shared/components/tabset/tabset.component';
+import { TabComponent } from 'src/app/shared/components/tabset/tab/tab.component';
 
 const visibilityStates: TabsetContentVisibility[] = ['visible', 'invisible'];
 const tabsetWithDefaultControls = `

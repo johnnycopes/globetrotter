@@ -1,0 +1,53 @@
+@import 'styles';
+
+.outcome {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.home {
+  position: absolute;
+  top: map-get($spacing, 64);
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.text {
+  font-size: map-get($font-size, 36);
+  margin-bottom: map-get($spacing, 16);
+}
+
+.accuracy {
+  font-size: map-get($font-size, 128);
+}
+
+.progress {
+  margin: 0 map-get($spacing, 48);
+}
+
+.logo {
+  text-align: left;
+  flex: 1;
+}
+
+.prompt {
+  text-align: center;
+  flex: 1;
+  font-weight: map-get($font-weight, bold);
+}
+
+.details {
+  text-align: right;
+  flex: 1;
+  font-size: map-get($font-size, 20);
+
+  @include tablet {
+    font-size: map-get($font-size, 24);
+  }
+
+  &__tally {
+    margin-bottom: map-get($spacing, 16);
+  }
+}

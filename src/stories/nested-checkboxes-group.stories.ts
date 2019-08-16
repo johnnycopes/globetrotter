@@ -7,12 +7,12 @@ import {
   object
 } from '@storybook/addon-knobs/angular';
 
-import { ButtonComponent } from 'src/app/shared/button/button.component';
-import { CounterComponent } from 'src/app/shared/counter/counter.component';
-import { CheckboxComponent } from 'src/app/shared/checkbox/checkbox.component';
-import { IconComponent } from 'src/app/shared/icon/icon.component';
-import { NestedCheckboxesComponent } from 'src/app/shared/nested-checkboxes/nested-checkboxes.component';
-import { NestedCheckboxesGroupComponent } from 'src/app/shared/nested-checkboxes-group/nested-checkboxes-group.component';
+import { ButtonComponent } from 'src/app/shared/components/button/button.component';
+import { CounterComponent } from 'src/app/shared/components/counter/counter.component';
+import { CheckboxComponent } from 'src/app/shared/components/checkbox/checkbox.component';
+import { IconComponent } from 'src/app/shared/components/icon/icon.component';
+import { NestedCheckboxesComponent } from 'src/app/shared/components/nested-checkboxes/nested-checkboxes.component';
+import { NestedCheckboxesGroupComponent } from 'src/app/shared/components/nested-checkboxes-group/nested-checkboxes-group.component';
 import { DefaultTreeProvider } from './mock-data/default-tree-provider.class';
 import { DefaultRenderer } from './mock-data/default-renderer.class';
 import { MOCK_DATA, SOME_SELECTED_DICT, ALL_SELECTED_DICT } from './mock-data/nested-checkboxes-group.data';

@@ -7,7 +7,7 @@ import {
   select,
 } from '@storybook/addon-knobs/angular';
 
-import { ButtonComponent, ButtonStyle } from 'src/app/shared/button/button.component';
+import { ButtonComponent, ButtonStyle } from 'src/app/shared/components/button/button.component';
 
 const buttonStyles: ButtonStyle[] = ['primary', 'secondary'];
 const actions = {

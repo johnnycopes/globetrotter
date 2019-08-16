@@ -7,7 +7,7 @@ import {
 } from '@storybook/addon-knobs/angular';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { FlipCardComponent, FlipCardSide, FlipCardGuess } from 'src/app/shared/flip-card/flip-card.component';
+import { FlipCardComponent, FlipCardSide, FlipCardGuess } from 'src/app/shared/components/flip-card/flip-card.component';
 
 const sides: FlipCardSide[] = ['front', 'back'];
 const guesses: FlipCardGuess[] = ['none', 'correct', 'incorrect'];

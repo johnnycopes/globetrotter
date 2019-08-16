@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map, distinctUntilChanged } from 'rxjs/operators';
 import * as _ from 'lodash';
 
-import { QuizService } from 'src/app/core/quiz/quiz.service';
-import { LoaderService } from './core/loader/loader.service';
+import { QuizService } from 'src/app/core/services/quiz/quiz.service';
+import { LoaderService } from './core/services/loader/loader.service';
 
 @Component({
   selector: 'app-root',

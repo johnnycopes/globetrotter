@@ -1,0 +1,54 @@
+@import 'styles';
+
+@mixin ng-content-slot {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fixed-slideable-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  z-index: map-get($z-index, fixed-slideable-panel);
+  transform: translateY(-100vh);
+  font-family: $font-stack;
+  color: map-get($color, lightest);
+  background: map-get($color, dark);
+
+  &__wrapper {
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  &__content {
+    height: 100%;
+    width: 100%;
+
+    & ::ng-deep > * {
+      @include ng-content-slot();
+    }
+  }
+
+  &__header {
+    height: map-get($spacing, 128);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+
+    & ::ng-deep > * {
+      @include ng-content-slot();
+    }
+  }
+
+}

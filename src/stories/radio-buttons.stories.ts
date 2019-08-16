@@ -7,7 +7,7 @@ import {
   object
 } from '@storybook/addon-knobs/angular';
 
-import { RadioButtonsComponent, RadioButtonsOption } from 'src/app/shared/radio-buttons/radio-buttons.component';
+import { RadioButtonsComponent, RadioButtonsOption } from 'src/app/shared/components/radio-buttons/radio-buttons.component';
 
 const sampleText = 'Number of countries to include in the quiz:';
 const actions = {
