@@ -20,22 +20,22 @@ export class NavigationComponent implements OnInit {
     },
     {
       name: 'Explore',
-      icon: 'Africa',
+      icon: 'Airplane',
       route: 'explore',
     },
     {
       name: 'Prepare',
-      icon: 'Asia',
+      icon: 'Luggage',
       route: 'prepare',
     },
     {
       name: 'Quiz',
-      icon: 'Americas',
+      icon: 'Lightbulb',
       route: 'select',
     },
     {
       name: 'Account',
-      icon: 'Earth',
+      icon: 'User',
       route: 'account',
     },
   ];
