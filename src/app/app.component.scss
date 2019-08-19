@@ -1,16 +1,9 @@
 @import 'styles';
 
-.app {
+.content {
+  margin-left: map-get($app, navigation-width);
 
-  &__nav {
-    position: fixed;
-    left: map-get($spacing, 12);
-    bottom: map-get($spacing, 24);
-    z-index: map-get($z-index, app-menu);
-    cursor: pointer;
-  }
-
-  &__content {
+  &__wrapper {
     @include quiz-width;
     min-height: 100vh;
     display: flex;

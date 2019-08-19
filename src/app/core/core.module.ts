@@ -1,18 +1,27 @@
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LayoutModule } from '@angular/cdk/layout';
+import { SharedModule } from '../shared/shared.module';
 
+import { AppRoutingModule } from '../app-routing.module';
 import { LoaderInterceptor } from './interceptors/loader.interceptor';
+import { NavigationComponent } from './navigation/navigation.component';
+import { NavigationLinkComponent } from './navigation/navigation-link/navigation-link.component';
 
 @NgModule({
   imports: [
     BrowserAnimationsModule,
-    LayoutModule
+    HttpClientModule,
+    LayoutModule,
+    SharedModule,
+    AppRoutingModule
   ],
   exports: [
     BrowserAnimationsModule,
-    LayoutModule
+    HttpClientModule,
+    LayoutModule,
+    NavigationComponent
   ],
   providers: [
     {
@@ -20,6 +29,10 @@ import { LoaderInterceptor } from './interceptors/loader.interceptor';
       useClass: LoaderInterceptor,
       multi: true
     }
+  ],
+  declarations: [
+    NavigationComponent,
+    NavigationLinkComponent
   ],
 })
 export class CoreModule { }

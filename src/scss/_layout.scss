@@ -22,8 +22,8 @@ $spacing: (
 );
 
 $z-index: (
-  app-menu: 200,
-  fixed-slideable-panel: 100,
+  fixed-slideable-panel: 200,
+  navigation: 100,
   positive: 1,
   none: 0,
   negative: -1
@@ -37,7 +37,8 @@ $border: (
 );
 
 $app: (
-  quiz-header-height: map-get($spacing, 128),
+  navigation-width: map-get($spacing, 96),
+  quiz-header-height: map-get($spacing, 96),
   quiz-card-width: 300px,
   quiz-cards-grid-gap: 12px
 );

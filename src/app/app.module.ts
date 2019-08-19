@@ -1,6 +1,4 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
@@ -17,10 +15,8 @@ import { HomeComponent } from './features/home/home.component';
     HomeComponent
   ],
   imports: [
-    BrowserModule,
-    CoreModule,
-    HttpClientModule,
     AppRoutingModule,
+    CoreModule,
     QuizModule,
     SelectModule,
     SharedModule,

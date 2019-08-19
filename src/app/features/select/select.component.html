@@ -5,7 +5,6 @@
     <div class="controls"
       app-fixed-slideable-panel-header
       >
-      <app-logo class="logo"></app-logo>
       <ul class="tabs">
         <li class="tab"
           *ngFor="let tab of tabs"
@@ -15,7 +14,7 @@
           {{tab.name}}
         </li>
       </ul>
-      <app-button class="launch"
+      <app-button
         buttonText="Launch"
         buttonStyle="primary"
         [disabled]="!canStartQuiz"

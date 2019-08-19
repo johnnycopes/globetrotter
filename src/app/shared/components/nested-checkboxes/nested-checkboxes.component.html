@@ -1,9 +1,8 @@
 <div class="nested-checkboxes">
   <app-icon class="nested-checkboxes__image"
     *ngIf="showImage"
-    [ngClass]="{'nested-checkboxes__image--inactive': !imageActive}"
-    [path]="imagePath"
-    [description]="itemDisplayName"
+    [icon]="iconName"
+    [highlighted]="imageActive"
     >
   </app-icon>
   <div class="nested-checkboxes__selection">

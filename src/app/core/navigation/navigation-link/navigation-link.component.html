@@ -1,0 +1,15 @@
+<a class="link"
+  #link="routerLinkActive"
+  [routerLink]="route"
+  routerLinkActive="link--active"
+  [routerLinkActiveOptions]="{exact: true}"
+  >
+  <app-icon class="link__logo"
+    [icon]="icon"
+    [highlighted]="link.isActive"
+    >
+  </app-icon>
+  <h3 class="link__text">
+    {{name}}
+  </h3>
+</a>

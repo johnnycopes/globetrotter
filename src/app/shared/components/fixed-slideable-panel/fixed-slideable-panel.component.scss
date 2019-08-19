@@ -11,9 +11,9 @@
 .fixed-slideable-panel {
   position: fixed;
   top: 0;
-  left: 0;
+  right: 0;
   height: 100vh;
-  width: 100%;
+  width: calc(100% - #{map-get($app, navigation-width)});
   z-index: map-get($z-index, fixed-slideable-panel);
   transform: translateY(-100vh);
   font-family: $font-stack;
@@ -38,7 +38,7 @@
   }
 
   &__header {
-    height: map-get($spacing, 128);
+    height: map-get($spacing, 96);
     width: 100%;
     display: flex;
     justify-content: space-between;

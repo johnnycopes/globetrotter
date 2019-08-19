@@ -12,7 +12,7 @@ export interface TreeProvider<T> {
 }
 
 export interface Renderer<T> {
-  getImagePath(node: T): string;
+  getIconName(node: T): string;
 }
 
 export type CheckboxStates = _.Dictionary<CheckboxState>;
@@ -38,7 +38,7 @@ export class NestedCheckboxesComponent<T> implements OnInit, ControlValueAccesso
   itemDisplayName: string;
   childItems: T[];
   total: number;
-  imagePath: string;
+  iconName: string;
   checkboxStates: CheckboxStates = {};
   private onChangeFn: (value: CheckboxStates) => void;
 
@@ -49,7 +49,7 @@ export class NestedCheckboxesComponent<T> implements OnInit, ControlValueAccesso
   }
 
   get imageActive(): boolean | undefined {
-    if (this.imagePath && this.checkboxStates) {
+    if (this.iconName && this.checkboxStates) {
       const currentState = this.checkboxStates[this.itemID];
       return currentState === 'checked' || currentState === 'indeterminate';
     }
@@ -62,7 +62,7 @@ export class NestedCheckboxesComponent<T> implements OnInit, ControlValueAccesso
     this.itemDisplayName = this.treeProvider.getItemDisplayName(this.item);
     this.childItems = this.treeProvider.getChildItems(this.item);
     this.total = this.showCounters && this.treeProvider.getItemTotal(this.item);
-    this.imagePath = this.showImage && this.renderer.getImagePath(this.item);
+    this.iconName = this.showImage && this.renderer.getIconName(this.item);
   }
 
   writeValue(value: CheckboxStates): void {

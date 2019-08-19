@@ -21,7 +21,7 @@ export type FixedSlideablePanelPosition = 'offscreen' | 'header' | 'fullscreen';
         transform: 'translateY(-100vh)'
       })),
       state('header', style({
-        transform: 'translateY(calc(-100vh + 128px))' // this value must kept in sync with the header height in SCSS
+        transform: 'translateY(calc(-100vh + 96px))' // this value must kept in sync with the header height in SCSS
       })),
       state('fullscreen', style({
         transform: 'translateY(0)'
