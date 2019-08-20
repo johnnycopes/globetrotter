@@ -9,10 +9,7 @@ export interface TreeProvider<T> {
   getItemDisplayName(node: T): string;
   getItemID(node: T): string;
   getItemTotal?(node: T): number;
-}
-
-export interface Renderer<T> {
-  getIconName(node: T): string;
+  getItemIcon?(node: T): string;
 }
 
 export type CheckboxStates = _.Dictionary<CheckboxState>;
@@ -30,7 +27,6 @@ export type CheckboxStates = _.Dictionary<CheckboxState>;
 export class NestedCheckboxesComponent<T> implements OnInit, ControlValueAccessor {
   @Input() item: T;
   @Input() treeProvider: TreeProvider<T>;
-  @Input() renderer: Renderer<T>;
   @Input() isRoot: boolean = true;
   @Input() showCounters?: boolean;
   @Input() showImage?: boolean;
@@ -62,7 +58,7 @@ export class NestedCheckboxesComponent<T> implements OnInit, ControlValueAccesso
     this.itemDisplayName = this.treeProvider.getItemDisplayName(this.item);
     this.childItems = this.treeProvider.getChildItems(this.item);
     this.total = this.showCounters && this.treeProvider.getItemTotal(this.item);
-    this.iconName = this.showImage && this.renderer.getIconName(this.item);
+    this.iconName = this.showImage && this.treeProvider.getItemIcon(this.item);
   }
 
   writeValue(value: CheckboxStates): void {

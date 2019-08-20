@@ -5,11 +5,10 @@ import * as _ from 'lodash';
 
 import { CountryService } from 'src/app/core/services/country/country.service';
 import { SelectService } from 'src/app/core/services/select/select.service';
-import { CheckboxStates, TreeProvider, Renderer } from 'src/app/shared/components/nested-checkboxes/nested-checkboxes.component';
+import { CheckboxStates, TreeProvider } from 'src/app/shared/components/nested-checkboxes/nested-checkboxes.component';
 import { Place } from 'src/app/shared/model/place.type';
 import { Region } from 'src/app/shared/model/region.interface';
 import { PlacesTreeProvider } from 'src/app/shared/model/places-tree-provider.class';
-import { PlacesRenderer } from 'src/app/shared/model/places-renderer.class';
 
 @Component({
   selector: 'app-select-countries',
@@ -20,7 +19,6 @@ export class SelectCountriesComponent implements OnInit {
   regions: Region[];
   checkboxStates$: Observable<CheckboxStates>;
   treeProvider: TreeProvider<Place> = new PlacesTreeProvider();
-  renderer: Renderer<Place> = new PlacesRenderer();
 
   constructor(
     private countryService: CountryService,

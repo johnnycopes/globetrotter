@@ -5,6 +5,14 @@ import { Region } from './region.interface';
 import { Subregion } from './subregion.interface';
 
 export class PlacesTreeProvider {
+  getItemDisplayName(place: Place): string {
+    return place.name;
+  }
+
+  getItemID(place: Place): string {
+    return place.name;
+  }
+
   getChildItems(place: Place): Place[] {
     if (isRegion(place)) {
       return place.subregions;
@@ -26,11 +34,7 @@ export class PlacesTreeProvider {
     }
   }
 
-  getItemDisplayName(place: Place): string {
-    return place.name;
-  }
-
-  getItemID(place: Place): string {
+  getItemIcon(place: Place): string {
     return place.name;
   }
 }

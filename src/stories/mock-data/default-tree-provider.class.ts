@@ -3,6 +3,14 @@ import * as _ from 'lodash';
 import { DefaultItem } from './default-item.interface';
 
 export class DefaultTreeProvider {
+  getItemDisplayName(item: DefaultItem): string {
+    return item.name;
+  }
+
+  getItemID(item: DefaultItem): string {
+    return item.name;
+  }
+
   getChildItems(item: DefaultItem): DefaultItem[] {
     if (item.items) {
       return item.items;
@@ -21,11 +29,7 @@ export class DefaultTreeProvider {
     }, 0);
   }
 
-  getItemDisplayName(item: DefaultItem): string {
-    return item.name;
-  }
-
-  getItemID(item: DefaultItem): string {
+  getItemIcon(item: DefaultItem): string {
     return item.name;
   }
 }

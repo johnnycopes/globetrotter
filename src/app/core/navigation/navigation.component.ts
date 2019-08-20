@@ -29,7 +29,7 @@ export class NavigationComponent implements OnInit {
       route: 'prepare',
     },
     {
-      name: 'Quiz',
+      name: 'Learn',
       icon: 'Lightbulb',
       route: 'select',
     },

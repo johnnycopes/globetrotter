@@ -11,12 +11,10 @@ import { CheckboxComponent } from 'src/app/shared/components/checkbox/checkbox.c
 import { IconComponent } from 'src/app/shared/components/icon/icon.component';
 import { NestedCheckboxesComponent } from 'src/app/shared/components/nested-checkboxes/nested-checkboxes.component';
 import { DefaultTreeProvider } from './mock-data/default-tree-provider.class';
-import { DefaultRenderer } from './mock-data/default-renderer.class';
 import { MOCK_DATA, SOME_SELECTED_DICT, ALL_SELECTED_DICT } from './mock-data/nested-checkboxes.data';
 import markdown from './notes/nested-checkboxes.md';
 
 const treeProvider = new DefaultTreeProvider;
-const renderer = new DefaultRenderer;
 const mockItem = MOCK_DATA;
 const noneSelectedDict = {};
 const someSelectedDict = SOME_SELECTED_DICT;
@@ -28,7 +26,6 @@ const template = `
   <app-nested-checkboxes
     [item]="item"
     [treeProvider]="treeProvider"
-    [renderer]="renderer"
     [showCounters]="showCounters"
     [showImage]="showImage"
     [ngModel]="checkboxStates"
@@ -57,7 +54,6 @@ storiesOf('Shared | Nested Checkboxes', module)
         checkboxStates: object('checkboxStates', noneSelectedDict),
         item: object('item', mockItem),
         treeProvider,
-        renderer,
         updateCheckboxStates: actions.updateCheckboxStates
       }
     };
@@ -71,7 +67,6 @@ storiesOf('Shared | Nested Checkboxes', module)
         checkboxStates: object('checkboxStates', someSelectedDict),
         item: object('item', mockItem),
         treeProvider,
-        renderer,
         updateCheckboxStates: actions.updateCheckboxStates
       }
     };
@@ -85,7 +80,6 @@ storiesOf('Shared | Nested Checkboxes', module)
         checkboxStates: object('checkboxStates', allSelectedDict),
         item: object('item', mockItem),
         treeProvider,
-        renderer,
         updateCheckboxStates: actions.updateCheckboxStates
       }
     }

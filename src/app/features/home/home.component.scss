@@ -9,10 +9,6 @@
 .title {
   font-size: map-get($font-size, 96);
   margin-bottom: map-get($spacing, 24);
-
-  @include desktop {
-    font-size: map-get($font-size, 128);
-  }
 }
 
 .divider {

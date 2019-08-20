@@ -18,6 +18,7 @@ export class IconComponent implements OnInit {
   @ViewChild('earthTemplate', { static: true }) earthTemplate: TemplateRef<any>;
   @ViewChild('europeTemplate', { static: true }) europeTemplate: TemplateRef<any>;
   @ViewChild('globetrotterTemplate', { static: true }) globetrotterTemplate: TemplateRef<any>;
+  @ViewChild('graduateCapTemplate', { static: true }) graduateCapTemplate: TemplateRef<any>;
   @ViewChild('lightbulbTemplate', { static: true }) lightbulbTemplate: TemplateRef<any>;
   @ViewChild('luggageTemplate', { static: true }) luggageTemplate: TemplateRef<any>;
   @ViewChild('oceaniaTemplate', { static: true }) oceaniaTemplate: TemplateRef<any>;
@@ -35,6 +36,7 @@ export class IconComponent implements OnInit {
       Earth: this.earthTemplate,
       Europe: this.europeTemplate,
       Globetrotter: this.globetrotterTemplate,
+      GraduateCap: this.graduateCapTemplate,
       Lightbulb: this.lightbulbTemplate,
       Luggage: this.luggageTemplate,
       Oceania: this.oceaniaTemplate,

@@ -1,7 +1,7 @@
 import { Component, Input, ViewChildren, QueryList } from '@angular/core';
 import * as _ from 'lodash';
 
-import { NestedCheckboxesComponent, TreeProvider, Renderer, CheckboxStates } from '../nested-checkboxes/nested-checkboxes.component';
+import { NestedCheckboxesComponent, TreeProvider, CheckboxStates } from '../nested-checkboxes/nested-checkboxes.component';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -17,7 +17,6 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 export class NestedCheckboxesGroupComponent<T> implements ControlValueAccessor {
   @Input() items: T[];
   @Input() treeProvider: TreeProvider<T>;
-  @Input() renderer: Renderer<T>;
   @Input() showCounters: boolean;
   @Input() showImages: boolean;
   @Input() text: string;
