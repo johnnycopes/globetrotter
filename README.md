@@ -5,7 +5,7 @@
 - **Application**: https://globetrotter.surge.sh
 - **Component library**: https://globetrotter-components.surge.sh
 
-This is a geography quiz! Test yourself on the national flags, capitals, or country names from any part(s) of the world that you choose and receive a score based on your answers. The application is built with [Angular](https://angular.io/) and the component library is built with [Storybook](https://storybook.js.org/).
+This is a geography app! Currently, only the Learn section is complete: you can test yourself on the national flags, capitals, or country names from any part(s) of the world that you choose and receive a score based on your answers. The application is built with [Angular](https://angular.io/) and the component library is built with [Storybook](https://storybook.js.org/).
 
 #### Local installation:
 
@@ -29,4 +29,4 @@ This is a geography quiz! Test yourself on the national flags, capitals, or coun
 - Add ability to view and re-take past quizzes
 - Add timer to application to include with finished quiz info
 - Make this a progressive web application by following [Google Lighthouse](https://developers.google.com/web/tools/lighthouse/) PWA guidelines
-- Add ability to create user account in order to save quizzes and scores
+- Build out new features: user authentication, ability to browse countries and save those you've visited or would like to visit, and packing checklists
