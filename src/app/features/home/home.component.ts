@@ -27,6 +27,6 @@ export class HomeComponent {
   constructor(private router: Router) { }
 
   onClick(): void {
-    this.router.navigate(['select']);
+    this.router.navigate(['learn']);
   }
 }

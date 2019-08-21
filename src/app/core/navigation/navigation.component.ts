@@ -4,6 +4,7 @@ interface NavigationLink {
   name: string;
   icon: string;
   route: string;
+  exactPathMatch: boolean;
 }
 
 @Component({
@@ -17,26 +18,31 @@ export class NavigationComponent implements OnInit {
       name: 'Home',
       icon: 'Globetrotter',
       route: '/',
+      exactPathMatch: true
     },
     {
       name: 'Explore',
       icon: 'Airplane',
       route: 'explore',
+      exactPathMatch: true
     },
     {
       name: 'Prepare',
       icon: 'Luggage',
       route: 'prepare',
+      exactPathMatch: true
     },
     {
       name: 'Learn',
       icon: 'Lightbulb',
-      route: 'select',
+      route: 'learn',
+      exactPathMatch: false
     },
     {
       name: 'Account',
       icon: 'User',
       route: 'account',
+      exactPathMatch: true
     },
   ];
 

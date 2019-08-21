@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import * as _ from 'lodash';
 
@@ -48,6 +48,6 @@ export class SelectComponent implements OnInit, OnDestroy {
     this.tabsetControlsPosition = 'offscreen';
     await this.utilityService.wait(Animation.fixedSlideablePanel);
     this.queryParams = this.selectService.mapSelectionToQueryParams(this.selection);
-    this.router.navigate(['quiz'], { queryParams: this.queryParams });
+    this.router.navigate(['learn/quiz'], { queryParams: this.queryParams });
   }
 }
