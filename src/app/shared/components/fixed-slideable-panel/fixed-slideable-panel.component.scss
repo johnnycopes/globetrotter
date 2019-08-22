@@ -3,9 +3,6 @@
 @mixin ng-content-slot {
   width: 100%;
   height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .fixed-slideable-panel {

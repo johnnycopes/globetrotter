@@ -1,6 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { map, distinctUntilChanged } from 'rxjs/operators';
+import { Router } from '@angular/router';
 import * as _ from 'lodash';
 
 import { FixedSlideablePanelPosition } from 'src/app/shared/components/fixed-slideable-panel/fixed-slideable-panel.component';
@@ -27,7 +28,8 @@ export class QuizMenuComponent implements OnInit, OnDestroy {
 
   constructor(
     private quizService: QuizService,
-    private utilityService: UtilityService
+    private utilityService: UtilityService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -57,5 +59,10 @@ export class QuizMenuComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.menuPositionSubscription.unsubscribe();
+  }
+
+  onBack(): void {
+    this.quizService.reset();
+    this.router.navigate(['learn']);
   }
 }

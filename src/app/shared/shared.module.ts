@@ -9,7 +9,6 @@ import { FixedSlideablePanelComponent } from './components/fixed-slideable-panel
 import { FlipCardComponent } from './components/flip-card/flip-card.component';
 import { IconComponent } from './components/icon/icon.component';
 import { LoaderComponent } from './components/loader/loader.component';
-import { LogoComponent } from './components/logo/logo.component';
 import { NestedCheckboxesComponent } from './components/nested-checkboxes/nested-checkboxes.component';
 import { NestedCheckboxesGroupComponent } from './components/nested-checkboxes-group/nested-checkboxes-group.component';
 import { PlaceholderComponent } from './components/placeholder/placeholder.component';
@@ -30,7 +29,6 @@ import { TabComponent } from './components/tabset/tab/tab.component';
     FlipCardComponent,
     IconComponent,
     LoaderComponent,
-    LogoComponent,
     NestedCheckboxesComponent,
     NestedCheckboxesGroupComponent,
     PlaceholderComponent,
@@ -46,7 +44,6 @@ import { TabComponent } from './components/tabset/tab/tab.component';
     FlipCardComponent,
     IconComponent,
     LoaderComponent,
-    LogoComponent,
     NestedCheckboxesComponent,
     NestedCheckboxesGroupComponent,
     PlaceholderComponent,

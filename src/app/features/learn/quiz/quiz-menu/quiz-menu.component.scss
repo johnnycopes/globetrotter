@@ -7,13 +7,6 @@
   align-items: center;
 }
 
-.home {
-  position: absolute;
-  top: map-get($spacing, 64);
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
 .text {
   font-size: map-get($font-size, 36);
   margin-bottom: map-get($spacing, 16);
@@ -21,27 +14,39 @@
 
 .accuracy {
   font-size: map-get($font-size, 128);
+  margin-bottom: map-get($spacing, 16);
+}
+
+.reset {
+  margin-right: map-get($spacing, 16);
 }
 
 .progress {
-  margin: 0 map-get($spacing, 48);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 map-get($spacing, 24);
 }
 
-.logo {
-  text-align: left;
+.back {
   flex: 1;
+
+  &__icon {
+    width: map-get($spacing, 24);
+    cursor: pointer;
+  }
 }
 
 .prompt {
-  text-align: center;
-  flex: 1;
   font-weight: map-get($font-weight, bold);
+  flex: 1;
+  text-align: center;
 }
 
 .details {
-  text-align: right;
-  flex: 1;
   font-size: map-get($font-size, 20);
+  flex: 1;
+  text-align: right;
 
   @include tablet {
     font-size: map-get($font-size, 24);

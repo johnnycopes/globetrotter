@@ -5,19 +5,31 @@
     app-fixed-slideable-panel-content
     *ngIf="quiz.isComplete"
     >
-    <app-logo class="home"></app-logo>
     <p class="text">
       Quiz complete! You scored
     </p>
     <h1 class="accuracy">
       {{quiz.accuracy}}%
     </h1>
+    <app-button class="reset"
+      buttonStyle="primary"
+      buttonText="Reset"
+      (click)="onBack()"
+      >
+    </app-button>
   </div>
   <div class="progress"
     app-fixed-slideable-panel-header
     *ngIf="!quiz.isComplete"
     >
-    <app-logo class="logo"></app-logo>
+    <div class="back">
+      <app-icon class="back__icon"
+        icon="Cancel"
+        [highlighted]="true"
+        (clicked)="onBack()"
+        >
+      </app-icon>
+    </div>
     <p class="prompt">
       {{prompt$ | async}}
     </p>

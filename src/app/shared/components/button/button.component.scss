@@ -29,7 +29,7 @@
 
   &--secondary {
     color: map-get($color, lightest);
-    background: map-get($color, darkest);
+    background: transparent;
 
     &:hover {
       background: lighten(map-get($color, darkest), 10%);
@@ -46,6 +46,9 @@
   }
 
   &__text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     min-height: 33.7px; // prevent collapse if no text
 
     @include tablet {

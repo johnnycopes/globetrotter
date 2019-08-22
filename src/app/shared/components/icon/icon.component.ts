@@ -13,6 +13,7 @@ export class IconComponent implements OnInit {
   @ViewChild('americasTemplate', { static: true }) americasTemplate: TemplateRef<any>;
   @ViewChild('airplaneTemplate', { static: true }) airplaneTemplate: TemplateRef<any>;
   @ViewChild('asiaTemplate', { static: true }) asiaTemplate: TemplateRef<any>;
+  @ViewChild('cancelTemplate', { static: true }) cancelTemplate: TemplateRef<any>;
   @ViewChild('earthTemplate', { static: true }) earthTemplate: TemplateRef<any>;
   @ViewChild('europeTemplate', { static: true }) europeTemplate: TemplateRef<any>;
   @ViewChild('globetrotterTemplate', { static: true }) globetrotterTemplate: TemplateRef<any>;
@@ -30,6 +31,7 @@ export class IconComponent implements OnInit {
       Americas: this.americasTemplate,
       Airplane: this.airplaneTemplate,
       Asia: this.asiaTemplate,
+      Cancel: this.cancelTemplate,
       Earth: this.earthTemplate,
       Europe: this.europeTemplate,
       Globetrotter: this.globetrotterTemplate,
