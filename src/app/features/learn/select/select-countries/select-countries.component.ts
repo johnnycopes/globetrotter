@@ -16,7 +16,7 @@ import { PlacesTreeProvider } from 'src/app/shared/model/places-tree-provider.cl
   styleUrls: ['./select-countries.component.scss']
 })
 export class SelectCountriesComponent implements OnInit {
-  regions: Region[];
+  regions$: Observable<Region[]>;
   checkboxStates$: Observable<CheckboxStates>;
   treeProvider: TreeProvider<Place> = new PlacesTreeProvider();
 
@@ -26,7 +26,7 @@ export class SelectCountriesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.regions = this.countryService.data;
+    this.regions$ = this.countryService.getData();
     this.checkboxStates$ = this.selectService.getSelection().pipe(
       map(selection => selection.countries)
     );

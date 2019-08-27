@@ -1,5 +1,5 @@
 <app-nested-checkboxes-group
-  [items]="regions"
+  [items]="regions$ | async"
   [treeProvider]="treeProvider"
   [showCounters]="true"
   [showImages]="true"

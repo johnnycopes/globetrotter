@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { first } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 import { Store } from 'src/app/shared/model/store.class';
 import { Selection } from 'src/app/shared/model/selection.class';
+import { Region } from 'src/app/shared/model/region.interface';
 import { CountryService } from '../country/country.service';
 import { QuizType } from 'src/app/shared/model/quiz-type.enum';
 import { CheckboxStates } from 'src/app/shared/components/nested-checkboxes/nested-checkboxes.component';
@@ -20,14 +22,17 @@ export class SelectService {
   };
 
   constructor(private countryService: CountryService) {
-    const type = QuizType.flagsCountries;
-    const quantity = 5;
-    const countries = this.mapCountriesToCheckboxStates();
-    this.store = new Store(new Selection(
-      type,
-      quantity,
-      countries
-    ));
+    this.store = new Store(new Selection(QuizType.flagsCountries, 5, {}));
+    this.countryService.getData()
+      .pipe(
+        first()
+      )
+      .subscribe(
+        regions => {
+          const countries = this.mapCountriesToCheckboxStates(regions);
+          this.updateCountries(countries);
+        }
+      );
   }
 
   getSelection(): Observable<Selection> {
@@ -51,16 +56,6 @@ export class SelectService {
 
   updateCountries(countries: CheckboxStates): void {
     this.store.set(['countries'], countries);
-  }
-
-  mapCountriesToCheckboxStates(): CheckboxStates {
-    return _.reduce(this.countryService.data, (accum, region) => {
-      accum[region.name] = 'checked';
-      _.forEach(region.subregions, subregion => {
-        accum[subregion.name] = 'checked';
-      })
-      return accum;
-    }, {});
   }
 
   mapSelectionToQueryParams(selection: Selection): _.Dictionary<string> {
@@ -104,6 +99,16 @@ export class SelectService {
       quantity,
       countries
     };
+  }
+
+  private mapCountriesToCheckboxStates(countries: Region[]): CheckboxStates {
+    return _.reduce(countries, (accum, region) => {
+      accum[region.name] = 'checked';
+      _.forEach(region.subregions, subregion => {
+        accum[subregion.name] = 'checked';
+      })
+      return accum;
+    }, {});
   }
 
   private convertQuantityParamToQuizQuantity(quantityParam: string): QuizQuantity {

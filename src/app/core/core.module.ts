@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { LayoutModule } from '@angular/cdk/layout';
 import { SharedModule } from '../shared/shared.module';
 
 import { AppRoutingModule } from '../app-routing.module';
-import { LoaderInterceptor } from './interceptors/loader.interceptor';
 import { NavigationComponent } from './navigation/navigation.component';
 import { NavigationLinkComponent } from './navigation/navigation-link/navigation-link.component';
 
@@ -22,13 +21,6 @@ import { NavigationLinkComponent } from './navigation/navigation-link/navigation
     HttpClientModule,
     LayoutModule,
     NavigationComponent
-  ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: LoaderInterceptor,
-      multi: true
-    }
   ],
   declarations: [
     NavigationComponent,

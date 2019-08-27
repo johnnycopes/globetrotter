@@ -27,11 +27,14 @@ export class QuizService {
   }
 
   initializeQuiz(selection: Selection): void {
-    const countries = this.countryService.getCountriesFromSelection(selection);
-    const type = selection.type;
-    this.store.set(['countries'], countries);
-    this.store.set(['totalCountries'], countries.length);
-    this.store.set(['type'], type);
+    this.countryService.getCountriesFromSelection(selection).subscribe(
+      countries => {
+        const type = selection.type;
+        this.store.set(['countries'], countries);
+        this.store.set(['totalCountries'], countries.length);
+        this.store.set(['type'], type);
+      }
+    );
   }
 
   updateQuiz(correctGuess: boolean): void {
