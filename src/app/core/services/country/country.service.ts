@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap, first } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 import { COUNTRY_STATUSES } from 'src/app/shared/model/country-statuses.data';
@@ -23,7 +24,8 @@ interface CountryStoreState {
 @Injectable({
   providedIn: 'root'
 })
-export class CountryService {
+export class CountryService implements Resolve<void> {
+  private request: Observable<Country[]>;
   private readonly store: Store;
   private readonly countriesApiUrl = 'https://restcountries.eu/rest/v2/all';
 
@@ -34,11 +36,29 @@ export class CountryService {
       subregionsByRegion: {},
       formattedData: []
     });
-    this.setCountryData();
+    this.initialize();
+  }
+
+  initialize(): void {
+    this.request = this.http.get<Country[]>(this.countriesApiUrl);
+    this.request.subscribe(allCountries => {
+      const countries = _.filter(allCountries, country => COUNTRY_STATUSES[country.name]);
+      const countriesBySubregion = _.groupBy(countries, 'subregion');
+      const subregionsByRegion = this.groupSubregionsByRegion(countriesBySubregion);
+      const formattedData = this.createFormattedData(countriesBySubregion, subregionsByRegion);
+      this.store.set(['countries'], countries);
+      this.store.set(['countriesBySubregion'], countriesBySubregion);
+      this.store.set(['subregionsByRegion'], subregionsByRegion);
+      this.store.set(['formattedData'], formattedData);
+    });
+  }
+
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
+    return this.request;
   }
 
   getData(): Observable<Region[]> {
-    return this.store.get(['formattedData']);
+    return this.store.get(['formattedData']).pipe(tap(data => console.log("data?", data)));
   }
 
   getCountriesFromSelection(selection: Selection): Observable<Country[]> {
@@ -60,18 +80,18 @@ export class CountryService {
     );
   }
 
-  private setCountryData(): void {
-    this.http.get<Country[]>(this.countriesApiUrl).subscribe(allCountries => {
-      const countries = _.filter(allCountries, country => COUNTRY_STATUSES[country.name]);
-      const countriesBySubregion = _.groupBy(countries, 'subregion');
-      const subregionsByRegion = this.groupSubregionsByRegion(countriesBySubregion);
-      const formattedData = this.createFormattedData(countriesBySubregion, subregionsByRegion);
-      this.store.set(['countries'], countries);
-      this.store.set(['countriesBySubregion'], countriesBySubregion);
-      this.store.set(['subregionsByRegion'], subregionsByRegion);
-      this.store.set(['formattedData'], formattedData);
-    });
-  }
+  // private setCountryData(): void {
+  //   this.http.get<Country[]>(this.countriesApiUrl).subscribe(allCountries => {
+  //     const countries = _.filter(allCountries, country => COUNTRY_STATUSES[country.name]);
+  //     const countriesBySubregion = _.groupBy(countries, 'subregion');
+  //     const subregionsByRegion = this.groupSubregionsByRegion(countriesBySubregion);
+  //     const formattedData = this.createFormattedData(countriesBySubregion, subregionsByRegion);
+  //     this.store.set(['countries'], countries);
+  //     this.store.set(['countriesBySubregion'], countriesBySubregion);
+  //     this.store.set(['subregionsByRegion'], subregionsByRegion);
+  //     this.store.set(['formattedData'], formattedData);
+  //   });
+  // }
 
   private groupSubregionsByRegion(countriesBySubregion: _.Dictionary<Country[]>): _.Dictionary<string[]> {
     return _.reduce(countriesBySubregion, (accum, countries, subregion) => {
