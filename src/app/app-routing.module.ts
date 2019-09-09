@@ -1,5 +1,5 @@
-import { NgModule, Injectable } from '@angular/core';
-import { RouterModule, Routes, Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
 import { HomeComponent } from './features/home/home.component';
 import { PlaceholderComponent } from './shared/components/placeholder/placeholder.component';

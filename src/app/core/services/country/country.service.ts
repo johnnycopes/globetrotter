@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { Resolve } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map, tap, first } from 'rxjs/operators';
+import { map, delay } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 import { COUNTRY_STATUSES } from 'src/app/shared/model/country-statuses.data';
@@ -10,6 +10,7 @@ import { Country } from 'src/app/shared/model/country.interface';
 import { Region } from 'src/app/shared/model/region.interface';
 import { Selection } from 'src/app/shared/model/selection.class';
 import { Store } from 'src/app/shared/model/store.class';
+import { LoaderService } from '../loader/loader.service';
 
 type CountriesBySubregion = _.Dictionary<Country[]>;
 type SubregionsByRegion = _.Dictionary<string[]>;
@@ -24,12 +25,15 @@ interface CountryStoreState {
 @Injectable({
   providedIn: 'root'
 })
-export class CountryService implements Resolve<void> {
+export class CountryService implements Resolve<Observable<Country[]>> {
   private request: Observable<Country[]>;
   private readonly store: Store;
   private readonly countriesApiUrl = 'https://restcountries.eu/rest/v2/all';
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private loaderService: LoaderService
+  ) {
     this.store = new Store({
       countries: [],
       countriesBySubregion: {},
@@ -39,8 +43,15 @@ export class CountryService implements Resolve<void> {
     this.initialize();
   }
 
+  resolve(): Observable<Country[]> {
+    this.loaderService.show();
+    return this.request;
+  }
+
   initialize(): void {
-    this.request = this.http.get<Country[]>(this.countriesApiUrl);
+    this.request = this.http.get<Country[]>(this.countriesApiUrl).pipe(
+      delay(1000) // prevent the loader from flashing on the screen too quickly
+    );
     this.request.subscribe(allCountries => {
       const countries = _.filter(allCountries, country => COUNTRY_STATUSES[country.name]);
       const countriesBySubregion = _.groupBy(countries, 'subregion');
@@ -50,15 +61,12 @@ export class CountryService implements Resolve<void> {
       this.store.set(['countriesBySubregion'], countriesBySubregion);
       this.store.set(['subregionsByRegion'], subregionsByRegion);
       this.store.set(['formattedData'], formattedData);
+      this.loaderService.hide();
     });
   }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
-    return this.request;
-  }
-
   getData(): Observable<Region[]> {
-    return this.store.get(['formattedData']).pipe(tap(data => console.log("data?", data)));
+    return this.store.get(['formattedData']);
   }
 
   getCountriesFromSelection(selection: Selection): Observable<Country[]> {
