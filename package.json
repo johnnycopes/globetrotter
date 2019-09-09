@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ng serve -o",
     "build": "ng build",
-    "deploy:win": "ng build --prod && cd dist/globetrotter && move index.html 200.html && surge . --domain https://globetrotter.surge.sh",
+    "deploy-staging:win": "ng build --prod && cd dist/globetrotter && move index.html 200.html && surge . --domain https://globetrotter-staging.surge.sh",
     "karma": "ng test",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -14,7 +14,7 @@
     "storybook": "start-storybook -s ./assets -p 6006",
     "build-storybook": "build-storybook",
     "deploy-storybook:win": "npm run build-storybook && cd storybook-static && surge . --domain https://globetrotter-components.surge.sh",
-    "deploy-all:win": "npm run deploy:win && npm run deploy-storybook:win"
+    "deploy-all:win": "npm run deploy-staging:win && npm run deploy-storybook:win"
   },
   "jest": {
     "preset": "jest-preset-angular",

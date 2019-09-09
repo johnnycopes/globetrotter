@@ -2,7 +2,7 @@
 
 #### Live links:
 
-- **Application**: https://globetrotter.surge.sh
+- **Application**: https://globetrotter.rocks
 - **Component library**: https://globetrotter-components.surge.sh
 
 This is a geography app! Currently, only the Learn section is complete: you can test yourself on the national flags, capitals, or country names from any part(s) of the world that you choose and receive a score based on your answers. The application is built with [Angular](https://angular.io/) and the component library is built with [Storybook](https://storybook.js.org/).
