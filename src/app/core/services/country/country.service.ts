@@ -10,7 +10,6 @@ import { Country } from 'src/app/shared/model/country.interface';
 import { Region } from 'src/app/shared/model/region.interface';
 import { Selection } from 'src/app/shared/model/selection.class';
 import { Store } from 'src/app/shared/model/store.class';
-import { LoaderService } from '../loader/loader.service';
 
 type CountriesBySubregion = _.Dictionary<Country[]>;
 type SubregionsByRegion = _.Dictionary<string[]>;
@@ -31,8 +30,7 @@ export class CountryService implements Resolve<Observable<Country[]>> {
   private readonly countriesApiUrl = 'https://restcountries.eu/rest/v2/all';
 
   constructor(
-    private http: HttpClient,
-    private loaderService: LoaderService
+    private http: HttpClient
   ) {
     this.store = new Store({
       countries: [],
@@ -44,25 +42,7 @@ export class CountryService implements Resolve<Observable<Country[]>> {
   }
 
   resolve(): Observable<Country[]> {
-    this.loaderService.show();
     return this.request;
-  }
-
-  initialize(): void {
-    this.request = this.http.get<Country[]>(this.countriesApiUrl).pipe(
-      delay(1000) // prevent the loader from flashing on the screen too quickly
-    );
-    this.request.subscribe(allCountries => {
-      const countries = _.filter(allCountries, country => COUNTRY_STATUSES[country.name]);
-      const countriesBySubregion = _.groupBy(countries, 'subregion');
-      const subregionsByRegion = this.groupSubregionsByRegion(countriesBySubregion);
-      const formattedData = this.createFormattedData(countriesBySubregion, subregionsByRegion);
-      this.store.set(['countries'], countries);
-      this.store.set(['countriesBySubregion'], countriesBySubregion);
-      this.store.set(['subregionsByRegion'], subregionsByRegion);
-      this.store.set(['formattedData'], formattedData);
-      this.loaderService.hide();
-    });
   }
 
   getData(): Observable<Region[]> {
@@ -88,18 +68,21 @@ export class CountryService implements Resolve<Observable<Country[]>> {
     );
   }
 
-  // private setCountryData(): void {
-  //   this.http.get<Country[]>(this.countriesApiUrl).subscribe(allCountries => {
-  //     const countries = _.filter(allCountries, country => COUNTRY_STATUSES[country.name]);
-  //     const countriesBySubregion = _.groupBy(countries, 'subregion');
-  //     const subregionsByRegion = this.groupSubregionsByRegion(countriesBySubregion);
-  //     const formattedData = this.createFormattedData(countriesBySubregion, subregionsByRegion);
-  //     this.store.set(['countries'], countries);
-  //     this.store.set(['countriesBySubregion'], countriesBySubregion);
-  //     this.store.set(['subregionsByRegion'], subregionsByRegion);
-  //     this.store.set(['formattedData'], formattedData);
-  //   });
-  // }
+  private initialize(): void {
+    this.request = this.http.get<Country[]>(this.countriesApiUrl).pipe(
+      delay(1000) // prevent the loader from flashing on the screen too quickly
+    );
+    this.request.subscribe(allCountries => {
+      const countries = _.filter(allCountries, country => COUNTRY_STATUSES[country.name]);
+      const countriesBySubregion = _.groupBy(countries, 'subregion');
+      const subregionsByRegion = this.groupSubregionsByRegion(countriesBySubregion);
+      const formattedData = this.createFormattedData(countriesBySubregion, subregionsByRegion);
+      this.store.set(['countries'], countries);
+      this.store.set(['countriesBySubregion'], countriesBySubregion);
+      this.store.set(['subregionsByRegion'], subregionsByRegion);
+      this.store.set(['formattedData'], formattedData);
+    });
+  }
 
   private groupSubregionsByRegion(countriesBySubregion: _.Dictionary<Country[]>): _.Dictionary<string[]> {
     return _.reduce(countriesBySubregion, (accum, countries, subregion) => {

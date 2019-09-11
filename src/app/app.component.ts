@@ -4,7 +4,8 @@ import { map, distinctUntilChanged } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 import { QuizService } from 'src/app/core/services/quiz/quiz.service';
-import { LoaderService } from './core/services/loader/loader.service';
+import { CountryService } from './core/services/country/country.service';
+import { Country } from './shared/model/country.interface';
 
 @Component({
   selector: 'app-root',
@@ -12,15 +13,16 @@ import { LoaderService } from './core/services/loader/loader.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  appLoading$ = this.loaderService.getLoader();
+  appLoadComplete$: Observable<Country[]>;
   quizCompleted$: Observable<boolean>;
 
   constructor(
-    private loaderService: LoaderService,
+    private countryService: CountryService,
     private quizService: QuizService
   ) { }
 
   ngOnInit(): void {
+    this.appLoadComplete$ = this.countryService.resolve();
     this.quizCompleted$ = this.quizService.getQuiz().pipe(
       map(quiz => quiz.isComplete),
       distinctUntilChanged()
