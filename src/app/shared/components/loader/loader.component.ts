@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-loader',
@@ -6,10 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./loader.component.scss']
 })
 export class LoaderComponent implements OnInit {
+  @Input() isComplete$: Observable<any>;
+  loading: boolean = true;
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit(): void {
+    this.isComplete$.subscribe(
+      { complete: () => this.loading = false }
+    );
   }
 
 }

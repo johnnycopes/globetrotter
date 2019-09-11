@@ -1,11 +1,13 @@
 @import 'styles';
 
-:host {
+.container {
   display: flex;
   justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
-.loading{
+.loader{
   width: map-get($spacing, 128);
   height: map-get($spacing, 128);
   border-radius: 50%;
