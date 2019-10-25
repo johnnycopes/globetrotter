@@ -1,0 +1,13 @@
+<button class="button"
+  [ngClass]="{
+    'button--primary': buttonStyle === 'primary',
+    'button--secondary': buttonStyle === 'secondary'
+  }"
+  [type]="buttonType"
+  [disabled]="disabled"
+  (click)="onClick()"
+  >
+  <div class="button__text">
+    {{buttonText}}
+  </div>
+</button>

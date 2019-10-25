@@ -1,0 +1,45 @@
+<app-fixed-slideable-panel *ngIf="(quiz$ | async) as quiz"
+  [position]="menuPosition"
+  >
+  <div class="outcome"
+    app-fixed-slideable-panel-content
+    *ngIf="quiz.isComplete"
+    >
+    <p class="text">
+      Quiz complete! You scored
+    </p>
+    <h1 class="accuracy">
+      {{quiz.accuracy}}%
+    </h1>
+    <app-button class="reset"
+      buttonStyle="primary"
+      buttonText="Reset"
+      (click)="onBack()"
+      >
+    </app-button>
+  </div>
+  <div class="progress"
+    app-fixed-slideable-panel-header
+    *ngIf="!quiz.isComplete"
+    >
+    <div class="back">
+      <app-icon class="back__icon"
+        icon="Cancel"
+        [highlighted]="true"
+        (clicked)="onBack()"
+        >
+      </app-icon>
+    </div>
+    <p class="prompt">
+      {{prompt$ | async}}
+    </p>
+    <div class="details">
+      <h4 class="details__tally">
+        {{quiz.countriesGuessed}} / {{quiz.totalCountries}}
+      </h4>
+      <h4 class="details__guess">
+        Guess #{{quiz.guess}}
+      </h4>
+    </div>
+  </div>
+</app-fixed-slideable-panel>

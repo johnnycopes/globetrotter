@@ -1,0 +1,34 @@
+<app-flip-card
+  [canFlip]="canFlip"
+  [guess]="guess"
+  [disabled]="disabled"
+  (flipped)="onFlip()"
+  >
+  <div app-flip-card-front>
+    <ng-container *ngTemplateOutlet="templates.front"></ng-container>
+  </div>
+  <div app-flip-card-back>
+    <ng-container *ngTemplateOutlet="templates.back"></ng-container>
+  </div>
+</app-flip-card>
+
+
+
+<ng-template #flagTemplate>
+  <img class="quiz-card__flag"
+    [src]="country.flag"
+    alt="Flag of {{country.name}}"
+  />
+</ng-template>
+
+<ng-template #countryTemplate>
+  <h3 class="quiz-card__name">
+    {{country.name}}
+  </h3>
+</ng-template>
+
+<ng-template #capitalTemplate>
+  <h3 class="quiz-card__name">
+    {{country.capital}}
+  </h3>
+</ng-template>
