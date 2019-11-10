@@ -13,3 +13,11 @@
   border-right: map-get($border, thin) solid map-get($color, dark);
   z-index: map-get($z-index, navigation);
 }
+
+.link {
+  margin-bottom: map-get($spacing, 32);
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
