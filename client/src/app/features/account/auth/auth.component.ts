@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 
@@ -7,7 +7,7 @@ import { AuthService } from 'src/app/core/services/auth/auth.service';
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.scss']
 })
-export class AuthComponent implements OnInit {
+export class AuthComponent {
   loginModel: any = {};
   registerModel: any = {};
 
@@ -15,23 +15,11 @@ export class AuthComponent implements OnInit {
     private authService: AuthService
   ) { }
 
-  ngOnInit() {
-
-  }
-
   login(): void {
-    this.authService.login(this.loginModel).subscribe(
-      () => console.log('logged in successfully'),
-      error => console.log('error', error)
-    );
-  }
-
-  logout(): void {
-    localStorage.removeItem('token');
-    console.log('logged out');
+    this.authService.login(this.loginModel);
   }
 
   register(): void {
-    console.log(this.registerModel);
+    this.authService.register(this.registerModel);
   }
 }

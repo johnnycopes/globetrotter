@@ -1,5 +1,7 @@
 @import 'styles';
 
+$tab-border: map-get($border, thin) solid map-get($color, dark);
+
 .tabs {
   display: flex;
   justify-content: center;
@@ -10,7 +12,6 @@
 }
 
 .tab {
-  $tab-border: map-get($border, thin) solid map-get($color, dark);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -19,9 +20,16 @@
   border: $tab-border;
   border-right: 0;
 
-  &:last-child {
+  &:first-of-type {
+    border-top-left-radius: map-get($border, radius);
+    border-bottom-left-radius: map-get($border, radius);
+  }
+
+  &:last-of-type {
     border-right: $tab-border;
     border-left: 0;
+    border-top-right-radius: map-get($border, radius);
+    border-bottom-right-radius: map-get($border, radius);
   }
 
   &--selected {

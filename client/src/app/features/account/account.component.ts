@@ -18,4 +18,8 @@ export class AccountComponent implements OnInit {
     return this.authService.checkIfLoggedIn();
   }
 
+  logout(): void {
+    localStorage.removeItem('token');
+    console.log('logged out');
+  }
 }

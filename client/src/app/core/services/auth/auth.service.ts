@@ -11,8 +11,8 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  login(model: any) {
-    return this.http.post(this.baseUrl + 'login', model).pipe(
+  login(model: any): void {
+    this.http.post(this.baseUrl + 'login', model).pipe(
       map((response: any) => {
         const user = response;
         if (user) {
@@ -20,6 +20,16 @@ export class AuthService {
           localStorage.setItem('token', user.token);
         }
       })
+    ).subscribe(
+      () => console.log('logged in successfully'),
+      error => console.log('error signing in:', error)
+    );
+  }
+
+  register(model: any): void {
+    this.http.post(this.baseUrl + 'register', model).subscribe(
+      () => console.log('registered successfully'),
+      error => console.log('error registering:', error)
     );
   }
 
