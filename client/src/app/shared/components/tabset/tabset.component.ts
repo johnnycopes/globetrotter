@@ -36,7 +36,7 @@ export type TabsetContentVisibility = 'visible' | 'invisible';
 })
 export class TabsetComponent implements AfterContentInit {
   @Input() controlsTemplate: TemplateRef<any>;
-  @Input() contentVisibility: TabsetContentVisibility = 'invisible';
+  @Input() contentVisibility: TabsetContentVisibility = 'visible';
   @ContentChildren(TabComponent) tabs: QueryList<TabComponent>;
 
   constructor() { }

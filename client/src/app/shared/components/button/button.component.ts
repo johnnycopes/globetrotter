@@ -10,7 +10,7 @@ export type ButtonStyle = 'primary' | 'secondary';
 export class ButtonComponent {
   @Input() buttonText: string;
   @Input() buttonType: string = 'button';
-  @Input() buttonStyle: ButtonStyle;
+  @Input() buttonStyle: ButtonStyle = 'primary';
   @Input() disabled: boolean;
   @Output() clicked = new EventEmitter<void>();
 

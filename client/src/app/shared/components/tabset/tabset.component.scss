@@ -3,23 +3,30 @@
 .tabs {
   display: flex;
   justify-content: center;
-  flex: 1;
+  margin: 0 auto;
   width: 100%;
   max-width: map-get($spacing, 512);
-  height: 100%;
   cursor: pointer;
 }
 
 .tab {
+  $tab-border: map-get($border, thin) solid map-get($color, dark);
   display: flex;
   justify-content: center;
   align-items: center;
   flex: 1;
-  height: 100%;
-  padding: 0 map-get($spacing, 24);
+  padding: map-get($spacing, 24);
+  border: $tab-border;
+  border-right: 0;
+
+  &:last-child {
+    border-right: $tab-border;
+    border-left: 0;
+  }
 
   &--selected {
     font-weight: map-get($font-weight, bold);
+    background: map-get($color, dark);
   }
 }
 

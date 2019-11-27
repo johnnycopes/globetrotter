@@ -1,0 +1,12 @@
+@import 'styles';
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+input {
+  padding: 20px;
+  margin-bottom: 20px;
+}

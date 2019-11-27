@@ -1,1 +1,56 @@
-<p>auth works!</p>
+<app-tabset class="tabset">
+  <div class="tabset__content"
+    app-tabset-content
+    >
+    <app-tab name="Sign In">
+      <form class="form"
+        #loginForm="ngForm"
+        (ngSubmit)="login()"
+        >
+        <input type="text"
+          required
+          placeholder="Username"
+          name="username"
+          [(ngModel)]="loginModel.username"
+        >
+        <input type="password"
+          required
+          placeholder="Password"
+          name="password"
+          [(ngModel)]="loginModel.password"
+        >
+        <app-button
+          buttonText="Sign In"
+          buttonType="submit"
+          [disabled]="!loginForm.valid"
+          >
+        </app-button>
+      </form>
+    </app-tab>
+    <app-tab name="Register">
+      <form class="form"
+        #registerForm="ngForm"
+        (ngSubmit)="register()"
+        >
+        <input type="text"
+          required
+          placeholder="Username"
+          name="username"
+          [(ngModel)]="registerModel.username"
+        >
+        <input type="password"
+          required
+          placeholder="Password"
+          name="password"
+          [(ngModel)]="registerModel.password"
+        >
+        <app-button
+          buttonText="Register"
+          buttonType="submit"
+          [disabled]="!registerForm.valid"
+          >
+        </app-button>
+      </form>
+    </app-tab>
+  </div>
+</app-tabset>

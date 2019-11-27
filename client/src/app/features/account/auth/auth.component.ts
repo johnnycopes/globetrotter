@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Country } from 'src/app/shared/model/country.interface';
+
+import { AuthService } from 'src/app/core/services/auth/auth.service';
 
 @Component({
   selector: 'app-auth',
@@ -8,16 +8,30 @@ import { Country } from 'src/app/shared/model/country.interface';
   styleUrls: ['./auth.component.scss']
 })
 export class AuthComponent implements OnInit {
-  private apiUrl = 'https://localhost:5001/weatherforecast';
+  loginModel: any = {};
+  registerModel: any = {};
 
   constructor(
-    private http: HttpClient
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
-    this.http.get<Country[]>(this.apiUrl).subscribe(
-      request => console.log(request)
+
+  }
+
+  login(): void {
+    this.authService.login(this.loginModel).subscribe(
+      () => console.log('logged in successfully'),
+      error => console.log('error', error)
     );
   }
 
+  logout(): void {
+    localStorage.removeItem('token');
+    console.log('logged out');
+  }
+
+  register(): void {
+    console.log(this.registerModel);
+  }
 }
