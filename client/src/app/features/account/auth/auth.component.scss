@@ -1,19 +1,7 @@
 @import 'styles';
 
-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.content {
+  margin: 0 auto;
+  max-width: map-get($spacing, 512);
 }
 
-.input {
-  margin-bottom: map-get($spacing, 32);
-
-  &:last-of-type {
-    margin-bottom: 0;
-  }
-}
-
-.button {
-  margin-top: map-get($spacing, 48);
-}

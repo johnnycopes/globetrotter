@@ -1,0 +1,31 @@
+<form class="form"
+  #form="ngForm"
+  (ngSubmit)="login()"
+  >
+  <app-input class="input"
+    label="username"
+    >
+    <input type="text"
+      required
+      id="username"
+      name="username"
+      [(ngModel)]="model.username"
+    >
+  </app-input>
+  <app-input class="input"
+    label="password"
+    >
+    <input type="password"
+      required
+      id="password"
+      name="password"
+      [(ngModel)]="model.password"
+    >
+  </app-input>
+  <app-button class="button"
+    buttonText="Sign In"
+    buttonType="submit"
+    [disabled]="!form.valid"
+    >
+  </app-button>
+</form>

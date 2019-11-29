@@ -1,0 +1,23 @@
+<form class="form"
+  #form="ngForm"
+  (ngSubmit)="register()"
+  >
+  <input type="text"
+    required
+    placeholder="Username"
+    name="username"
+    [(ngModel)]="model.username"
+  >
+  <input type="password"
+    required
+    placeholder="Password"
+    name="password"
+    [(ngModel)]="model.password"
+  >
+  <app-button
+    buttonText="Register"
+    buttonType="submit"
+    [disabled]="!form.valid"
+    >
+  </app-button>
+</form>

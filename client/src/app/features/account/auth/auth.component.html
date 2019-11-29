@@ -1,62 +1,14 @@
-<app-tabset class="tabset">
-  <div class="tabset__content"
+<app-tabset>
+  <div class="content"
     app-tabset-content
     >
     <app-tab name="Sign In">
-      <form class="form"
-        #loginForm="ngForm"
-        (ngSubmit)="login()"
-        >
-        <app-input class="input"
-          label="username"
-          >
-          <input type="text"
-            required
-            id="username"
-            name="username"
-            [(ngModel)]="loginModel.username"
-          >
-        </app-input>
-        <app-input class="input"
-          label="password"
-          >
-          <input type="password"
-            required
-            id="password"
-            name="password"
-            [(ngModel)]="loginModel.password"
-          >
-        </app-input>
-        <app-button class="button"
-          buttonText="Sign In"
-          buttonType="submit"
-          >
-        </app-button>
-      </form>
+      <app-login class="form">
+      </app-login>
     </app-tab>
     <app-tab name="Register">
-      <form class="form"
-        #registerForm="ngForm"
-        (ngSubmit)="register()"
-        >
-        <input type="text"
-          required
-          placeholder="Username"
-          name="username"
-          [(ngModel)]="registerModel.username"
-        >
-        <input type="password"
-          required
-          placeholder="Password"
-          name="password"
-          [(ngModel)]="registerModel.password"
-        >
-        <app-button
-          buttonText="Register"
-          buttonType="submit"
-          >
-        </app-button>
-      </form>
+      <app-register class="form">
+      </app-register>
     </app-tab>
   </div>
 </app-tabset>
