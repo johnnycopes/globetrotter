@@ -1,23 +1,7 @@
-<!-- <form class="form"
-  #form="ngForm"
-  (ngSubmit)="register()"
+<app-form
+  buttonText="Register"
+  [inputs]="inputs"
+  (submitted)="register($event)"
   >
-  <input type="text"
-    required
-    placeholder="Username"
-    name="username"
-    [(ngModel)]="model.username"
-  >
-  <input type="password"
-    required
-    placeholder="Password"
-    name="password"
-    [(ngModel)]="model.password"
-  >
-  <app-button
-    buttonText="Register"
-    buttonType="submit"
-    [disabled]="!form.valid"
-    >
-  </app-button>
-</form> -->
+</app-form>
+

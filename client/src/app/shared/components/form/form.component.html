@@ -1,0 +1,21 @@
+
+<form [formGroup]="form"
+  (ngSubmit)="onSubmit()"
+  >
+  <app-input class="input"
+    *ngFor="let input of inputs"
+    [label]="input.label"
+    >
+    <input
+      [id]="input.label"
+      [type]="input.type"
+      [formControlName]="input.name"
+    >
+  </app-input>
+  <app-button class="button"
+    buttonType="submit"
+    [buttonText]="buttonText"
+    [disabled]="!form.valid"
+    >
+  </app-button>
+</form>

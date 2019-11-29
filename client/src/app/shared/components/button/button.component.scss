@@ -1,5 +1,9 @@
 @import 'styles';
 
+:host {
+  display: inline-block;
+}
+
 .button {
   padding: map-get($spacing, 8) 0;
   width: map-get($spacing, 128);

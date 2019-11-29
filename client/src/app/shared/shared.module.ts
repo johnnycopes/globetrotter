@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ButtonComponent } from './components/button/button.component';
 import { CheckboxComponent } from './components/checkbox/checkbox.component';
@@ -16,11 +16,13 @@ import { PlaceholderComponent } from './components/placeholder/placeholder.compo
 import { RadioButtonsComponent } from './components/radio-buttons/radio-buttons.component';
 import { TabsetComponent } from './components/tabset/tabset.component';
 import { TabComponent } from './components/tabset/tab/tab.component';
+import { FormComponent } from './components/form/form.component';
 
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   declarations: [
     ButtonComponent,
@@ -28,6 +30,7 @@ import { TabComponent } from './components/tabset/tab/tab.component';
     CounterComponent,
     FixedSlideablePanelComponent,
     FlipCardComponent,
+    FormComponent,
     IconComponent,
     InputComponent,
     LoaderComponent,
@@ -44,6 +47,7 @@ import { TabComponent } from './components/tabset/tab/tab.component';
     CounterComponent,
     FixedSlideablePanelComponent,
     FlipCardComponent,
+    FormComponent,
     IconComponent,
     InputComponent,
     LoaderComponent,
