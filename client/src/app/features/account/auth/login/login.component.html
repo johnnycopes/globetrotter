@@ -1,4 +1,31 @@
-<form class="form"
+<form [formGroup]="form"
+  (ngSubmit)="login()"
+  >
+  <app-input class="input"
+    label="username"
+    >
+    <input type="text"
+      id="username"
+      formControlName="username"
+    >
+  </app-input>
+  <app-input class="input"
+    label="password"
+    >
+    <input type="password"
+      id="password"
+      formControlName="password"
+    >
+  </app-input>
+  <app-button class="button"
+    buttonText="Sign In"
+    buttonType="submit"
+    [disabled]="!form.valid"
+    >
+  </app-button>
+</form>
+
+<!-- <form class="form"
   #form="ngForm"
   (ngSubmit)="login()"
   >
@@ -28,4 +55,4 @@
     [disabled]="!form.valid"
     >
   </app-button>
-</form>
+</form> -->
