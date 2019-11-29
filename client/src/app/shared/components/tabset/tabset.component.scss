@@ -6,9 +6,9 @@ $tab-border: map-get($border, thin) solid map-get($color, dark);
   display: flex;
   justify-content: center;
   margin: 0 auto;
+  margin-bottom: map-get($spacing, 48);
   width: 100%;
   max-width: map-get($spacing, 512);
-  margin-bottom: map-get($spacing, 48);
   cursor: pointer;
 }
 
