@@ -1,4 +1,4 @@
-<div *ngIf="checkIfLoggedIn(); else auth">
+<div *ngIf="loggedIn$ | async; else auth">
   <p>Logged in!</p>
   <app-button
     buttonText="Sign Out"
