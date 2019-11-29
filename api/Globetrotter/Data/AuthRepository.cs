@@ -26,10 +26,14 @@ namespace Globetrotter.Data
             var user = await _context.Users.FirstOrDefaultAsync(x => x.Username == username);
 
             if (user == null)
+            {
                 return null;
+            }
 
             if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
+            {
                 return null;
+            }
 
             return user;
         }
@@ -42,7 +46,9 @@ namespace Globetrotter.Data
             for (int i = 0; i < computedHash.Length; i++)
             {
                 if (computedHash[i] != passwordHash[i])
+                {
                     return false;
+                }
             }
             return true;
         }

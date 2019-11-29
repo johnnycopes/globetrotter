@@ -8,6 +8,7 @@ $tab-border: map-get($border, thin) solid map-get($color, dark);
   margin: 0 auto;
   width: 100%;
   max-width: map-get($spacing, 512);
+  margin-bottom: map-get($spacing, 48);
   cursor: pointer;
 }
 
@@ -16,7 +17,7 @@ $tab-border: map-get($border, thin) solid map-get($color, dark);
   justify-content: center;
   align-items: center;
   flex: 1;
-  padding: map-get($spacing, 24);
+  padding: map-get($spacing, 16);
   border: $tab-border;
   border-right: 0;
 
@@ -36,8 +37,4 @@ $tab-border: map-get($border, thin) solid map-get($color, dark);
     font-weight: map-get($font-weight, bold);
     background: map-get($color, dark);
   }
-}
-
-.content {
-  margin: map-get($spacing, 48) 0;
 }

@@ -7,22 +7,29 @@
         #loginForm="ngForm"
         (ngSubmit)="login()"
         >
-        <input type="text"
-          required
-          placeholder="Username"
-          name="username"
-          [(ngModel)]="loginModel.username"
-        >
-        <input type="password"
-          required
-          placeholder="Password"
-          name="password"
-          [(ngModel)]="loginModel.password"
-        >
-        <app-button
+        <app-input class="input"
+          label="username"
+          >
+          <input type="text"
+            required
+            id="username"
+            name="username"
+            [(ngModel)]="loginModel.username"
+          >
+        </app-input>
+        <app-input class="input"
+          label="password"
+          >
+          <input type="password"
+            required
+            id="password"
+            name="password"
+            [(ngModel)]="loginModel.password"
+          >
+        </app-input>
+        <app-button class="button"
           buttonText="Sign In"
           buttonType="submit"
-          [disabled]="!loginForm.valid"
           >
         </app-button>
       </form>
@@ -47,7 +54,6 @@
         <app-button
           buttonText="Register"
           buttonType="submit"
-          [disabled]="!registerForm.valid"
           >
         </app-button>
       </form>

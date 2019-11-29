@@ -49,7 +49,9 @@ namespace Globetrotter.Controllers
             var userFromRepo = await _repo.Login(userForLoginDto.Username.ToLower(), userForLoginDto.Password);
 
             if (userFromRepo == null)
+            {
                 return Unauthorized();
+            }
 
             // Our token contains two claims: the user's ID and the user's username.
             var claims = new[]

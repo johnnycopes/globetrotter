@@ -45,17 +45,6 @@
     cursor: not-allowed;
   }
 
-  &__text {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 33.7px; // prevent collapse if no text
-
-    @include tablet {
-      min-height: 40px;
-    }
-  }
-
   @include tablet {
     width: map-get($spacing, 192);
     font-size: map-get($font-size, 24);
