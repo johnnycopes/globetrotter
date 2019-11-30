@@ -2,33 +2,27 @@
 <form [formGroup]="form"
   (ngSubmit)="onSubmit()"
   >
-  <ng-container *ngFor="let item of inputs">
+  <ul class="guidelines"
+    *ngIf="guidelines"
+    >
+    <li class="guideline"
+      *ngFor="let guideline of guidelines"
+      >
+      {{guideline}}
+    </li>
+  </ul>
+  <ng-container *ngFor="let input of inputs">
     <app-input class="input"
-      *ngIf="item.name"
-      [label]="item.label"
-      [control]="form.get(item.name)"
+      [label]="input.label"
+      [control]="form.get(input.name)"
+      [errorMessage]="input.errorMessage"
       >
       <input
-        [id]="item.label"
-        [type]="item.type"
-        [formControlName]="item.name"
+        [id]="input.label"
+        [type]="input.type"
+        [formControlName]="input.name"
       >
     </app-input>
-    <ng-container *ngIf="item.groupName"
-      [formGroupName]="item.groupName"
-      >
-      <app-input class="input"
-        *ngFor="let input of item.inputs"
-        [label]="input.label"
-        [control]="form.get(item.groupName + '.' + input.name)"
-        >
-        <input
-          [id]="input.label"
-          [type]="input.type"
-          [formControlName]="input.name"
-        >
-      </app-input>
-    </ng-container>
   </ng-container>
   <app-button class="button"
     buttonType="submit"
@@ -37,16 +31,3 @@
     >
   </app-button>
 </form>
-<!--
-<ng-template #formInput>
-  <app-input class="input"
-    [label]="item.label"
-    [control]="form.get(item.name)"
-    >
-    <input
-      [id]="item.label"
-      [type]="item.type"
-      [formControlName]="item.name"
-    >
-  </app-input>
-</ng-template> -->

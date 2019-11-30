@@ -13,6 +13,7 @@ import { FormInputGroup } from '../../model/form-input-group.interface';
 export class FormComponent implements OnInit {
   @Input() buttonText: string;
   @Input() inputs: (FormInput | FormInputGroup)[];
+  @Input() guidelines: string[];
   @Output() submitted = new EventEmitter<FormGroup>();
   form: FormGroup;
 
@@ -21,7 +22,7 @@ export class FormComponent implements OnInit {
   ngOnInit() {
     const formControls = _.reduce(this.inputs, (accum, current) => {
       if (this.isFormInput(current)) {
-        accum[current.name] = ['', current.validators];
+        accum[current.name] = ['', current.validators || []];
       } else if (this.isFormInputGroup(current)) {
         const group = _.reduce(current.inputs, (accum, current) => {
           accum[current.name] = ['', current.validators];

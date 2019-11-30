@@ -2,8 +2,8 @@
   {{label}}
 </label>
 <ng-content></ng-content>
-<p class="error"
-  *ngIf="!control.valid && control.touched"
+<app-alert class="error"
+  *ngIf="errorMessage && !control.valid && control.touched"
   >
-  This field is not filled out correctly
-</p>
+  {{errorMessage}}
+</app-alert>
