@@ -11,6 +11,7 @@ import { FormInput } from 'src/app/shared/model/form-input.interface';
 })
 export class LoginComponent implements OnInit {
   inputs: FormInput[];
+  guidelines: string[];
 
   constructor(private authService: AuthService) { }
 
@@ -19,18 +20,31 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.guidelines = [
+      'Username must be between 8 and 20 characters',
+      'Password must be between 8 and 20 characters'
+    ];
     this.inputs = [
       {
         name: 'username',
         type: 'text',
         label: 'Username',
-        validators: [Validators.required]
+        validators: [Validators.required],
+        errorMessage: 'Username is required'
       },
       {
         name: 'password',
         type: 'password',
         label: 'Password',
-        validators: [Validators.required]
+        validators: [Validators.required],
+        errorMessage: 'Password is required'
+      },
+      {
+        name: 'test',
+        type: 'number',
+        label: 'Test!',
+        validators: [Validators.required, Validators.min(2)],
+        errorMessage: 'Number must be >= 2'
       }
     ];
   }

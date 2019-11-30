@@ -1,7 +1,45 @@
-<app-form
-  buttonText="Register"
-  [inputs]="inputs"
-  (submitted)="register($event)"
-  >
-</app-form>
 
+<form [formGroup]="form"
+  (ngSubmit)="onSubmit()"
+  >
+  <app-input class="input"
+    label="Username"
+    [control]="form.get('username')"
+    errorMessage="Username is required"
+    >
+    <input
+      id="Username"
+      type="text"
+      formControlName="username"
+    >
+  </app-input>
+  <app-input class="input"
+    label="Password"
+    [control]="form.get('password')"
+    >
+    <input
+      id="Password"
+      type="password"
+      formControlName="password"
+    >
+  </app-input>
+  <app-input class="input"
+    label="Confirm Password"
+    [control]="form.get('confirmPassword')"
+    >
+    <input
+      id="Confirm Password"
+      type="password"
+      formControlName="confirmPassword"
+    >
+  </app-input>
+  <app-alert *ngIf="form.errors?.differentPasswords && (form.touched || form.dirty) && form.get('confirmPassword').touched">
+    Passwords don't match
+  </app-alert>
+  <app-button class="button"
+    buttonType="submit"
+    buttonText="Register"
+    [disabled]="!form.valid"
+    >
+  </app-button>
+</form>

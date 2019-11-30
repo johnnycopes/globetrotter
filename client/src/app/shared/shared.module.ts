@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { AlertComponent } from './components/alert/alert.component';
 import { ButtonComponent } from './components/button/button.component';
 import { CheckboxComponent } from './components/checkbox/checkbox.component';
 import { CounterComponent } from './components/counter/counter.component';
@@ -25,6 +26,7 @@ import { FormComponent } from './components/form/form.component';
     ReactiveFormsModule
   ],
   declarations: [
+    AlertComponent,
     ButtonComponent,
     CheckboxComponent,
     CounterComponent,
@@ -40,8 +42,10 @@ import { FormComponent } from './components/form/form.component';
     RadioButtonsComponent,
     TabsetComponent,
     TabComponent,
+    AlertComponent,
   ],
   exports: [
+    AlertComponent,
     ButtonComponent,
     CheckboxComponent,
     CounterComponent,
