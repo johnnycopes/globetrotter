@@ -7,11 +7,8 @@
 
 label {
   margin-bottom: map-get($spacing, 8);
-  font-size: map-get($font-size, 20);
-  text-transform: uppercase;
-  letter-spacing: map-get($spacing, 2);
-  color: map-get($color, medium);
   cursor: pointer;
+  @include small-caps();
 }
 
 :host ::ng-deep input {

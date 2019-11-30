@@ -19,8 +19,12 @@ form {
 .input {
   width: 100%;
   margin-bottom: map-get($spacing, 24);
+}
 
-  &:last-of-type {
-    margin-bottom: map-get($spacing, 64);
-  }
+.alert {
+  margin-bottom: map-get($spacing, 24);
+}
+
+.button {
+  margin-top: map-get($spacing, 24);
 }

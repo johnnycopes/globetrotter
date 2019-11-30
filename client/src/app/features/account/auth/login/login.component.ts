@@ -12,6 +12,7 @@ import { FormInput } from 'src/app/shared/model/form-input.interface';
 export class LoginComponent implements OnInit {
   inputs: FormInput[];
   guidelines: string[];
+  validators: any;
 
   constructor(private authService: AuthService) { }
 
@@ -38,15 +39,7 @@ export class LoginComponent implements OnInit {
         label: 'Password',
         validators: [Validators.required],
         errorMessage: 'Password is required'
-      },
-      {
-        name: 'test',
-        type: 'number',
-        label: 'Test!',
-        validators: [Validators.required, Validators.min(2)],
-        errorMessage: 'Number must be >= 2'
       }
     ];
   }
-
 }

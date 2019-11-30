@@ -24,6 +24,15 @@
       >
     </app-input>
   </ng-container>
+  <app-alert class="alert"
+    *ngIf="validators && form.errors"
+    >
+    <ng-container *ngFor="let validator of validators">
+      <p *ngIf="form.errors[validator.errorKey] && inputsHaveBeenTouched(validator.inputNames)">
+        {{validator.errorMessage}}
+      </p>
+    </ng-container>
+  </app-alert>
   <app-button class="button"
     buttonType="submit"
     [buttonText]="buttonText"

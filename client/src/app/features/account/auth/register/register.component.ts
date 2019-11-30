@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { FormGroup, Validators, ValidatorFn, AbstractControl, FormBuilder, ValidationErrors } from '@angular/forms';
+import { FormGroup, Validators } from '@angular/forms';
 
 import { AuthService } from 'src/app/core/services/auth/auth.service';
+import { CustomValidators } from 'src/app/shared/utility/custom-validators';
 import { FormInput } from 'src/app/shared/model/form-input.interface';
-import { FormInputGroup } from 'src/app/shared/model/form-input-group.interface';
 
 @Component({
   selector: 'app-register',
@@ -11,10 +11,11 @@ import { FormInputGroup } from 'src/app/shared/model/form-input-group.interface'
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent {
-  form: FormGroup;
+  inputs: FormInput[];
+  guidelines: string[];
+  validators: any;
 
   constructor(
-    private formBuilder: FormBuilder,
     private authService: AuthService
   ) { }
 
@@ -23,23 +24,36 @@ export class RegisterComponent {
   }
 
   ngOnInit(): void {
-    this.form = this.formBuilder.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required],
-      confirmPassword: ['', Validators.required]
-    }, { validators: this.checkPasswords });
-  }
-
-  identityRevealedValidator(control: FormGroup): ValidationErrors | null {
-    const name = control.get('name');
-    const alterEgo = control.get('alterEgo');
-
-    return name && alterEgo && name.value === alterEgo.value ? { 'identityRevealed': true } : null;
-  };
-
-  checkPasswords(group: FormGroup): ValidationErrors | null {
-    let password = group.get('password').value;
-    let confirmPassword = group.get('confirmPassword').value;
-    return password === confirmPassword ? null : { differentPasswords: true }
+    this.guidelines = [
+      'Username must be between 8 and 20 characters',
+      'Password must be between 8 and 20 characters'
+    ];
+    this.inputs = [
+      {
+        name: 'username',
+        type: 'text',
+        label: 'Username',
+        validators: [Validators.required],
+        errorMessage: 'Username is required'
+      },
+      {
+        name: 'password',
+        type: 'password',
+        label: 'Password'
+      },
+      {
+        name: 'confirmPassword',
+        type: 'password',
+        label: 'Confirm Password'
+      }
+    ];
+    this.validators = [
+      {
+        inputNames: ['password', 'confirmPassword'],
+        validator: CustomValidators.checkPasswords,
+        errorKey: 'differentPasswords',
+        errorMessage: `Passwords don't match`
+      }
+    ];
   }
 }

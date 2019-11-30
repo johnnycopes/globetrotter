@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 
 @Component({
@@ -6,16 +6,12 @@ import { AbstractControl } from '@angular/forms';
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.scss']
 })
-export class InputComponent implements OnInit {
+export class InputComponent {
   @Input() label: string;
   @Input() error: boolean;
   @Input() control: AbstractControl;
   @Input() errorMessage: string;
 
   constructor() { }
-
-  ngOnInit() {
-    // console.log(this.label, this.control);
-  }
 
 }
