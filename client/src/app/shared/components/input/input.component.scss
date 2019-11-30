@@ -29,3 +29,13 @@ label {
     border-color: map-get($color, medium);
   }
 }
+
+.error {
+  margin-top: map-get($spacing, 8);
+  padding: map-get($spacing, 8);
+  background: #ffc3cd;
+  color: #bd2222;
+  border-radius: map-get($border, radius);
+  font-size: map-get($font-size, 20);
+  font-weight: map-get($font-weight, bold);
+}

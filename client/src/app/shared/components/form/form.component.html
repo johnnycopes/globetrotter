@@ -2,16 +2,34 @@
 <form [formGroup]="form"
   (ngSubmit)="onSubmit()"
   >
-  <app-input class="input"
-    *ngFor="let input of inputs"
-    [label]="input.label"
-    >
-    <input
-      [id]="input.label"
-      [type]="input.type"
-      [formControlName]="input.name"
-    >
-  </app-input>
+  <ng-container *ngFor="let item of inputs">
+    <app-input class="input"
+      *ngIf="item.name"
+      [label]="item.label"
+      [control]="form.get(item.name)"
+      >
+      <input
+        [id]="item.label"
+        [type]="item.type"
+        [formControlName]="item.name"
+      >
+    </app-input>
+    <ng-container *ngIf="item.groupName"
+      [formGroupName]="item.groupName"
+      >
+      <app-input class="input"
+        *ngFor="let input of item.inputs"
+        [label]="input.label"
+        [control]="form.get(item.groupName + '.' + input.name)"
+        >
+        <input
+          [id]="input.label"
+          [type]="input.type"
+          [formControlName]="input.name"
+        >
+      </app-input>
+    </ng-container>
+  </ng-container>
   <app-button class="button"
     buttonType="submit"
     [buttonText]="buttonText"
@@ -19,3 +37,16 @@
     >
   </app-button>
 </form>
+<!--
+<ng-template #formInput>
+  <app-input class="input"
+    [label]="item.label"
+    [control]="form.get(item.name)"
+    >
+    <input
+      [id]="item.label"
+      [type]="item.type"
+      [formControlName]="item.name"
+    >
+  </app-input>
+</ng-template> -->

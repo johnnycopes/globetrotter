@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import * as _ from 'lodash';
 
 import { FormInput } from '../../model/form-input.interface';
+import { FormInputGroup } from '../../model/form-input-group.interface';
 
 @Component({
   selector: 'app-form',
@@ -11,7 +12,7 @@ import { FormInput } from '../../model/form-input.interface';
 })
 export class FormComponent implements OnInit {
   @Input() buttonText: string;
-  @Input() inputs: FormInput[];
+  @Input() inputs: (FormInput | FormInputGroup)[];
   @Output() submitted = new EventEmitter<FormGroup>();
   form: FormGroup;
 
@@ -19,7 +20,15 @@ export class FormComponent implements OnInit {
 
   ngOnInit() {
     const formControls = _.reduce(this.inputs, (accum, current) => {
-      accum[current.name] = ['', current.validators];
+      if (this.isFormInput(current)) {
+        accum[current.name] = ['', current.validators];
+      } else if (this.isFormInputGroup(current)) {
+        const group = _.reduce(current.inputs, (accum, current) => {
+          accum[current.name] = ['', current.validators];
+          return accum;
+        }, {});
+        accum[current.groupName] = this.formBuilder.group(group);
+      }
       return accum;
     }, {});
     this.form = this.formBuilder.group(formControls);
@@ -27,5 +36,13 @@ export class FormComponent implements OnInit {
 
   onSubmit(): void {
     this.submitted.emit(this.form);
+  }
+
+  private isFormInput(item: FormInput | FormInputGroup): item is FormInput {
+    return 'name' in item;
+  }
+
+  private isFormInputGroup(item: FormInput | FormInputGroup): item is FormInputGroup {
+    return 'groupName' in item;
   }
 }

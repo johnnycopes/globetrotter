@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { AbstractControl } from '@angular/forms';
 
 @Component({
   selector: 'app-input',
@@ -7,10 +8,13 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class InputComponent implements OnInit {
   @Input() label: string;
+  @Input() error: boolean;
+  @Input() control: AbstractControl;
 
   constructor() { }
 
   ngOnInit() {
+    // console.log(this.label, this.control);
   }
 
 }

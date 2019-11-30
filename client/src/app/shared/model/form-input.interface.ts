@@ -4,5 +4,5 @@ export interface FormInput {
   name: string,
   type: string,
   label: string,
-  validators: Validators[]
+  validators: Validators[];
 }
