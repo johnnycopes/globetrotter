@@ -1,9 +1,5 @@
 @import 'styles';
 
-:host {
-  width: 100%;
-}
-
 .alert {
   padding: map-get($spacing, 8);
   background: #ffc3cd;

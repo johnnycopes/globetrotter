@@ -3,6 +3,7 @@
 :host {
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 label {
@@ -28,5 +29,6 @@ label {
 }
 
 .error {
-  margin-top: map-get($spacing, 8);
+  position: absolute;
+  right: map-get($spacing, 8);
 }
