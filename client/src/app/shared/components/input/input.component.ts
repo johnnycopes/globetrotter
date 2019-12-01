@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { AbstractControl } from '@angular/forms';
 
 @Component({
   selector: 'app-input',
@@ -9,7 +8,7 @@ import { AbstractControl } from '@angular/forms';
 export class InputComponent {
   @Input() label: string;
   @Input() error: boolean;
-  @Input() control: AbstractControl;
+  @Input() showError: boolean;
   @Input() errorMessage: string;
 
   constructor() { }

@@ -3,7 +3,7 @@
 </label>
 <ng-content></ng-content>
 <app-alert class="error"
-  *ngIf="errorMessage && !control.valid && control.touched"
+  *ngIf="showError"
   >
   {{errorMessage}}
 </app-alert>

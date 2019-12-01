@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { CustomValidators } from 'src/app/shared/utility/custom-validators';
-import { FormInput } from 'src/app/shared/model/form-input.interface';
 
 @Component({
   selector: 'app-register',
@@ -11,16 +10,24 @@ import { FormInput } from 'src/app/shared/model/form-input.interface';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent {
-  inputs: FormInput[];
   guidelines: string[];
-  validators: any;
+  form: FormGroup;
 
   constructor(
-    private authService: AuthService
+    private authService: AuthService,
+    private formBuilder: FormBuilder
   ) { }
 
-  register(form: FormGroup): void {
-    this.authService.register(form.value);
+  get username() {
+    return this.form.get('username');
+  }
+
+  get password() {
+    return this.form.get('password');
+  }
+
+  get confirmPassword() {
+    return this.form.get('confirmPassword');
   }
 
   ngOnInit(): void {
@@ -28,32 +35,15 @@ export class RegisterComponent {
       'Username must be between 8 and 20 characters',
       'Password must be between 8 and 20 characters'
     ];
-    this.inputs = [
-      {
-        name: 'username',
-        type: 'text',
-        label: 'Username',
-        validators: [Validators.required],
-        errorMessage: 'Username is required'
-      },
-      {
-        name: 'password',
-        type: 'password',
-        label: 'Password'
-      },
-      {
-        name: 'confirmPassword',
-        type: 'password',
-        label: 'Confirm Password'
-      }
-    ];
-    this.validators = [
-      {
-        inputNames: ['password', 'confirmPassword'],
-        validator: CustomValidators.checkPasswords,
-        errorKey: 'differentPasswords',
-        errorMessage: `Passwords don't match`
-      }
-    ];
+    this.form = this.formBuilder.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required],
+      confirmPassword: ['', Validators.required]
+    }, { validators: CustomValidators.checkPasswords });
   }
+
+  register(form: FormGroup): void {
+    this.authService.register(form.value);
+  }
+
 }

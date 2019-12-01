@@ -1,42 +1,21 @@
-
-<form [formGroup]="form"
+<ul class="guidelines"
+  *ngIf="guidelines"
+  >
+  <li class="guideline"
+    *ngFor="let guideline of guidelines"
+    >
+    {{guideline}}
+  </li>
+</ul>
+<form [formGroup]="formGroup"
   (ngSubmit)="onSubmit()"
   >
-  <ul class="guidelines"
-    *ngIf="guidelines"
-    >
-    <li class="guideline"
-      *ngFor="let guideline of guidelines"
-      >
-      {{guideline}}
-    </li>
-  </ul>
-  <ng-container *ngFor="let input of inputs">
-    <app-input class="input"
-      [label]="input.label"
-      [control]="form.get(input.name)"
-      [errorMessage]="input.errorMessage"
-      >
-      <input
-        [id]="input.label"
-        [type]="input.type"
-        [formControlName]="input.name"
-      >
-    </app-input>
-  </ng-container>
-  <app-alert class="alert"
-    *ngIf="validators && form.errors"
-    >
-    <ng-container *ngFor="let validator of validators">
-      <p *ngIf="form.errors[validator.errorKey] && inputsHaveBeenTouched(validator.inputNames)">
-        {{validator.errorMessage}}
-      </p>
-    </ng-container>
-  </app-alert>
+  <ng-content select="app-input">
+  </ng-content>
   <app-button class="button"
     buttonType="submit"
     [buttonText]="buttonText"
-    [disabled]="!form.valid"
+    [disabled]="!formGroup.valid"
     >
   </app-button>
 </form>

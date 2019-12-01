@@ -1,8 +1,44 @@
-<app-form
-  buttonText="Register"
-  [inputs]="inputs"
+<app-form [formGroup]="form"
   [guidelines]="guidelines"
-  [validators]="validators"
+  buttonText="Register"
   (submitted)="register($event)"
   >
+  <app-input class="input"
+    label="Username"
+    [showError]="
+      !form.get('username').valid &&
+      form.get('username').touched
+    "
+    errorMessage="Username is required"
+    >
+    <input
+      id="Username"
+      type="text"
+      formControlName="username"
+    >
+  </app-input>
+  <app-input class="input"
+    label="Password"
+    >
+    <input
+      id="Password"
+      type="password"
+      formControlName="password"
+    >
+  </app-input>
+  <app-input class="input"
+    label="Confirm Password"
+    [showError]="
+      form.errors?.differentPasswords &&
+      password.touched &&
+      confirmPassword.touched
+    "
+    errorMessage="Passwords don't match"
+    >
+    <input
+      id="Confirm Password"
+      type="password"
+      formControlName="confirmPassword"
+    >
+  </app-input>
 </app-form>
