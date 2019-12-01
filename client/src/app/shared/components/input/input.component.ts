@@ -7,7 +7,6 @@ import { Component, Input } from '@angular/core';
 })
 export class InputComponent {
   @Input() label: string;
-  @Input() error: boolean;
   @Input() showError: boolean;
   @Input() errorMessage: string;
 

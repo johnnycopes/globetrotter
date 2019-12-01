@@ -5,10 +5,7 @@
   >
   <app-input class="input"
     label="Username"
-    [showError]="
-      !form.get('username').valid &&
-      form.get('username').touched
-    "
+    [showError]="!username.valid && username.touched"
     errorMessage="Username is required"
     >
     <input
@@ -19,6 +16,8 @@
   </app-input>
   <app-input class="input"
     label="Password"
+    [showError]="!password.valid && password.touched"
+    errorMessage="Password is required"
     >
     <input
       id="Password"
