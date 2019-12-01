@@ -1,6 +1,28 @@
-<!-- <app-form
+<app-form
+  [formGroup]="form"
   buttonText="Sign In"
-  [inputs]="inputs"
   (submitted)="login($event)"
   >
-</app-form> -->
+  <app-input
+    label="Username"
+    [showError]="!username.valid && username.touched"
+    errorMessage="Username is required"
+    >
+    <input
+      id="Username"
+      type="text"
+      formControlName="username"
+    />
+  </app-input>
+  <app-input
+    label="Password"
+    [showError]="!password.valid && password.touched"
+    errorMessage="Password is required"
+    >
+    <input
+      id="Password"
+      type="password"
+      formControlName="password"
+    />
+  </app-input>
+</app-form>

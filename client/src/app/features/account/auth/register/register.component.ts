@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { CustomValidators } from 'src/app/shared/utility/custom-validators';
@@ -18,15 +18,15 @@ export class RegisterComponent {
     private formBuilder: FormBuilder
   ) { }
 
-  get username() {
+  get username(): AbstractControl {
     return this.form.get('username');
   }
 
-  get password() {
+  get password(): AbstractControl {
     return this.form.get('password');
   }
 
-  get confirmPassword() {
+  get confirmPassword(): AbstractControl {
     return this.form.get('confirmPassword');
   }
 

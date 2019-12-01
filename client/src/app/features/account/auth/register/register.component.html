@@ -1,9 +1,10 @@
-<app-form [formGroup]="form"
+<app-form
+  [formGroup]="form"
   [guidelines]="guidelines"
   buttonText="Register"
   (submitted)="register($event)"
   >
-  <app-input class="input"
+  <app-input
     label="Username"
     [showError]="!username.valid && username.touched"
     errorMessage="Username is required"
@@ -12,9 +13,9 @@
       id="Username"
       type="text"
       formControlName="username"
-    >
+    />
   </app-input>
-  <app-input class="input"
+  <app-input
     label="Password"
     [showError]="!password.valid && password.touched"
     errorMessage="Password is required"
@@ -23,9 +24,9 @@
       id="Password"
       type="password"
       formControlName="password"
-    >
+    />
   </app-input>
-  <app-input class="input"
+  <app-input
     label="Confirm Password"
     [showError]="
       form.errors?.differentPasswords &&
@@ -38,6 +39,6 @@
       id="Confirm Password"
       type="password"
       formControlName="confirmPassword"
-    >
+    />
   </app-input>
 </app-form>

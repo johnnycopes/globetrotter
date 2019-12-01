@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 
 import { AuthService } from 'src/app/core/services/auth/auth.service';
-import { FormInput } from 'src/app/shared/model/form-input.interface';
 
 @Component({
   selector: 'app-login',
@@ -10,36 +9,29 @@ import { FormInput } from 'src/app/shared/model/form-input.interface';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  inputs: FormInput[];
-  guidelines: string[];
-  validators: any;
+  form: FormGroup;
 
-  constructor(private authService: AuthService) { }
+  constructor(
+    private authService: AuthService,
+    private formBuilder: FormBuilder
+  ) { }
 
-  login(form: FormGroup): void {
-    this.authService.login(form.value);
+  get username(): AbstractControl {
+    return this.form.get('username');
+  }
+
+  get password(): AbstractControl {
+    return this.form.get('password');
   }
 
   ngOnInit(): void {
-    this.guidelines = [
-      'Username must be between 8 and 20 characters',
-      'Password must be between 8 and 20 characters'
-    ];
-    this.inputs = [
-      {
-        name: 'username',
-        type: 'text',
-        label: 'Username',
-        validators: [Validators.required],
-        errorMessage: 'Username is required'
-      },
-      {
-        name: 'password',
-        type: 'password',
-        label: 'Password',
-        validators: [Validators.required],
-        errorMessage: 'Password is required'
-      }
-    ];
+    this.form = this.formBuilder.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required]
+    });
+  }
+
+  login(form: FormGroup): void {
+    this.authService.login(form.value);
   }
 }

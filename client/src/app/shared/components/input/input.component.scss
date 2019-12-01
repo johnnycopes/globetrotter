@@ -13,7 +13,7 @@ label {
 
 :host ::ng-deep input {
   width: 100%;
-  padding: map-get($spacing, 16);
+  padding: map-get($spacing, 8);
   border: map-get($border, thin) solid transparent;
   border-radius: map-get($border, radius);
   background: map-get($color, white);
