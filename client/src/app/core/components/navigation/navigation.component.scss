@@ -5,10 +5,10 @@
   flex-direction: column;
   justify-content: center;
   position: fixed;
-  top: 0;
+  top: map-get($app, header-height);
   left: 0;
   width: map-get($app, navigation-width);
-  height: 100vh;
+  height: calc(100vh - #{map-get($app, header-height)});
   background: map-get($color, darkest);
   border-right: map-get($border, thin) solid map-get($color, dark);
   z-index: map-get($z-index, navigation);

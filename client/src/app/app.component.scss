@@ -1,17 +1,20 @@
 @import 'styles';
 
+$height: calc(100vh - #{map-get($app, header-height)});
+
 .content {
-  margin-left: map-get($app, navigation-width);
+  padding-top: map-get($app, header-height);
+  padding-left: map-get($app, navigation-width);
 
   &__wrapper {
     @include quiz-width;
-    min-height: 100vh;
+    min-height: $height;
     display: flex;
     flex-direction: column;
     justify-content: center;
 
     &--no-scroll {
-      height: 100vh;
+      height: $height;
       overflow: hidden;
     }
   }

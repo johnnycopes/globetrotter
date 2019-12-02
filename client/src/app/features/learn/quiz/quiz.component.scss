@@ -1,5 +1,9 @@
 @import 'styles';
 
 .quiz {
-  min-height: calc(100vh - (#{map-get($app, quiz-header-height)} + #{map-get($app, quiz-cards-grid-gap)}));
+  min-height: calc(100vh - (
+    #{map-get($app, header-height)} +
+    #{map-get($app, quiz-header-height)} +
+    #{map-get($app, quiz-cards-grid-gap)}
+  ));
 }

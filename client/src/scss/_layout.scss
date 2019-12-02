@@ -22,6 +22,7 @@ $spacing: (
 );
 
 $z-index: (
+  header: 300,
   fixed-slideable-panel: 200,
   navigation: 100,
   positive: 1,
@@ -37,6 +38,7 @@ $border: (
 );
 
 $app: (
+  header-height: map-get($spacing, 64),
   navigation-width: map-get($spacing, 96),
   quiz-header-height: map-get($spacing, 96),
   quiz-card-width: 300px,

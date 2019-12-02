@@ -1,7 +1,9 @@
 <ng-template #tabsetControlsTemplate
   let-tabs="tabs"
   >
-  <app-fixed-slideable-panel [position]="tabsetControlsPosition">
+  <app-fixed-slideable-panel class="tabset"
+    [position]="tabsetControlsPosition"
+    >
     <div class="controls"
       app-fixed-slideable-panel-header
       >

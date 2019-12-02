@@ -1,0 +1,13 @@
+@import 'styles';
+
+:host {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: map-get($app, header-height);
+  width: 100%;
+  background: map-get($color, darkest);
+  border-bottom: map-get($border, thin) solid map-get($color, dark);
+  z-index: map-get($z-index, header);
+}

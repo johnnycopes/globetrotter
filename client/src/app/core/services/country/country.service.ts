@@ -62,7 +62,7 @@ export class CountryService implements Resolve<Observable<Country[]>> {
         }, []);
         return _(countries)
           .shuffle()
-          .slice(0, quantity)
+          .slice(0, 1)
           .value();
       })
     );
@@ -70,7 +70,7 @@ export class CountryService implements Resolve<Observable<Country[]>> {
 
   private initialize(): void {
     this.request = this.http.get<Country[]>(this.countriesApiUrl).pipe(
-      // delay(1000) // prevent the loader from flashing on the screen too quickly
+      // delay(200) // prevent the loader from flashing on the screen too quickly
     );
     this.request.subscribe(allCountries => {
       const countries = _.filter(allCountries, country => COUNTRY_STATUSES[country.name]);
