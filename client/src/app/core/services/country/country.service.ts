@@ -62,7 +62,7 @@ export class CountryService implements Resolve<Observable<Country[]>> {
         }, []);
         return _(countries)
           .shuffle()
-          .slice(0, quantity)
+          .slice(0, 1)
           .value();
       })
     );

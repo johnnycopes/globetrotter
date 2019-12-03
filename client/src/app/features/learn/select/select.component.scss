@@ -1,5 +1,10 @@
 @import 'styles';
 
+.tabset {
+  top: map-get($app, header-height);
+  left: map-get($app, navigation-width);
+}
+
 .controls {
   display: flex;
   justify-content: space-between;
