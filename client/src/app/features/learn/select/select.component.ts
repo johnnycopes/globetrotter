@@ -50,4 +50,8 @@ export class SelectComponent implements OnInit, OnDestroy {
     this.queryParams = this.selectService.mapSelectionToQueryParams(this.selection);
     this.router.navigate(['learn/quiz'], { queryParams: this.queryParams });
   }
+
+  onQuit(): void {
+    this.router.navigate(['home']);
+  }
 }

@@ -1,10 +1,20 @@
 <ng-template #tabsetControlsTemplate
   let-tabs="tabs"
   >
-  <app-fixed-slideable-panel [position]="tabsetControlsPosition">
+  <app-fixed-slideable-panel class="tabset"
+    [position]="tabsetControlsPosition"
+    >
     <div class="controls"
       app-fixed-slideable-panel-header
       >
+      <div class="quit">
+        <app-icon class="quit__icon"
+          icon="Cancel"
+          [highlighted]="true"
+          (clicked)="onQuit()"
+          >
+        </app-icon>
+      </div>
       <ul class="tabs">
         <li class="tab"
           *ngFor="let tab of tabs"
@@ -14,13 +24,15 @@
           {{tab.name}}
         </li>
       </ul>
-      <app-button
-        buttonText="Launch"
-        buttonStyle="primary"
-        [disabled]="!canStartQuiz"
-        (clicked)="onLaunch()"
-        >
-      </app-button>
+      <div class="launch">
+        <app-button class="launch__button"
+          buttonText="Launch"
+          buttonStyle="primary"
+          [disabled]="!canStartQuiz"
+          (clicked)="onLaunch()"
+          >
+        </app-button>
+      </div>
     </div>
   </app-fixed-slideable-panel>
 </ng-template>

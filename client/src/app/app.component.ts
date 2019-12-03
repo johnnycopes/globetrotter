@@ -14,7 +14,7 @@ import { Country } from './shared/model/country.interface';
 })
 export class AppComponent implements OnInit {
   appLoadComplete$: Observable<Country[]>;
-  quizCompleted$: Observable<boolean>;
+  quizComplete$: Observable<boolean>;
 
   constructor(
     private countryService: CountryService,
@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.appLoadComplete$ = this.countryService.resolve();
-    this.quizCompleted$ = this.quizService.getQuiz().pipe(
+    this.quizComplete$ = this.quizService.getQuiz().pipe(
       map(quiz => quiz.isComplete),
       distinctUntilChanged()
     );

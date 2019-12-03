@@ -6,8 +6,8 @@ import { SharedModule } from '../shared/shared.module';
 
 import { AppRoutingModule } from '../app-routing.module';
 import { ErrorInterceptorProvider } from './interceptors/error/error.interceptor';
-import { NavigationComponent } from './navigation/navigation.component';
-import { NavigationLinkComponent } from './navigation/navigation-link/navigation-link.component';
+import { NavigationComponent } from './components/navigation/navigation.component';
+import { NavigationLinkComponent } from './components/navigation/navigation-link/navigation-link.component';
 
 @NgModule({
   imports: [

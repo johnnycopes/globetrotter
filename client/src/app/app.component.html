@@ -1,10 +1,9 @@
-<app-navigation class="navigation">
-</app-navigation>
+<app-navigation></app-navigation>
 
 <app-loader [isComplete$]="appLoadComplete$">
   <div class="content">
     <div class="content__wrapper"
-      [ngClass]="{'content__wrapper--no-scroll': (quizCompleted$ | async)}"
+      [ngClass]="{'content__wrapper--no-scroll': (quizComplete$ | async)}"
       >
       <router-outlet></router-outlet>
     </div>

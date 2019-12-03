@@ -1,0 +1,23 @@
+@import 'styles';
+
+:host {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: map-get($app, navigation-height);
+  background: map-get($color, darkest);
+  border-bottom: map-get($border, thin) solid map-get($color, dark);
+  z-index: map-get($z-index, navigation);
+}
+
+.link {
+  margin-right: map-get($spacing, 32);
+
+  &:last-child {
+    margin-right: 0;
+  }
+}
