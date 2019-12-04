@@ -1,13 +1,27 @@
 <div @fadeIn>
-  <div *ngIf="loggedIn$ | async; else auth">
-    <p>Logged in!</p>
-    <app-button
-      buttonText="Sign Out"
-      (clicked)="logout()"
+  <ng-container *ngIf="(authData$ | async) as authData">
+    <div class="account"
+      *ngIf="authData.tokenValid; else auth"
       >
-    </app-button>
-  </div>
-  <ng-template #auth>
-    <app-auth></app-auth>
-  </ng-template>
+      <div class="details">
+        <div class="details__user">
+          <app-icon class="avatar"
+            icon="User"
+            >
+          </app-icon>
+          <h1 class="username">
+            {{authData.username}}
+          </h1>
+        </div>
+        <app-button
+          buttonText="Sign Out"
+          (clicked)="logout()"
+          >
+        </app-button>
+      </div>
+    </div>
+    <ng-template #auth>
+      <app-auth></app-auth>
+    </ng-template>
+  </ng-container>
 </div>

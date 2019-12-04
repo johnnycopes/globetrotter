@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { Animation } from 'src/app/shared/model/animation.enum';
+import { Auth } from 'src/app/shared/model/auth.class';
 
 @Component({
   selector: 'app-account',
@@ -20,13 +21,14 @@ import { Animation } from 'src/app/shared/model/animation.enum';
   ]
 })
 export class AccountComponent implements OnInit {
-  loggedIn$: Observable<boolean> = this.authService.getData().pipe(
-    map(authData => authData.tokenValid)
-  );
+  authData$: Observable<Auth>;
 
   constructor(private authService: AuthService) { }
 
   ngOnInit() {
+    this.authData$ = this.authService.getData().pipe(
+      map(authData => authData)
+    );
   }
 
   logout(): void {

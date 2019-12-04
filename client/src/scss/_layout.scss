@@ -38,6 +38,7 @@ $border: (
 );
 
 $app: (
+  page-height: calc(100vh - #{map-get($spacing, 96)}),
   navigation-height: map-get($spacing, 96),
   quiz-menu-height: map-get($spacing, 96),
   quiz-card-width: 300px,

@@ -41,17 +41,13 @@
   [controlsTemplate]="tabsetControlsTemplate"
   [contentVisibility]="tabsetContentVisibility"
   >
-  <div class="content"
-    app-tabset-content
-    >
-    <app-tab name="Type">
-      <app-select-type></app-select-type>
-    </app-tab>
-    <app-tab name="Quantity">
-      <app-select-quantity></app-select-quantity>
-    </app-tab>
-    <app-tab name="Countries">
-      <app-select-countries></app-select-countries>
-    </app-tab>
-  </div>
+  <app-tab name="Type">
+    <app-select-type></app-select-type>
+  </app-tab>
+  <app-tab name="Quantity">
+    <app-select-quantity></app-select-quantity>
+  </app-tab>
+  <app-tab name="Countries">
+    <app-select-countries></app-select-countries>
+  </app-tab>
 </app-tabset>

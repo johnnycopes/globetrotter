@@ -78,7 +78,7 @@
   }
 
   &__input {
-    display: none;
+    visibility: hidden;
     position: absolute;
     left: -100vh;
     opacity: 0;
