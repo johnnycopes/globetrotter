@@ -1,11 +1,10 @@
 @import 'styles';
 
-$header: map-get($app, quiz-header-height);
 $grid-gap: map-get($app, quiz-cards-grid-gap);
 
 .quiz-cards {
-  margin-top: calc(#{$header} + #{$grid-gap});
-  padding-bottom: calc((#{$header} / 2) + #{$grid-gap});
+  margin-top: $grid-gap;
+  padding-bottom: calc((#{map-get($app, quiz-menu-height)} / 2) + #{$grid-gap});
   display: grid;
   justify-content: center;
   grid-template-columns: repeat(auto-fill, 300px);

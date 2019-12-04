@@ -2,7 +2,7 @@
 
 .quiz {
   min-height: calc(100vh - (
-    #{map-get($app, quiz-header-height)} +
+    #{map-get($app, quiz-menu-height)} +
     #{map-get($app, quiz-cards-grid-gap)}
   ));
 }

@@ -5,22 +5,17 @@
   height: 100%;
 }
 
-:host {
+.fixed-slideable-panel {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: map-get($z-index, fixed-slideable-panel);
-  width: 100%;
-}
-
-.fixed-slideable-panel {
-  position: absolute;
   height: 100vh;
   width: 100%;
   transform: translateY(-100vh);
   font-family: $font-stack;
   color: map-get($color, lightest);
   background: map-get($color, dark);
+  z-index: map-get($z-index, fixed-slideable-panel);
 
   &__wrapper {
     height: 100%;

@@ -1,10 +1,5 @@
 @import 'styles';
 
-.menu {
-  top: map-get($app, header-height);
-  left: map-get($app, navigation-width);
-}
-
 .outcome {
   display: flex;
   flex-direction: column;
