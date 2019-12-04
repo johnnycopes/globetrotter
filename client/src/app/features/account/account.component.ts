@@ -3,11 +3,21 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { AuthService } from 'src/app/core/services/auth/auth.service';
+import { trigger, transition, style, animate } from '@angular/animations';
+import { Animation } from 'src/app/shared/model/animation.enum';
 
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
-  styleUrls: ['./account.component.scss']
+  styleUrls: ['./account.component.scss'],
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: '0' }),
+        animate(`${Animation.screenTransition}ms ease-in`, style({ opacity: '1' }))
+      ])
+    ])
+  ]
 })
 export class AccountComponent implements OnInit {
   loggedIn$: Observable<boolean> = this.authService.getData().pipe(

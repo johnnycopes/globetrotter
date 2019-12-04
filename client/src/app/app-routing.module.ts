@@ -8,18 +8,19 @@ import { SelectComponent } from './features/learn/select/select.component';
 import { QuizComponent } from './features/learn/quiz/quiz.component';
 import { AccountComponent } from './features/account/account.component';
 import { CountryService } from './core/services/country/country.service';
+import { RouteNames } from './shared/model/route-names.enum';
 
 const routes: Routes = [
   { path: '', resolve: { countries: CountryService }, children: [
-    { path: 'explore', component: PlaceholderComponent },
-    { path: 'prepare', component: PlaceholderComponent },
-    { path: 'learn', component: LearnComponent, children: [
-      { path: 'quiz', component: QuizComponent },
-      { path: 'select', component: SelectComponent },
+    { path: RouteNames.explore, component: PlaceholderComponent },
+    { path: RouteNames.prepare, component: PlaceholderComponent },
+    { path: RouteNames.learn, component: LearnComponent, children: [
+      { path: RouteNames.quiz, component: QuizComponent },
+      { path: RouteNames.select, component: SelectComponent },
       { path: '', redirectTo: 'select', pathMatch: 'full' }
     ]},
-    { path: 'account', component: AccountComponent },
-    { path: '', component: HomeComponent },
+    { path: RouteNames.account, component: AccountComponent },
+    { path: RouteNames.home, component: HomeComponent },
     { path: '**', redirectTo: '', pathMatch: 'full' }
   ]}
 ];

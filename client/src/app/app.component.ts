@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map, distinctUntilChanged } from 'rxjs/operators';
+import { map, filter, distinctUntilChanged } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 import { QuizService } from 'src/app/core/services/quiz/quiz.service';
 import { CountryService } from './core/services/country/country.service';
 import { Country } from './shared/model/country.interface';
+import { RouteNames } from './shared/model/route-names.enum';
 
 @Component({
   selector: 'app-root',
@@ -15,8 +17,10 @@ import { Country } from './shared/model/country.interface';
 export class AppComponent implements OnInit {
   appLoadComplete$: Observable<Country[]>;
   quizComplete$: Observable<boolean>;
+  showNavigation$: Observable<boolean>;
 
   constructor(
+    private router: Router,
     private countryService: CountryService,
     private quizService: QuizService
   ) { }
@@ -25,6 +29,14 @@ export class AppComponent implements OnInit {
     this.appLoadComplete$ = this.countryService.resolve();
     this.quizComplete$ = this.quizService.getQuiz().pipe(
       map(quiz => quiz.isComplete),
+      distinctUntilChanged()
+    );
+    this.showNavigation$ = this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd),
+      map((navigationEnd: NavigationEnd) => {
+        const routeUrl = navigationEnd.urlAfterRedirects.split('/')[1];
+        return routeUrl !== RouteNames.learn;
+      }),
       distinctUntilChanged()
     );
   }
