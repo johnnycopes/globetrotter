@@ -1,14 +1,7 @@
 import { Component, AfterContentInit, ContentChildren, QueryList, Input, TemplateRef } from '@angular/core';
-import {
-  trigger,
-  style,
-  animate,
-  state,
-  transition
-} from '@angular/animations';
 
+import { visibilityAnimation, fadeInWithFixedSlideablePanelDelayAnimation } from '../../utility/animations';
 import { TabComponent } from './tab/tab.component';
-import { AnimationTimes } from '../../model/animation-times.enum';
 
 export type TabsetContentVisibility = 'visible' | 'invisible';
 
@@ -17,21 +10,8 @@ export type TabsetContentVisibility = 'visible' | 'invisible';
   templateUrl: './tabset.component.html',
   styleUrls: ['./tabset.component.scss'],
   animations: [
-    trigger('visibility', [
-      state('invisible', style({
-        opacity: 0
-      })),
-      state('visible', style({
-        opacity: 1
-      })),
-      transition('* => *', animate(`${AnimationTimes.screenTransition}ms ease-in-out`))
-    ]),
-    trigger('fadeIn', [
-      transition(':enter', [
-        style({ opacity: '0' }),
-        animate(`${AnimationTimes.screenTransition}ms ${AnimationTimes.fixedSlideablePanel}ms ease-in`, style({ opacity: '1' }))
-      ])
-    ])
+    visibilityAnimation,
+    fadeInWithFixedSlideablePanelDelayAnimation
   ]
 })
 export class TabsetComponent implements AfterContentInit {

@@ -1,13 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import {
-  trigger,
-  state,
-  style,
-  animate,
-  transition
-} from '@angular/animations';
 
-import { AnimationTimes } from 'src/app/shared/model/animation-times.enum';
+import { flipAnimation, guessAnimation, disabledAnimation } from '../../utility/animations';
 
 export type FlipCardSide = 'front' | 'back';
 export type FlipCardGuess = 'correct' | 'incorrect' | 'none';
@@ -17,38 +10,9 @@ export type FlipCardGuess = 'correct' | 'incorrect' | 'none';
   templateUrl: './flip-card.component.html',
   styleUrls: ['./flip-card.component.scss'],
   animations: [
-    trigger('flip', [
-      state('front', style({
-        transform: 'rotateY(0)'
-      })),
-      state('back', style({
-        transform: 'rotateY(180deg)'
-      })),
-      transition('front => back', animate(`${AnimationTimes.flipCard}ms ease-in`)),
-      transition('back => front', animate(`${AnimationTimes.flipCard}ms ease-out`))
-    ]),
-    trigger('disabled', [
-      state('disabled', style({
-        filter: 'grayscale(100%)',
-        cursor: 'not-allowed'
-      })),
-      transition('* => disabled', animate(`${AnimationTimes.flipCard}ms ease-in`))
-    ]),
-    trigger('guess', [
-      state('none', style({
-        border: 'none',
-        padding: '20px'
-      })),
-      state('correct', style({
-        border: '20px solid limegreen',
-        padding: '0'
-      })),
-      state('incorrect', style({
-        border: '20px solid crimson',
-        padding: '0'
-      })),
-      transition('* => *', animate(`${AnimationTimes.flipCard}ms ease-in`))
-    ])
+    flipAnimation,
+    guessAnimation,
+    disabledAnimation
   ]
 })
 export class FlipCardComponent {
