@@ -8,7 +8,7 @@ import {
 } from '@angular/animations';
 
 import { TabComponent } from './tab/tab.component';
-import { Animation } from 'src/app/shared/model/animation.enum';
+import { AnimationTimes } from '../../model/animation-times.enum';
 
 export type TabsetContentVisibility = 'visible' | 'invisible';
 
@@ -24,12 +24,12 @@ export type TabsetContentVisibility = 'visible' | 'invisible';
       state('visible', style({
         opacity: 1
       })),
-      transition('* => *', animate(`${Animation.screenTransition}ms ease-in-out`))
+      transition('* => *', animate(`${AnimationTimes.screenTransition}ms ease-in-out`))
     ]),
     trigger('fadeIn', [
       transition(':enter', [
         style({ opacity: '0' }),
-        animate(`${Animation.screenTransition}ms ${Animation.fixedSlideablePanel}ms ease-in`, style({ opacity: '1' }))
+        animate(`${AnimationTimes.screenTransition}ms ${AnimationTimes.fixedSlideablePanel}ms ease-in`, style({ opacity: '1' }))
       ])
     ])
   ]

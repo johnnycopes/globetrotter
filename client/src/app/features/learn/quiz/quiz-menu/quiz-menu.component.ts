@@ -8,7 +8,7 @@ import { FixedSlideablePanelPosition } from 'src/app/shared/components/fixed-sli
 import { QuizType } from 'src/app/shared/model/quiz-type.enum';
 import { QuizService } from 'src/app/core/services/quiz/quiz.service';
 import { UtilityService } from 'src/app/core/services/utility/utility.service';
-import { Animation } from 'src/app/shared/model/animation.enum';
+import { AnimationTimes } from 'src/app/shared/model/animation-times.enum';
 import { RouteNames } from 'src/app/shared/model/route-names.enum';
 
 @Component({
@@ -49,7 +49,7 @@ export class QuizMenuComponent implements OnInit, OnDestroy {
       async isComplete => {
         if (isComplete) {
           this.menuPosition = 'offscreen';
-          await this.utilityService.wait(Animation.cardsFadeInDelay);
+          await this.utilityService.wait(AnimationTimes.cardsFadeInDelay);
           this.menuPosition = 'fullscreen';
         } else {
           this.menuPosition = 'header';

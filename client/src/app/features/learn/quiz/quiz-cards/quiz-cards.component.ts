@@ -1,21 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  trigger,
-  style,
-  animate,
-  transition,
-  query,
-  stagger,
-  animateChild
-} from '@angular/animations';
+import { trigger, transition, query, stagger, animateChild, useAnimation } from '@angular/animations';
 import { Observable } from 'rxjs';
 import { map, first, distinctUntilChanged} from 'rxjs/operators';
 import * as _ from 'lodash';
 
 import { Country } from 'src/app/shared/model/country.interface';
-import { Animation } from 'src/app/shared/model/animation.enum';
 import { QuizType } from 'src/app/shared/model/quiz-type.enum';
 import { QuizService } from 'src/app/core/services/quiz/quiz.service';
+import { AnimationTimes } from 'src/app/shared/model/animation-times.enum';
+import { fadeIn } from 'src/app/shared/utility/animations';
 
 @Component({
   selector: 'app-quiz-cards',
@@ -24,13 +17,14 @@ import { QuizService } from 'src/app/core/services/quiz/quiz.service';
   animations: [
     trigger('stagger', [
       transition(':enter', [
-        query(':enter', stagger(`${Animation.cardsStagger}ms`, [animateChild()]))
+        query(':enter', stagger(`${AnimationTimes.cardsStagger}ms`, [animateChild()]))
       ])
     ]),
     trigger('fadeIn', [
       transition(':enter', [
-        style({ opacity: '0' }),
-        animate(`${Animation.cardsFadeIn}ms ${Animation.cardsFadeInDelay}ms ease-in`, style({ opacity: '1' }))
+        useAnimation(fadeIn, {
+          params: { timing: AnimationTimes.screenTransition }
+        })
       ])
     ])
   ]

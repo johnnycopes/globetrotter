@@ -7,7 +7,7 @@ import {
   transition
 } from '@angular/animations';
 
-import { Animation } from 'src/app/shared/model/animation.enum';
+import { AnimationTimes } from 'src/app/shared/model/animation-times.enum';
 
 export type FixedSlideablePanelPosition = 'offscreen' | 'header' | 'fullscreen';
 
@@ -26,7 +26,7 @@ export type FixedSlideablePanelPosition = 'offscreen' | 'header' | 'fullscreen';
       state('fullscreen', style({
         transform: 'translateY(0)'
       })),
-      transition('* => *', animate(`${Animation.fixedSlideablePanel}ms ease-in-out`))
+      transition('* => *', animate(`${AnimationTimes.fixedSlideablePanel}ms ease-in-out`))
     ])
   ]
 })

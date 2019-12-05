@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { trigger, transition, useAnimation } from '@angular/animations';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { AuthService } from 'src/app/core/services/auth/auth.service';
-import { trigger, transition, style, animate } from '@angular/animations';
-import { Animation } from 'src/app/shared/model/animation.enum';
+import { AnimationTimes } from 'src/app/shared/model/animation-times.enum';
 import { Auth } from 'src/app/shared/model/auth.class';
+import { fadeIn } from 'src/app/shared/utility/animations';
 
 @Component({
   selector: 'app-account',
@@ -14,8 +15,9 @@ import { Auth } from 'src/app/shared/model/auth.class';
   animations: [
     trigger('fadeIn', [
       transition(':enter', [
-        style({ opacity: '0' }),
-        animate(`${Animation.screenTransition}ms ease-in`, style({ opacity: '1' }))
+        useAnimation(fadeIn, {
+          params: { timing: AnimationTimes.screenTransition }
+        })
       ])
     ])
   ]

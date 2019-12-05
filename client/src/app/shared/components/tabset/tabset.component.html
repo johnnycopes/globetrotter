@@ -13,11 +13,9 @@
 <ng-container *ngTemplateOutlet="
   controlsTemplate ? controlsTemplate : defaultControlsTemplate;
   context: { tabs: this.tabs }
-  "
-  >
+  ">
 </ng-container>
 <div class="content"
-  [@visibility]="contentVisibility"
   @fadeIn
   >
   <ng-content></ng-content>

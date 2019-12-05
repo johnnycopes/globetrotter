@@ -1,12 +1,8 @@
 import { Component } from '@angular/core';
-import {
-  trigger,
-  style,
-  animate,
-  transition
-} from '@angular/animations';
+import { trigger, transition, useAnimation } from '@angular/animations';
 
-import { Animation } from 'src/app/shared/model/animation.enum';
+import { AnimationTimes } from 'src/app/shared/model/animation-times.enum';
+import { fadeIn } from '../../utility/animations';
 
 @Component({
   selector: 'app-placeholder',
@@ -15,8 +11,9 @@ import { Animation } from 'src/app/shared/model/animation.enum';
   animations: [
     trigger('fadeIn', [
       transition(':enter', [
-        style({ opacity: '0' }),
-        animate(`${Animation.screenTransition}ms ease-in`, style({ opacity: '1' }))
+        useAnimation(fadeIn, {
+          params: { timing: AnimationTimes.screenTransition }
+        })
       ])
     ])
   ]
