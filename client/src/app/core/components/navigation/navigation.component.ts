@@ -42,7 +42,7 @@ export class NavigationComponent implements OnInit {
       name: 'Account',
       icon: 'User',
       route: 'account',
-      exactPathMatch: true
+      exactPathMatch: false
     },
   ];
 

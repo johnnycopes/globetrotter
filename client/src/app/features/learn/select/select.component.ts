@@ -1,8 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import * as _ from 'lodash';
 
+import { RouteNames } from 'src/app/shared/model/route-names.enum';
 import { SelectService } from 'src/app/core/services/select/select.service';
 import { UtilityService } from 'src/app/core/services/utility/utility.service';
 import { Selection } from 'src/app/shared/model/selection.class';
@@ -48,10 +49,13 @@ export class SelectComponent implements OnInit, OnDestroy {
     this.tabsetControlsPosition = 'offscreen';
     await this.utilityService.wait(Animation.fixedSlideablePanel);
     this.queryParams = this.selectService.mapSelectionToQueryParams(this.selection);
-    this.router.navigate(['learn/quiz'], { queryParams: this.queryParams });
+    this.router.navigate(
+      [`${RouteNames.learn}/${RouteNames.quiz}`],
+      { queryParams: this.queryParams }
+    );
   }
 
   onQuit(): void {
-    this.router.navigate(['home']);
+    this.router.navigate([RouteNames.home]);
   }
 }

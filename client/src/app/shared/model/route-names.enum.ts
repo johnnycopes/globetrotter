@@ -1,9 +1,11 @@
 export enum RouteNames {
-  home = '',
+  home = 'home',
   explore = 'explore',
   prepare = 'prepare',
   learn = 'learn',
   quiz = 'quiz',
   select = 'select',
-  account = 'account'
+  account = 'account',
+  auth = 'auth',
+  profile = 'profile'
 }

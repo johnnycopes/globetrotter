@@ -4,23 +4,3 @@
   min-height: map-get($app, page-height);
   padding-top: map-get($spacing, 48);
 }
-
-.details {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  &__user {
-    display: flex;
-    align-items: center;
-  }
-}
-
-.avatar {
-  width: map-get($spacing, 96);
-  margin-right: map-get($spacing, 24);
-}
-
-.username {
-  font-size: map-get($font-size, 48);
-}

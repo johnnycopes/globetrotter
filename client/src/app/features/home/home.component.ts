@@ -8,6 +8,7 @@ import {
 } from '@angular/animations';
 
 import { Animation } from 'src/app/shared/model/animation.enum';
+import { RouteNames } from 'src/app/shared/model/route-names.enum';
 
 @Component({
   selector: 'app-home',
@@ -27,6 +28,6 @@ export class HomeComponent {
   constructor(private router: Router) { }
 
   onClick(): void {
-    this.router.navigate(['learn']);
+    this.router.navigate([RouteNames.learn]);
   }
 }

@@ -9,6 +9,7 @@ import { QuizType } from 'src/app/shared/model/quiz-type.enum';
 import { QuizService } from 'src/app/core/services/quiz/quiz.service';
 import { UtilityService } from 'src/app/core/services/utility/utility.service';
 import { Animation } from 'src/app/shared/model/animation.enum';
+import { RouteNames } from 'src/app/shared/model/route-names.enum';
 
 @Component({
   selector: 'app-quiz-menu',
@@ -63,6 +64,6 @@ export class QuizMenuComponent implements OnInit, OnDestroy {
 
   onBack(): void {
     this.quizService.reset();
-    this.router.navigate(['learn']);
+    this.router.navigate([RouteNames.learn]);
   }
 }

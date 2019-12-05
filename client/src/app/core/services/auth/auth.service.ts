@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { JwtHelperService } from "@auth0/angular-jwt";
 
 import { environment } from 'src/environments/environment';
+import { RouteNames } from 'src/app/shared/model/route-names.enum';
 import { Store } from 'src/app/shared/model/store.class';
 import { Auth } from 'src/app/shared/model/auth.class';
 
@@ -16,7 +18,10 @@ export class AuthService {
   private baseUrl = environment.baseUrl;
   private jwtHelper = new JwtHelperService();
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ) {
     this.store = new Store(new Auth('', '', false));
     const token = localStorage.getItem('token');
     if (token) {
@@ -33,7 +38,7 @@ export class AuthService {
         }
       })
     ).subscribe(
-      () => console.log('logged in successfully'),
+      () => this.router.navigate([`${RouteNames.account}/${RouteNames.profile}`]),
       error => console.log(error)
     );
   }
@@ -41,6 +46,7 @@ export class AuthService {
   logout(): void {
     this.store.set([], new Auth('', '', false));
     localStorage.removeItem('token');
+    this.router.navigate([`${RouteNames.account}/${RouteNames.auth}`])
   }
 
   register(model: any): void {
