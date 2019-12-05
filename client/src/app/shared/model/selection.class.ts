@@ -5,9 +5,9 @@ import { CheckboxStates } from '../components/nested-checkboxes/nested-checkboxe
 export class Selection {
 
   constructor(
-    public type: QuizType,
-    public quantity: QuizQuantity,
-    public countries: CheckboxStates
+    public type: QuizType = QuizType.flagsCountries,
+    public quantity: QuizQuantity = 5,
+    public countries: CheckboxStates = {}
   ) { }
 
 }

@@ -22,7 +22,7 @@ export class SelectService {
   };
 
   constructor(private countryService: CountryService) {
-    this.store = new Store(new Selection(QuizType.flagsCountries, 5, {}));
+    this.store = new Store(new Selection());
     this.countryService.getData()
       .pipe(
         first()

@@ -22,7 +22,7 @@ export class AuthService {
     private http: HttpClient,
     private router: Router
   ) {
-    this.store = new Store(new Auth('', '', false));
+    this.store = new Store(new Auth());
     const token = localStorage.getItem('token');
     if (token) {
       this.setData(token);
@@ -44,7 +44,7 @@ export class AuthService {
   }
 
   logout(): void {
-    this.store.set([], new Auth('', '', false));
+    this.store.set([], new Auth());
     localStorage.removeItem('token');
     this.router.navigate([`${RouteNames.account}/${RouteNames.auth}`])
   }
