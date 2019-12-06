@@ -5,9 +5,10 @@ import { LayoutModule } from '@angular/cdk/layout';
 
 import { AppRoutingModule } from '../app-routing.module';
 import { SharedModule } from '../shared/shared.module';
-import { ErrorInterceptorProvider } from './interceptors/error/error.interceptor';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { NavigationLinkComponent } from './components/navigation/navigation-link/navigation-link.component';
+import { AuthInterceptorProvider } from './interceptors/auth/auth.interceptor';
+import { ErrorInterceptorProvider } from './interceptors/error/error.interceptor';
 
 @NgModule({
   imports: [
@@ -28,6 +29,7 @@ import { NavigationLinkComponent } from './components/navigation/navigation-link
     NavigationLinkComponent
   ],
   providers: [
+    // AuthInterceptorProvider, // TODO: uncomment once needed
     ErrorInterceptorProvider
   ]
 })

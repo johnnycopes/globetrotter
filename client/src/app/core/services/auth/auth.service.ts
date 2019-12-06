@@ -31,10 +31,9 @@ export class AuthService {
 
   login(model: any): void {
     this.http.post(this.baseUrl + 'login', model).pipe(
-      map((response: any) => {
-        const user = response;
-        if (user) {
-          this.setData(user.token);
+      map((response: { token: string }) => {
+        if (response) {
+          this.setData(response.token);
         }
       })
     ).subscribe(
@@ -44,9 +43,12 @@ export class AuthService {
   }
 
   logout(): void {
+    this.store.get(['tokenExpirationTimer']).pipe(
+      map(timer => clearTimeout(timer))
+    );
     this.store.set([], new Auth());
     localStorage.removeItem('token');
-    this.router.navigate([`${RouteNames.account}/${RouteNames.auth}`])
+    this.router.navigate([`${RouteNames.account}/${RouteNames.auth}`]);
   }
 
   register(model: any): void {
@@ -63,9 +65,14 @@ export class AuthService {
   private setData(token: string): void {
     const decodedToken = this.jwtHelper.decodeToken(token);
     const tokenValid = !this.jwtHelper.isTokenExpired(token);
+    const tokenExpirationDate = this.jwtHelper.getTokenExpirationDate(token);
+    const timeUntilAutoLogout = tokenExpirationDate.getTime() - Date.now();
+    const timer = window.setTimeout(() => this.logout(), timeUntilAutoLogout);
+
     this.store.set(['username'], decodedToken.unique_name);
     this.store.set(['token'], token);
     this.store.set(['tokenValid'], tokenValid);
+    this.store.set(['tokenExpirationTimer'], timer);
     localStorage.setItem('token', token);
   }
 }
