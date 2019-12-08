@@ -1,6 +1,13 @@
 <div class="account"
   *ngIf="(authData$ | async) as authData"
   >
+  <app-alert class="alert"
+    *ngIf="firstLogin"
+    type="success"
+    [large]="true"
+    >
+    Signed in successfully
+  </app-alert>
   <div class="details">
     <div class="details__user">
       <app-icon class="avatar"

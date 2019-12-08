@@ -37,7 +37,10 @@ export class AuthService {
         }
       })
     ).subscribe(
-      () => {this.router.navigate([`${RouteNames.account}/${RouteNames.profile}`])},
+      () => {
+        this.router.navigate([`${RouteNames.account}/${RouteNames.profile}`],
+        { state: { firstLogin: true } }
+      )},
       error => console.log(error)
     );
   }

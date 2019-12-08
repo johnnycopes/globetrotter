@@ -1,5 +1,9 @@
 @import 'styles';
 
+.alert {
+  margin-bottom: map-get($spacing, 24);
+}
+
 .details {
   display: flex;
   justify-content: space-between;

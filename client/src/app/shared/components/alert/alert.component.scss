@@ -1,10 +1,26 @@
 @import 'styles';
 
+:host {
+  display: block;
+}
+
 .alert {
   padding: map-get($spacing, 8);
-  background: #ffc3cd;
-  color: #bd2222;
   border-radius: map-get($border, radius);
   font-size: map-get($font-size, 20);
   font-weight: map-get($font-weight, bold);
+
+  &--success {
+    color: #53831c;
+    background: #c4d9ac;
+  }
+
+  &--error {
+    background: #ffc3cd;
+    color: #bd2222;
+  }
+
+  &--large {
+    padding: map-get($spacing, 16);
+  }
 }

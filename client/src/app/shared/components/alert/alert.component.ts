@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+
+type AlertType = 'success' | 'error';
 
 @Component({
   selector: 'app-alert',
@@ -6,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./alert.component.scss']
 })
 export class AlertComponent implements OnInit {
+  @Input() type: AlertType = 'error';
+  @Input() large: boolean;
 
   constructor() { }
 
