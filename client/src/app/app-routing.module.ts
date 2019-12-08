@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { RouteNames } from './shared/model/route-names.enum';
 import { CountryService } from './core/services/country/country.service';
+import { AuthGuard } from './core/guards/auth/auth.guard';
 import { HomeComponent } from './features/home/home.component';
 import { PlaceholderComponent } from './shared/components/placeholder/placeholder.component';
 import { LearnComponent } from './features/learn/learn.component';
@@ -21,10 +22,10 @@ const routes: Routes = [
       { path: RouteNames.select, component: SelectComponent },
       { path: '', redirectTo: RouteNames.select, pathMatch: 'full' }
     ]},
-    { path: RouteNames.account, component: AccountComponent, children: [
+    { path: RouteNames.account, canActivate: [ AuthGuard ], component: AccountComponent, children: [
       { path: RouteNames.auth, component: AuthComponent },
       { path: RouteNames.profile, component: ProfileComponent },
-      { path: '', redirectTo: RouteNames.auth, pathMatch: 'full' }
+      { path: '', redirectTo: RouteNames.profile, pathMatch: 'full' }
     ]},
     { path: RouteNames.home, component: HomeComponent },
     { path: '**', redirectTo: '', pathMatch: 'full' }

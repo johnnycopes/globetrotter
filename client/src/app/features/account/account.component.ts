@@ -1,9 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Component } from '@angular/core';
 
-import { AuthService } from 'src/app/core/services/auth/auth.service';
-import { Auth } from 'src/app/shared/model/auth.class';
 import { fadeInAnimation } from 'src/app/shared/utility/animations';
 
 @Component({
@@ -12,18 +8,8 @@ import { fadeInAnimation } from 'src/app/shared/utility/animations';
   styleUrls: ['./account.component.scss'],
   animations: [fadeInAnimation]
 })
-export class AccountComponent implements OnInit {
-  authData$: Observable<Auth>;
+export class AccountComponent {
 
-  constructor(private authService: AuthService) { }
+  constructor() { }
 
-  ngOnInit() {
-    this.authData$ = this.authService.getData().pipe(
-      map(authData => authData)
-    );
-  }
-
-  logout(): void {
-    this.authService.logout();
-  }
 }

@@ -1,22 +1,20 @@
-<ng-container *ngIf="(authData$ | async) as authData">
-  <div class="account"
-    *ngIf="authData.tokenValid; else auth"
-    >
-    <div class="details">
-      <div class="details__user">
-        <app-icon class="avatar"
-          icon="User"
-          >
-        </app-icon>
-        <h1 class="username">
-          {{authData.username}}
-        </h1>
-      </div>
-      <app-button
-        buttonText="Sign Out"
-        (clicked)="logout()"
+<div class="account"
+  *ngIf="(authData$ | async) as authData"
+  >
+  <div class="details">
+    <div class="details__user">
+      <app-icon class="avatar"
+        icon="User"
         >
-      </app-button>
+      </app-icon>
+      <h1 class="username">
+        {{authData.username}}
+      </h1>
     </div>
+    <app-button
+      buttonText="Sign Out"
+      (clicked)="logout()"
+      >
+    </app-button>
   </div>
-</ng-container>
+</div>
