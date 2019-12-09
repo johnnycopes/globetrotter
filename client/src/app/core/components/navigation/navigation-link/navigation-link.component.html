@@ -2,14 +2,17 @@
   #link="routerLinkActive"
   [routerLink]="route"
   routerLinkActive="link--active"
-  [routerLinkActiveOptions]="{exact: exactPathMatch}"
+  [routerLinkActiveOptions]="{exact: selected}"
   >
   <app-icon class="link__logo"
+    *ngIf="icon"
     [icon]="icon"
     [highlighted]="link.isActive"
     >
   </app-icon>
-  <h3 class="link__text">
+  <h3 class="link__text"
+    *ngIf="name"
+    >
     {{name}}
   </h3>
 </a>

@@ -1,8 +1,11 @@
 @import 'styles';
 
-@mixin ng-content-slot {
-  width: 100%;
+$header-height: map-get($app, navigation-height);
+
+@mixin content-slot {
   height: 100%;
+  width: 100%;
+  padding: 0 map-get($spacing, 24);
 }
 
 .fixed-slideable-panel {
@@ -12,39 +15,27 @@
   height: 100vh;
   width: 100%;
   transform: translateY(-100vh);
-  font-family: $font-stack;
-  color: map-get($color, lightest);
+  display: flex;
+  flex-direction: column;
   background: map-get($color, dark);
   z-index: map-get($z-index, fixed-slideable-panel);
 
-  &__wrapper {
-    height: 100%;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-  }
-
-  &__content {
-    height: 100%;
+  &__offset,
+  &__header {
+    height: $header-height;
     width: 100%;
 
     & ::ng-deep > * {
-      @include ng-content-slot();
+      @include content-slot();
     }
   }
 
-  &__header {
-    height: map-get($spacing, 96);
+  &__content {
+    height: calc(100% - #{($header-height * 2)});
     width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: absolute;
-    bottom: 0;
 
     & ::ng-deep > * {
-      @include ng-content-slot();
+      @include content-slot();
     }
   }
 }

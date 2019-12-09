@@ -2,25 +2,8 @@
   *ngIf="(quiz$ | async) as quiz"
   [position]="menuPosition"
   >
-  <div class="outcome"
-    app-fixed-slideable-panel-content
-    *ngIf="quiz.isComplete"
-    >
-    <p class="text">
-      Quiz complete! You scored
-    </p>
-    <h1 class="accuracy">
-      {{quiz.accuracy}}%
-    </h1>
-    <app-button class="reset"
-      buttonStyle="primary"
-      buttonText="Reset"
-      (click)="onBack()"
-      >
-    </app-button>
-  </div>
   <div class="progress"
-    app-fixed-slideable-panel-header
+    header
     *ngIf="!quiz.isComplete"
     >
     <div class="back">
@@ -42,5 +25,22 @@
         Guess #{{quiz.guess}}
       </h4>
     </div>
+  </div>
+  <div class="outcome"
+    content
+    *ngIf="quiz.isComplete"
+    >
+    <p class="text">
+      Quiz complete! You scored
+    </p>
+    <h1 class="accuracy">
+      {{quiz.accuracy}}%
+    </h1>
+    <app-button class="reset"
+      buttonStyle="primary"
+      buttonText="Reset"
+      (click)="onBack()"
+      >
+    </app-button>
   </div>
 </app-fixed-slideable-panel>

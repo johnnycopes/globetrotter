@@ -1,8 +1,25 @@
-<app-navigation-link class="link"
-  *ngFor="let link of links"
-  [name]="link.name"
-  [icon]="link.icon"
-  [route]="link.route"
-  [exactPathMatch]="link.exactPathMatch"
-  >
-</app-navigation-link>
+<app-fixed-slideable-panel position="header">
+  <div class="content"
+    header
+    >
+    <app-navigation-link class="link"
+      [icon]="home.icon"
+      [route]="home.route"
+      [selected]="home.exactPathMatch"
+      >
+    </app-navigation-link>
+    <app-navigation-link class="link"
+      *ngFor="let link of links"
+      [name]="link.name"
+      [route]="link.route"
+      [selected]="link.exactPathMatch"
+      >
+    </app-navigation-link>
+    <app-navigation-link class="link"
+      [icon]="account.icon"
+      [route]="account.route"
+      [selected]="account.exactPathMatch"
+      >
+    </app-navigation-link>
+  </div>
+</app-fixed-slideable-panel>

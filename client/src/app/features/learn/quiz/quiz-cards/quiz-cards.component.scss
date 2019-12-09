@@ -4,7 +4,7 @@ $grid-gap: map-get($app, quiz-cards-grid-gap);
 
 .quiz-cards {
   margin-top: $grid-gap;
-  padding-bottom: calc((#{map-get($app, quiz-menu-height)} / 2) + #{$grid-gap});
+  padding-bottom: calc((#{map-get($app, navigation-height)} / 2) + #{$grid-gap});
   display: grid;
   justify-content: center;
   grid-template-columns: repeat(auto-fill, 300px);

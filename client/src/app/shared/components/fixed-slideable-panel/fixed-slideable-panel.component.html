@@ -1,12 +1,12 @@
 <div class="fixed-slideable-panel"
   [@position]="position"
   >
-  <div class="fixed-slideable-panel__wrapper">
-    <div class="fixed-slideable-panel__content">
-      <ng-content select="[app-fixed-slideable-panel-content]"></ng-content>
-    </div>
-    <div class="fixed-slideable-panel__header">
-      <ng-content select="[app-fixed-slideable-panel-header]"></ng-content>
-    </div>
+  <div class="fixed-slideable-panel__offset">
+  </div>
+  <div class="fixed-slideable-panel__content">
+    <ng-content select="[content]"></ng-content>
+  </div>
+  <div class="fixed-slideable-panel__header">
+    <ng-content select="[header]"></ng-content>
   </div>
 </div>

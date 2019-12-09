@@ -1,31 +1,9 @@
 @import 'styles';
 
-.outcome {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.text {
-  font-size: map-get($font-size, 36);
-  margin-bottom: map-get($spacing, 16);
-}
-
-.accuracy {
-  font-size: map-get($font-size, 128);
-  margin-bottom: map-get($spacing, 16);
-}
-
-.reset {
-  margin-right: map-get($spacing, 16);
-}
-
 .progress {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0 map-get($spacing, 24);
 }
 
 .back {
@@ -55,4 +33,25 @@
   &__tally {
     margin-bottom: map-get($spacing, 16);
   }
+}
+
+.outcome {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.text {
+  font-size: map-get($font-size, 36);
+  margin-bottom: map-get($spacing, 16);
+}
+
+.accuracy {
+  font-size: map-get($font-size, 128);
+  margin-bottom: map-get($spacing, 16);
+}
+
+.reset {
+  margin-right: map-get($spacing, 16);
 }

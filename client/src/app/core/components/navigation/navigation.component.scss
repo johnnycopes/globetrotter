@@ -1,15 +1,6 @@
 @import 'styles';
 
-:host {
+.content {
   display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: map-get($app, navigation-height);
-  background: map-get($color, darkest);
-  border-bottom: map-get($border, thin) solid map-get($color, dark);
-  z-index: map-get($z-index, navigation);
+  justify-content: space-between;
 }

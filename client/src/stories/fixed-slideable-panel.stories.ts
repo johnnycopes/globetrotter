@@ -10,11 +10,11 @@ import { FixedSlideablePanelComponent, FixedSlideablePanelPosition } from 'src/a
 const positions: FixedSlideablePanelPosition[] = ['offscreen', 'header', 'fullscreen'];
 const template = `
   <app-fixed-slideable-panel [position]="position">
-    <div app-fixed-slideable-panel-content>
-      Content section (fullscreen)
-    </div>
-    <div app-fixed-slideable-panel-header>
+    <div header>
       Header section (header)
+    </div>
+    <div content>
+      Content section (fullscreen)
     </div>
   </app-fixed-slideable-panel>
 `;
