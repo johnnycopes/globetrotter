@@ -1,0 +1,16 @@
+@import 'styles';
+
+.menu-link {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 map-get($spacing, 24);
+  border-top: map-get($border, thin) solid transparent;
+  border-bottom: map-get($border, thin) solid transparent;
+  cursor: pointer;
+
+  &--selected {
+    border-bottom-color: map-get($color, white);
+  }
+}

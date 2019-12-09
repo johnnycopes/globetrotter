@@ -11,6 +11,7 @@ import { FlipCardComponent } from './components/flip-card/flip-card.component';
 import { IconComponent } from './components/icon/icon.component';
 import { InputComponent } from './components/input/input.component';
 import { LoaderComponent } from './components/loader/loader.component';
+import { MenuLinkComponent } from './components/menu-link/menu-link.component';
 import { NestedCheckboxesComponent } from './components/nested-checkboxes/nested-checkboxes.component';
 import { NestedCheckboxesGroupComponent } from './components/nested-checkboxes-group/nested-checkboxes-group.component';
 import { PlaceholderComponent } from './components/placeholder/placeholder.component';
@@ -36,6 +37,7 @@ import { FormComponent } from './components/form/form.component';
     IconComponent,
     InputComponent,
     LoaderComponent,
+    MenuLinkComponent,
     NestedCheckboxesComponent,
     NestedCheckboxesGroupComponent,
     PlaceholderComponent,
@@ -55,6 +57,7 @@ import { FormComponent } from './components/form/form.component';
     IconComponent,
     InputComponent,
     LoaderComponent,
+    MenuLinkComponent,
     NestedCheckboxesComponent,
     NestedCheckboxesGroupComponent,
     PlaceholderComponent,

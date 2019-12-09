@@ -23,18 +23,6 @@
 
 .tab {
   flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  padding: 0 map-get($spacing, 24);
-  cursor: pointer;
-  border-top: map-get($border, thin) solid transparent;
-  border-bottom: map-get($border, thin) solid transparent;
-
-  &--selected {
-    border-bottom-color: map-get($color, white);
-  }
 }
 
 .launch {

@@ -16,13 +16,13 @@
         </app-icon>
       </div>
       <ul class="tabs">
-        <li class="tab"
+        <app-menu-link class="tab"
           *ngFor="let tab of tabs"
-          [ngClass]="{'tab--selected': tab.selected}"
-          (click)="tabset.onSelectTab(tab)"
+          [name]="tab.name"
+          [selected]="tab.selected"
+          (clicked)="tabset.onSelectTab(tab)"
           >
-          {{tab.name}}
-        </li>
+        </app-menu-link>
       </ul>
       <div class="launch">
         <app-button class="launch__button"
