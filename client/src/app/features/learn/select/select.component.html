@@ -4,18 +4,17 @@
   <app-fixed-slideable-panel class="tabset"
     [position]="tabsetControlsPosition"
     >
-    <div class="controls"
-      header
-      >
-      <div class="quit">
-        <app-icon class="quit__icon"
-          icon="Cancel"
-          [highlighted]="true"
-          (clicked)="onQuit()"
-          >
-        </app-icon>
-      </div>
-      <ul class="tabs">
+    <app-container header>
+      <app-icon class="quit"
+        left
+        icon="Cancel"
+        [highlighted]="true"
+        (clicked)="onQuit()"
+        >
+      </app-icon>
+      <ul class="tabs"
+        center
+        >
         <app-menu-link class="tab"
           *ngFor="let tab of tabs"
           [name]="tab.name"
@@ -24,16 +23,15 @@
           >
         </app-menu-link>
       </ul>
-      <div class="launch">
-        <app-button class="launch__button"
-          buttonText="Launch"
-          buttonStyle="primary"
-          [disabled]="!canStartQuiz"
-          (clicked)="onLaunch()"
-          >
-        </app-button>
-      </div>
-    </div>
+      <app-button
+        right
+        buttonText="Launch"
+        buttonStyle="primary"
+        [disabled]="!canStartQuiz"
+        (clicked)="onLaunch()"
+        >
+      </app-button>
+    </app-container>
   </app-fixed-slideable-panel>
 </ng-template>
 

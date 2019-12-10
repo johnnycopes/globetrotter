@@ -1,5 +1,8 @@
 <div class="icon"
-  [ngClass]="{'icon--highlighted': highlighted}"
+  [ngClass]="{
+    'icon--highlighted': highlighted,
+    'icon--clickable': clickable
+  }"
   (click)="onClick()"
   >
   <ng-container *ngTemplateOutlet="templatesDict[icon]">

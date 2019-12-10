@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { RouteNames } from 'src/app/shared/model/route-names.enum';
 
 interface NavigationLink {
   name?: string;
@@ -13,23 +16,11 @@ interface NavigationLink {
   styleUrls: ['./navigation.component.scss']
 })
 export class NavigationComponent implements OnInit {
-  home: NavigationLink;
-  account: NavigationLink;
   links: NavigationLink[];
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
-    this.home = {
-      icon: 'Globetrotter',
-      route: '/',
-      exactPathMatch: true
-    };
-    this.account = {
-      icon: 'User',
-      route: 'account',
-      exactPathMatch: false
-    };
     this.links = [
       {
         name: 'Explore',
@@ -47,6 +38,14 @@ export class NavigationComponent implements OnInit {
         exactPathMatch: false
       }
     ];
+  }
+
+  navigateToHome(): void {
+    this.router.navigate([RouteNames.home]);
+  }
+
+  navigateToAccount(): void {
+    this.router.navigate([RouteNames.account]);
   }
 
 }

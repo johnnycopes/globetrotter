@@ -2,22 +2,24 @@
   *ngIf="(quiz$ | async) as quiz"
   [position]="menuPosition"
   >
-  <div class="progress"
+  <app-container class="progress"
     header
     *ngIf="!quiz.isComplete"
     >
-    <div class="back">
-      <app-icon class="back__icon"
-        icon="Cancel"
-        [highlighted]="true"
-        (clicked)="onBack()"
-        >
-      </app-icon>
-    </div>
-    <p class="prompt">
+    <app-icon class="back"
+      left
+      icon="Cancel"
+      [highlighted]="true"
+      (clicked)="onBack()"
+      >
+    </app-icon>
+    <p class="prompt"
+      center>
       {{prompt$ | async}}
     </p>
-    <div class="details">
+    <div class="details"
+      right
+      >
       <h4 class="details__tally">
         {{quiz.countriesGuessed}} / {{quiz.totalCountries}}
       </h4>
@@ -25,7 +27,7 @@
         Guess #{{quiz.guess}}
       </h4>
     </div>
-  </div>
+  </app-container>
   <div class="outcome"
     content
     *ngIf="quiz.isComplete"

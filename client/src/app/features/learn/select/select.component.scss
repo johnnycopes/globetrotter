@@ -1,32 +1,15 @@
 @import 'styles';
 
-.controls {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 .quit {
-  flex: 1;
-
-  &__icon {
-    width: map-get($spacing, 24);
-    cursor: pointer;
-  }
+  width: map-get($spacing, 24);
 }
 
 .tabs {
-  flex: 1 0 10%;
   display: flex;
   height: 100%;
+  width: 100%;
 }
 
 .tab {
   flex: 1;
-}
-
-.launch {
-  flex: 1;
-  display: flex;
-  justify-content: flex-end;
 }

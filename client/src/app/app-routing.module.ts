@@ -14,7 +14,7 @@ import { AuthComponent } from './features/account/auth/auth.component';
 import { ProfileComponent } from './features/account/profile/profile.component';
 
 const routes: Routes = [
-  // { path: '', resolve: { countries: CountryService }, children: [
+  { path: '', resolve: { countries: CountryService }, children: [
     { path: RouteNames.explore, component: PlaceholderComponent },
     { path: RouteNames.prepare, component: PlaceholderComponent },
     { path: RouteNames.learn, component: LearnComponent, children: [
@@ -29,7 +29,7 @@ const routes: Routes = [
     ]},
     { path: RouteNames.home, component: HomeComponent },
     { path: '**', redirectTo: '', pathMatch: 'full' }
-  // ]}
+  ]}
 ];
 
 @NgModule({

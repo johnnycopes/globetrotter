@@ -1,29 +1,15 @@
 @import 'styles';
 
-.progress {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 .back {
-  flex: 1;
-
-  &__icon {
-    width: map-get($spacing, 24);
-    cursor: pointer;
-  }
+  width: map-get($spacing, 24);
 }
 
 .prompt {
   font-weight: map-get($font-weight, bold);
-  flex: 1;
-  text-align: center;
 }
 
 .details {
   font-size: map-get($font-size, 20);
-  flex: 1;
   text-align: right;
 
   @include tablet {

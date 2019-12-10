@@ -7,7 +7,6 @@ import { Component, Input } from '@angular/core';
 })
 export class NavigationLinkComponent {
   @Input() name: string;
-  @Input() icon: string;
   @Input() route: string;
   @Input() exactPathMatch: boolean;
 

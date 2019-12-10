@@ -22,6 +22,7 @@ export class IconComponent implements OnInit {
   @ViewChild('oceaniaTemplate', { static: true }) oceaniaTemplate: TemplateRef<any>;
   @ViewChild('userTemplate', { static: true }) userTemplate: TemplateRef<any>;
   templatesDict: _.Dictionary<TemplateRef<any>>;
+  clickable: boolean;
 
   constructor() { }
 
@@ -40,6 +41,7 @@ export class IconComponent implements OnInit {
       Oceania: this.oceaniaTemplate,
       User: this.userTemplate
     };
+    this.clickable = this.clicked.observers.length > 0;
   }
 
   onClick(): void {

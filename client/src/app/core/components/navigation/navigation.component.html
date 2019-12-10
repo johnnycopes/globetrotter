@@ -1,25 +1,29 @@
 <app-fixed-slideable-panel position="header">
-  <div class="content"
-    header
-    >
-    <app-navigation-link
-      [icon]="home.icon"
-      [route]="home.route"
-      [exactPathMatch]="home.exactPathMatch"
+  <app-container header>
+    <app-icon class="home"
+      left
+      icon="Globetrotter"
+      [highlighted]="true"
+      (clicked)="navigateToHome()"
       >
-    </app-navigation-link>
-    <app-navigation-link class="link"
-      *ngFor="let link of links"
-      [name]="link.name"
-      [route]="link.route"
-      [exactPathMatch]="link.exactPathMatch"
+    </app-icon>
+    <ul class="links"
+      center
       >
-    </app-navigation-link>
-    <app-navigation-link
-      [icon]="account.icon"
-      [route]="account.route"
-      [exactPathMatch]="account.exactPathMatch"
+      <app-navigation-link class="link"
+        *ngFor="let link of links"
+        [name]="link.name"
+        [route]="link.route"
+        [exactPathMatch]="link.exactPathMatch"
+        >
+      </app-navigation-link>
+    </ul>
+    <app-icon class="account"
+      right
+      icon="User"
+      [highlighted]="true"
+      (clicked)="navigateToAccount()"
       >
-    </app-navigation-link>
-  </div>
+    </app-icon>
+  </app-container>
 </app-fixed-slideable-panel>

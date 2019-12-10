@@ -16,4 +16,8 @@
       fill: map-get($color, lightest);
     }
   }
+
+  &--clickable {
+    cursor: pointer;
+  }
 }
