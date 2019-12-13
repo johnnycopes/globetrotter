@@ -8,7 +8,6 @@ import { SharedModule } from '../shared/shared.module';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { NavigationLinkComponent } from './components/navigation/navigation-link/navigation-link.component';
 import { AuthInterceptorProvider } from './interceptors/auth/auth.interceptor';
-import { ErrorInterceptorProvider } from './interceptors/error/error.interceptor';
 
 @NgModule({
   imports: [
@@ -30,7 +29,6 @@ import { ErrorInterceptorProvider } from './interceptors/error/error.interceptor
   ],
   providers: [
     // AuthInterceptorProvider, // TODO: uncomment once needed
-    ErrorInterceptorProvider
   ]
 })
 export class CoreModule { }

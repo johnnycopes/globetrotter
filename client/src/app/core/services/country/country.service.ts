@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Resolve } from '@angular/router';
-import { Observable } from 'rxjs';
-import { map, delay } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 import { COUNTRY_STATUSES } from 'src/app/shared/model/country-statuses.data';
@@ -10,6 +10,7 @@ import { Country } from 'src/app/shared/model/country.interface';
 import { Region } from 'src/app/shared/model/region.interface';
 import { Selection } from 'src/app/shared/model/selection.class';
 import { Store } from 'src/app/shared/model/store.class';
+import { ErrorService } from '../error/error.service';
 
 type CountriesBySubregion = _.Dictionary<Country[]>;
 type SubregionsByRegion = _.Dictionary<string[]>;
@@ -30,7 +31,8 @@ export class CountryService implements Resolve<Observable<Country[]>> {
   private readonly countriesApiUrl = 'https://restcountries.eu/rest/v2/all';
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private errorService: ErrorService
   ) {
     this.store = new Store({
       countries: [],
@@ -71,6 +73,10 @@ export class CountryService implements Resolve<Observable<Country[]>> {
   private initialize(): void {
     this.request = this.http.get<Country[]>(this.countriesApiUrl).pipe(
       // delay(200) // prevent the loader from flashing on the screen too quickly
+      catchError(error => {
+        this.errorService.setError(error.message);
+        return of([]);
+      })
     );
     this.request.subscribe(allCountries => {
       const countries = _.filter(allCountries, country => COUNTRY_STATUSES[country.name]);

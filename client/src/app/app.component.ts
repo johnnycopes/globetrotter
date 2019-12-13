@@ -8,6 +8,7 @@ import { QuizService } from 'src/app/core/services/quiz/quiz.service';
 import { CountryService } from './core/services/country/country.service';
 import { Country } from './shared/model/country.interface';
 import { RouteNames } from './shared/model/route-names.enum';
+import { ErrorService } from './core/services/error/error.service';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +16,7 @@ import { RouteNames } from './shared/model/route-names.enum';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  error$: Observable<string>;
   appLoadComplete$: Observable<Country[]>;
   quizComplete$: Observable<boolean>;
   showNavigation$: Observable<boolean>;
@@ -22,10 +24,12 @@ export class AppComponent implements OnInit {
   constructor(
     private router: Router,
     private countryService: CountryService,
-    private quizService: QuizService
+    private quizService: QuizService,
+    private errorService: ErrorService
   ) { }
 
   ngOnInit(): void {
+    this.error$ = this.errorService.getError();
     this.appLoadComplete$ = this.countryService.resolve();
     this.quizComplete$ = this.quizService.getQuiz().pipe(
       map(quiz => quiz.isComplete),
@@ -40,5 +44,4 @@ export class AppComponent implements OnInit {
       distinctUntilChanged()
     );
   }
-
 }

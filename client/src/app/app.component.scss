@@ -1,7 +1,10 @@
 @import 'styles';
 
 .content {
-  padding-top: map-get($app, navigation-height);
+
+  &--with-navigation {
+    padding-top: map-get($app, navigation-height);
+  }
 
   &__wrapper {
     @include quiz-width;

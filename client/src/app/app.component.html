@@ -1,8 +1,9 @@
-<app-navigation *ngIf="showNavigation$ | async">
-</app-navigation>
-
 <app-loader [isComplete$]="appLoadComplete$">
-  <div class="content">
+  <div class="content"
+    [ngClass]="{'content--with-navigation': (appLoadComplete$ | async)}"
+    >
+    <app-navigation *ngIf="showNavigation$ | async">
+    </app-navigation>
     <div class="content__wrapper"
       [ngClass]="{'content__wrapper--no-scroll': (quizComplete$ | async)}"
       >
@@ -10,3 +11,4 @@
     </div>
   </div>
 </app-loader>
+
