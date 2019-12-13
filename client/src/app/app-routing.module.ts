@@ -4,6 +4,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { RouteNames } from './shared/model/route-names.enum';
 import { CountryService } from './core/services/country/country.service';
 import { AuthGuard } from './core/guards/auth/auth.guard';
+import { ShellComponent } from './core/components/shell/shell.component';
+import { PageNotFoundComponent } from './core/components/page-not-found/page-not-found.component';
 import { HomeComponent } from './features/home/home.component';
 import { PlaceholderComponent } from './shared/components/placeholder/placeholder.component';
 import { LearnComponent } from './features/learn/learn.component';
@@ -14,7 +16,8 @@ import { AuthComponent } from './features/account/auth/auth.component';
 import { ProfileComponent } from './features/account/profile/profile.component';
 
 const routes: Routes = [
-  { path: '', resolve: { countries: CountryService }, children: [
+  {
+    path: '', component: ShellComponent, resolve: { countries: CountryService }, children: [
     { path: RouteNames.explore, component: PlaceholderComponent },
     { path: RouteNames.prepare, component: PlaceholderComponent },
     { path: RouteNames.learn, component: LearnComponent, children: [
@@ -27,9 +30,9 @@ const routes: Routes = [
       { path: RouteNames.profile, component: ProfileComponent },
       { path: '', redirectTo: RouteNames.profile, pathMatch: 'full' }
     ]},
-    { path: RouteNames.home, component: HomeComponent },
-    { path: '**', redirectTo: '', pathMatch: 'full' }
-  ]}
+    { path: RouteNames.home, component: HomeComponent }
+  ]},
+  { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({

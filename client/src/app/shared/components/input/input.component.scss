@@ -8,7 +8,6 @@
 
 label {
   margin-bottom: map-get($spacing, 8);
-  cursor: pointer;
   @include small-caps();
 }
 

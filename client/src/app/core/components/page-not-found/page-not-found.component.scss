@@ -1,0 +1,21 @@
+@import 'styles';
+
+:host {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.content {
+  text-align: center;
+}
+
+.header {
+  font-size: map-get($font-size, 48);
+  margin-bottom: map-get($spacing, 24);
+}
+
+.message {
+  margin-bottom: map-get($spacing, 32);
+}

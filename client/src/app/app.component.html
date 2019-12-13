@@ -1,14 +1,10 @@
-<app-loader [isComplete$]="appLoadComplete$">
-  <div class="content"
-    [ngClass]="{'content--with-navigation': (appLoadComplete$ | async)}"
-    >
-    <app-navigation *ngIf="showNavigation$ | async">
-    </app-navigation>
-    <div class="content__wrapper"
-      [ngClass]="{'content__wrapper--no-scroll': (quizComplete$ | async)}"
-      >
-      <router-outlet></router-outlet>
-    </div>
-  </div>
+<app-loader *ngIf="loading$ | async">
 </app-loader>
 
+<p *ngIf="error$ | async">
+  error! something went wrong.
+</p>
+
+<ng-container *ngIf="!(loading$ | async) && !(error$ | async)">
+  <router-outlet></router-outlet>
+</ng-container>

@@ -72,7 +72,7 @@ export class CountryService implements Resolve<Observable<Country[]>> {
 
   private initialize(): void {
     this.request = this.http.get<Country[]>(this.countriesApiUrl).pipe(
-      // delay(200) // prevent the loader from flashing on the screen too quickly
+      // delay(200), // prevent the loader from flashing on the screen too quickly
       catchError(error => {
         this.errorService.setError(error.message);
         return of([]);

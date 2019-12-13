@@ -5,8 +5,10 @@ import { LayoutModule } from '@angular/cdk/layout';
 
 import { AppRoutingModule } from '../app-routing.module';
 import { SharedModule } from '../shared/shared.module';
+import { ShellComponent } from './components/shell/shell.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { NavigationLinkComponent } from './components/navigation/navigation-link/navigation-link.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { AuthInterceptorProvider } from './interceptors/auth/auth.interceptor';
 
 @NgModule({
@@ -21,11 +23,15 @@ import { AuthInterceptorProvider } from './interceptors/auth/auth.interceptor';
     BrowserAnimationsModule,
     HttpClientModule,
     LayoutModule,
-    NavigationComponent
+    ShellComponent,
+    NavigationComponent,
+    PageNotFoundComponent
   ],
   declarations: [
+    ShellComponent,
     NavigationComponent,
-    NavigationLinkComponent
+    NavigationLinkComponent,
+    PageNotFoundComponent
   ],
   providers: [
     // AuthInterceptorProvider, // TODO: uncomment once needed

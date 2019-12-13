@@ -1,14 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router, RouterEvent, NavigationCancel, NavigationEnd, NavigationError } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map, filter, distinctUntilChanged } from 'rxjs/operators';
 import * as _ from 'lodash';
 
-import { QuizService } from 'src/app/core/services/quiz/quiz.service';
-import { CountryService } from './core/services/country/country.service';
-import { Country } from './shared/model/country.interface';
-import { RouteNames } from './shared/model/route-names.enum';
 import { ErrorService } from './core/services/error/error.service';
+import { map, distinctUntilChanged, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -16,32 +12,32 @@ import { ErrorService } from './core/services/error/error.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  loading$: Observable<boolean>;
   error$: Observable<string>;
-  appLoadComplete$: Observable<Country[]>;
-  quizComplete$: Observable<boolean>;
-  showNavigation$: Observable<boolean>;
 
   constructor(
     private router: Router,
-    private countryService: CountryService,
-    private quizService: QuizService,
     private errorService: ErrorService
   ) { }
 
   ngOnInit(): void {
+    this.loading$ = this.setLoadingState();
     this.error$ = this.errorService.getError();
-    this.appLoadComplete$ = this.countryService.resolve();
-    this.quizComplete$ = this.quizService.getQuiz().pipe(
-      map(quiz => quiz.isComplete),
-      distinctUntilChanged()
-    );
-    this.showNavigation$ = this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd),
-      map((navigationEnd: NavigationEnd) => {
-        const routeUrl = navigationEnd.urlAfterRedirects.split('/')[1];
-        return routeUrl !== RouteNames.learn;
+  }
+
+  private setLoadingState(): Observable<boolean> {
+    return this.router.events.pipe(
+      filter(event => event instanceof RouterEvent),
+      map((routerEvent: RouterEvent) => {
+        if (routerEvent instanceof NavigationEnd ||
+          routerEvent instanceof NavigationCancel ||
+          routerEvent instanceof NavigationError) {
+          return false;
+        }
+        return true;
       }),
       distinctUntilChanged()
     );
   }
+
 }

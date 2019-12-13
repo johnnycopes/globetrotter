@@ -1,0 +1,10 @@
+<app-navigation>
+</app-navigation>
+
+<div class="content">
+  <div class="content__wrapper"
+    [ngClass]="{'content__wrapper--no-scroll': (quizComplete$ | async)}"
+    >
+    <router-outlet></router-outlet>
+  </div>
+</div>

@@ -20,9 +20,6 @@ export class ErrorService implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    console.log('hello????');
-    console.log(this.store.data$.value);
-
     return next.handle(req).pipe(
       catchError(error => {
         if (error.status === 401) {
