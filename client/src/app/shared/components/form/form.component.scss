@@ -16,6 +16,10 @@ form {
   align-items: center;
 }
 
+.error {
+  margin-bottom: map-get($spacing, 24);
+}
+
 :host ::ng-deep app-input {
   width: 100%;
   margin-bottom: map-get($spacing, 24);

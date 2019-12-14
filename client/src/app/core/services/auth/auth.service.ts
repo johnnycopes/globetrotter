@@ -87,7 +87,6 @@ export class AuthService {
     const tokenExpirationDate = this.jwtHelper.getTokenExpirationDate(token);
     const timeUntilAutoLogout = tokenExpirationDate.getTime() - Date.now();
     const timer = window.setTimeout(() => this.logout(), timeUntilAutoLogout);
-
     this.store.set(['username'], decodedToken.unique_name);
     this.store.set(['token'], token);
     this.store.set(['tokenValid'], tokenValid);

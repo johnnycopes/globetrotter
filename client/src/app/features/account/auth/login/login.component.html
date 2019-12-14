@@ -1,5 +1,6 @@
 <app-form
   [formGroup]="form"
+  [error]="error$ | async"
   buttonText="Sign In"
   (submitted)="login($event)"
   >

@@ -10,6 +10,7 @@ import * as _ from 'lodash';
 export class FormComponent {
   @Input() formGroup: FormGroup;
   @Input() guidelines: string[];
+  @Input() error: string;
   @Input() buttonText: string;
   @Output() submitted = new EventEmitter<FormGroup>();
 

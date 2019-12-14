@@ -1,5 +1,6 @@
 <app-form
   [formGroup]="form"
+  [error]="error$ | async"
   [guidelines]="guidelines"
   buttonText="Register"
   (submitted)="register($event)"
