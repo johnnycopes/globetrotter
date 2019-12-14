@@ -9,6 +9,7 @@ import { ShellComponent } from './components/shell/shell.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { NavigationLinkComponent } from './components/navigation/navigation-link/navigation-link.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { ErrorComponent } from './components/error/error.component';
 import { AuthInterceptorProvider } from './interceptors/auth/auth.interceptor';
 
 @NgModule({
@@ -25,13 +26,15 @@ import { AuthInterceptorProvider } from './interceptors/auth/auth.interceptor';
     LayoutModule,
     ShellComponent,
     NavigationComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    ErrorComponent
   ],
   declarations: [
     ShellComponent,
     NavigationComponent,
     NavigationLinkComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    ErrorComponent
   ],
   providers: [
     // AuthInterceptorProvider, // TODO: uncomment once needed

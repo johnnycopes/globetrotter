@@ -1,5 +1,10 @@
 @import 'styles';
 
+.account {
+  min-height: map-get($app, page-height);
+  padding-top: map-get($spacing, 48);
+}
+
 .alert {
   margin-bottom: map-get($spacing, 24);
 }

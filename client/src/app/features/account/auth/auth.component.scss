@@ -4,4 +4,5 @@
   display: block;
   margin: 0 auto;
   max-width: map-get($spacing, 512);
+  margin-top: map-get($spacing, 48);
 }

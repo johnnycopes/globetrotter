@@ -24,17 +24,17 @@ export class NavigationComponent implements OnInit {
     this.links = [
       {
         name: 'Explore',
-        route: '/explore',
+        route: `/${RouteNames.explore}`,
         exactPathMatch: true
       },
       {
         name: 'Prepare',
-        route: '/prepare',
+        route: `/${RouteNames.prepare}`,
         exactPathMatch: true
       },
       {
         name: 'Learn',
-        route: '/learn',
+        route: `/${RouteNames.learn}`,
         exactPathMatch: false
       }
     ];

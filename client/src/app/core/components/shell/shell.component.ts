@@ -3,8 +3,8 @@ import { Observable } from 'rxjs';
 import { map, distinctUntilChanged } from 'rxjs/operators';
 
 import { QuizService } from '../../services/quiz/quiz.service';
-import { Country } from 'src/app/shared/model/country.interface';
-import { CountryService } from '../../services/country/country.service';
+import { RouteNames } from 'src/app/shared/model/route-names.enum';
+import { RouterService } from '../../services/router/router.service';
 
 @Component({
   selector: 'app-shell',
@@ -12,16 +12,18 @@ import { CountryService } from '../../services/country/country.service';
   styleUrls: ['./shell.component.scss']
 })
 export class ShellComponent implements OnInit {
-  appLoadComplete$: Observable<Country[]>;
+  showNavigation$: Observable<boolean>;
   quizComplete$: Observable<boolean>;
 
   constructor(
+    private routerService: RouterService,
     private quizService: QuizService,
-    private countryService: CountryService,
   ) { }
 
   ngOnInit(): void {
-    this.appLoadComplete$ = this.countryService.resolve();
+    this.showNavigation$ = this.routerService.getCurrentRoute().pipe(
+      map(currentRoute => currentRoute !== RouteNames.learn)
+    );
     this.quizComplete$ = this.quizService.getQuiz().pipe(
       map(quiz => quiz.isComplete),
       distinctUntilChanged()

@@ -1,6 +1,0 @@
-@import 'styles';
-
-:host {
-  min-height: map-get($app, page-height);
-  padding-top: map-get($spacing, 48);
-}

@@ -24,6 +24,15 @@ $breakpoints: (
   }
 }
 
+@mixin full-screen-page {
+  position: absolute;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 @mixin quiz-width {
   max-width: (map-get($app, quiz-card-width) * 5) + (map-get($app, quiz-cards-grid-gap) * 4);
   width: 90%;
