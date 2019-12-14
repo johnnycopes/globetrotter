@@ -48,12 +48,28 @@ export class ErrorService implements HttpInterceptor {
     );
   }
 
-  getError(): Observable<string> {
-    return this.store.get(['message']);
+  getGlobalError(): Observable<string> {
+    return this.store.get(['globalError']);
   }
 
-  setError(message: string): void {
-    this.store.set(['message'], message);
+  setGlobalError(error: string): void {
+    this.store.set(['globalError'], error);
+  }
+
+  getLoginError(): Observable<string> {
+    return this.store.get(['loginError']);
+  }
+
+  setLoginError(error: string): void {
+    this.store.set(['loginError'], error);
+  }
+
+  getRegisterError(): Observable<string> {
+    return this.store.get(['registerError']);
+  }
+
+  setRegisterError(error: string): void {
+    this.store.set(['registerError'], error);
   }
 }
 

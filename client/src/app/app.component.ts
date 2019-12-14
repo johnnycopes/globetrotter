@@ -21,6 +21,6 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading$ = this.routerService.getLoading();
-    this.error$ = this.errorService.getError();
+    this.error$ = this.errorService.getGlobalError();
   }
 }

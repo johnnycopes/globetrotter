@@ -1,3 +1,5 @@
 export class Error {
-  message: string = ''
+  globalError: string = '';
+  loginError: string = '';
+  registerError: string = '';
 }

@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { JwtHelperService } from "@auth0/angular-jwt";
+import * as _ from 'lodash';
 
 import { environment } from 'src/environments/environment';
 import { RouteNames } from 'src/app/shared/model/route-names.enum';
 import { Store } from 'src/app/shared/model/store.class';
 import { Auth } from 'src/app/shared/model/auth.class';
+import { ErrorService } from '../error/error.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +22,8 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private errorService: ErrorService
   ) {
     this.store = new Store(new Auth());
     const token = localStorage.getItem('token');
@@ -41,7 +44,11 @@ export class AuthService {
         this.router.navigate([`${RouteNames.account}/${RouteNames.profile}`],
         { state: { firstLogin: true } }
       )},
-      error => console.log(error)
+      (error: HttpErrorResponse) => {
+        if (error.status === 401) {
+          this.errorService.setLoginError('Incorrect password');
+        }
+      }
     );
   }
 
@@ -57,7 +64,16 @@ export class AuthService {
   register(model: any): void {
     this.http.post(this.baseUrl + 'register', model).subscribe(
       () => console.log('registered successfully'),
-      error => console.log(error)
+      (error: HttpErrorResponse) => {
+        if (error.status === 400) {
+          let message = error.error;
+          const multipleErrors = !!(_.get(error, 'error.errors'));
+          if (multipleErrors) {
+            message = 'Failed to register new account';
+          }
+          this.errorService.setRegisterError(message);
+        }
+      }
     );
   }
 
