@@ -1,10 +1,6 @@
 export class Auth {
-
-  constructor(
-    public username: string = '',
-    public token: string = '',
-    public tokenValid: boolean = false,
-    public tokenExpirationTimer: number = 0
-  ) { }
-
+  username: string = '';
+  token: string = '';
+  tokenValid: boolean = false;
+  tokenExpirationTimer: number = 0;
 }

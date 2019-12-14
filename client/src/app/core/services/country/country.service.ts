@@ -6,6 +6,7 @@ import { map, catchError } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 import { COUNTRY_STATUSES } from 'src/app/shared/model/country-statuses.data';
+import { Countries } from 'src/app/shared/model/countries.class';
 import { Country } from 'src/app/shared/model/country.interface';
 import { Region } from 'src/app/shared/model/region.interface';
 import { Selection } from 'src/app/shared/model/selection.class';
@@ -14,13 +15,6 @@ import { ErrorService } from '../error/error.service';
 
 type CountriesBySubregion = _.Dictionary<Country[]>;
 type SubregionsByRegion = _.Dictionary<string[]>;
-
-interface CountryStoreState {
-  countries: Country[];
-  countriesBySubregion: CountriesBySubregion;
-  subregionsByRegion: SubregionsByRegion;
-  formattedData: Region[];
-}
 
 @Injectable({
   providedIn: 'root'
@@ -34,12 +28,7 @@ export class CountryService implements Resolve<Observable<Country[]>> {
     private http: HttpClient,
     private errorService: ErrorService
   ) {
-    this.store = new Store({
-      countries: [],
-      countriesBySubregion: {},
-      subregionsByRegion: {},
-      formattedData: []
-    });
+    this.store = new Store(new Countries());
     this.initialize();
   }
 

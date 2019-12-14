@@ -21,19 +21,8 @@ export class RouterService {
     return this.store.get(['currentRoute']);
   }
 
-  getLoadingState(): Observable<boolean> {
-    return this.router.events.pipe(
-      filter(event => event instanceof RouterEvent),
-      map((routerEvent: RouterEvent) => {
-        if (routerEvent instanceof NavigationEnd ||
-          routerEvent instanceof NavigationCancel ||
-          routerEvent instanceof NavigationError) {
-          return false;
-        }
-        return true;
-      }),
-      distinctUntilChanged()
-    );
+  getLoading(): Observable<boolean> {
+    return this.store.get(['loading']);
   }
 
   private intialize(): void {
@@ -44,6 +33,18 @@ export class RouterService {
         return routeUrl;
       })
     ).subscribe(route => this.store.set(['currentRoute'], route));
+
+    this.router.events.pipe(
+      filter(event => event instanceof RouterEvent),
+      map((routerEvent: RouterEvent) => {
+        if (routerEvent instanceof NavigationEnd ||
+          routerEvent instanceof NavigationCancel ||
+          routerEvent instanceof NavigationError) {
+          return false;
+        }
+        return true;
+      })
+    ).subscribe(loading => this.store.set(['loading'], loading));
   }
 
 }
