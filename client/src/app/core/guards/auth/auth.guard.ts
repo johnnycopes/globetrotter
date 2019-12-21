@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
+import { CanActivate, CanActivateChild, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 
@@ -9,7 +9,7 @@ import { RouteNames } from 'src/app/shared/model/route-names.enum';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+export class AuthGuard implements CanActivate, CanActivateChild {
 
   constructor(
     private router: Router,
@@ -35,6 +35,13 @@ export class AuthGuard implements CanActivate {
         return true;
       })
     );
+  }
+
+  canActivateChild(next: ActivatedRouteSnapshot, state: RouterStateSnapshot):
+    Observable<boolean | UrlTree> |
+    Promise<boolean | UrlTree> |
+    boolean | UrlTree {
+      return this.canActivate(next, state);
   }
 
 }

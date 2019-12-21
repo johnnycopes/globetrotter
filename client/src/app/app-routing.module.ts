@@ -25,7 +25,7 @@ const routes: Routes = [
       { path: RouteNames.select, component: SelectComponent },
       { path: '', redirectTo: RouteNames.select, pathMatch: 'full' }
     ]},
-    { path: RouteNames.account, canActivate: [ AuthGuard ], component: AccountComponent, children: [
+    { path: RouteNames.account, canActivateChild: [ AuthGuard ], component: AccountComponent, children: [
       { path: RouteNames.auth, component: AuthComponent },
       { path: RouteNames.profile, component: ProfileComponent },
       { path: '', redirectTo: RouteNames.profile, pathMatch: 'full' }

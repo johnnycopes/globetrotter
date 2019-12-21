@@ -47,9 +47,11 @@ export class AuthService {
         { state: { firstLogin: true } }
       )},
       (error: HttpErrorResponse) => {
+        let message = error.error;
         if (error.status === 401) {
-          this.errorService.setLoginError('Incorrect password');
+          message = 'Incorrect password';
         }
+        this.errorService.setLoginError(message);
       }
     );
   }
