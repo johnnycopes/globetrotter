@@ -14,14 +14,14 @@ import { Auth } from 'src/app/shared/model/auth.class';
 })
 export class ProfileComponent implements OnInit {
   authData$: Observable<Auth>;
-  firstLogin: boolean;
+  alertMessage: string;
 
   constructor(
     private authService: AuthService,
     private router: Router
   ) {
     const navigation = this.router.getCurrentNavigation();
-    this.firstLogin = _.get(navigation, "extras.state.firstLogin", false);
+    this.alertMessage = _.get(navigation, "extras.state.alertMessage");
   }
 
   ngOnInit() {

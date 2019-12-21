@@ -2,11 +2,11 @@
   *ngIf="(authData$ | async) as authData"
   >
   <app-alert class="alert"
-    *ngIf="firstLogin"
+    *ngIf="alertMessage"
     type="success"
     [large]="true"
     >
-    Signed in successfully
+    {{alertMessage}}
   </app-alert>
   <div class="details">
     <div class="details__user">

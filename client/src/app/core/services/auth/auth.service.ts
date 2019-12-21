@@ -34,7 +34,7 @@ export class AuthService {
     }
   }
 
-  login(model: any): void {
+  login(model: any, alertMessage = 'Signed in successfully!'): void {
     this.http.post(this.baseUrl + 'login', model).pipe(
       map((response: { token: string }) => {
         if (response) {
@@ -43,9 +43,11 @@ export class AuthService {
       })
     ).subscribe(
       () => {
-        this.router.navigate([`${RouteNames.account}/${RouteNames.profile}`],
-        { state: { firstLogin: true } }
-      )},
+        this.router.navigate(
+          [`${RouteNames.account}/${RouteNames.profile}`],
+          { state: { alertMessage } }
+        );
+      },
       (error: HttpErrorResponse) => {
         let message = error.error;
         if (error.status === 401) {
@@ -67,7 +69,7 @@ export class AuthService {
 
   register(model: any): void {
     this.http.post(this.baseUrl + 'register', model).subscribe(
-      () => console.log('registered successfully'),
+      () => this.login(model, 'Registered successfully!'),
       (error: HttpErrorResponse) => {
         if (error.status === 400) {
           let message = error.error;
