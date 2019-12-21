@@ -54,7 +54,7 @@ export class RegisterComponent {
   }
 
   register(form: FormGroup): void {
-    this.authService.register(form.value);
+    this.authService.register(form);
   }
 
 }

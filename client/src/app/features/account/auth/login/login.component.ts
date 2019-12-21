@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
   }
 
   login(form: FormGroup): void {
-    this.authService.login(form.value);
+    this.authService.login(form);
   }
 
 }

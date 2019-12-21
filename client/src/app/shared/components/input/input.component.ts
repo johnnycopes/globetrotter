@@ -9,7 +9,4 @@ export class InputComponent {
   @Input() label: string;
   @Input() showError: boolean;
   @Input() errorMessage: string;
-
-  constructor() { }
-
 }

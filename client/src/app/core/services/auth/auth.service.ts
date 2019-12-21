@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { AbstractControl } from '@angular/forms';
+import { AbstractControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -13,6 +13,7 @@ import { ErrorMessages } from 'src/app/shared/model/error-messages.enum';
 import { Store } from 'src/app/shared/model/store.class';
 import { Auth } from 'src/app/shared/model/auth.class';
 import { ErrorService } from '../error/error.service';
+import { Login, AuthCreds } from 'src/app/shared/model/auth-creds.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +35,13 @@ export class AuthService {
     }
   }
 
-  login(model: any, alertMessage = 'Signed in successfully!'): void {
+  getData(): Observable<Auth> {
+    return this.store.get([]);
+  }
+
+  login(form: FormGroup, alertMessage = 'Signed in successfully!'): void {
+    form.disable();
+    const model: AuthCreds = form.value;
     this.http.post(this.baseUrl + 'login', model).pipe(
       map((response: { token: string }) => {
         if (response) {
@@ -49,6 +56,7 @@ export class AuthService {
         );
       },
       (error: HttpErrorResponse) => {
+        form.enable();
         let message = error.error;
         if (error.status === 401) {
           message = 'Incorrect password';
@@ -67,9 +75,11 @@ export class AuthService {
     this.router.navigate([`${RouteNames.account}/${RouteNames.auth}`]);
   }
 
-  register(model: any): void {
+  register(form: FormGroup): void {
+    form.disable();
+    const model: AuthCreds = form.value;
     this.http.post(this.baseUrl + 'register', model).subscribe(
-      () => this.login(model, 'Registered successfully!'),
+      () => this.login(form, 'Registered successfully!'),
       (error: HttpErrorResponse) => {
         if (error.status === 400) {
           let message = error.error;
@@ -79,12 +89,9 @@ export class AuthService {
           }
           this.errorService.setRegisterError(message);
         }
+        form.enable();
       }
     );
-  }
-
-  getData(): Observable<Auth> {
-    return this.store.get([]);
   }
 
   getInputError(input: AbstractControl, inputName: string): Observable<string> {

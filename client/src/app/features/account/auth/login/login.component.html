@@ -6,8 +6,8 @@
   >
   <app-input
     label="Username"
-    [showError]="!username.valid && username.touched"
     errorMessage="Username is required"
+    [showError]="username.status === 'INVALID' && username.touched"
     >
     <input
       id="Username"
@@ -18,7 +18,7 @@
   <app-input
     label="Password"
     errorMessage="Password is required"
-    [showError]="!password.valid && password.touched"
+    [showError]="password.status === 'INVALID' && password.touched"
     >
     <input
       id="Password"

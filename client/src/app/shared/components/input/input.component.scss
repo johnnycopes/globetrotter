@@ -25,6 +25,11 @@ label {
   &:focus {
     border-color: map-get($color, medium);
   }
+
+  &:disabled {
+    background: map-get($color, medium);
+    cursor: not-allowed;
+  }
 }
 
 .error {
