@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
-
-import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { Observable } from 'rxjs';
 
+import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { ErrorService } from 'src/app/core/services/error/error.service';
 
 @Component({
@@ -13,7 +12,7 @@ import { ErrorService } from 'src/app/core/services/error/error.service';
 })
 export class LoginComponent implements OnInit {
   form: FormGroup;
-  error$: Observable<string>;
+  formError$: Observable<string>;
 
   constructor(
     private authService: AuthService,
@@ -34,7 +33,7 @@ export class LoginComponent implements OnInit {
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
-    this.error$ = this.errorService.getLoginError();
+    this.formError$ = this.errorService.getLoginError();
   }
 
   login(form: FormGroup): void {

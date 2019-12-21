@@ -1,6 +1,6 @@
 <app-form
   [formGroup]="form"
-  [error]="error$ | async"
+  [error]="formError$ | async"
   buttonText="Sign In"
   (submitted)="login($event)"
   >
@@ -17,8 +17,8 @@
   </app-input>
   <app-input
     label="Password"
-    [showError]="!password.valid && password.touched"
     errorMessage="Password is required"
+    [showError]="!password.valid && password.touched"
     >
     <input
       id="Password"

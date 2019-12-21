@@ -7,8 +7,8 @@
   >
   <app-input
     label="Username"
-    [showError]="!username.valid && username.touched"
     errorMessage="Username is required"
+    [showError]="!username.valid && username.touched"
     >
     <input
       id="Username"
@@ -18,8 +18,8 @@
   </app-input>
   <app-input
     label="Password"
+    [errorMessage]="passwordError$ | async"
     [showError]="!password.valid && password.touched"
-    errorMessage="Password is required"
     >
     <input
       id="Password"
@@ -29,13 +29,12 @@
   </app-input>
   <app-input
     label="Confirm Password"
+    errorMessage="Passwords don't match"
     [showError]="
       form.errors?.differentPasswords &&
       password.touched &&
       confirmPassword.touched
-    "
-    errorMessage="Passwords don't match"
-    >
+    ">
     <input
       id="Confirm Password"
       type="password"

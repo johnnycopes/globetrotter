@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -8,6 +9,7 @@ import * as _ from 'lodash';
 
 import { environment } from 'src/environments/environment';
 import { RouteNames } from 'src/app/shared/model/route-names.enum';
+import { ErrorMessages } from 'src/app/shared/model/error-messages.enum';
 import { Store } from 'src/app/shared/model/store.class';
 import { Auth } from 'src/app/shared/model/auth.class';
 import { ErrorService } from '../error/error.service';
@@ -79,6 +81,19 @@ export class AuthService {
 
   getData(): Observable<Auth> {
     return this.store.get([]);
+  }
+
+  getInputError(input: AbstractControl, inputName: string): Observable<string> {
+    return input.statusChanges.pipe(
+      map(() => {
+        if (input.errors) {
+          const inputError = Object.keys(input.errors)[0];
+          const errorMessage = `${inputName} is ${ErrorMessages[inputError]}`;
+          return errorMessage;
+        }
+        return '';
+      })
+    );
   }
 
   private setData(token: string): void {

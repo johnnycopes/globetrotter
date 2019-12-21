@@ -9,43 +9,11 @@ import { Error } from 'src/app/shared/model/error.class';
 @Injectable({
   providedIn: 'root'
 })
-export class ErrorService implements HttpInterceptor {
+export class ErrorService {
   private readonly store: Store;
 
   constructor() {
     this.store = new Store(new Error());
-  }
-
-  intercept(
-    req: HttpRequest<any>,
-    next: HttpHandler
-  ): Observable<HttpEvent<any>> {
-    return next.handle(req).pipe(
-      catchError(error => {
-        if (error.status === 401) {
-          return throwError(error.error.title);
-        }
-        if (error instanceof HttpErrorResponse) {
-          this.store.set(['message'], 'bad bad bad');
-          return throwError('bad bad bad');
-          // const applicationError = error.headers.get('Application-Error');
-          // if (applicationError) {
-          //   return throwError(applicationError);
-          // }
-          // const serverError = error.error;
-          // let modelStateErrors = '';
-          // if (serverError.errors && typeof serverError.errors === 'object') {
-          //   for (const key in serverError.errors) {
-          //     if (serverError.errors[key]) {
-          //       modelStateErrors += serverError.errors[key] + '\n';
-          //     }
-          //   }
-          // }
-          // return throwError(modelStateErrors || serverError || 'Unknown Server Error');
-        }
-      }),
-      tap(() => this.store.set(['message'], 'thing?'))
-    );
   }
 
   getGlobalError(): Observable<string> {

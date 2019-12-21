@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { CustomValidators } from 'src/app/shared/utility/custom-validators';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { ErrorService } from 'src/app/core/services/error/error.service';
+import { Api } from 'src/app/shared/model/api.enum';
 
 @Component({
   selector: 'app-register',
@@ -14,7 +15,8 @@ import { ErrorService } from 'src/app/core/services/error/error.service';
 export class RegisterComponent {
   guidelines: string[];
   form: FormGroup;
-  error$: Observable<string>;
+  formError$: Observable<string>;
+  passwordError$: Observable<string>;
 
   constructor(
     private authService: AuthService,
@@ -36,15 +38,19 @@ export class RegisterComponent {
 
   ngOnInit(): void {
     this.guidelines = [
-      'Username must be between 8 and 20 characters',
-      'Password must be between 8 and 20 characters'
+      `Password must be between ${Api.minLength} and ${Api.maxLength} characters`
     ];
     this.form = this.formBuilder.group({
       username: ['', Validators.required],
-      password: ['', Validators.required],
+      password: ['', [
+        Validators.required,
+        Validators.minLength(Api.minLength),
+        Validators.maxLength(Api.maxLength)
+      ]],
       confirmPassword: ['', Validators.required]
     }, { validators: CustomValidators.checkPasswords });
-    this.error$ = this.errorService.getRegisterError();
+    this.formError$ = this.errorService.getRegisterError();
+    this.passwordError$ = this.authService.getInputError(this.password, 'Password');
   }
 
   register(form: FormGroup): void {
