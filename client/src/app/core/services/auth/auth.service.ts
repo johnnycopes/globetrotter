@@ -13,7 +13,7 @@ import { ErrorMessages } from 'src/app/shared/model/error-messages.enum';
 import { Store } from 'src/app/shared/model/store.class';
 import { Auth } from 'src/app/shared/model/auth.class';
 import { ErrorService } from '../error/error.service';
-import { Login, AuthCreds } from 'src/app/shared/model/auth-creds.interface';
+import { AuthCreds } from 'src/app/shared/model/auth-creds.interface';
 
 @Injectable({
   providedIn: 'root'

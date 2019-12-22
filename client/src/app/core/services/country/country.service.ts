@@ -63,7 +63,6 @@ export class CountryService implements Resolve<Observable<Country[]>> {
     this.request = this.http.get<Country[]>(this.countriesApiUrl).pipe(
       // delay(200), // prevent the loader from flashing on the screen too quickly
       catchError(error => {
-        // this.errorService.setGlobalError(error.message);
         return of([]);
       })
     );
