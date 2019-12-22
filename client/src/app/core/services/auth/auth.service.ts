@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, startWith } from 'rxjs/operators';
 import { JwtHelperService } from "@auth0/angular-jwt";
 import * as _ from 'lodash';
 
@@ -54,6 +54,8 @@ export class AuthService {
           [`${RouteNames.account}/${RouteNames.profile}`],
           { state: { alertMessage } }
         );
+        form.reset();
+        this.errorService.setLoginError('');
       },
       (error: HttpErrorResponse) => {
         form.enable();
@@ -79,7 +81,10 @@ export class AuthService {
     form.disable();
     const model: AuthCreds = form.value;
     this.http.post(this.baseUrl + 'register', model).subscribe(
-      () => this.login(form, 'Registered successfully!'),
+      () => {
+        this.login(form, 'Registered successfully!');
+        this.errorService.setRegisterError('');
+      },
       (error: HttpErrorResponse) => {
         if (error.status === 400) {
           let message = error.error;
@@ -96,6 +101,7 @@ export class AuthService {
 
   getInputError(input: AbstractControl, inputName: string): Observable<string> {
     return input.statusChanges.pipe(
+      startWith(''), // fire observable on load for cases where input is touched but not changed
       map(() => {
         if (input.errors) {
           const inputError = Object.keys(input.errors)[0];
