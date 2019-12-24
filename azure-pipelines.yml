@@ -15,6 +15,19 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+- task: Npm@1
+  displayName: 'Install front-end packages'
+  inputs:
+    command: 'install'
+    workingDir: 'client'
+
+- task: Npm@1
+  displayName: 'Build Angular project'
+  inputs:
+    command: 'custom'
+    workingDir: 'client'
+    customCommand: 'build'
+
 - task: NuGetToolInstaller@1
 
 - task: NuGetCommand@2
