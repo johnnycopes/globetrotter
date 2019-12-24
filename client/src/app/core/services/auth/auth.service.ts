@@ -20,7 +20,7 @@ import { AuthCreds } from 'src/app/shared/model/auth-creds.interface';
 })
 export class AuthService {
   private readonly store: Store;
-  private baseUrl = environment.baseUrl;
+  private apiUrl = environment.apiUrl + 'auth/';
   private jwtHelper = new JwtHelperService();
 
   constructor(
@@ -42,7 +42,7 @@ export class AuthService {
   login(form: FormGroup, alertMessage = 'Signed in successfully!'): void {
     form.disable();
     const model: AuthCreds = form.value;
-    this.http.post(this.baseUrl + 'login', model).pipe(
+    this.http.post(this.apiUrl + 'login', model).pipe(
       map((response: { token: string }) => {
         if (response) {
           this.setData(response.token);
@@ -80,7 +80,7 @@ export class AuthService {
   register(form: FormGroup): void {
     form.disable();
     const model: AuthCreds = form.value;
-    this.http.post(this.baseUrl + 'register', model).subscribe(
+    this.http.post(this.apiUrl + 'register', model).subscribe(
       () => {
         this.login(form, 'Registered successfully!');
         this.errorService.setRegisterError('');
