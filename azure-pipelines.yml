@@ -6,6 +6,9 @@
 trigger:
 - master
 
+variables:
+  buildConfiguration: 'Release'
+
 stages:
 - stage: 'Build'
   displayName: 'Build the web application'
@@ -18,7 +21,6 @@ stages:
     variables:
       solution: '**/*.sln'
       buildPlatform: 'Any CPU'
-      buildConfiguration: 'Release'
       dotnetSdkVersion: '3.1.x'
 
     steps:
