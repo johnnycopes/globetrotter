@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router, NavigationEnd, RouterEvent, NavigationCancel, NavigationError } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map, filter, distinctUntilChanged } from 'rxjs/operators';
+import { map, filter } from 'rxjs/operators';
 
 import { Store } from 'src/app/shared/model/store.class';
 import { RouterInfo } from 'src/app/shared/model/router-info.class';

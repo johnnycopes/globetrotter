@@ -24,7 +24,6 @@ $tab-border: map-get($border, thin) solid map-get($color, dark);
 
   &:last-of-type {
     border-right: $tab-border;
-    border-left: 0;
     border-top-right-radius: map-get($border, radius);
     border-bottom-right-radius: map-get($border, radius);
   }

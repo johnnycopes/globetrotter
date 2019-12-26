@@ -8,3 +8,9 @@
     <router-outlet></router-outlet>
   </div>
 </div>
+
+<app-modal *ngIf="showModal$ | async"
+  (confirmed)="onModalConfirm()"
+  >
+  {{modalMessage$ | async}}
+</app-modal>

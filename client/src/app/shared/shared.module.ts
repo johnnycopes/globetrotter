@@ -14,6 +14,7 @@ import { IconComponent } from './components/icon/icon.component';
 import { InputComponent } from './components/input/input.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { MenuLinkComponent } from './components/menu-link/menu-link.component';
+import { ModalComponent } from './components/modal/modal.component';
 import { NestedCheckboxesComponent } from './components/nested-checkboxes/nested-checkboxes.component';
 import { NestedCheckboxesGroupComponent } from './components/nested-checkboxes-group/nested-checkboxes-group.component';
 import { PlaceholderComponent } from './components/placeholder/placeholder.component';
@@ -40,6 +41,7 @@ import { TabsetComponent } from './components/tabset/tabset.component';
     InputComponent,
     LoaderComponent,
     MenuLinkComponent,
+    ModalComponent,
     NestedCheckboxesComponent,
     NestedCheckboxesGroupComponent,
     PlaceholderComponent,
@@ -60,6 +62,7 @@ import { TabsetComponent } from './components/tabset/tabset.component';
     InputComponent,
     LoaderComponent,
     MenuLinkComponent,
+    ModalComponent,
     NestedCheckboxesComponent,
     NestedCheckboxesGroupComponent,
     PlaceholderComponent,
