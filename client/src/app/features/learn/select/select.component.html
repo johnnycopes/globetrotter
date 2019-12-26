@@ -12,17 +12,15 @@
         (clicked)="onQuit()"
         >
       </app-icon>
-      <ul class="tabs"
-        center
-        >
-        <app-menu-link class="tab"
+      <ng-container center>
+        <app-menu-link
           *ngFor="let tab of tabs"
           [name]="tab.name"
           [selected]="tab.selected"
           (clicked)="tabset.onSelectTab(tab)"
           >
         </app-menu-link>
-      </ul>
+      </ng-container>
       <app-button
         right
         buttonText="Launch"

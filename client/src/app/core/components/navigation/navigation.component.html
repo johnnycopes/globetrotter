@@ -7,17 +7,15 @@
       (clicked)="navigateToHome()"
       >
     </app-icon>
-    <ul class="links"
-      center
-      >
-      <app-navigation-link class="link"
+    <ng-container center>
+      <app-navigation-link
         *ngFor="let link of links"
         [name]="link.name"
         [route]="link.route"
         [exactPathMatch]="link.exactPathMatch"
         >
       </app-navigation-link>
-    </ul>
+    </ng-container>
     <app-icon class="account"
       right
       icon="User"

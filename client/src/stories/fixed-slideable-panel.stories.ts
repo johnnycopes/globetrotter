@@ -6,13 +6,32 @@ import {
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { FixedSlideablePanelComponent, FixedSlideablePanelPosition } from 'src/app/shared/components/fixed-slideable-panel/fixed-slideable-panel.component';
+import { ContainerComponent } from 'src/app/shared/components/container/container.component';
 
 const positions: FixedSlideablePanelPosition[] = ['offscreen', 'header', 'fullscreen'];
-const template = `
+const simpleTemplate = `
   <app-fixed-slideable-panel [position]="position">
     <div header>
       Header section (header)
     </div>
+    <div content>
+      Content section (fullscreen)
+    </div>
+  </app-fixed-slideable-panel>
+`;
+const complexTemplate = `
+  <app-fixed-slideable-panel [position]="position">
+    <app-container header>
+      <p left>
+        Left
+      </p>
+      <h1 center>
+        Center
+      </h1>
+      <p right>
+        Right
+      </p>
+    </app-container>
     <div content>
       Content section (fullscreen)
     </div>
@@ -24,12 +43,12 @@ storiesOf('Shared | Fixed Slideable Panel', module)
   .addDecorator(
     moduleMetadata({
       imports: [BrowserAnimationsModule],
-      declarations: [FixedSlideablePanelComponent]
+      declarations: [FixedSlideablePanelComponent, ContainerComponent]
     })
   )
   .add('offscreen', () => {
     return {
-      template,
+      template: simpleTemplate,
       props: {
         position: select('position', positions, 'offscreen')
       }
@@ -37,7 +56,15 @@ storiesOf('Shared | Fixed Slideable Panel', module)
   })
   .add('header', () => {
     return {
-      template,
+      template: simpleTemplate,
+      props: {
+        position: select('position', positions, 'header')
+      }
+    };
+  })
+  .add('header with container', () => {
+    return {
+      template: complexTemplate,
       props: {
         position: select('position', positions, 'header')
       }
@@ -45,7 +72,7 @@ storiesOf('Shared | Fixed Slideable Panel', module)
   })
   .add('fullscreen', () => {
     return {
-      template,
+      template: simpleTemplate,
       props: {
         position: select('position', positions, 'fullscreen')
       }

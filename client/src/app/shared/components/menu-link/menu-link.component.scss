@@ -1,5 +1,10 @@
 @import 'styles';
 
+:host {
+  height: 100%;
+  flex: 1;
+}
+
 .menu-link {
   height: 100%;
   display: flex;

@@ -3,13 +3,3 @@
 .quit {
   width: map-get($spacing, 24);
 }
-
-.tabs {
-  display: flex;
-  height: 100%;
-  width: 100%;
-}
-
-.tab {
-  flex: 1;
-}

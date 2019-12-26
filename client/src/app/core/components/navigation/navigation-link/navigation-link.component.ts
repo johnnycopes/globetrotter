@@ -9,7 +9,4 @@ export class NavigationLinkComponent {
   @Input() name: string;
   @Input() route: string;
   @Input() exactPathMatch: boolean;
-
-  constructor() { }
-
 }

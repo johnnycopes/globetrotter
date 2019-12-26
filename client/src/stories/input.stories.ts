@@ -18,16 +18,16 @@ storiesOf('Shared | Input', module)
   .add('text', () => {
     return {
       template: `
-      <app-input
-        [label]="label"
-        [errorMessage]="errorMessage"
-        [showError]="showError"
-        >
-        <input
-          [id]="label"
-          type="text"
-        />
-      </app-input>
+        <app-input
+          [label]="label"
+          [errorMessage]="errorMessage"
+          [showError]="showError"
+          >
+          <input
+            [id]="label"
+            type="text"
+          />
+        </app-input>
       `,
       props: {
         label: text('label', 'Username'),
@@ -39,16 +39,16 @@ storiesOf('Shared | Input', module)
   .add('with error', () => {
     return {
       template: `
-      <app-input
-        [label]="label"
-        [errorMessage]="errorMessage"
-        [showError]="showError"
-        >
-        <input
-          [id]="label"
-          type="password"
-        />
-      </app-input>
+        <app-input
+          [label]="label"
+          [errorMessage]="errorMessage"
+          [showError]="showError"
+          >
+          <input
+            [id]="label"
+            type="password"
+          />
+        </app-input>
       `,
       props: {
         label: text('label', 'Password'),
