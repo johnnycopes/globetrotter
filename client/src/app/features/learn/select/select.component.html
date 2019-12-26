@@ -13,12 +13,12 @@
         >
       </app-icon>
       <ng-container center>
-        <li appMenuLink
+        <li appLink
           *ngFor="let tab of tabs"
-          [name]="tab.name"
           [selected]="tab.selected"
           (click)="tabset.onSelectTab(tab)"
           >
+          {{tab.name}}
         </li>
       </ng-container>
       <app-button

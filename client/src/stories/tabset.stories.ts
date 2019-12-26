@@ -10,7 +10,7 @@ import { TabComponent } from 'src/app/shared/components/tabset/tab/tab.component
 import { FixedSlideablePanelComponent } from 'src/app/shared/components/fixed-slideable-panel/fixed-slideable-panel.component';
 import { ContainerComponent } from 'src/app/shared/components/container/container.component';
 import { IconComponent } from 'src/app/shared/components/icon/icon.component';
-import { MenuLinkComponent } from 'src/app/shared/components/menu-link/menu-link.component';
+import { LinkComponent } from 'src/app/shared/components/link/link.component';
 import { ButtonComponent } from 'src/app/shared/components/button/button.component';
 
 const visibilityStates: TabsetContentVisibility[] = ['visible', 'invisible'];
@@ -26,7 +26,7 @@ storiesOf('Shared | Tabset', module)
         FixedSlideablePanelComponent,
         ContainerComponent,
         IconComponent,
-        MenuLinkComponent,
+        LinkComponent,
         ButtonComponent
       ]
     })
@@ -68,12 +68,12 @@ storiesOf('Shared | Tabset', module)
                 >
               </app-icon>
               <ng-container center>
-                <li appMenuLink
+                <li appLink
                   *ngFor="let tab of tabs"
-                  [name]="tab.name"
                   [selected]="tab.selected"
                   (click)="tabset.onSelectTab(tab)"
                   >
+                  {{tab.name}}
                 </li>
               </ng-container>
               <app-button

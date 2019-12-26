@@ -1,33 +1,31 @@
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 import {
   withKnobs,
-  text,
   boolean
 } from '@storybook/addon-knobs/angular';
 
-import { MenuLinkComponent } from 'src/app/shared/components/menu-link/menu-link.component';
+import { LinkComponent } from 'src/app/shared/components/link/link.component';
 import { FixedSlideablePanelComponent } from 'src/app/shared/components/fixed-slideable-panel/fixed-slideable-panel.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-storiesOf('Shared | Menu Link', module)
+storiesOf('Shared | Link', module)
   .addDecorator(withKnobs)
   .addDecorator(
     moduleMetadata({
       imports: [BrowserAnimationsModule],
-      declarations: [MenuLinkComponent, FixedSlideablePanelComponent]
+      declarations: [LinkComponent, FixedSlideablePanelComponent]
     })
   )
   .add('alone', () => {
     return {
       template: `
-        <li appMenuLink
-          [name]="name"
+        <li appLink
           [selected]="selected"
           >
+          Type
         </li>
       `,
       props: {
-        name: text('name', 'Quantity'),
         selected: boolean('selected', true),
       }
     };
@@ -41,16 +39,15 @@ storiesOf('Shared | Menu Link', module)
           <div header
             style="width: 200px"
             >
-            <li appMenuLink
-              [name]="name"
+            <li appLink
               [selected]="selected"
               >
+              Quanitity
             </li>
           </div>
         </app-fixed-slideable-panel>
       `,
       props: {
-        name: text('name', 'Quantity'),
         selected: boolean('selected', true),
       }
     };

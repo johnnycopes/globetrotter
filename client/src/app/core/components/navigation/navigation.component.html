@@ -8,15 +8,15 @@
       >
     </app-icon>
     <ng-container center>
-      <a appMenuLink
+      <a appLink
         *ngFor="let link of links"
-        [name]="link.name"
         [selected]="navigationLink.isActive"
         [routerLink]="link.route"
         routerLinkActive
         [routerLinkActiveOptions]="{exact: link.exactPathMatch}"
         #navigationLink="routerLinkActive"
         >
+        {{link.name}}
       </a>
     </ng-container>
     <app-icon class="account"
