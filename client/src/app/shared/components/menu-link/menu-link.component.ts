@@ -1,16 +1,11 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-menu-link',
+  selector: '[appMenuLink]',
   templateUrl: './menu-link.component.html',
   styleUrls: ['./menu-link.component.scss']
 })
 export class MenuLinkComponent {
   @Input() name: string;
   @Input() selected: boolean;
-  @Output() clicked = new EventEmitter<void>();
-
-  onClick(): void {
-    this.clicked.emit();
-  }
 }

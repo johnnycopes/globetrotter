@@ -7,7 +7,6 @@ import { AppRoutingModule } from '../app-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { ShellComponent } from './components/shell/shell.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
-import { NavigationLinkComponent } from './components/navigation/navigation-link/navigation-link.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { ErrorComponent } from './components/error/error.component';
 import { AuthInterceptorProvider } from './interceptors/auth/auth.interceptor';
@@ -32,7 +31,6 @@ import { AuthInterceptorProvider } from './interceptors/auth/auth.interceptor';
   declarations: [
     ShellComponent,
     NavigationComponent,
-    NavigationLinkComponent,
     PageNotFoundComponent,
     ErrorComponent
   ],

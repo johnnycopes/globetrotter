@@ -9,7 +9,7 @@ storiesOf('Shared | Container', module)
       declarations: [ContainerComponent, IconComponent]
     })
   )
-  .add('split into thirds', () => {
+  .add('split in thirds', () => {
     return {
       template: `
         <app-container>

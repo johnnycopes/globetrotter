@@ -68,13 +68,13 @@ storiesOf('Shared | Tabset', module)
                 >
               </app-icon>
               <ng-container center>
-                <app-menu-link
+                <li appMenuLink
                   *ngFor="let tab of tabs"
                   [name]="tab.name"
                   [selected]="tab.selected"
-                  (clicked)="tabset.onSelectTab(tab)"
+                  (click)="tabset.onSelectTab(tab)"
                   >
-                </app-menu-link>
+                </li>
               </ng-container>
               <app-button
                 right
