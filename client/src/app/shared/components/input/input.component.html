@@ -3,7 +3,7 @@
 </label>
 <ng-content></ng-content>
 <app-alert class="error"
-  *ngIf="showError"
+  *ngIf="showError && !!errorMessage.length"
   >
   {{errorMessage}}
 </app-alert>

@@ -14,8 +14,6 @@ export class FormComponent {
   @Input() buttonText: string;
   @Output() submitted = new EventEmitter<FormGroup>();
 
-  constructor() { }
-
   onSubmit(): void {
     this.submitted.emit(this.formGroup);
   }
