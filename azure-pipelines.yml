@@ -16,7 +16,9 @@ stages:
   - job: 'Build'
     displayName: 'Build job'
     pool:
-      vmImage: 'windows-latest'
+      vmImage: 'ubuntu-16.04'
+      demands:
+      - npm
 
     variables:
       solution: '**/*.sln'
@@ -84,6 +86,7 @@ stages:
           steps:
           - download: current
             artifact: drop
+
           - task: AzureWebApp@1
             displayName: 'Azure App Service Deploy: website'
             inputs:
