@@ -76,7 +76,7 @@ stages:
   jobs:
   - deployment: Deploy
     pool:
-      vmImage: 'windows-latest'
+      vmImage: 'ubuntu-16.04'
     environment: dev
     variables:
     - group: Release
