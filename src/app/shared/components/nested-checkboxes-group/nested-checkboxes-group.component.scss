@@ -1,0 +1,66 @@
+@import 'styles';
+
+.form {
+  display: grid;
+}
+
+.top {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: map-get($spacing, 24);
+
+  @include desktop {
+    flex-direction: row;
+  }
+
+  &--space-between {
+    justify-content: space-between;
+  }
+
+  &__counter {
+    font-size: map-get($font-size, 24);
+    margin-bottom: map-get($spacing, 12);
+
+    @include tablet {
+      font-size: map-get($font-size, 36);
+      margin-bottom: map-get($spacing, 24);
+    }
+
+    @include desktop {
+      margin-bottom: 0;
+    }
+  }
+
+  &__select-all {
+    margin-right: map-get($spacing, 24);
+  }
+}
+
+.items {
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
+
+  @include desktop {
+    grid-template-columns: 1fr 1fr;
+    justify-items: left;
+  }
+}
+
+.item {
+  padding: map-get($spacing, 8) 0;
+  max-width: 500px;
+  width: 100%;
+
+  @include tablet {
+    padding: map-get($spacing, 16) 0;
+  }
+
+  @include desktop {
+    max-width: none;
+    min-width: 500px;
+    width: 100%;
+  }
+}

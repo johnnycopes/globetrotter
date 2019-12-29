@@ -1,0 +1,5 @@
+# Redirect single page app routes
+/*    /index.html    200
+
+# Redirect default Netlify subdomain to primary domain
+https://hardcore-edison-0546b3.netlify.com/* https://globetrotter.rocks/:splat 301!

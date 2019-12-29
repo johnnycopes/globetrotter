@@ -1,0 +1,29 @@
+<form class="form"
+  #optionForm="ngForm"
+  >
+  <div class="text">
+    {{text}}
+  </div>
+  <div class="options"
+    [ngClass]="{'options--stacked-vertically': stackedVertically}"
+    >
+    <div class="option"
+      [ngClass]="{'option--stacked-vertically': stackedVertically}"
+      *ngFor="let option of options"
+      >
+      <input class="option__input"
+        [id]="option.display"
+        [value]="option.value"
+        (change)="onChange()"
+        [(ngModel)]="model && model.value"
+        type="radio"
+        name="option"
+        />
+      <label class="option__label"
+        [for]="option.display"
+        >
+        {{option.display}}
+      </label>
+    </div>
+  </div>
+</form>

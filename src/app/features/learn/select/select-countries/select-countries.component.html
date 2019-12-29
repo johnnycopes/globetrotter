@@ -1,0 +1,10 @@
+<app-nested-checkboxes-group
+  [items]="regions$ | async"
+  [treeProvider]="treeProvider"
+  [showCounters]="true"
+  [showImages]="true"
+  text="possible countries are selected."
+  [ngModel]="checkboxStates$ | async"
+  (ngModelChange)="onCountriesChange($event)"
+  >
+</app-nested-checkboxes-group>

@@ -1,0 +1,32 @@
+<div class="counter"
+  [ngClass]="{'counter--reverse': textFirst}"
+  >
+  <span class="counter__numbers"
+    *ngIf="current || total"
+    [ngClass]="{
+      'counter--bold': boldNumbers,
+      'counter--last': textFirst
+    }"
+    >
+    <span *ngIf="wrapNumbers">(</span>
+    <span>
+      <ng-container *ngIf="current !== undefined">{{current}} / </ng-container>
+      <ng-container *ngIf="total !== undefined">{{total}}</ng-container>
+    </span>
+    <span *ngIf="wrapNumbers">)</span>
+  </span>
+  <span class="counter__space"
+    *ngIf="text"
+    >
+    &nbsp;
+  </span>
+  <span class="counter__text"
+    *ngIf="text"
+    [ngClass]="{
+      'counter--bold': boldText,
+      'counter--first': textFirst
+    }"
+    >
+    {{text}}
+  </span>
+</div>

@@ -1,0 +1,45 @@
+$font-stack: 'Mukta', Frutiger, 'Frutiger Linotype', Univers, Calibri, 'Gill Sans', 'Gill Sans MT', 'Myriad Pro', Myriad, 'DejaVu Sans Condensed', 'Liberation Sans', 'Nimbus Sans L', Tahoma, Geneva, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+/*
+Use these values for font-sizing. A hand-crafted type scale
+(source: Refactoring UI, page 105)
+*/
+$font-size: (
+  12: 12px,
+  14: 14px,
+  16: 16px, // <=== base value
+  18: 18px,
+  20: 20px,
+  24: 24px,
+  30: 30px,
+  36: 36px,
+  48: 48px,
+  60: 60px,
+  72: 72px,
+  96: 96px,
+  128: 128px
+);
+
+$font-color: (
+  white: hsl(0, 100%, 100%),
+  light: hsl(203, 15%, 47%),
+  gray: hsl(201, 23%, 34%),
+  dark: hsl(202, 57%, 15%)
+);
+
+$font-weight: (
+  normal: 300,
+  bold: 700
+);
+
+$line-height: (
+  small: 1,
+  normal: 1.5,
+  large: 2
+);
+
+$text-align: (
+  left: left,
+  center: center,
+  right: right
+);

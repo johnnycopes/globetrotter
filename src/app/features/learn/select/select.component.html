@@ -1,0 +1,45 @@
+<ng-template #tabsetControlsTemplate
+  let-tabs="tabs"
+  >
+  <app-fixed-slideable-panel [position]="tabsetControlsPosition">
+    <div class="controls"
+      app-fixed-slideable-panel-header
+      >
+      <ul class="tabs">
+        <li class="tab"
+          *ngFor="let tab of tabs"
+          [ngClass]="{'tab--selected': tab.selected}"
+          (click)="tabset.onSelectTab(tab)"
+          >
+          {{tab.name}}
+        </li>
+      </ul>
+      <app-button
+        buttonText="Launch"
+        buttonStyle="primary"
+        [disabled]="!canStartQuiz"
+        (clicked)="onLaunch()"
+        >
+      </app-button>
+    </div>
+  </app-fixed-slideable-panel>
+</ng-template>
+
+<app-tabset #tabset
+  [controlsTemplate]="tabsetControlsTemplate"
+  [contentVisibility]="tabsetContentVisibility"
+  >
+  <div class="content"
+    app-tabset-content
+    >
+    <app-tab name="Type">
+      <app-select-type></app-select-type>
+    </app-tab>
+    <app-tab name="Quantity">
+      <app-select-quantity></app-select-quantity>
+    </app-tab>
+    <app-tab name="Countries">
+      <app-select-countries></app-select-countries>
+    </app-tab>
+  </div>
+</app-tabset>

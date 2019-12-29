@@ -1,0 +1,18 @@
+@import 'styles';
+
+.content {
+  margin-left: map-get($app, navigation-width);
+
+  &__wrapper {
+    @include quiz-width;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    &--no-scroll {
+      height: 100vh;
+      overflow: hidden;
+    }
+  }
+}

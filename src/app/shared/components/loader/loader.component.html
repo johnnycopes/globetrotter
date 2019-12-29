@@ -1,0 +1,9 @@
+<div class="container"
+  *ngIf="loading; else content"
+  >
+  <div class="loader"></div>
+</div>
+
+<ng-template #content>
+  <ng-content></ng-content>
+</ng-template>
