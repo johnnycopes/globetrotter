@@ -84,9 +84,8 @@ namespace Globetrotter
 
             app.UseRouting();
 
-            app.UseAuthentication();
-
             app.UseAuthorization();
+            app.UseAuthentication();
 
             app.UseDefaultFiles();
             app.UseStaticFiles();
