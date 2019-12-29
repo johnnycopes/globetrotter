@@ -4,7 +4,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
 
 trigger:
-- master
+- none
 
 variables:
   buildConfiguration: 'Release'
@@ -23,7 +23,7 @@ stages:
     variables:
       solution: '**/*.sln'
       buildPlatform: 'Any CPU'
-      dotnetSdkVersion: '3.x'
+      dotnetSdkVersion: '3.1.x'
 
     steps:
     - task: UseDotNet@2
