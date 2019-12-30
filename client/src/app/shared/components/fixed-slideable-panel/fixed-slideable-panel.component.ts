@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 import { positionAnimation } from '../../utility/animations';
 
@@ -12,7 +12,15 @@ export type FixedSlideablePanelPosition = 'offscreen' | 'header' | 'fullscreen';
 })
 export class FixedSlideablePanelComponent {
   @Input() position: FixedSlideablePanelPosition;
+  @Output() animationStarted = new EventEmitter<AnimationEvent>();
+  @Output() animationFinished = new EventEmitter<AnimationEvent>();
 
-  constructor() { }
+  onAnimationStart(event: AnimationEvent): void {
+    console.log('start');
+    this.animationStarted.emit(event);
+  }
 
+  onAnimationFinish(event: AnimationEvent): void {
+    this.animationFinished.emit(event);
+  }
 }

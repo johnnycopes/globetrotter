@@ -3,14 +3,23 @@ import {
   withKnobs,
   select
 } from '@storybook/addon-knobs/angular';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { action } from '@storybook/addon-actions';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FixedSlideablePanelComponent, FixedSlideablePanelPosition } from 'src/app/shared/components/fixed-slideable-panel/fixed-slideable-panel.component';
 import { ContainerComponent } from 'src/app/shared/components/container/container.component';
 
+const actions = {
+  onAnimationStart: action('animation started'),
+  onAnimationFinish: action('animation finished')
+};
 const positions: FixedSlideablePanelPosition[] = ['offscreen', 'header', 'fullscreen'];
 const simpleTemplate = `
-  <app-fixed-slideable-panel [position]="position">
+  <app-fixed-slideable-panel
+    [position]="position"
+    (animationStarted)="onAnimationStart($event)"
+    (animationFinished)="onAnimationFinish($event)"
+    >
     <div header>
       Header section (header)
     </div>
@@ -20,7 +29,11 @@ const simpleTemplate = `
   </app-fixed-slideable-panel>
 `;
 const complexTemplate = `
-  <app-fixed-slideable-panel [position]="position">
+  <app-fixed-slideable-panel
+    [position]="position"
+    (animationStarted)="onAnimationStart($event)"
+    (animationFinished)="onAnimationFinish($event)"
+    >
     <app-container header>
       <p left>
         Left
@@ -50,7 +63,9 @@ storiesOf('Shared | Fixed Slideable Panel', module)
     return {
       template: simpleTemplate,
       props: {
-        position: select('position', positions, 'offscreen')
+        position: select('position', positions, 'offscreen'),
+        onAnimationStart: actions.onAnimationStart,
+        onAnimationFinish: actions.onAnimationFinish
       }
     };
   })
@@ -58,7 +73,9 @@ storiesOf('Shared | Fixed Slideable Panel', module)
     return {
       template: simpleTemplate,
       props: {
-        position: select('position', positions, 'header')
+        position: select('position', positions, 'header'),
+        onAnimationStart: actions.onAnimationStart,
+        onAnimationFinish: actions.onAnimationFinish
       }
     };
   })
@@ -66,7 +83,9 @@ storiesOf('Shared | Fixed Slideable Panel', module)
     return {
       template: complexTemplate,
       props: {
-        position: select('position', positions, 'header')
+        position: select('position', positions, 'header'),
+        onAnimationStart: actions.onAnimationStart,
+        onAnimationFinish: actions.onAnimationFinish
       }
     };
   })
@@ -74,7 +93,9 @@ storiesOf('Shared | Fixed Slideable Panel', module)
     return {
       template: simpleTemplate,
       props: {
-        position: select('position', positions, 'fullscreen')
+        position: select('position', positions, 'fullscreen'),
+        onAnimationStart: actions.onAnimationStart,
+        onAnimationFinish: actions.onAnimationFinish
       }
     };
   });
