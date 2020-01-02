@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, combineLatest } from 'rxjs';
 import { map, distinctUntilChanged, tap } from 'rxjs/operators';
 
 import { RouterService } from '../../services/router/router.service';
@@ -8,6 +8,14 @@ import { ModalService } from '../../services/modal/modal.service';
 import { UtilityService } from '../../services/utility/utility.service';
 import { RouteNames } from 'src/app/shared/model/route-names.enum';
 import { AnimationTimes } from 'src/app/shared/model/animation-times.enum';
+import { Quiz } from 'src/app/shared/model/quiz.class';
+
+interface ViewModel {
+  showNavigation: boolean;
+  showModal: boolean;
+  modalMessage: string;
+  quizComplete: boolean;
+}
 
 @Component({
   selector: 'app-shell',
@@ -15,11 +23,12 @@ import { AnimationTimes } from 'src/app/shared/model/animation-times.enum';
   styleUrls: ['./shell.component.scss']
 })
 export class ShellComponent implements OnInit {
-  showNavigation$: Observable<boolean>;
+  vm$: Observable<ViewModel>;
   showContent: boolean;
-  showModal$: Observable<boolean>;
-  modalMessage$: Observable<string>;
-  quizComplete$: Observable<boolean>;
+  private showNavigation$: Observable<boolean>;
+  private showModal$: Observable<boolean>;
+  private modalMessage$: Observable<string>;
+  private quizComplete$: Observable<boolean>;
 
   constructor(
     private routerService: RouterService,
@@ -31,20 +40,28 @@ export class ShellComponent implements OnInit {
   ngOnInit(): void {
     this.showNavigation$ = this.routerService.getCurrentRoute().pipe(
       map(currentRoute => currentRoute !== RouteNames.learn),
-      distinctUntilChanged(),
-      tap(async (showNavigation) => {
-        this.showContent = false;
-        if (showNavigation) {
-          await this.utilityService.wait(AnimationTimes.fixedSlideablePanel);
-        }
-        this.showContent = true;
-      })
+      distinctUntilChanged()
     );
     this.showModal$ = this.modalService.getOpen();
     this.modalMessage$ = this.modalService.getMessage();
     this.quizComplete$ = this.quizService.getQuiz().pipe(
       map(quiz => quiz.isComplete),
       distinctUntilChanged()
+    );
+    this.vm$ = combineLatest([
+      this.showNavigation$,
+      this.showModal$,
+      this.modalMessage$,
+      this.quizComplete$
+    ]).pipe(
+      map(([showNavigation, showModal, modalMessage, quizComplete]) => ({ showNavigation, showModal, modalMessage, quizComplete })),
+      tap(async ({ showNavigation }) => {
+        this.showContent = false;
+        if (showNavigation) {
+          await this.utilityService.wait(AnimationTimes.fixedSlideablePanel);
+        }
+        this.showContent = true;
+      })
     );
   }
 

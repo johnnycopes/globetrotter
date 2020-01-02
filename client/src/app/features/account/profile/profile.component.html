@@ -1,5 +1,5 @@
 <div class="account"
-  *ngIf="(authData$ | async) as authData"
+  *ngIf="authData$ | async as authData"
   >
   <app-alert class="alert"
     *ngIf="alertMessage"

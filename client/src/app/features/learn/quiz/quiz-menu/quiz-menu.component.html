@@ -1,48 +1,47 @@
-<app-fixed-slideable-panel
-  *ngIf="(quiz$ | async) as quiz"
-  [position]="menuPosition"
-  >
-  <app-container class="progress"
-    header
-    *ngIf="!quiz.isComplete"
-    >
-    <app-icon class="back"
-      left
-      icon="Cancel"
-      [highlighted]="true"
-      (clicked)="onBack()"
+<ng-container *ngIf="vm$ | async as vm">
+  <app-fixed-slideable-panel [position]="position">
+    <app-container class="progress"
+      header
+      *ngIf="!vm.quiz.isComplete"
       >
-    </app-icon>
-    <p class="prompt"
-      center>
-      {{prompt$ | async}}
-    </p>
-    <div class="details"
-      right
+      <app-icon class="back"
+        left
+        icon="Cancel"
+        [highlighted]="true"
+        (clicked)="onBack()"
+        >
+      </app-icon>
+      <p class="prompt"
+        center>
+        {{vm.prompt}}
+      </p>
+      <div class="details"
+        right
+        >
+        <h4 class="details__tally">
+          {{vm.quiz.countriesGuessed}} / {{vm.quiz.totalCountries}}
+        </h4>
+        <h4 class="details__guess">
+          Guess #{{vm.quiz.guess}}
+        </h4>
+      </div>
+    </app-container>
+    <div class="outcome"
+      content
+      *ngIf="vm.quiz.isComplete"
       >
-      <h4 class="details__tally">
-        {{quiz.countriesGuessed}} / {{quiz.totalCountries}}
-      </h4>
-      <h4 class="details__guess">
-        Guess #{{quiz.guess}}
-      </h4>
+      <p class="text">
+        Quiz complete! You scored
+      </p>
+      <h1 class="accuracy">
+        {{vm.quiz.accuracy}}%
+      </h1>
+      <app-button class="reset"
+        buttonStyle="primary"
+        buttonText="Reset"
+        (click)="onBack()"
+        >
+      </app-button>
     </div>
-  </app-container>
-  <div class="outcome"
-    content
-    *ngIf="quiz.isComplete"
-    >
-    <p class="text">
-      Quiz complete! You scored
-    </p>
-    <h1 class="accuracy">
-      {{quiz.accuracy}}%
-    </h1>
-    <app-button class="reset"
-      buttonStyle="primary"
-      buttonText="Reset"
-      (click)="onBack()"
-      >
-    </app-button>
-  </div>
-</app-fixed-slideable-panel>
+  </app-fixed-slideable-panel>
+</ng-container>
