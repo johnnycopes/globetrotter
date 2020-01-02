@@ -1,48 +1,40 @@
 <app-fixed-slideable-panel position="header">
   <app-container header>
     <ng-container left>
-      <a class="icon-link"
-        appLink
-        [selected]="homeLink.isActive"
-        [routerLink]="home.route"
-        routerLinkActive
-        [routerLinkActiveOptions]="{exact: home.exactPathMatch}"
-        #homeLink="routerLinkActive"
-        >
-        <app-icon
-          [icon]="home.icon"
-          [highlighted]="true"
-          >
-        </app-icon>
-      </a>
+      <ng-container *ngTemplateOutlet="linkTemplate; context: { $implicit: home }">
+      </ng-container>
     </ng-container>
     <ng-container center>
-      <a appLink
-        *ngFor="let link of links"
-        [selected]="navigationLink.isActive"
-        [routerLink]="link.route"
-        routerLinkActive
-        [routerLinkActiveOptions]="{exact: link.exactPathMatch}"
-        #navigationLink="routerLinkActive"
-        >
-        {{link.name}}
-      </a>
+      <ng-container *ngFor="let link of links">
+        <ng-container *ngTemplateOutlet="linkTemplate; context: { $implicit: link }">
+        </ng-container>
+      </ng-container>
     </ng-container>
     <ng-container right>
-      <a class="icon-link"
-        appLink
-        [selected]="accountLink.isActive"
-        [routerLink]="account.route"
-        routerLinkActive
-        [routerLinkActiveOptions]="{exact: account.exactPathMatch}"
-        #accountLink="routerLinkActive"
-        >
-        <app-icon
-          [icon]="account.icon"
-          [highlighted]="true"
-          >
-        </app-icon>
-      </a>
+      <ng-container *ngTemplateOutlet="linkTemplate; context: { $implicit: account }">
+      </ng-container>
     </ng-container>
   </app-container>
 </app-fixed-slideable-panel>
+
+<ng-template #linkTemplate
+  let-link
+  >
+  <a appLink
+    [ngClass]="{'icon-link': link.icon}"
+    [selected]="navigationLink.isActive"
+    [routerLink]="link.route"
+    routerLinkActive
+    [routerLinkActiveOptions]="{exact: link.exactPathMatch}"
+    #navigationLink="routerLinkActive"
+    >
+    <app-icon *ngIf="link.icon; else linkName"
+      [icon]="link.icon"
+      [highlighted]="true"
+      >
+    </app-icon>
+    <ng-template #linkName>
+      {{link.name}}
+    </ng-template>
+  </a>
+</ng-template>
