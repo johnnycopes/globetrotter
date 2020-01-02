@@ -1,12 +1,21 @@
 <app-fixed-slideable-panel position="header">
   <app-container header>
-    <app-icon class="home"
-      left
-      icon="Globetrotter"
-      [highlighted]="true"
-      (clicked)="navigateToHome()"
-      >
-    </app-icon>
+    <ng-container left>
+      <a class="icon-link"
+        appLink
+        [selected]="homeLink.isActive"
+        [routerLink]="home.route"
+        routerLinkActive
+        [routerLinkActiveOptions]="{exact: home.exactPathMatch}"
+        #homeLink="routerLinkActive"
+        >
+        <app-icon
+          [icon]="home.icon"
+          [highlighted]="true"
+          >
+        </app-icon>
+      </a>
+    </ng-container>
     <ng-container center>
       <a appLink
         *ngFor="let link of links"
@@ -19,12 +28,21 @@
         {{link.name}}
       </a>
     </ng-container>
-    <app-icon class="account"
-      right
-      icon="User"
-      [highlighted]="true"
-      (clicked)="navigateToAccount()"
-      >
-    </app-icon>
+    <ng-container right>
+      <a class="icon-link"
+        appLink
+        [selected]="accountLink.isActive"
+        [routerLink]="account.route"
+        routerLinkActive
+        [routerLinkActiveOptions]="{exact: account.exactPathMatch}"
+        #accountLink="routerLinkActive"
+        >
+        <app-icon
+          [icon]="account.icon"
+          [highlighted]="true"
+          >
+        </app-icon>
+      </a>
+    </ng-container>
   </app-container>
 </app-fixed-slideable-panel>

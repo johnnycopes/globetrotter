@@ -4,9 +4,9 @@ import { Router } from '@angular/router';
 import { RouteNames } from 'src/app/shared/model/route-names.enum';
 
 interface NavigationLink {
-  name?: string;
-  icon?: string;
+  name: string;
   route: string;
+  icon?: string;
   exactPathMatch: boolean;
 }
 
@@ -16,11 +16,19 @@ interface NavigationLink {
   styleUrls: ['./navigation.component.scss']
 })
 export class NavigationComponent implements OnInit {
+  home: NavigationLink;
   links: NavigationLink[];
+  account: NavigationLink;
 
   constructor(private router: Router) { }
 
   ngOnInit() {
+    this.home = {
+      name: 'Home',
+      icon: 'Globetrotter',
+      route: RouteNames.home,
+      exactPathMatch: true
+    };
     this.links = [
       {
         name: 'Explore',
@@ -38,14 +46,11 @@ export class NavigationComponent implements OnInit {
         exactPathMatch: false
       }
     ];
+    this.account = {
+      name: 'Account',
+      icon: 'User',
+      route: `/${RouteNames.account}`,
+      exactPathMatch: false
+    };
   }
-
-  navigateToHome(): void {
-    this.router.navigate([RouteNames.home]);
-  }
-
-  navigateToAccount(): void {
-    this.router.navigate([RouteNames.account]);
-  }
-
 }

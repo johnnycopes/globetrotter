@@ -16,7 +16,6 @@ export class FixedSlideablePanelComponent {
   @Output() animationFinished = new EventEmitter<AnimationEvent>();
 
   onAnimationStart(event: AnimationEvent): void {
-    console.log('start');
     this.animationStarted.emit(event);
   }
 
