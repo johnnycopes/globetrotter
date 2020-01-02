@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Resolve } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { map, shareReplay, catchError } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 import { COUNTRY_STATUSES } from 'src/app/shared/model/country-statuses.data';
@@ -62,6 +62,7 @@ export class CountryService implements Resolve<Observable<Country[]>> {
   private initialize(): void {
     this.request = this.http.get<Country[]>(this.countriesApiUrl).pipe(
       // delay(200), // prevent the loader from flashing on the screen too quickly
+      shareReplay(),
       catchError(error => {
         return of([]);
       })
