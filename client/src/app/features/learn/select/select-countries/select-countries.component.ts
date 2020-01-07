@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as _ from 'lodash';
 
@@ -10,15 +10,21 @@ import { Place } from 'src/app/shared/model/place.type';
 import { Region } from 'src/app/shared/model/region.interface';
 import { PlacesTreeProvider } from 'src/app/shared/model/places-tree-provider.class';
 
+interface ViewModel {
+  regions: Region[];
+  checkboxStates: CheckboxStates;
+}
+
 @Component({
   selector: 'app-select-countries',
   templateUrl: './select-countries.component.html',
   styleUrls: ['./select-countries.component.scss']
 })
 export class SelectCountriesComponent implements OnInit {
-  regions$: Observable<Region[]>;
-  checkboxStates$: Observable<CheckboxStates>;
+  vm$: Observable<ViewModel>;
   treeProvider: TreeProvider<Place> = new PlacesTreeProvider();
+  private regions$: Observable<Region[]>;
+  private checkboxStates$: Observable<CheckboxStates>;
 
   constructor(
     private countryService: CountryService,
@@ -26,13 +32,23 @@ export class SelectCountriesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.regions$ = this.countryService.getData();
-    this.checkboxStates$ = this.selectService.getSelection().pipe(
-      map(selection => selection.countries)
+    this.initializeStreams();
+    this.vm$ = combineLatest([
+      this.regions$,
+      this.checkboxStates$
+    ]).pipe(
+      map(([regions, checkboxStates]) => ({regions, checkboxStates}))
     );
   }
 
   onCountriesChange(model: CheckboxStates): void {
     this.selectService.updateCountries(model);
+  }
+
+  private initializeStreams(): void {
+    this.regions$ = this.countryService.getData();
+    this.checkboxStates$ = this.selectService.getSelection().pipe(
+      map(selection => selection.countries)
+    );
   }
 }

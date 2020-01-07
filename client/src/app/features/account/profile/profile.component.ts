@@ -13,8 +13,8 @@ import { Auth } from 'src/app/shared/model/auth.class';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-  authData$: Observable<Auth>;
   alertMessage: string;
+  authData$: Observable<Auth>;
 
   constructor(
     private authService: AuthService,

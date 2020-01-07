@@ -1,6 +1,7 @@
 <app-form
+  *ngIf="vm$ | async as vm"
   [formGroup]="form"
-  [error]="formError$ | async"
+  [error]="vm.formError"
   [guidelines]="guidelines"
   buttonText="Register"
   (submitted)="register($event)"
@@ -18,7 +19,7 @@
   </app-input>
   <app-input
     label="Password"
-    [errorMessage]="passwordError$ | async"
+    [errorMessage]="vm.passwordError"
     [showError]="password.status === 'INVALID' && password.touched"
     >
     <input

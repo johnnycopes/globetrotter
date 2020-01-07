@@ -1,9 +1,10 @@
 <div class="quiz-cards"
+  *ngIf="vm$ | async as vm"
   @stagger
   >
   <app-quiz-card
-    *ngFor="let country of countries$ | async"
-    [type]="quizType$ | async"
+    *ngFor="let country of vm.countries"
+    [type]="vm.quizType"
     [country]="country"
     [canFlip]="canFlipCards"
     (flipped)="onFlip($event)"

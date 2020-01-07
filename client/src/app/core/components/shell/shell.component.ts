@@ -11,6 +11,7 @@ import { AnimationTimes } from 'src/app/shared/model/animation-times.enum';
 
 interface ViewModel {
   showNavigation: boolean;
+  showContent: boolean;
   showModal: boolean;
   modalMessage: string;
   quizComplete: boolean;
@@ -39,6 +40,47 @@ export class ShellComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeStreams();
+    // const streams = {
+    //   showNavigation: this.showNavigation$,
+    //   showContent: this.showContent$,
+    //   showModal: this.showModal$,
+    //   modalMessage: this.modalMessage$,
+    //   quizComplete: this.quizComplete$
+    // };
+
+    // this.vm$ = this.utilityService.combineStreams<ViewModel>(streams);
+
+    // this.vm$ = this.utilityService.combineStuffUnsafeButVariable<ViewModel>([
+    //   this.showNavigation$,
+    //   this.showContent$,
+    //   this.showModal$,
+    //   this.modalMessage$,
+    //   this.quizComplete$
+    // ],
+    //   ([showNavigation, showContent, showModal, modalMessage, quizComplete]) => ({
+    //     showNavigation,
+    //     showContent,
+    //     showModal,
+    //     modalMessage,
+    //     quizComplete
+    //   })
+    // );
+
+    // this.vm$ = this.utilityService.combineFiveStreams(
+    //   this.showNavigation$,
+    //   this.showContent$,
+    //   this.showModal$,
+    //   this.modalMessage$,
+    //   this.quizComplete$,
+    //   ([showNavigation, showContent, showModal, modalMessage, quizComplete]) => ({
+    //     showNavigation,
+    //     showContent,
+    //     showModal,
+    //     modalMessage,
+    //     quizComplete
+    //   })
+    // );
+
     this.vm$ = combineLatest([
       this.showNavigation$,
       this.showContent$,
