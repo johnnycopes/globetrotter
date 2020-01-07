@@ -4,7 +4,7 @@
 
   <div class="content">
     <div class="content__wrapper"
-      *ngIf="showContent"
+      *ngIf="vm.showContent"
       [ngClass]="{'content__wrapper--no-scroll': vm.quizComplete}"
       >
       <router-outlet></router-outlet>

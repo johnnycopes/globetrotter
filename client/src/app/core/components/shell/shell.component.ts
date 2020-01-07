@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, combineLatest } from 'rxjs';
+import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
 import { map, distinctUntilChanged, tap } from 'rxjs/operators';
 
 import { RouterService } from '../../services/router/router.service';
@@ -8,7 +8,6 @@ import { ModalService } from '../../services/modal/modal.service';
 import { UtilityService } from '../../services/utility/utility.service';
 import { RouteNames } from 'src/app/shared/model/route-names.enum';
 import { AnimationTimes } from 'src/app/shared/model/animation-times.enum';
-import { Quiz } from 'src/app/shared/model/quiz.class';
 
 interface ViewModel {
   showNavigation: boolean;
@@ -24,8 +23,9 @@ interface ViewModel {
 })
 export class ShellComponent implements OnInit {
   vm$: Observable<ViewModel>;
-  showContent: boolean;
+  private showNavigationChanged = new BehaviorSubject<boolean>(false);
   private showNavigation$: Observable<boolean>;
+  private showContent$: Observable<boolean>;
   private showModal$: Observable<boolean>;
   private modalMessage$: Observable<string>;
   private quizComplete$: Observable<boolean>;
@@ -38,8 +38,47 @@ export class ShellComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.initializeStreams();
+    this.vm$ = combineLatest([
+      this.showNavigation$,
+      this.showContent$,
+      this.showModal$,
+      this.modalMessage$,
+      this.quizComplete$
+    ]).pipe(
+      map(([
+        showNavigation,
+        showContent,
+        showModal,
+        modalMessage,
+        quizComplete
+      ]) => ({
+        showNavigation,
+        showContent,
+        showModal,
+        modalMessage,
+        quizComplete
+      })
+    ));
+  }
+
+  onModalConfirm(): void {
+    this.modalService.setOpen(false);
+  }
+
+  private initializeStreams(): void {
     this.showNavigation$ = this.routerService.getCurrentRoute().pipe(
       map(currentRoute => currentRoute !== RouteNames.learn),
+      distinctUntilChanged(),
+      tap(async (showNavigation) => {
+        this.showNavigationChanged.next(false);
+        if (showNavigation) {
+          await this.utilityService.wait(AnimationTimes.fixedSlideablePanel);
+        }
+        this.showNavigationChanged.next(true);
+      })
+    );
+    this.showContent$ = this.showNavigationChanged.asObservable().pipe(
       distinctUntilChanged()
     );
     this.showModal$ = this.modalService.getOpen();
@@ -48,24 +87,5 @@ export class ShellComponent implements OnInit {
       map(quiz => quiz.isComplete),
       distinctUntilChanged()
     );
-    this.vm$ = combineLatest([
-      this.showNavigation$,
-      this.showModal$,
-      this.modalMessage$,
-      this.quizComplete$
-    ]).pipe(
-      map(([showNavigation, showModal, modalMessage, quizComplete]) => ({ showNavigation, showModal, modalMessage, quizComplete })),
-      tap(async ({ showNavigation }) => {
-        this.showContent = false;
-        if (showNavigation) {
-          await this.utilityService.wait(AnimationTimes.fixedSlideablePanel);
-        }
-        this.showContent = true;
-      })
-    );
-  }
-
-  onModalConfirm(): void {
-    this.modalService.setOpen(false);
   }
 }
