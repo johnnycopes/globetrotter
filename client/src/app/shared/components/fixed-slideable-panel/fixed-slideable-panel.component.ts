@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 
 import { positionAnimation } from '../../utility/animations';
 
@@ -8,6 +8,7 @@ export type FixedSlideablePanelPosition = 'offscreen' | 'header' | 'fullscreen';
   selector: 'app-fixed-slideable-panel',
   templateUrl: './fixed-slideable-panel.component.html',
   styleUrls: ['./fixed-slideable-panel.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [positionAnimation]
 })
 export class FixedSlideablePanelComponent {

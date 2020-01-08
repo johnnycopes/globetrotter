@@ -1,4 +1,4 @@
-import { Component, AfterContentInit, ContentChildren, QueryList, Input, TemplateRef } from '@angular/core';
+import { Component, AfterContentInit, ContentChildren, QueryList, Input, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
 
 import { visibilityAnimation, fadeInWithFixedSlideablePanelDelayAnimation } from '../../utility/animations';
 import { TabComponent } from './tab/tab.component';
@@ -9,6 +9,7 @@ export type TabsetContentVisibility = 'visible' | 'invisible';
   selector: 'app-tabset',
   templateUrl: './tabset.component.html',
   styleUrls: ['./tabset.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     visibilityAnimation,
     fadeInWithFixedSlideablePanelDelayAnimation
@@ -18,8 +19,6 @@ export class TabsetComponent implements AfterContentInit {
   @Input() controlsTemplate: TemplateRef<any>;
   @Input() contentVisibility: TabsetContentVisibility = 'visible';
   @ContentChildren(TabComponent) tabs: QueryList<TabComponent>;
-
-  constructor() { }
 
   ngAfterContentInit(): void {
     const selectedTab = this.tabs.find(tab => tab.selected);

@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 
 import { flipAnimation, guessAnimation, disabledAnimation } from '../../utility/animations';
 
@@ -9,6 +9,7 @@ export type FlipCardGuess = 'correct' | 'incorrect' | 'none';
   selector: 'app-flip-card',
   templateUrl: './flip-card.component.html',
   styleUrls: ['./flip-card.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     flipAnimation,
     guessAnimation,
@@ -21,8 +22,6 @@ export class FlipCardComponent {
   @Input() canFlip: boolean = true;
   @Input() disabled: boolean;
   @Output() flipped = new EventEmitter<FlipCardSide>();
-
-  constructor() { }
 
   onClick(): void {
     if (this.canFlip && !this.disabled) {

@@ -1,11 +1,12 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 
 export type ButtonStyle = 'primary' | 'secondary';
 
 @Component({
   selector: 'app-button',
   templateUrl: './button.component.html',
-  styleUrls: ['./button.component.scss']
+  styleUrls: ['./button.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ButtonComponent {
   @Input() buttonText: string;
@@ -14,10 +15,7 @@ export class ButtonComponent {
   @Input() disabled: boolean;
   @Output() clicked = new EventEmitter<void>();
 
-  constructor() { }
-
   onClick(): void {
     this.clicked.emit();
   }
-
 }

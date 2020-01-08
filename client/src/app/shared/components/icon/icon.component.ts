@@ -1,9 +1,10 @@
-import { Component, Input, Output, EventEmitter, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, TemplateRef, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-icon',
   templateUrl: './icon.component.html',
-  styleUrls: ['./icon.component.scss']
+  styleUrls: ['./icon.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class IconComponent implements OnInit {
   @Input() icon: string;
@@ -23,8 +24,6 @@ export class IconComponent implements OnInit {
   @ViewChild('userTemplate', { static: true }) userTemplate: TemplateRef<any>;
   templatesDict: _.Dictionary<TemplateRef<any>>;
   clickable: boolean;
-
-  constructor() { }
 
   ngOnInit(): void {
     this.templatesDict = {

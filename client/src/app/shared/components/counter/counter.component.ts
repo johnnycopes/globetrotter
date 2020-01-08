@@ -1,9 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-counter',
   templateUrl: './counter.component.html',
-  styleUrls: ['./counter.component.scss']
+  styleUrls: ['./counter.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CounterComponent {
   @Input() text: string;
@@ -13,7 +14,4 @@ export class CounterComponent {
   @Input() boldNumbers: boolean;
   @Input() boldText: boolean;
   @Input() textFirst: boolean;
-
-  constructor() { }
-
 }

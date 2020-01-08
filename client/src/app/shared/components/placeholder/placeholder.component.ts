@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 import { fadeInAnimation } from '../../utility/animations';
 
@@ -6,10 +6,9 @@ import { fadeInAnimation } from '../../utility/animations';
   selector: 'app-placeholder',
   templateUrl: './placeholder.component.html',
   styleUrls: ['./placeholder.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [fadeInAnimation]
 })
 export class PlaceholderComponent {
-
-  constructor() { }
 
 }
