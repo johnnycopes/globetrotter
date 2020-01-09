@@ -5,19 +5,19 @@
     {{text}}
   </div>
   <div class="options"
-    [ngClass]="{'options--stacked-vertically': stackedVertically}"
+    [ngClass]="{'options--stacked-vertically': stackedVertically$ | async}"
     >
     <div class="option"
-      [ngClass]="{'option--stacked-vertically': stackedVertically}"
       *ngFor="let option of options"
+      [ngClass]="{'option--stacked-vertically': stackedVertically$ | async}"
       >
       <input class="option__input"
-        [id]="option.display"
-        [value]="option.value"
-        (change)="onChange()"
-        [(ngModel)]="model && model.value"
         type="radio"
         name="option"
+        [id]="option.display"
+        [value]="option.value"
+        [(ngModel)]="model.value"
+        (change)="onChange(option)"
       />
       <label class="option__label"
         [for]="option.display"

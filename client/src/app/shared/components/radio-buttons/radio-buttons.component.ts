@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
+import { Component, Input, Output, EventEmitter, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { Breakpoints } from 'src/app/shared/model/breakpoints.enum';
 
@@ -13,56 +14,32 @@ export interface RadioButtonsOption<T> {
   selector: 'app-radio-buttons',
   templateUrl: './radio-buttons.component.html',
   styleUrls: ['./radio-buttons.component.scss'],
-  providers: [{
-    provide: NG_VALUE_ACCESSOR,
-    useExisting: RadioButtonsComponent,
-    multi: true
-  }]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class RadioButtonsComponent<T> implements OnInit, ControlValueAccessor {
-  @Input() options: RadioButtonsOption<T>[];
+export class RadioButtonsComponent<T> implements OnInit {
   @Input() text: string;
   @Input() alwaysStackedVertically: boolean;
-  stackedVertically: boolean = true;
-  model: RadioButtonsOption<T>;
-  private onChangeFn: any;
+  @Input() options: RadioButtonsOption<T>[];
+  @Input() model: RadioButtonsOption<T>;
+  @Output() modelChanged = new EventEmitter<RadioButtonsOption<T>>();
+  stackedVertically$: Observable<boolean>;
 
-  constructor(
-    public breakpointObserver: BreakpointObserver
-  ) { }
-
-  writeValue(obj: any): void {
-    this.model = obj;
-  }
-
-  registerOnChange(fn: any): void {
-    this.onChangeFn = fn;
-  }
-
-  registerOnTouched(fn: any): void { }
+  constructor(public breakpointObserver: BreakpointObserver) { }
 
   ngOnInit(): void {
-    this.setBreakpoint();
-  }
-
-  onChange(): void {
-    this.onChangeFn(this.model);
-  }
-
-  private setBreakpoint() {
-    if (this.alwaysStackedVertically) {
-      return;
-    }
-    this.breakpointObserver
+    this.stackedVertically$ = this.breakpointObserver
       .observe([Breakpoints.tablet])
-      .subscribe((state: BreakpointState) => {
-        if (state.matches) {
-          this.stackedVertically = false;
-        }
-        else {
-          this.stackedVertically = true;
-        }
-      });
+      .pipe(
+        map(state => {
+          if (this.alwaysStackedVertically) {
+            return true;
+          }
+          return !state.matches;
+        })
+      );
   }
 
+  onChange(model: RadioButtonsOption<T>): void {
+    this.modelChanged.emit(model);
+  }
 }

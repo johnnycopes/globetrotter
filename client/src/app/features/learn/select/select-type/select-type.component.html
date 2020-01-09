@@ -2,7 +2,7 @@
   text="Which type of quiz would you like to take?"
   [options]="types"
   [alwaysStackedVertically]="true"
-  [ngModel]="selectedType$ | async"
-  (ngModelChange)="onChange($event)"
+  [model]="selectedType$ | async"
+  (modelChanged)="onChange($event)"
   >
 </app-radio-buttons>
