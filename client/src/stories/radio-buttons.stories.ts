@@ -11,7 +11,7 @@ import { RadioButtonsComponent, RadioButtonsOption } from 'src/app/shared/compon
 
 const sampleText = 'Number of countries to include in the quiz:';
 const actions = {
-  onChange: action('ngModelChanged')
+  onChange: () => action('modelChanged')
 };
 const options: RadioButtonsOption<number>[] = [
   { display: '5', value: 5 },
@@ -25,8 +25,8 @@ const template = `
     [text]="text"
     [alwaysStackedVertically]="alwaysStackedVertically"
     [options]="options"
-    [ngModel]="selectedOption"
-    (ngModelChange)="onChange($event)"
+    [model]="model"
+    (modelChanged)="onChange($event)"
     >
   </app-radio-buttons>
 `;
@@ -38,51 +38,51 @@ storiesOf('Shared | Radio Buttons', module)
       declarations: [RadioButtonsComponent]
     }),
   )
-  .add('none selected', () => {
+  .add('no model', () => {
     return {
       template,
       props: {
         text: text('text', sampleText),
         alwaysStackedVertically: boolean('alwaysStackedVertically', false),
-        selectedOption: object('selectedOption', {}),
-        options: object('options', options),
-        onChange: actions.onChange
-      }
-    };
-  })
-  .add('first selected', () => {
-    return {
-      template,
-      props: {
-        text: text('text', sampleText),
-        alwaysStackedVertically: boolean('alwaysStackedVertically', false),
-        selectedOption: object('selectedOption', options[0]),
-        options: object('options', options),
-        onChange: actions.onChange
-      }
-    };
-  })
-  .add('last selected', () => {
-    return {
-      template,
-      props: {
-        text: text('text', sampleText),
-        alwaysStackedVertically: boolean('alwaysStackedVertically', false),
-        selectedOption: object('selectedOption', options[options.length - 1]),
-        options: object('options', options),
-        onChange: actions.onChange
-      }
-    };
-  })
-  .add('stacked vertically', () => {
-    return {
-      template,
-      props: {
-        text: text('text', sampleText),
-        alwaysStackedVertically: boolean('alwaysStackedVertically', true),
-        selectedOption: object('selectedOption', options[0]),
+        model: object('model', {}),
         options: object('options', options),
         onChange: actions.onChange
       }
     };
   });
+  // .add('first selected', () => {
+  //   return {
+  //     template,
+  //     props: {
+  //       text: text('text', sampleText),
+  //       alwaysStackedVertically: boolean('alwaysStackedVertically', false),
+  //       model: object('model', options[0]),
+  //       options: object('options', options),
+  //       onChange: actions.onChange
+  //     }
+  //   };
+  // })
+  // .add('last selected', () => {
+  //   return {
+  //     template,
+  //     props: {
+  //       text: text('text', sampleText),
+  //       alwaysStackedVertically: boolean('alwaysStackedVertically', false),
+  //       model: object('model', options[options.length - 1]),
+  //       options: object('options', options),
+  //       onChange: actions.onChange
+  //     }
+  //   };
+  // })
+  // .add('stacked vertically', () => {
+  //   return {
+  //     template,
+  //     props: {
+  //       text: text('text', sampleText),
+  //       alwaysStackedVertically: boolean('alwaysStackedVertically', true),
+  //       model: object('model', options[0]),
+  //       options: object('options', options),
+  //       onChange: actions.onChange
+  //     }
+  //   };
+  // });

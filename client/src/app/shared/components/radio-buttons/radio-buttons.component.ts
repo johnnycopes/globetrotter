@@ -10,6 +10,10 @@ export interface RadioButtonsOption<T> {
   value: T;
 }
 
+interface ViewModel {
+  stackedVertically: boolean;
+}
+
 @Component({
   selector: 'app-radio-buttons',
   templateUrl: './radio-buttons.component.html',
@@ -22,11 +26,23 @@ export class RadioButtonsComponent<T> implements OnInit {
   @Input() options: RadioButtonsOption<T>[];
   @Input() model: RadioButtonsOption<T>;
   @Output() modelChanged = new EventEmitter<RadioButtonsOption<T>>();
-  stackedVertically$: Observable<boolean>;
+  vm$: Observable<ViewModel>;
+  private stackedVertically$: Observable<boolean>;
 
   constructor(public breakpointObserver: BreakpointObserver) { }
 
   ngOnInit(): void {
+    this.intializeStreams();
+    this.vm$ = this.stackedVertically$.pipe(
+      map(stackedVertically => ({ stackedVertically }))
+    );
+  }
+
+  onChange(model: RadioButtonsOption<T>): void {
+    this.modelChanged.emit(model);
+  }
+
+  private intializeStreams(): void {
     this.stackedVertically$ = this.breakpointObserver
       .observe([Breakpoints.tablet])
       .pipe(
@@ -37,9 +53,5 @@ export class RadioButtonsComponent<T> implements OnInit {
           return !state.matches;
         })
       );
-  }
-
-  onChange(model: RadioButtonsOption<T>): void {
-    this.modelChanged.emit(model);
   }
 }
