@@ -1,4 +1,4 @@
-import { Component, Input, ViewChildren, QueryList } from '@angular/core';
+import { Component, Input, ViewChildren, QueryList, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import * as _ from 'lodash';
 
 import { NestedCheckboxesComponent, TreeProvider, CheckboxStates } from '../nested-checkboxes/nested-checkboxes.component';
@@ -8,6 +8,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   selector: 'app-nested-checkboxes-group',
   templateUrl: './nested-checkboxes-group.component.html',
   styleUrls: ['./nested-checkboxes-group.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [{
     provide: NG_VALUE_ACCESSOR,
     useExisting: NestedCheckboxesGroupComponent,
@@ -37,7 +38,7 @@ export class NestedCheckboxesGroupComponent<T> implements ControlValueAccessor {
     }
   }
 
-  constructor() { }
+  constructor(private changeDetectorRef: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.total = this.showTopCounter && this.getTotal();
@@ -45,6 +46,7 @@ export class NestedCheckboxesGroupComponent<T> implements ControlValueAccessor {
 
   writeValue(value: CheckboxStates): void {
     this.checkboxStates = value;
+    this.changeDetectorRef.markForCheck();
   }
 
   registerOnChange(fn: (value: CheckboxStates) => void): void {

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import * as _ from 'lodash';
 
@@ -18,6 +18,7 @@ export type CheckboxStates = _.Dictionary<CheckboxState>;
   selector: 'app-nested-checkboxes',
   templateUrl: './nested-checkboxes.component.html',
   styleUrls: ['./nested-checkboxes.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [{
     provide: NG_VALUE_ACCESSOR,
     useExisting: NestedCheckboxesComponent,
@@ -51,7 +52,7 @@ export class NestedCheckboxesComponent<T> implements OnInit, ControlValueAccesso
     }
   }
 
-  constructor() { }
+  constructor(private changeDetectorRef: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.itemID = this.treeProvider.getItemID(this.item);
@@ -63,6 +64,7 @@ export class NestedCheckboxesComponent<T> implements OnInit, ControlValueAccesso
 
   writeValue(value: CheckboxStates): void {
     this.checkboxStates = value;
+    this.changeDetectorRef.markForCheck();
   }
 
   registerOnChange(fn: (value: CheckboxStates) => void): void {

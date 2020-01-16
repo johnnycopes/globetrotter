@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 export type CheckboxState = 'checked' | 'unchecked' | 'indeterminate';
@@ -7,6 +7,7 @@ export type CheckboxState = 'checked' | 'unchecked' | 'indeterminate';
   selector: 'app-checkbox',
   templateUrl: './checkbox.component.html',
   styleUrls: ['./checkbox.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [{
     provide: NG_VALUE_ACCESSOR,
     useExisting: CheckboxComponent,
@@ -18,10 +19,11 @@ export class CheckboxComponent implements ControlValueAccessor {
   state: CheckboxState = 'unchecked';
   private onChangeFn: (value: CheckboxState) => void;
 
-  constructor() { }
+  constructor(private changeDetectorRef: ChangeDetectorRef) { }
 
   writeValue(value: CheckboxState): void {
     this.state = value;
+    this.changeDetectorRef.markForCheck();
   }
 
   registerOnChange(fn: (value: CheckboxState) => void): void {
