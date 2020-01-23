@@ -9,16 +9,16 @@
     [ngClass]="{'options--stacked-vertically': vm.stackedVertically}"
     >
     <div class="option"
-      *ngFor="let option of options"
       [ngClass]="{'option--stacked-vertically': vm.stackedVertically}"
+      *ngFor="let option of options"
       >
       <input class="option__input"
-        type="radio"
-        name="option"
         [id]="option.display"
         [value]="option.value"
-        [(ngModel)]="model.value"
-        (change)="onChange(option)"
+        (change)="onChange()"
+        [(ngModel)]="model && model.value"
+        type="radio"
+        name="option"
       />
       <label class="option__label"
         [for]="option.display"

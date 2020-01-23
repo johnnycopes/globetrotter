@@ -1,7 +1,9 @@
-import { Component, Input, Output, EventEmitter, OnInit, ChangeDetectionStrategy } from '@angular/core';
+
+import { Component, Input, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, distinctUntilChanged } from 'rxjs/operators';
 
 import { Breakpoints } from 'src/app/shared/model/breakpoints.enum';
 
@@ -18,18 +20,26 @@ interface ViewModel {
   selector: 'app-radio-buttons',
   templateUrl: './radio-buttons.component.html',
   styleUrls: ['./radio-buttons.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [{
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: RadioButtonsComponent,
+    multi: true
+  }]
 })
-export class RadioButtonsComponent<T> implements OnInit {
+export class RadioButtonsComponent<T> implements OnInit, ControlValueAccessor {
+  @Input() options: RadioButtonsOption<T>[];
   @Input() text: string;
   @Input() alwaysStackedVertically: boolean;
-  @Input() options: RadioButtonsOption<T>[];
-  @Input() model: RadioButtonsOption<T>;
-  @Output() modelChanged = new EventEmitter<RadioButtonsOption<T>>();
+  model: RadioButtonsOption<T>;
   vm$: Observable<ViewModel>;
   private stackedVertically$: Observable<boolean>;
+  private onChangeFn: any;
 
-  constructor(public breakpointObserver: BreakpointObserver) { }
+  constructor(
+    public changeDetectorRef: ChangeDetectorRef,
+    public breakpointObserver: BreakpointObserver
+  ) { }
 
   ngOnInit(): void {
     this.intializeStreams();
@@ -38,8 +48,19 @@ export class RadioButtonsComponent<T> implements OnInit {
     );
   }
 
-  onChange(model: RadioButtonsOption<T>): void {
-    this.modelChanged.emit(model);
+  writeValue(obj: any): void {
+    this.model = obj;
+    this.changeDetectorRef.markForCheck();
+  }
+
+  registerOnChange(fn: any): void {
+    this.onChangeFn = fn;
+  }
+
+  registerOnTouched(fn: any): void { }
+
+  onChange(): void {
+    this.onChangeFn(this.model);
   }
 
   private intializeStreams(): void {
@@ -51,7 +72,8 @@ export class RadioButtonsComponent<T> implements OnInit {
             return true;
           }
           return !state.matches;
-        })
+        }),
+        distinctUntilChanged()
       );
   }
 }

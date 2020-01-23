@@ -1,27 +1,29 @@
-<ul class="guidelines"
-  *ngIf="guidelines"
-  >
-  <li class="guideline"
-    *ngFor="let guideline of guidelines"
+<ng-container *ngIf="vm$ | async as vm">
+  <ul class="guidelines"
+    *ngIf="guidelines"
     >
-    {{guideline}}
-  </li>
-</ul>
-<app-alert class="error"
-  *ngIf="error"
-  [large]="true"
-  >
-  {{error}}
-</app-alert>
-<form [formGroup]="formGroup"
-  (ngSubmit)="onSubmit()"
-  >
-  <ng-content select="app-input">
-  </ng-content>
-  <app-button class="button"
-    buttonType="submit"
-    [buttonText]="buttonText"
-    [disabled]="!formGroup.valid"
+    <li class="guideline"
+      *ngFor="let guideline of guidelines"
+      >
+      {{guideline}}
+    </li>
+  </ul>
+  <app-alert class="error"
+    *ngIf="error"
+    [large]="true"
     >
-  </app-button>
-</form>
+    {{error}}
+  </app-alert>
+  <form [formGroup]="formGroup"
+    (ngSubmit)="onSubmit()"
+    >
+    <ng-content select="app-input">
+    </ng-content>
+    <app-button class="button"
+      buttonType="submit"
+      [buttonText]="buttonText"
+      [disabled]="!vm.valid"
+      >
+    </app-button>
+  </form>
+</ng-container>

@@ -71,9 +71,7 @@ export class NestedCheckboxesComponent<T> implements OnInit, ControlValueAccesso
     this.onChangeFn = fn;
   }
 
-  registerOnTouched(fn: (value: CheckboxStates) => void): void {
-    //
-  }
+  registerOnTouched(fn: (value: CheckboxStates) => void): void { }
 
   updateSelectedCheckboxState(checkboxState: CheckboxState): void {
     const newCheckboxStatesDict = {...this.checkboxStates};
