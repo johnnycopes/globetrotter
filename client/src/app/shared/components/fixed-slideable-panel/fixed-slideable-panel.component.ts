@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 
 import { positionAnimation } from '../../utility/animations';
+import { AnimatedComponent } from '../../model/animated-component.class';
 
 export type FixedSlideablePanelPosition = 'offscreen' | 'header' | 'fullscreen';
 
@@ -11,16 +12,6 @@ export type FixedSlideablePanelPosition = 'offscreen' | 'header' | 'fullscreen';
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [positionAnimation]
 })
-export class FixedSlideablePanelComponent {
+export class FixedSlideablePanelComponent extends AnimatedComponent {
   @Input() position: FixedSlideablePanelPosition;
-  @Output() animationStarted = new EventEmitter<AnimationEvent>();
-  @Output() animationFinished = new EventEmitter<AnimationEvent>();
-
-  onAnimationStart(event: AnimationEvent): void {
-    this.animationStarted.emit(event);
-  }
-
-  onAnimationFinish(event: AnimationEvent): void {
-    this.animationFinished.emit(event);
-  }
 }

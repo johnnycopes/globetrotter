@@ -1,7 +1,8 @@
-import { Component, AfterContentInit, ContentChildren, QueryList, Input, TemplateRef, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
+import { Component, AfterContentInit, ContentChildren, QueryList, Input, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
 
 import { visibilityAnimation, fadeInWithFixedSlideablePanelDelayAnimation } from '../../utility/animations';
 import { TabComponent } from './tab/tab.component';
+import { AnimatedComponent } from '../../model/animated-component.class';
 
 export type TabsetContentVisibility = 'visible' | 'invisible';
 
@@ -15,12 +16,10 @@ export type TabsetContentVisibility = 'visible' | 'invisible';
     fadeInWithFixedSlideablePanelDelayAnimation
   ]
 })
-export class TabsetComponent implements AfterContentInit {
+export class TabsetComponent extends AnimatedComponent implements AfterContentInit {
   @Input() controlsTemplate: TemplateRef<any>;
   @Input() contentVisibility: TabsetContentVisibility = 'visible';
   @ContentChildren(TabComponent) tabs: QueryList<TabComponent>;
-  @Output() animationStarted = new EventEmitter<AnimationEvent>();
-  @Output() animationFinished = new EventEmitter<AnimationEvent>();
 
   ngAfterContentInit(): void {
     const selectedTab = this.tabs.find(tab => tab.selected);
@@ -33,13 +32,5 @@ export class TabsetComponent implements AfterContentInit {
   onSelectTab(tab: TabComponent) {
     this.tabs.forEach(tab => tab.selected = false);
     tab.selected = true;
-  }
-
-  onAnimationStart(event: AnimationEvent): void {
-    this.animationStarted.emit(event);
-  }
-
-  onAnimationFinish(event: AnimationEvent): void {
-    this.animationFinished.emit(event);
   }
 }
