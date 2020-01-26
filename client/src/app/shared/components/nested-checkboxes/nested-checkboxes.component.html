@@ -7,7 +7,7 @@
   </app-icon>
   <div class="nested-checkboxes__selection">
     <app-checkbox class="nested-checkboxes__checkbox"
-      [ngClass]="{'nested-checkboxes__checkbox--bold': isRoot}"
+      [bold]="isRoot"
       [invertColors]="isRoot"
       [ngModel]="checkboxStates && checkboxStates[itemID]"
       (ngModelChange)="updateSelectedCheckboxState($event)"

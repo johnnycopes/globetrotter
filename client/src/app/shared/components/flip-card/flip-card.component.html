@@ -1,5 +1,7 @@
 <div class="flip-card"
   [@flip]="side"
+  (@flip.start)="onAnimationStart($event)"
+  (@flip.done)="onAnimationFinish($event)"
   (click)="onClick()"
   >
   <div class="flip-card__side flip-card__front"

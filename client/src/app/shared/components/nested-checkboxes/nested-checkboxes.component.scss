@@ -28,10 +28,6 @@
   &__checkbox {
     position: relative;
     margin-bottom: map-get($spacing, 4);
-
-    &--bold {
-      font-weight: map-get($font-weight, bold);
-    }
   }
 
   &__child {

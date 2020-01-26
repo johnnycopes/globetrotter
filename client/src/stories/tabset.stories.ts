@@ -1,4 +1,5 @@
 import { storiesOf, moduleMetadata } from '@storybook/angular';
+import { action } from '@storybook/addon-actions';
 import {
   withKnobs,
   select
@@ -14,6 +15,10 @@ import { LinkComponent } from 'src/app/shared/components/link/link.component';
 import { ButtonComponent } from 'src/app/shared/components/button/button.component';
 
 const visibilityStates: TabsetContentVisibility[] = ['visible', 'invisible'];
+const actions = {
+  onAnimationStart: action('animation started'),
+  onAnimationFinish: action('animation finished')
+};
 
 storiesOf('Shared | Tabset', module)
   .addDecorator(withKnobs)
@@ -34,20 +39,29 @@ storiesOf('Shared | Tabset', module)
   .add('with default template', () => {
     return {
       template: `
-        <app-tabset [contentVisibility]="contentVisibility">
-          <app-tab name="Type">
+        <app-tabset
+          [contentVisibility]="contentVisibility"
+          (animationStarted)="onAnimationStart($event)"
+          (animationFinished)="onAnimationFinish($event)"
+          >
+          <app-tab name="Type"
+            >
             <h1>type content here</h1>
           </app-tab>
-          <app-tab name="Quantity">
+          <app-tab name="Quantity"
+            >
             <h1>quantity content here</h1>
           </app-tab>
-          <app-tab name="Countries">
+          <app-tab name="Countries"
+            >
             <h1>countries content here</h1>
           </app-tab>
         </app-tabset>
       `,
       props: {
-        contentVisibility: select('contentVisibility', visibilityStates, 'visible')
+        contentVisibility: select('contentVisibility', visibilityStates, 'visible'),
+        onAnimationStart: actions.onAnimationStart,
+        onAnimationFinish: actions.onAnimationFinish
       }
     };
   })
@@ -91,20 +105,25 @@ storiesOf('Shared | Tabset', module)
             [controlsTemplate]="tabsetControlsTemplate"
             [contentVisibility]="tabsetContentVisibility"
             >
-            <app-tab name="Type">
+            <app-tab name="Type" (animationStarted)="onAnimationStart($event)"
+    (animationFinished)="onAnimationFinish($event)">
               <h1>type content here</h1>
             </app-tab>
-            <app-tab name="Quantity">
+            <app-tab name="Quantity" (animationStarted)="onAnimationStart($event)"
+    (animationFinished)="onAnimationFinish($event)">
               <h1>quantity content here</h1>
             </app-tab>
-            <app-tab name="Countries">
+            <app-tab name="Countries" (animationStarted)="onAnimationStart($event)"
+    (animationFinished)="onAnimationFinish($event)">
               <h1>countries content here</h1>
             </app-tab>
           </app-tabset>
         </div>
       `,
       props: {
-        contentVisibility: select('contentVisibility', visibilityStates, 'visible')
+        contentVisibility: select('contentVisibility', visibilityStates, 'visible'),
+        onAnimationStart: actions.onAnimationStart,
+        onAnimationFinish: actions.onAnimationFinish
       }
     };
   });

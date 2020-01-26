@@ -84,7 +84,7 @@ export class NestedCheckboxesComponent<T> implements OnInit, ControlValueAccesso
 
     const childCheckboxStateCounts = _.reduce(this.childItems, (accum, childItem) => {
       const childID = this.treeProvider.getItemID(childItem);
-      const childCheckboxState = this.checkboxStates[childID] || "unchecked"; // set to "unchecked" if undefined
+      const childCheckboxState = this.checkboxStates[childID] || 'unchecked'; // set to "unchecked" if undefined
       return {
         ...accum,
         [childCheckboxState]: accum[childCheckboxState] + 1

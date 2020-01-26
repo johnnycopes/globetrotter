@@ -12,7 +12,9 @@ import { FlipCardComponent, FlipCardSide, FlipCardGuess } from 'src/app/shared/c
 const sides: FlipCardSide[] = ['front', 'back'];
 const guesses: FlipCardGuess[] = ['none', 'correct', 'incorrect'];
 const actions = {
-  onFlip: action('flipped')
+  onFlip: action('flipped'),
+  onAnimationStart: action('animation started'),
+  onAnimationFinish: action('animation finished')
 };
 const template = `
   <app-flip-card
@@ -21,6 +23,8 @@ const template = `
     [guess]="guess"
     [disabled]="disabled"
     (flipped)="onFlip($event)"
+    (animationStarted)="onAnimationStart($event)"
+    (animationFinished)="onAnimationFinish($event)"
     >
     <div app-flip-card-front>
       <img src="https://restcountries.eu/data/usa.svg"
@@ -50,7 +54,9 @@ storiesOf('Shared | Flip Card', module)
         guess: select('guess', guesses, 'none'),
         canFlip: boolean('canFlip', true),
         disabled: boolean('disabled', false),
-        onFlip: actions.onFlip
+        onFlip: actions.onFlip,
+        onAnimationStart: actions.onAnimationStart,
+        onAnimationFinish: actions.onAnimationFinish
       }
     };
   })
@@ -62,7 +68,9 @@ storiesOf('Shared | Flip Card', module)
         guess: select('guess', guesses, 'none'),
         canFlip: boolean('canFlip', true),
         disabled: boolean('disabled', false),
-        onFlip: actions.onFlip
+        onFlip: actions.onFlip,
+        onAnimationStart: actions.onAnimationStart,
+        onAnimationFinish: actions.onAnimationFinish
       }
     };
   })
@@ -74,7 +82,9 @@ storiesOf('Shared | Flip Card', module)
         guess: select('guess', guesses, 'correct'),
         canFlip: boolean('canFlip', true),
         disabled: boolean('disabled', false),
-        onFlip: actions.onFlip
+        onFlip: actions.onFlip,
+        onAnimationStart: actions.onAnimationStart,
+        onAnimationFinish: actions.onAnimationFinish
       }
     };
   })
@@ -86,7 +96,9 @@ storiesOf('Shared | Flip Card', module)
         guess: select('guess', guesses, 'incorrect'),
         canFlip: boolean('canFlip', true),
         disabled: boolean('disabled', false),
-        onFlip: actions.onFlip
+        onFlip: actions.onFlip,
+        onAnimationStart: actions.onAnimationStart,
+        onAnimationFinish: actions.onAnimationFinish
       }
     };
   })
@@ -98,7 +110,9 @@ storiesOf('Shared | Flip Card', module)
         guess: select('guess', guesses, 'none'),
         canFlip: boolean('canFlip', false),
         disabled: boolean('disabled', true),
-        onFlip: actions.onFlip
+        onFlip: actions.onFlip,
+        onAnimationStart: actions.onAnimationStart,
+        onAnimationFinish: actions.onAnimationFinish
       }
     };
   });

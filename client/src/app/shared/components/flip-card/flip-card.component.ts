@@ -22,6 +22,8 @@ export class FlipCardComponent {
   @Input() canFlip: boolean = true;
   @Input() disabled: boolean;
   @Output() flipped = new EventEmitter<FlipCardSide>();
+  @Output() animationStarted = new EventEmitter<AnimationEvent>();
+  @Output() animationFinished = new EventEmitter<AnimationEvent>();
 
   onClick(): void {
     if (this.canFlip && !this.disabled) {
@@ -32,5 +34,13 @@ export class FlipCardComponent {
 
   flip(): void {
     this.side = this.side === 'front' ? 'back' : 'front';
+  }
+
+  onAnimationStart(event: AnimationEvent): void {
+    this.animationStarted.emit(event);
+  }
+
+  onAnimationFinish(event: AnimationEvent): void {
+    this.animationFinished.emit(event);
   }
 }
