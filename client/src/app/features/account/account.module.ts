@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { AppRoutingModule } from 'src/app/app-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AccountComponent } from './account.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -27,8 +27,8 @@ import { RegisterComponent } from './auth/register/register.component';
   ],
   imports: [
     CommonModule,
+    RouterModule,
     ReactiveFormsModule,
-    AppRoutingModule,
     SharedModule
   ]
 })

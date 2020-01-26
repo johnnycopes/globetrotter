@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 import { SelectModule } from './select/select.module';
 import { QuizModule } from './quiz/quiz.module';
-import { AppRoutingModule } from 'src/app/app-routing.module';
 
 import { LearnComponent } from './learn.component';
 
@@ -16,7 +16,7 @@ import { LearnComponent } from './learn.component';
   ],
   imports: [
     CommonModule,
-    AppRoutingModule,
+    RouterModule,
     QuizModule,
     SelectModule
   ]
