@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
 import { LayoutModule } from '@angular/cdk/layout';
 
-import { AppRoutingModule } from '../app-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { ShellComponent } from './components/shell/shell.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
@@ -15,9 +15,9 @@ import { AuthInterceptorProvider } from './interceptors/auth/auth.interceptor';
   imports: [
     BrowserAnimationsModule,
     HttpClientModule,
+    RouterModule,
     LayoutModule,
     SharedModule,
-    AppRoutingModule
   ],
   exports: [
     BrowserAnimationsModule,

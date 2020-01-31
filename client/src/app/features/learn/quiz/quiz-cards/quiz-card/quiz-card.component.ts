@@ -28,7 +28,7 @@ export class QuizCardComponent implements OnInit, OnDestroy {
   guess: FlipCardGuess;
   disabled: boolean;
   templates: CardTemplates;
-  templatesDict: _.Dictionary<CardTemplates>;
+  private templatesDict: _.Dictionary<CardTemplates>;
   private currentCountry: Country;
   private currentCountrySubscription: Subscription;
 
