@@ -32,24 +32,24 @@ export class NavigationComponent implements OnInit {
     this.links = [
       {
         name: 'Explore',
-        route: `/${RouteNames.explore}`,
+        route: RouteNames.explore,
         exactPathMatch: true
       },
       {
         name: 'Prepare',
-        route: `/${RouteNames.prepare}`,
+        route: RouteNames.prepare,
         exactPathMatch: true
       },
       {
         name: 'Learn',
-        route: `/${RouteNames.learn}`,
+        route: RouteNames.learn,
         exactPathMatch: false
       }
     ];
     this.account = {
       name: 'Account',
       icon: 'User',
-      route: `/${RouteNames.account}`,
+      route: RouteNames.account,
       exactPathMatch: false
     };
   }

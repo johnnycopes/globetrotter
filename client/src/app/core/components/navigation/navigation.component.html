@@ -23,7 +23,7 @@
   <a appLink
     [ngClass]="{'icon-link': link.icon}"
     [selected]="navigationLink.isActive"
-    [routerLink]="link.route"
+    routerLink="/{{link.route}}"
     routerLinkActive
     [routerLinkActiveOptions]="{exact: link.exactPathMatch}"
     #navigationLink="routerLinkActive"

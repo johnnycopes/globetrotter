@@ -1,5 +1,5 @@
 export enum RouteNames {
-  home = '',
+  home = 'home',
   explore = 'explore',
   prepare = 'prepare',
   learn = 'learn',
