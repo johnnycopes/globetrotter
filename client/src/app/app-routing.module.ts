@@ -5,10 +5,8 @@ import { RouteNames } from './shared/model/route-names.enum';
 import { CountryService } from './core/services/country/country.service';
 import { AuthGuard } from './core/guards/auth/auth.guard';
 import { ShellComponent } from './core/components/shell/shell.component';
-import { HomeComponent } from './features/home/home.component';
-import { PlaceholderComponent } from './shared/components/placeholder/placeholder.component';
-import { LearnComponent } from './features/learn/learn.component';
-import { AccountComponent } from './features/account/account.component';
+import { HomeComponent } from './core/components/home/home.component';
+import { PlaceholderComponent } from './core/components/placeholder/placeholder.component';
 import { PageNotFoundComponent } from './core/components/page-not-found/page-not-found.component';
 
 const routes: Routes = [
@@ -18,11 +16,9 @@ const routes: Routes = [
     { path: RouteNames.explore, component: PlaceholderComponent },
     { path: RouteNames.prepare, component: PlaceholderComponent },
     { path: RouteNames.learn,
-      component: LearnComponent,
       loadChildren: () => import('./features/learn/learn.module').then(m => m.LearnModule)
     },
     { path: RouteNames.account,
-      component: AccountComponent,
       canActivateChild: [AuthGuard],
       loadChildren: () => import('./features/account/account.module').then(m => m.AccountModule)
     },

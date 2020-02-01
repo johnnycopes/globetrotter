@@ -17,7 +17,6 @@ import { LoaderComponent } from './components/loader/loader.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { NestedCheckboxesComponent } from './components/nested-checkboxes/nested-checkboxes.component';
 import { NestedCheckboxesGroupComponent } from './components/nested-checkboxes-group/nested-checkboxes-group.component';
-import { PlaceholderComponent } from './components/placeholder/placeholder.component';
 import { RadioButtonsComponent } from './components/radio-buttons/radio-buttons.component';
 import { TabComponent } from './components/tabset/tab/tab.component';
 import { TabsetComponent } from './components/tabset/tabset.component';
@@ -44,7 +43,6 @@ import { TabsetComponent } from './components/tabset/tabset.component';
     ModalComponent,
     NestedCheckboxesComponent,
     NestedCheckboxesGroupComponent,
-    PlaceholderComponent,
     RadioButtonsComponent,
     TabComponent,
     TabsetComponent,
@@ -65,7 +63,6 @@ import { TabsetComponent } from './components/tabset/tabset.component';
     ModalComponent,
     NestedCheckboxesComponent,
     NestedCheckboxesGroupComponent,
-    PlaceholderComponent,
     RadioButtonsComponent,
     TabComponent,
     TabsetComponent,

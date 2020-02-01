@@ -12,9 +12,11 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 
 const accountRoutes: Routes = [
-  { path: RouteNames.auth, component: AuthComponent },
-  { path: RouteNames.profile, component: ProfileComponent },
-  { path: '', redirectTo: RouteNames.profile, pathMatch: 'full' }
+  { path: '', component: AccountComponent, children: [
+    { path: RouteNames.auth, component: AuthComponent },
+    { path: RouteNames.profile, component: ProfileComponent },
+    { path: '', redirectTo: RouteNames.profile, pathMatch: 'full' }
+  ]}
 ];
 
 @NgModule({
