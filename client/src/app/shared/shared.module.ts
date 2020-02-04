@@ -13,6 +13,7 @@ import { FormComponent } from './components/form/form.component';
 import { IconComponent } from './components/icon/icon.component';
 import { InputComponent } from './components/input/input.component';
 import { LinkComponent } from './components/link/link.component';
+import { ListDetailsComponent } from './components/list-details/list-details.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { NestedCheckboxesComponent } from './components/nested-checkboxes/nested-checkboxes.component';
@@ -40,6 +41,7 @@ import { TabsetComponent } from './components/tabset/tabset.component';
     InputComponent,
     LoaderComponent,
     LinkComponent,
+    ListDetailsComponent,
     ModalComponent,
     NestedCheckboxesComponent,
     NestedCheckboxesGroupComponent,
@@ -61,6 +63,7 @@ import { TabsetComponent } from './components/tabset/tabset.component';
     LoaderComponent,
     LinkComponent,
     ModalComponent,
+    ListDetailsComponent,
     NestedCheckboxesComponent,
     NestedCheckboxesGroupComponent,
     RadioButtonsComponent,

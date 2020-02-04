@@ -75,7 +75,7 @@ storiesOf('Shared | Nested Checkboxes Group', module)
         text: text('text', 'possible countries selected.'),
         treeProvider,
         checkboxStates: object('checkboxStates', someSelectedDict),
-        items: object('item', mockItems),
+        items: object('items', mockItems),
         onModelChange: actions.onModelChange
       }
     };
@@ -89,7 +89,7 @@ storiesOf('Shared | Nested Checkboxes Group', module)
         text: text('text', 'possible countries selected.'),
         treeProvider,
         checkboxStates: object('checkboxStates', allSelectedDict),
-        items: object('item', mockItems),
+        items: object('items', mockItems),
         onModelChange: actions.onModelChange
       }
     };

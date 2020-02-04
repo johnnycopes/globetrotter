@@ -61,9 +61,9 @@ export class CountryService implements Resolve<Observable<Country[]>> {
 
   private initialize(): void {
     this.request = this.http.get<Country[]>(this.countriesApiUrl).pipe(
-      // delay(200), // prevent the loader from flashing on the screen too quickly
       shareReplay(),
       catchError(error => {
+        this.errorService.setGlobalError(error.message);
         return of([]);
       })
     );
@@ -76,6 +76,7 @@ export class CountryService implements Resolve<Observable<Country[]>> {
       this.store.set(['countriesBySubregion'], countriesBySubregion);
       this.store.set(['subregionsByRegion'], subregionsByRegion);
       this.store.set(['formattedData'], formattedData);
+      console.log(formattedData);
     });
   }
 
