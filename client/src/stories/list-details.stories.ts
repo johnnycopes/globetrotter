@@ -29,7 +29,8 @@ storiesOf('Shared | List Details', module)
         </ng-template>
 
         <ng-template #detailsTemplate
-          let-country>
+          let-country
+          >
           <h1 style="font-size: 56px">
             {{country.name}}
           </h1>
@@ -41,16 +42,18 @@ storiesOf('Shared | List Details', module)
 
         <app-list-details
           [items]="items"
-          [selectedItem]="items[0]"
-          uniqueKey="cioc"
           [listItemTemplate]="listItemTemplate"
           [detailsTemplate]="detailsTemplate"
-          (itemSelected)="onSelect($event)"
+          [getItemUniqueId]="getUniqueId"
+          [selectedItem]="selectedItem"
+          (selectedItemChange)="onSelect($event)"
           >
         </app-list-details>
       `,
       props: {
+        selectedItem: object('item', MOCK_DATA[0]),
         items: object('items', MOCK_DATA),
+        getUniqueId: (item) => item.cioc,
         onSelect: actions.onSelect
       }
     }

@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, Output, EventEmitter, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
-import * as _ from 'lodash';
 
 @Component({
   selector: 'app-list-details',
@@ -9,30 +8,27 @@ import * as _ from 'lodash';
 })
 export class ListDetailsComponent<T> implements OnInit {
   @Input() items: T[];
-  @Input() selectedItem: T;
-  @Input() uniqueKey: string;
   @Input() listItemTemplate: TemplateRef<any>;
   @Input() detailsTemplate: TemplateRef<any>;
-  @Output() itemSelected = new EventEmitter<T>();
-  private itemsKeyedByUniqueKey: _.Dictionary<T>;
+  @Input() getItemUniqueId: (item: T) => string;
+  @Input() selectedItem: T;
+  @Output() selectedItemChange = new EventEmitter<T>();
 
-  ngOnInit(): void {
-    if (!this.uniqueKey) {
-      throw new Error('A unique key must defined as an input of the list-details component');
-    }
-    this.itemsKeyedByUniqueKey = _.keyBy(this.items, this.uniqueKey);
+  public trackByFn = (index: number, item: T): string => {
+    return this.getItemUniqueId(item);
   }
 
-  public trackByFn(index: number, item: T): number {
-    return item[this.uniqueKey];
+  ngOnInit(): void {
+    if (!this.getItemUniqueId) {
+      throw new Error('A unique key function must defined as an input of the list-details component');
+    }
   }
 
   public onSelect(item: T): void {
-    this.selectedItem = item;
-    this.itemSelected.emit(item);
+    this.selectedItemChange.emit(item);
   }
 
   public checkIfSelected(item: T): boolean {
-    return item[this.uniqueKey] === this.selectedItem[this.uniqueKey];
+    return this.getItemUniqueId(item) === this.getItemUniqueId(this.selectedItem);
   }
 }
