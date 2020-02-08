@@ -1,0 +1,92 @@
+@import 'styles';
+
+.text {
+  text-align: center;
+  font-size: map-get($font-size, 24);
+  margin-bottom: map-get($spacing, 24);
+
+  @include mobile {
+    font-size: map-get($font-size, 24);
+  }
+
+  @include tablet {
+    font-size: map-get($font-size, 36);
+    margin-bottom: map-get($spacing, 48);
+  }
+}
+
+.options {
+  display: flex;
+  justify-content: space-between;
+
+  &--stacked-vertically {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.option {
+  width: map-get($spacing, 128);
+  height: map-get($spacing, 128);
+
+  @include desktop {
+    width: map-get($spacing, 192);
+    height: map-get($spacing, 192);
+  }
+
+  &--stacked-vertically {
+    width: map-get($spacing, 256);
+    height: map-get($spacing, 64);
+    margin-bottom: map-get($spacing, 24);
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    @include mobile {
+      width: map-get($spacing, 384);
+      margin-bottom: map-get($spacing, 32);
+    }
+
+    @include desktop {
+      width: map-get($spacing, 512);
+      height: map-get($spacing, 96);
+    }
+  }
+
+  &__label {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: map-get($font-size, 24);
+    border: map-get($border, thin) solid map-get($color, medium);
+    color: map-get($color, medium);
+    transition: map-get($transition, border);
+    border-radius: map-get($border, radius);
+    cursor: pointer;
+
+    @include tablet {
+      font-size: map-get($font-size, 30);
+    }
+
+    @include desktop {
+      font-size: map-get($font-size, 36);
+    }
+  }
+
+  &__input {
+    visibility: hidden;
+    position: absolute;
+    left: -100vh;
+    opacity: 0;
+  }
+
+  &__input:checked ~ .option__label {
+    color: map-get($color, lightest);
+    border: map-get($border, medium) solid map-get($color, lightest);
+    font-weight: map-get($font-weight, bold);
+  }
+}

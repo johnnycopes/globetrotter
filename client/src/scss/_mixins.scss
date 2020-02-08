@@ -1,0 +1,47 @@
+// Keep this in-sync with the Breakpoints enum in breakpoints.enum.ts
+$breakpoints: (
+  all: 0px,
+  mobile: 400px,
+  tablet: 750px,
+  desktop: 1200px
+);
+
+@mixin mobile {
+  @media (min-width: #{map-get($breakpoints, mobile)}) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: #{map-get($breakpoints, tablet)}) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: #{map-get($breakpoints, desktop)}) {
+    @content;
+  }
+}
+
+@mixin full-screen-page {
+  position: absolute;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin quiz-width {
+  max-width: (map-get($app, quiz-card-width) * 5) + (map-get($app, quiz-cards-grid-gap) * 4);
+  width: 90%;
+  margin: 0 auto;
+}
+
+@mixin small-caps {
+  font-size: map-get($font-size, 20);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: map-get($color, medium);
+}

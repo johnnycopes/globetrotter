@@ -1,0 +1,14 @@
+@import 'styles';
+
+:host {
+  @include full-screen-page;
+}
+
+.content {
+  text-align: center;
+}
+
+.header {
+  font-size: map-get($font-size, 48);
+  margin-bottom: map-get($spacing, 24);
+}

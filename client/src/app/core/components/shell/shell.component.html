@@ -1,0 +1,19 @@
+<ng-container *ngIf="vm$ | async as vm">
+  <app-navigation *ngIf="vm.showNavigation">
+  </app-navigation>
+
+  <div class="content">
+    <div class="content__wrapper"
+      *ngIf="vm.showContent"
+      [ngClass]="{'content__wrapper--no-scroll': vm.quizComplete}"
+      >
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+
+  <app-modal *ngIf="vm.showModal"
+    (confirmed)="onModalConfirm()"
+    >
+    {{vm.modalMessage}}
+  </app-modal>
+</ng-container>

@@ -1,0 +1,25 @@
+<ng-template #defaultControlsTemplate>
+  <ul class="tabs">
+    <li class="tab"
+      *ngFor="let tab of tabs"
+      [ngClass]="{'tab--selected': tab.selected}"
+      (click)="onSelectTab(tab)"
+      >
+      {{tab.name}}
+    </li>
+  </ul>
+</ng-template>
+
+<ng-container *ngTemplateOutlet="
+  controlsTemplate ? controlsTemplate : defaultControlsTemplate;
+  context: { tabs: this.tabs }
+  ">
+</ng-container>
+<div class="content"
+  [@visibility]="contentVisibility"
+  @fadeIn
+  (@fadeIn.start)="onAnimationStart($event)"
+  (@fadeIn.done)="onAnimationFinish($event)"
+  >
+  <ng-content></ng-content>
+</div>

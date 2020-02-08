@@ -1,0 +1,30 @@
+@import 'styles';
+
+.guidelines {
+  font-size: map-get($font-size, 24);
+  margin-bottom: map-get($spacing, 24);
+  list-style-type: circle;
+}
+
+.guideline {
+  margin-bottom: map-get($spacing, 8);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.error {
+  margin-bottom: map-get($spacing, 24);
+}
+
+:host ::ng-deep app-input {
+  width: 100%;
+  margin-bottom: map-get($spacing, 24);
+}
+
+.button {
+  margin-top: map-get($spacing, 24);
+}

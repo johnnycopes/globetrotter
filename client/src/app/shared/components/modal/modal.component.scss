@@ -1,0 +1,28 @@
+@import 'styles';
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: map-get($z-index, modal);
+  background: hsla(182, 82%, 93%, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dialog {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 30vh;
+  min-height: map-get($spacing, 256);
+  max-height: map-get($spacing, 768);
+  width: map-get($spacing, 512);
+  background: map-get($color, dark);
+  padding: map-get($spacing, 32);
+  border-radius: map-get($border, radius);
+}

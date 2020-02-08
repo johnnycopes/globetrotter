@@ -1,0 +1,38 @@
+@import 'styles';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+label {
+  margin-bottom: map-get($spacing, 8);
+  @include small-caps();
+}
+
+:host ::ng-deep input {
+  width: 100%;
+  padding: map-get($spacing, 8);
+  border: map-get($border, thin) solid transparent;
+  border-radius: map-get($border, radius);
+  background: map-get($color, white);
+  color: map-get($color, darkest);
+  font-family: $font-stack;
+  font-size: map-get($font-size, 20);
+  transition: map-get($transition, border);
+
+  &:focus {
+    border-color: map-get($color, medium);
+  }
+
+  &:disabled {
+    background: map-get($color, medium);
+    cursor: not-allowed;
+  }
+}
+
+.error {
+  position: absolute;
+  right: map-get($spacing, 8);
+}

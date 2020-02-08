@@ -1,0 +1,36 @@
+@import 'styles';
+
+.nested-checkboxes {
+  display: flex;
+  flex: 0 1 50%;
+  align-items: center;
+  position: relative;
+
+  &__image {
+    width: map-get($spacing, 96);
+    padding-right: map-get($spacing, 8);
+
+    @include mobile {
+      width: map-get($spacing, 128);
+    }
+
+    @include tablet {
+      width: map-get($spacing, 192);
+      padding-right: map-get($spacing, 32);
+    }
+  }
+
+  &__selection {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__checkbox {
+    position: relative;
+    margin-bottom: map-get($spacing, 4);
+  }
+
+  &__child {
+    margin-left: map-get($spacing, 24);
+  }
+}

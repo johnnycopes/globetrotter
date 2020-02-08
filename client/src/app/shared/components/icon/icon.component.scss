@@ -1,0 +1,23 @@
+@import 'styles';
+
+:host {
+  display: inline-block;
+  width: map-get($spacing, 48);
+}
+
+.icon {
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  &--highlighted {
+    path {
+      fill: map-get($color, lightest);
+    }
+  }
+
+  &--clickable {
+    cursor: pointer;
+  }
+}

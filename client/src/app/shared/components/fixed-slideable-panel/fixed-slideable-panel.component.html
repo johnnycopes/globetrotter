@@ -1,0 +1,14 @@
+<div class="fixed-slideable-panel"
+  [@position]="position"
+  (@position.start)="onAnimationStart($event)"
+  (@position.done)="onAnimationFinish($event)"
+  >
+  <div class="fixed-slideable-panel__offset">
+  </div>
+  <div class="fixed-slideable-panel__content">
+    <ng-content select="[content]"></ng-content>
+  </div>
+  <div class="fixed-slideable-panel__header">
+    <ng-content select="[header]"></ng-content>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+<div class="overlay">
+  <div class="dialog">
+    <div class="content">
+      <ng-content></ng-content>
+    </div>
+    <app-button
+      buttonText="OK"
+      (clicked)="onConfirm()"
+      >
+    </app-button>
+  </div>
+</div>

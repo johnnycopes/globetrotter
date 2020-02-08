@@ -1,0 +1,19 @@
+<label class="checkbox"
+  [ngClass]="{'checkbox--inverted': invertColors}"
+  >
+  <input class="input"
+    type="checkbox"
+    [indeterminate]="state === 'indeterminate'"
+    [checked]="state === 'checked'"
+    (change)="onChange()"
+  />
+  <div class="element"></div>
+  <div class="label"
+    [ngClass]="{
+      'label--active': state !== 'unchecked',
+      'label--bold': bold
+    }"
+    >
+    <ng-content></ng-content>
+  </div>
+</label>

@@ -1,0 +1,9 @@
+<app-loader *ngIf="loading$ | async">
+</app-loader>
+
+<app-error *ngIf="error$ | async">
+</app-error>
+
+<ng-container *ngIf="!(loading$ | async) && !(error$ | async)">
+  <router-outlet></router-outlet>
+</ng-container>

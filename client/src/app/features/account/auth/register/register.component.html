@@ -1,0 +1,45 @@
+<app-form
+  *ngIf="vm$ | async as vm"
+  [formGroup]="form"
+  [error]="vm.formError"
+  [guidelines]="guidelines"
+  buttonText="Register"
+  (submitted)="register($event)"
+  >
+  <app-input
+    label="Username"
+    errorMessage="Username is required"
+    [showError]="username.status === 'INVALID' && username.touched"
+    >
+    <input
+      id="Username"
+      type="text"
+      formControlName="username"
+    />
+  </app-input>
+  <app-input
+    label="Password"
+    [errorMessage]="vm.passwordError"
+    [showError]="password.status === 'INVALID' && password.touched"
+    >
+    <input
+      id="Password"
+      type="password"
+      formControlName="password"
+    />
+  </app-input>
+  <app-input
+    label="Confirm Password"
+    errorMessage="Passwords don't match"
+    [showError]="
+      form.errors?.differentPasswords &&
+      password.touched &&
+      confirmPassword.touched
+    ">
+    <input
+      id="Confirm Password"
+      type="password"
+      formControlName="confirmPassword"
+    />
+  </app-input>
+</app-form>

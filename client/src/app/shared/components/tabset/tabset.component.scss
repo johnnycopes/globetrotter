@@ -1,0 +1,39 @@
+@import 'styles';
+
+$tab-border: map-get($border, thin) solid map-get($color, dark);
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.tab {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  padding: map-get($spacing, 16);
+  border: $tab-border;
+  border-right: 0;
+
+  &:first-of-type {
+    border-top-left-radius: map-get($border, radius);
+    border-bottom-left-radius: map-get($border, radius);
+  }
+
+  &:last-of-type {
+    border-right: $tab-border;
+    border-top-right-radius: map-get($border, radius);
+    border-bottom-right-radius: map-get($border, radius);
+  }
+
+  &--selected {
+    font-weight: map-get($font-weight, bold);
+    background: map-get($color, dark);
+  }
+}
+
+.content {
+  margin: map-get($spacing, 48) auto;
+}
