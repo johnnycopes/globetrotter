@@ -7,7 +7,7 @@ import {
 } from '@storybook/addon-knobs/angular';
 import { CounterComponent } from 'src/app/shared/components/counter/counter.component';
 
-storiesOf('Shared | Counter', module)
+storiesOf('Shared/Counter', module)
   .addDecorator(withKnobs)
   .add('alone', () => {
     return {

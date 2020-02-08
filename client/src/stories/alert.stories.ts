@@ -9,7 +9,7 @@ import { AlertComponent } from 'src/app/shared/components/alert/alert.component'
 
 const types = ['success', 'error'];
 
-storiesOf('Shared | Alert', module)
+storiesOf('Shared/Alert', module)
   .addDecorator(withKnobs)
   .addDecorator(
     moduleMetadata({

@@ -31,7 +31,7 @@ const template = `
   </app-radio-buttons>
 `;
 
-storiesOf('Shared | Radio Buttons', module)
+storiesOf('Shared/Radio Buttons', module)
   .addDecorator(withKnobs)
   .addDecorator(
     moduleMetadata({

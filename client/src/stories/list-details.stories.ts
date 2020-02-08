@@ -12,7 +12,7 @@ const actions = {
   onSelect: action('selected')
 };
 
-storiesOf('Shared | List Details', module)
+storiesOf('Shared/List Details', module)
   .addDecorator(withKnobs)
   .addDecorator(
     moduleMetadata({

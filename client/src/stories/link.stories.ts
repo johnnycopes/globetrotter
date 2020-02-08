@@ -8,7 +8,7 @@ import { LinkComponent } from 'src/app/shared/components/link/link.component';
 import { FixedSlideablePanelComponent } from 'src/app/shared/components/fixed-slideable-panel/fixed-slideable-panel.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-storiesOf('Shared | Link', module)
+storiesOf('Shared/Link', module)
   .addDecorator(withKnobs)
   .addDecorator(
     moduleMetadata({

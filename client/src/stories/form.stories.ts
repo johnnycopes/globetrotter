@@ -24,7 +24,7 @@ const withValidationForm = formBuilder.group({
   password: ['', Validators.required]
 });
 
-storiesOf('Shared | Form', module)
+storiesOf('Shared/Form', module)
   .addDecorator(withKnobs)
   .addDecorator(
     moduleMetadata({

@@ -14,7 +14,7 @@ const actions = {
   onClick: action('clicked')
 };
 
-storiesOf('Shared | Button', module)
+storiesOf('Shared/Button', module)
   .addDecorator(withKnobs)
   .add('primary', () => {
     return {

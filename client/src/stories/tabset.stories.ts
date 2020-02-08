@@ -20,7 +20,7 @@ const actions = {
   onAnimationFinish: action('animation finished')
 };
 
-storiesOf('Shared | Tabset', module)
+storiesOf('Shared/Tabset', module)
   .addDecorator(withKnobs)
   .addDecorator(
     moduleMetadata({

@@ -51,7 +51,7 @@ const complexTemplate = `
   </app-fixed-slideable-panel>
 `;
 
-storiesOf('Shared | Fixed Slideable Panel', module)
+storiesOf('Shared/Fixed Slideable Panel', module)
   .addDecorator(withKnobs)
   .addDecorator(
     moduleMetadata({

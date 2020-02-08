@@ -11,7 +11,7 @@ const actions = {
   onConfirm: action('confirmed')
 };
 
-storiesOf('Shared | Modal', module)
+storiesOf('Shared/Modal', module)
   .addDecorator(withKnobs)
   .addDecorator(
     moduleMetadata({

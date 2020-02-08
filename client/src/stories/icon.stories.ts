@@ -25,7 +25,7 @@ const actions = {
   onClick: action('clicked')
 };
 
-storiesOf('Shared | Icon', module)
+storiesOf('Shared/Icon', module)
   .addDecorator(withKnobs)
   .add('Icon', () => {
     return {

@@ -1,6 +1,9 @@
 import { addParameters } from '@storybook/angular';
 
 addParameters({
+  options: {
+    showRoots: true,
+  },
   viewport: {
     /**
      * name to display in the dropdown

@@ -8,7 +8,7 @@ import {
 import { InputComponent } from 'src/app/shared/components/input/input.component';
 import { AlertComponent } from 'src/app/shared/components/alert/alert.component';
 
-storiesOf('Shared | Input', module)
+storiesOf('Shared/Input', module)
   .addDecorator(withKnobs)
   .addDecorator(
     moduleMetadata({

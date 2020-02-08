@@ -12,7 +12,6 @@ import { IconComponent } from 'src/app/shared/components/icon/icon.component';
 import { NestedCheckboxesComponent } from 'src/app/shared/components/nested-checkboxes/nested-checkboxes.component';
 import { DefaultTreeProvider } from './mock-data/default-tree-provider.class';
 import { MOCK_DATA, SOME_SELECTED_DICT, ALL_SELECTED_DICT } from './mock-data/nested-checkboxes.data';
-import markdown from './notes/nested-checkboxes.md';
 
 const treeProvider = new DefaultTreeProvider;
 const mockItem = MOCK_DATA;
@@ -33,7 +32,7 @@ const template = `
   ></app-nested-checkboxes>
 `;
 
-storiesOf('Shared | Nested Checkboxes', module)
+storiesOf('Shared/Nested Checkboxes', module)
   .addDecorator(withKnobs)
   .addDecorator(
     moduleMetadata({
@@ -57,7 +56,7 @@ storiesOf('Shared | Nested Checkboxes', module)
         updateCheckboxStates: actions.updateCheckboxStates
       }
     };
-  }, { notes: { markdown }})
+  })
   .add('some selected', () => {
     return {
       template,
@@ -70,7 +69,7 @@ storiesOf('Shared | Nested Checkboxes', module)
         updateCheckboxStates: actions.updateCheckboxStates
       }
     };
-  }, { notes: { markdown } })
+  })
   .add('all selected', () => {
     return {
       template,
@@ -83,4 +82,4 @@ storiesOf('Shared | Nested Checkboxes', module)
         updateCheckboxStates: actions.updateCheckboxStates
       }
     }
-  }, { notes: { markdown } });
+  });
