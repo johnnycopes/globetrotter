@@ -21,10 +21,10 @@ export class QuizCardComponent implements OnInit, OnDestroy {
   @Input() canFlip: boolean;
   @Input() type: QuizType;
   @Output() flipped = new EventEmitter<boolean>();
-  @ViewChild('flagTemplate') flagTemplate: TemplateRef<any>;
-  @ViewChild('countryTemplate') countryTemplate: TemplateRef<any>;
-  @ViewChild('capitalTemplate') capitalTemplate: TemplateRef<any>;
-  @ViewChild(FlipCardComponent) private flipCardComponent: FlipCardComponent;
+  @ViewChild('flagTemplate', { static: true }) flagTemplate: TemplateRef<any>;
+  @ViewChild('countryTemplate', { static: true }) countryTemplate: TemplateRef<any>;
+  @ViewChild('capitalTemplate', { static: true }) capitalTemplate: TemplateRef<any>;
+  @ViewChild(FlipCardComponent, { static: true }) private flipCardComponent: FlipCardComponent;
   guess: FlipCardGuess;
   disabled: boolean;
   templates: CardTemplates;
