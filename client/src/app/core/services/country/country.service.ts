@@ -76,7 +76,6 @@ export class CountryService implements Resolve<Observable<Country[]>> {
       this.store.set(['countriesBySubregion'], countriesBySubregion);
       this.store.set(['subregionsByRegion'], subregionsByRegion);
       this.store.set(['formattedData'], formattedData);
-      console.log(formattedData);
     });
   }
 
