@@ -13,6 +13,7 @@
       (ngModelChange)="updateSelectedCheckboxState($event)"
       >
       <app-counter
+        *ngIf="showCounters"
         [current]="current"
         [total]="total"
         [text]="itemDisplayName"

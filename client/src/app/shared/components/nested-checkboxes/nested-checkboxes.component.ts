@@ -58,8 +58,12 @@ export class NestedCheckboxesComponent<T> implements OnInit, ControlValueAccesso
     this.itemID = this.treeProvider.getItemID(this.item);
     this.itemDisplayName = this.treeProvider.getItemDisplayName(this.item);
     this.childItems = this.treeProvider.getChildItems(this.item);
-    this.total = this.showCounters && this.treeProvider.getItemTotal(this.item);
-    this.iconName = this.showImage && this.treeProvider.getItemIcon(this.item);
+    if (this.showCounters && this.treeProvider.getItemTotal) {
+      this.total = this.treeProvider.getItemTotal(this.item);
+    }
+    if (this.showImage && this.treeProvider.getItemIcon) {
+      this.iconName = this.treeProvider.getItemIcon(this.item);
+    }
   }
 
   writeValue(value: CheckboxStates): void {
@@ -133,7 +137,11 @@ export class NestedCheckboxesComponent<T> implements OnInit, ControlValueAccesso
       return _.reduce(childItems, (accum, childItem) => {
         const childCheckboxState = this.checkboxStates[this.treeProvider.getItemID(childItem)];
         if (childCheckboxState === 'checked') {
-          return accum + this.treeProvider.getItemTotal(childItem);
+          let childTotal = 0;
+          if (childItem && this.treeProvider.getItemTotal) {
+            childTotal = this.treeProvider.getItemTotal(childItem);
+          }
+          return accum + childTotal;
         }
         else {
           return accum + this.calculcateCurrent(childItem);

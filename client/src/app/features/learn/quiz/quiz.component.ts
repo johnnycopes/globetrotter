@@ -22,9 +22,9 @@ export class QuizComponent implements OnInit {
     this.route.queryParamMap.subscribe(
       queryParams => {
         const params = {
-          type: queryParams.get('type'),
-          quantity: queryParams.get('quantity'),
-          countries: queryParams.get('countries')
+          type: queryParams.get('type') || '',
+          quantity: queryParams.get('quantity') || '',
+          countries: queryParams.get('countries') || ''
         };
         const selection = this.selectService.mapQueryParamsToSelection(params);
         this.selectService.updateSelection(selection);

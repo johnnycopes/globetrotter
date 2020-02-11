@@ -30,7 +30,7 @@ export class PlacesTreeProvider {
       return place.countries.length;
     }
     else {
-      return null;
+      return 0;
     }
   }
 

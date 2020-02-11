@@ -20,11 +20,11 @@ export class LoginComponent implements OnInit {
     private errorService: ErrorService
   ) { }
 
-  get username(): AbstractControl {
+  get username(): AbstractControl | null {
     return this.form.get('username');
   }
 
-  get password(): AbstractControl {
+  get password(): AbstractControl | null {
     return this.form.get('password');
   }
 

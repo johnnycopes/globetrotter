@@ -60,7 +60,7 @@ export class QuizService {
   }
 
   private moveGuessedCountryToEnd(countries: Country[]): Country[] {
-    const guessedCountry = _.head(countries);
+    const guessedCountry = countries[0];
     const updatedCountries = this.removeGuessedCountry(countries);
     updatedCountries.push(guessedCountry);
     return updatedCountries;

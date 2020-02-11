@@ -104,7 +104,7 @@ export class AuthService {
       startWith(''), // fire observable on load for cases where input is touched but not changed
       map(() => {
         if (input.errors) {
-          const inputError = Object.keys(input.errors)[0];
+          const inputError = Object.keys(input.errors)[0] as keyof typeof ErrorMessages;
           const errorMessage = `${inputName} is ${ErrorMessages[inputError]}`;
           return errorMessage;
         }
@@ -117,7 +117,7 @@ export class AuthService {
     const decodedToken = this.jwtHelper.decodeToken(token);
     const tokenValid = !this.jwtHelper.isTokenExpired(token);
     const tokenExpirationDate = this.jwtHelper.getTokenExpirationDate(token);
-    const timeUntilAutoLogout = tokenExpirationDate.getTime() - Date.now();
+    const timeUntilAutoLogout = tokenExpirationDate ? tokenExpirationDate.getTime() - Date.now() : 0;
     const timer = window.setTimeout(() => this.logout(), timeUntilAutoLogout);
     this.store.set(['username'], decodedToken.unique_name);
     this.store.set(['token'], token);

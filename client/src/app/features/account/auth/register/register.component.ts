@@ -31,15 +31,15 @@ export class RegisterComponent {
     private errorService: ErrorService
   ) { }
 
-  get username(): AbstractControl {
+  get username(): AbstractControl | null {
     return this.form.get('username');
   }
 
-  get password(): AbstractControl {
+  get password(): AbstractControl | null {
     return this.form.get('password');
   }
 
-  get confirmPassword(): AbstractControl {
+  get confirmPassword(): AbstractControl | null {
     return this.form.get('confirmPassword');
   }
 
@@ -75,7 +75,9 @@ export class RegisterComponent {
 
   private initializeStreams(): void {
     this.formError$ = this.errorService.getRegisterError();
-    this.passwordError$ = this.authService.getInputError(this.password, 'Password');
+    if (this.password) {
+      this.passwordError$ = this.authService.getInputError(this.password, 'Password');
+    }
   }
 
 }

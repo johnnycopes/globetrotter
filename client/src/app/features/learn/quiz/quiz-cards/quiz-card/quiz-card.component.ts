@@ -35,7 +35,7 @@ export class QuizCardComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.setCardTemplates();
     this.currentCountrySubscription = this.quizService.getQuiz().subscribe(
-      quiz => this.currentCountry = _.head(quiz.countries)
+      quiz => this.currentCountry = quiz.countries[0]
     );
   }
 

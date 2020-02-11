@@ -95,7 +95,7 @@ export class CountryService implements Resolve<Observable<Country[]>> {
           [region]: [...subregions, subregion]
         };
       }
-    }, {});
+    }, {} as _.Dictionary<string[]>);
   }
 
   private createFormattedData(countriesBySubregion: CountriesBySubregion, subregionsByRegion: SubregionsByRegion): Region[] {

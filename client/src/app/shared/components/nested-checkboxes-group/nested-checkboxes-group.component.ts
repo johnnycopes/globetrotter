@@ -30,10 +30,10 @@ export class NestedCheckboxesGroupComponent<T> implements ControlValueAccessor {
     return this.showCounters && !!this.text;
   }
 
-  get current(): number {
+  get current(): number | undefined {
     if (this.showTopCounter && this.checkboxStates && this.nestedCheckboxesComponents) {
       return this.nestedCheckboxesComponents.reduce((accum, component) => {
-        return accum + component.current;
+        return accum + _.get(component, 'current', 0);
       }, 0);
     }
   }
@@ -41,7 +41,9 @@ export class NestedCheckboxesGroupComponent<T> implements ControlValueAccessor {
   constructor(private changeDetectorRef: ChangeDetectorRef) { }
 
   ngOnInit(): void {
-    this.total = this.showTopCounter && this.getTotal();
+    if (this.showTopCounter) {
+      this.total = this.getTotal();
+    }
   }
 
   writeValue(value: CheckboxStates): void {
@@ -94,8 +96,12 @@ export class NestedCheckboxesGroupComponent<T> implements ControlValueAccessor {
   }
 
   private getTotal(): number {
-   return _.reduce(this.items, (accum, current) => {
-      return accum + this.treeProvider.getItemTotal(current);
+    return _.reduce(this.items, (accum, current) => {
+      let itemTotal = 0;
+      if (this.treeProvider.getItemTotal) {
+        itemTotal = this.treeProvider.getItemTotal(current);
+      }
+      return accum + itemTotal;
     }, 0);
   }
 }

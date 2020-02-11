@@ -50,7 +50,7 @@ export class SelectService {
     this.store.set(['type'], type);
   }
 
-  updateQuantity(quantity: number): void {
+  updateQuantity(quantity: number | null): void {
     this.store.set(['quantity'], quantity);
   }
 
@@ -81,7 +81,8 @@ export class SelectService {
   }
 
   mapQueryParamsToSelection(queryParams: _.Dictionary<string>): Selection {
-    const type = QuizType[_.camelCase(queryParams.type)];
+    const typeKey = _.camelCase(queryParams.type) as keyof typeof QuizType;
+    const type = QuizType[typeKey];
     const quantity = this.convertQuantityParamToQuizQuantity(queryParams.quantity);
     const countries = _.reduce(queryParams.countries.split(','), (accum, current) => {
       if (current.includes(this.paramDict.checked)) {
@@ -93,7 +94,7 @@ export class SelectService {
         accum[updatedKey] = 'indeterminate';
       }
       return accum;
-    }, {});
+    }, {} as CheckboxStates);
     return {
       type,
       quantity,
@@ -108,7 +109,7 @@ export class SelectService {
         accum[subregion.name] = 'checked';
       })
       return accum;
-    }, {});
+    }, {} as CheckboxStates);
   }
 
   private convertQuantityParamToQuizQuantity(quantityParam: string): QuizQuantity {
@@ -124,7 +125,7 @@ export class SelectService {
     }
   }
 
-  private isQuizQuantity(quantityParm: number): quantityParm is QuizQuantity {
+  private isQuizQuantity(quantityParm: number | null): quantityParm is QuizQuantity {
     const isValid =
       quantityParm === 5 ||
       quantityParm === 10 ||
