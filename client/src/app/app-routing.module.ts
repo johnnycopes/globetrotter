@@ -8,17 +8,23 @@ import { ShellComponent } from './core/components/shell/shell.component';
 import { HomeComponent } from './core/components/home/home.component';
 import { PlaceholderComponent } from './core/components/placeholder/placeholder.component';
 import { PageNotFoundComponent } from './core/components/page-not-found/page-not-found.component';
+import { ExploreComponent } from './features/explore/explore.component';
 
 const routes: Routes = [
   {
     path: '', component: ShellComponent, resolve: { countries: CountryService }, children: [
     { path: RouteNames.home, component: HomeComponent },
-    { path: RouteNames.explore, component: PlaceholderComponent },
+    {
+      path: RouteNames.explore,
+      loadChildren: () => import('./features/explore/explore.module').then(m => m.ExploreModule)
+    },
     { path: RouteNames.prepare, component: PlaceholderComponent },
-    { path: RouteNames.learn,
+    {
+      path: RouteNames.learn,
       loadChildren: () => import('./features/learn/learn.module').then(m => m.LearnModule)
     },
-    { path: RouteNames.account,
+    {
+      path: RouteNames.account,
       canActivateChild: [AuthGuard],
       loadChildren: () => import('./features/account/account.module').then(m => m.AccountModule)
     },

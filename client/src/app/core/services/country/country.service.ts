@@ -36,7 +36,11 @@ export class CountryService implements Resolve<Observable<Country[]>> {
     return this.request;
   }
 
-  getData(): Observable<Region[]> {
+  getCountries(): Observable<Country[]> {
+    return this.store.get(['countries']);
+  }
+
+  getFormattedData(): Observable<Region[]> {
     return this.store.get(['formattedData']);
   }
 

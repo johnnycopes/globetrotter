@@ -6,6 +6,7 @@ import {
 } from '@storybook/addon-knobs/angular';
 
 import { MOCK_DATA } from './mock-data/list-details.data';
+import { Country } from 'src/app/shared/model/country.interface';
 import { ListDetailsComponent } from 'src/app/shared/components/list-details/list-details.component';
 
 const actions = {
@@ -53,7 +54,7 @@ storiesOf('Shared/List Details', module)
       props: {
         selectedItem: object('item', MOCK_DATA[0]),
         items: object('items', MOCK_DATA),
-        getUniqueId: (item) => item.cioc,
+        getUniqueId: (item: Country) => item.cioc,
         onSelect: actions.onSelect
       }
     }

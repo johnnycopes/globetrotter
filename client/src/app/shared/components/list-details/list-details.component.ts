@@ -8,11 +8,15 @@ import { Component, OnInit, Input, Output, EventEmitter, TemplateRef, ChangeDete
 })
 export class ListDetailsComponent<T> implements OnInit {
   @Input() items: T[];
+  @Input() heightOffset: string = '96px';
+  @Input() listClass: string;
   @Input() listItemTemplate: TemplateRef<any>;
   @Input() detailsTemplate: TemplateRef<any>;
   @Input() getItemUniqueId: (item: T) => string;
   @Input() selectedItem: T;
   @Output() selectedItemChange = new EventEmitter<T>();
+  public containerHeight: string;
+  public listHeight: string;
 
   public trackByFn = (index: number, item: T): string => {
     return this.getItemUniqueId(item);
@@ -22,6 +26,8 @@ export class ListDetailsComponent<T> implements OnInit {
     if (!this.getItemUniqueId) {
       throw new Error('A unique key function must defined as an input of the list-details component');
     }
+    this.containerHeight = `calc(100vh - 12px - ${this.heightOffset})`;
+    this.listHeight = `calc(100vh - 24px - ${this.heightOffset})`;
   }
 
   public onSelect(item: T): void {

@@ -23,7 +23,7 @@ export class SelectService {
 
   constructor(private countryService: CountryService) {
     this.store = new Store(new Selection());
-    this.countryService.getData()
+    this.countryService.getFormattedData()
       .pipe(
         first()
       )

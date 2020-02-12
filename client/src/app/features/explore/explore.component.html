@@ -1,0 +1,37 @@
+<div @fadeIn
+  *ngIf="vm$ | async as vm"
+  >
+  <ng-template #listItemTemplate
+    let-country
+    >
+    <div class="list-item">
+      <h3>{{country.name}}</h3>
+    </div>
+  </ng-template>
+
+  <ng-template #detailsTemplate
+    let-country
+    >
+    <h1 class="name">
+      {{country.name}}
+    </h1>
+    <h2 class="capital">
+      {{country.capital}}
+    </h2>
+    <img class="flag"
+      [src]="country.flag"
+    >
+  </ng-template>
+
+  <app-list-details
+    [items]="vm.countries"
+    listClass="list"
+    heightOffset="96px"
+    [listItemTemplate]="listItemTemplate"
+    [detailsTemplate]="detailsTemplate"
+    [getItemUniqueId]="getCountryCode"
+    [selectedItem]="vm.selectedCountry"
+    (selectedItemChange)="onSelect($event)"
+    >
+  </app-list-details>
+</div>

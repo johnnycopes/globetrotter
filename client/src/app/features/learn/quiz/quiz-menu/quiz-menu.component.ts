@@ -58,6 +58,7 @@ export class QuizMenuComponent implements OnInit {
 
   private initializeStreams(): void {
     this.quiz$ = this.quizService.getQuiz().pipe(
+      distinctUntilChanged(),
       tap(async (quiz) => {
         if (quiz.isComplete) {
           this.positionChanged.next('offscreen');

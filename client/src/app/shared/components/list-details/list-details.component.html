@@ -1,14 +1,20 @@
-<ul class="list">
-  <li class="list__item"
-    *ngFor="let item of items; trackBy: trackByFn"
-    [ngClass]="{'list__item--selected': checkIfSelected(item)}"
-    (click)="onSelect(item)"
+<div class="container"
+  [ngStyle]="{'grid-template-rows': this.containerHeight}"
+  >
+  <ul class="list"
+    [ngStyle]="{'max-height': this.listHeight}"
     >
-    <ng-container *ngTemplateOutlet="listItemTemplate; context: { $implicit: item }">
+    <li class="list__item"
+      *ngFor="let item of items; trackBy: trackByFn"
+      [ngClass]="{'list__item--selected': checkIfSelected(item)}"
+      (click)="onSelect(item)"
+      >
+      <ng-container *ngTemplateOutlet="listItemTemplate; context: { $implicit: item }">
+      </ng-container>
+    </li>
+  </ul>
+  <div class="details">
+    <ng-container *ngTemplateOutlet="detailsTemplate; context: { $implicit: selectedItem }">
     </ng-container>
-  </li>
-</ul>
-<div class="details">
-  <ng-container *ngTemplateOutlet="detailsTemplate; context: { $implicit: selectedItem }">
-  </ng-container>
+  </div>
 </div>

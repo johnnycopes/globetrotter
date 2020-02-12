@@ -1,17 +1,23 @@
 @import 'styles';
 
-:host {
-  display: flex;
-  width: 100%;
+$list-width: map-get($spacing, 384);
+
+.container {
+  display: grid;
+  grid-template-columns: [list] $list-width [details] 1fr;
 }
 
 .list {
+  grid-row: 1;
+  grid-column: list;
   margin-right: map-get($spacing, 12);
+  position: fixed;
+  width: $list-width;
+  overflow: auto;
 
   &__item {
     margin-bottom: map-get($spacing, 12);
     padding: map-get($spacing, 12);
-    width: map-get($spacing, 384);
     background: map-get($color, dark);
     border-radius: map-get($border, radius);
     cursor: pointer;
@@ -24,5 +30,7 @@
 }
 
 .details {
-  flex: 1 1 auto;
+  grid-row: 1;
+  grid-column: details;
+  padding-left: map-get($spacing, 12);
 }
