@@ -26,7 +26,7 @@
   <app-list-details
     [items]="vm.countries"
     listClass="list"
-    heightOffset="96px"
+    [styles]="styles"
     [listItemTemplate]="listItemTemplate"
     [detailsTemplate]="detailsTemplate"
     [getItemUniqueId]="getCountryCode"

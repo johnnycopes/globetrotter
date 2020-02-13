@@ -1,5 +1,8 @@
 <div class="container"
-  [ngStyle]="{'grid-template-rows': this.containerHeight}"
+  [ngStyle]="{
+    'grid-template-rows': this.containerHeight,
+    'margin-top': this.styles.gap
+  }"
   >
   <ul class="list"
     [ngStyle]="{'max-height': this.listHeight}"
@@ -7,13 +10,16 @@
     <li class="list__item"
       *ngFor="let item of items; trackBy: trackByFn"
       [ngClass]="{'list__item--selected': checkIfSelected(item)}"
+      [style.marginBottom]="this.styles.gap"
       (click)="onSelect(item)"
       >
       <ng-container *ngTemplateOutlet="listItemTemplate; context: { $implicit: item }">
       </ng-container>
     </li>
   </ul>
-  <div class="details">
+  <div class="details"
+    [style.marginLeft]="this.styles.gap"
+    >
     <ng-container *ngTemplateOutlet="detailsTemplate; context: { $implicit: selectedItem }">
     </ng-container>
   </div>

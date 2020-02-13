@@ -8,15 +8,11 @@ $list-width: map-get($spacing, 384);
 }
 
 .list {
-  grid-row: 1;
-  grid-column: list;
-  margin-right: map-get($spacing, 12);
   position: fixed;
   width: $list-width;
   overflow: auto;
 
   &__item {
-    margin-bottom: map-get($spacing, 12);
     padding: map-get($spacing, 12);
     background: map-get($color, dark);
     border-radius: map-get($border, radius);
@@ -30,7 +26,5 @@ $list-width: map-get($spacing, 384);
 }
 
 .details {
-  grid-row: 1;
   grid-column: details;
-  padding-left: map-get($spacing, 12);
 }

@@ -1,9 +1,5 @@
 @import 'styles';
 
-:host {
-  padding-top: map-get($spacing, 12);
-}
-
 .list-item {
   display: flex;
   justify-content: space-between;

@@ -5,6 +5,7 @@ import { map, tap, distinctUntilChanged } from 'rxjs/operators';
 import { fadeInAnimation } from 'src/app/shared/utility/animations';
 import { CountryService } from 'src/app/core/services/country/country.service';
 import { Country } from 'src/app/shared/model/country.interface';
+import { ListDetailsStyles } from 'src/app/shared/components/list-details/list-details.component';
 
 interface ViewModel {
   countries: Country[];
@@ -18,6 +19,10 @@ interface ViewModel {
   animations: [fadeInAnimation]
 })
 export class ExploreComponent implements OnInit {
+  styles: ListDetailsStyles = {
+    heightOffset: '96px',
+    gap: '12px'
+  };
   vm$: Observable<ViewModel>;
   private countries$: Observable<Country[]>;
   private selectedCountry$: Observable<Country>;

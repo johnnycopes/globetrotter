@@ -1,5 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
 
+export interface ListDetailsStyles {
+  heightOffset: string;
+  gap: string;
+}
+
 @Component({
   selector: 'app-list-details',
   templateUrl: './list-details.component.html',
@@ -8,10 +13,9 @@ import { Component, OnInit, Input, Output, EventEmitter, TemplateRef, ChangeDete
 })
 export class ListDetailsComponent<T> implements OnInit {
   @Input() items: T[];
-  @Input() heightOffset: string = '96px';
-  @Input() listClass: string;
   @Input() listItemTemplate: TemplateRef<any>;
   @Input() detailsTemplate: TemplateRef<any>;
+  @Input() styles: ListDetailsStyles;
   @Input() getItemUniqueId: (item: T) => string;
   @Input() selectedItem: T;
   @Output() selectedItemChange = new EventEmitter<T>();
@@ -26,8 +30,8 @@ export class ListDetailsComponent<T> implements OnInit {
     if (!this.getItemUniqueId) {
       throw new Error('A unique key function must defined as an input of the list-details component');
     }
-    this.containerHeight = `calc(100vh - 12px - ${this.heightOffset})`;
-    this.listHeight = `calc(100vh - 24px - ${this.heightOffset})`;
+    this.containerHeight = `calc(100vh - ${this.styles.gap} - ${this.styles.heightOffset})`;
+    this.listHeight = `calc(100vh - ${this.styles.gap} - ${this.styles.gap} - ${this.styles.heightOffset})`;
   }
 
   public onSelect(item: T): void {
