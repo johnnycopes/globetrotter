@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, Subject, ReplaySubject, combineLatest } from 'rxjs';
-import { map, tap, switchMap, distinctUntilChanged, startWith, debounceTime } from 'rxjs/operators';
+import { map, tap, switchMap, startWith, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 import { fadeInAnimation } from 'src/app/shared/utility/animations';
@@ -71,9 +71,16 @@ export class ExploreComponent implements OnInit {
       distinctUntilChanged()
     );
     this.filteredCountries$ = this.searchTerm$.pipe(
+      map(searchTerm => _.toLower(searchTerm)),
       switchMap((searchTerm, index) => this.countries$.pipe(
         tap(countries => index === 0 ? this.selectedCountryChange$.next(countries[0]) : null),
-        map(countries => _.filter(countries, country => country.name.toLowerCase().includes(searchTerm)))
+        map(countries => {
+          return _.filter(countries, country => {
+            const name = _.toLower(country.name);
+            const capital = _.toLower(country.capital);
+            return name.includes(searchTerm) || capital.includes(searchTerm);
+          });
+        })
       )
     ));
   }

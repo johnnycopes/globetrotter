@@ -22,6 +22,10 @@ $toolbar-width: map-get($spacing, 384);
     border-radius: map-get($border, radius);
     cursor: pointer;
 
+    &:last-child {
+      margin-bottom: 0 !important;
+    }
+
     &--selected {
       background: map-get($color, light);
       color: map-get($color, darkest);
