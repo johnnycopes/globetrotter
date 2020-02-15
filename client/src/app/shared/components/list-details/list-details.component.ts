@@ -19,7 +19,9 @@ export class ListDetailsComponent<T> implements OnInit, AfterViewInit {
   @Input() styles: ListDetailsStyles;
   @Input() getItemUniqueId: (item: T) => string;
   @Input() selectedItem: T;
+  @Input() searchTerm: string;
   @Output() selectedItemChange = new EventEmitter<T>();
+  @Output() searchTermChange = new EventEmitter<string>();
   public containerHeight: string;
   public toolbarHeight: string;
   public trackByFn = (index: number, item: T): string => {
@@ -36,7 +38,6 @@ export class ListDetailsComponent<T> implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    console.dir(this.search);
     this.containerHeight = `calc(100vh - ${this.styles.gap} - ${this.styles.heightOffset})`;
     this.toolbarHeight = `
       calc(100vh -

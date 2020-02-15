@@ -9,7 +9,11 @@
       [ngStyle]="{'margin-bottom': this.styles.gap}"
       label="search"
       >
-      <input type="text" />
+      <input
+        type="text"
+        [ngModel]="searchTerm"
+        (ngModelChange)="searchTermChange.emit($event)"
+      />
     </app-input>
     <ul class="list"
       [ngStyle]="{'max-height': this.toolbarHeight}"

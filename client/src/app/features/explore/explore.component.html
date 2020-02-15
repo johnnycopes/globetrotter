@@ -24,14 +24,16 @@
   </ng-template>
 
   <app-list-details
-    [items]="vm.countries"
+    [items]="vm.filteredCountries"
     listClass="list"
     [styles]="styles"
     [listItemTemplate]="listItemTemplate"
     [detailsTemplate]="detailsTemplate"
     [getItemUniqueId]="getCountryCode"
     [selectedItem]="vm.selectedCountry"
+    [searchTerm]="vm.searchTerm"
     (selectedItemChange)="onSelect($event)"
+    (searchTermChange)="onSearch($event)"
     >
   </app-list-details>
 </div>
