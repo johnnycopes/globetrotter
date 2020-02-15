@@ -1,4 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, TemplateRef, ChangeDetectionStrategy, ViewChild, ElementRef, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { InputComponent } from '../input/input.component';
 
 export interface ListDetailsStyles {
   heightOffset: string;
@@ -11,7 +12,7 @@ export interface ListDetailsStyles {
   styleUrls: ['./list-details.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ListDetailsComponent<T> implements OnInit {
+export class ListDetailsComponent<T> implements OnInit, AfterViewInit {
   @Input() items: T[];
   @Input() listItemTemplate: TemplateRef<any>;
   @Input() detailsTemplate: TemplateRef<any>;
@@ -20,18 +21,32 @@ export class ListDetailsComponent<T> implements OnInit {
   @Input() selectedItem: T;
   @Output() selectedItemChange = new EventEmitter<T>();
   public containerHeight: string;
-  public listHeight: string;
-
+  public toolbarHeight: string;
   public trackByFn = (index: number, item: T): string => {
     return this.getItemUniqueId(item);
   }
+  @ViewChild(InputComponent, { read: ElementRef }) private search: ElementRef;
+
+  constructor(private cdRef: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     if (!this.getItemUniqueId) {
       throw new Error('A unique key function must defined as an input of the list-details component');
     }
+  }
+
+  ngAfterViewInit(): void {
+    console.dir(this.search);
     this.containerHeight = `calc(100vh - ${this.styles.gap} - ${this.styles.heightOffset})`;
-    this.listHeight = `calc(100vh - ${this.styles.gap} - ${this.styles.gap} - ${this.styles.heightOffset})`;
+    this.toolbarHeight = `
+      calc(100vh -
+      ${this.search.nativeElement.offsetHeight}px -
+      ${this.styles.gap} -
+      ${this.styles.gap} -
+      ${this.styles.gap} -
+      ${this.styles.heightOffset})
+    `;
+    this.cdRef.detectChanges();
   }
 
   public onSelect(item: T): void {

@@ -1,15 +1,19 @@
 @import 'styles';
 
-$list-width: map-get($spacing, 384);
+$toolbar-width: map-get($spacing, 384);
 
 .container {
   display: grid;
-  grid-template-columns: [list] $list-width [details] 1fr;
+  grid-template-columns: [toolbar] $toolbar-width [details] 1fr;
+}
+
+.toolbar {
+  grid-column: toolbar;
+  position: fixed;
+  width: $toolbar-width;
 }
 
 .list {
-  position: fixed;
-  width: $list-width;
   overflow: auto;
 
   &__item {
