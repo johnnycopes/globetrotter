@@ -16,7 +16,7 @@ body {
   font-family: $font-stack;
   font-size: map-get($font-size, 24);
   font-weight: map-get($font-weight, normal);
-  line-height: map-get($line-height, 1.5);
+  line-height: map-get($line-height, small);
   min-height: 100vh;
   position: relative;
 

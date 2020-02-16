@@ -1,3 +1,5 @@
+// Source: REST Countries API -- https://restcountries.eu/#api-endpoints-response-example
+
 import { Currency } from './currency.interface';
 import { Language } from './language.interface';
 import { RegionalBloc } from './regional-bloc.interface';

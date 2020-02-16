@@ -12,6 +12,7 @@ interface ViewModel {
   filteredCountries: Country[];
   selectedCountry: Country;
   searchTerm: string;
+  summary: string;
 }
 
 @Component({
@@ -32,6 +33,8 @@ export class ExploreComponent implements OnInit {
   private searchTermChange$ = new Subject<string>();
   private selectedCountry$: Observable<Country>;
   private selectedCountryChange$ = new ReplaySubject<Country>(1);
+  private summary$: Observable<string>;
+  private summaryChange$ = new ReplaySubject<string>(1);
 
   constructor(private countryService: CountryService) { }
 
@@ -40,9 +43,10 @@ export class ExploreComponent implements OnInit {
     this.vm$ = combineLatest([
       this.filteredCountries$,
       this.selectedCountry$,
-      this.searchTerm$
+      this.searchTerm$,
+      this.summary$
     ]).pipe(
-      map(([filteredCountries, selectedCountry, searchTerm]) => ({ filteredCountries, selectedCountry, searchTerm }))
+      map(([filteredCountries, selectedCountry, searchTerm, summary]) => ({ filteredCountries, selectedCountry, searchTerm, summary }))
     );
   }
 
@@ -52,6 +56,9 @@ export class ExploreComponent implements OnInit {
 
   onSelect(selectedCountry: Country): void {
     this.selectedCountryChange$.next(selectedCountry);
+    this.countryService.getSummary(selectedCountry.name).pipe(
+      map(summary => this.summaryChange$.next(summary))
+    ).subscribe();
   }
 
   onSearch(searchTerm: string) {
@@ -67,13 +74,16 @@ export class ExploreComponent implements OnInit {
       debounceTime(100),
       distinctUntilChanged()
     );
+    this.summary$ = this.summaryChange$.asObservable().pipe(
+      distinctUntilChanged()
+    );
     this.countries$ = this.countryService.getCountries().pipe(
       distinctUntilChanged()
     );
     this.filteredCountries$ = this.searchTerm$.pipe(
       map(searchTerm => _.toLower(searchTerm)),
       switchMap((searchTerm, index) => this.countries$.pipe(
-        tap(countries => index === 0 ? this.selectedCountryChange$.next(countries[0]) : null),
+        tap(countries => index === 0 ? this.onSelect(countries[0]) : null),
         map(countries => {
           return _.filter(countries, country => {
             const name = _.toLower(country.name);

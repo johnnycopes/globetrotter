@@ -17,4 +17,10 @@
 
 .flag {
   height: map-get($spacing, 256);
+  margin-bottom: map-get($spacing, 32);
+}
+
+.summary {
+  line-height: map-get($line-height, normal);
+  margin-bottom: map-get($spacing, 32);
 }

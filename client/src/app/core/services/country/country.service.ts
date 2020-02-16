@@ -12,6 +12,7 @@ import { Region } from 'src/app/shared/model/region.interface';
 import { Selection } from 'src/app/shared/model/selection.class';
 import { Store } from 'src/app/shared/model/store.class';
 import { ErrorService } from '../error/error.service';
+import { Summary } from 'src/app/shared/model/summary.interface';
 
 type CountriesBySubregion = _.Dictionary<Country[]>;
 type SubregionsByRegion = _.Dictionary<string[]>;
@@ -23,6 +24,7 @@ export class CountryService implements Resolve<Observable<Country[]>> {
   private request: Observable<Country[]>;
   private readonly store: Store;
   private readonly countriesApiUrl = 'https://restcountries.eu/rest/v2/all';
+  private readonly wikipediaApiUrl = 'https://en.wikipedia.org/api/rest_v1/page/summary/';
 
   constructor(
     private http: HttpClient,
@@ -60,6 +62,12 @@ export class CountryService implements Resolve<Observable<Country[]>> {
           .slice(0, quantity)
           .value();
       })
+    );
+  }
+
+  getSummary(countryName: string): Observable<string> {
+    return this.http.get<Summary>(this.wikipediaApiUrl + countryName).pipe(
+      map(result => result.extract)
     );
   }
 

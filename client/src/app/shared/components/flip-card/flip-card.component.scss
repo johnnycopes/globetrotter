@@ -8,7 +8,6 @@
   font-family: $font-stack;
   font-weight: map-get($font-weight, normal);
   font-size: map-get($font-size, 30);
-  line-height: 1;
   color: map-get($color, darkest);
   position: relative;
   width: 300px;
