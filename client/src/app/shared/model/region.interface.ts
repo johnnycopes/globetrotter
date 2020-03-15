@@ -1,6 +1,6 @@
-import { Subregion } from "./subregion.interface";
+import { ISubregion } from "./subregion.interface";
 
-export interface Region {
+export interface IRegion {
   name: string;
-  subregions: Subregion[];
+  subregions: ISubregion[];
 }

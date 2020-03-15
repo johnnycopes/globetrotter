@@ -1,6 +1,6 @@
-import { Country } from "./country.interface";
+import { ICountry } from "./country.interface";
 
-export interface Subregion {
+export interface ISubregion {
   name: string;
-  countries: Country[];
+  countries: ICountry[];
 }

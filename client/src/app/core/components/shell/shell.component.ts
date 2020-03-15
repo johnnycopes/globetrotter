@@ -7,7 +7,7 @@ import { QuizService } from '../../services/quiz/quiz.service';
 import { ModalService } from '../../services/modal/modal.service';
 import { UtilityService } from '../../services/utility/utility.service';
 import { RouteNames } from 'src/app/shared/model/route-names.enum';
-import { AnimationTimes } from 'src/app/shared/model/animation-times.enum';
+import { EAnimationDuration } from 'src/app/shared/model/animation-duration.enum';
 
 interface ViewModel {
   showNavigation: boolean;
@@ -115,7 +115,7 @@ export class ShellComponent implements OnInit {
       tap(async (showNavigation) => {
         this.showNavigationChanged.next(false);
         if (showNavigation) {
-          await this.utilityService.wait(AnimationTimes.fixedSlideablePanel);
+          await this.utilityService.wait(EAnimationDuration.fixedSlideablePanel);
         }
         this.showNavigationChanged.next(true);
       })

@@ -1,4 +1,4 @@
-export enum AnimationTimes {
+export enum EAnimationDuration {
   cardsStagger = 100,
   cardsFadeIn = 400,
   cardsFadeInDelay = 600,

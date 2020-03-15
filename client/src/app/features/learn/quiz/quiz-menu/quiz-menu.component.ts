@@ -5,9 +5,9 @@ import { Router } from '@angular/router';
 import * as _ from 'lodash';
 
 import { Quiz } from 'src/app/shared/model/quiz.class';
-import { QuizType } from 'src/app/shared/model/quiz-type.enum';
+import { EQuizType } from 'src/app/shared/model/quiz-type.enum';
 import { FixedSlideablePanelPosition } from 'src/app/shared/components/fixed-slideable-panel/fixed-slideable-panel.component';
-import { AnimationTimes } from 'src/app/shared/model/animation-times.enum';
+import { EAnimationDuration } from 'src/app/shared/model/animation-duration.enum';
 import { RouteNames } from 'src/app/shared/model/route-names.enum';
 import { QuizService } from 'src/app/core/services/quiz/quiz.service';
 import { UtilityService } from 'src/app/core/services/utility/utility.service';
@@ -29,9 +29,9 @@ export class QuizMenuComponent implements OnInit {
   private position$: Observable<FixedSlideablePanelPosition>;
   private prompt$: Observable<string>;
   private promptDict: _.Dictionary<string> = {
-    [QuizType.flagsCountries]: 'name',
-    [QuizType.capitalsCountries]: 'name',
-    [QuizType.countriesCapitals]: 'capital'
+    [EQuizType.flagsCountries]: 'name',
+    [EQuizType.capitalsCountries]: 'name',
+    [EQuizType.countriesCapitals]: 'capital'
   };
 
   constructor(
@@ -62,7 +62,7 @@ export class QuizMenuComponent implements OnInit {
       tap(async (quiz) => {
         if (quiz.isComplete) {
           this.positionChanged.next('offscreen');
-          await this.utilityService.wait(AnimationTimes.cardsFadeInDelay);
+          await this.utilityService.wait(EAnimationDuration.cardsFadeInDelay);
           this.positionChanged.next('fullscreen');
         } else {
           this.positionChanged.next('header');

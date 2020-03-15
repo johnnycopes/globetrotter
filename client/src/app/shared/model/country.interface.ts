@@ -1,10 +1,10 @@
 // Source: REST Countries API -- https://restcountries.eu/#api-endpoints-response-example
 
-import { Currency } from './currency.interface';
-import { Language } from './language.interface';
-import { RegionalBloc } from './regional-bloc.interface';
+import { ICurrency } from './currency.interface';
+import { ILanguage } from './language.interface';
+import { IRegionalBloc } from './regional-bloc.interface';
 
-export interface Country {
+export interface ICountry {
   name: string;
   topLevelDomain: string[];
   alpha2Code: string;
@@ -23,8 +23,8 @@ export interface Country {
   borders: string[];
   nativeName: string;
   numericCode: string;
-  currencies: Currency[];
-  languages: Language[];
+  currencies: ICurrency[];
+  languages: ILanguage[];
   translations: {
     de: string;
     es: string;
@@ -38,6 +38,6 @@ export interface Country {
     fa: string;
   };
   flag: string;
-  regionalBlocs: RegionalBloc[]
+  regionalBlocs: IRegionalBloc[]
   cioc: string;
 }

@@ -1,7 +1,7 @@
 import { Component, Input, ViewChildren, QueryList, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import * as _ from 'lodash';
 
-import { NestedCheckboxesComponent, TreeProvider, CheckboxStates } from '../nested-checkboxes/nested-checkboxes.component';
+import { NestedCheckboxesComponent, ITreeProvider, TCheckboxStates } from '../nested-checkboxes/nested-checkboxes.component';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -17,14 +17,14 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 })
 export class NestedCheckboxesGroupComponent<T> implements ControlValueAccessor {
   @Input() items: T[];
-  @Input() treeProvider: TreeProvider<T>;
+  @Input() treeProvider: ITreeProvider<T>;
   @Input() showCounters: boolean;
   @Input() showImages: boolean;
   @Input() text: string;
   @ViewChildren(NestedCheckboxesComponent) nestedCheckboxesComponents: QueryList<NestedCheckboxesComponent<T>>;
-  checkboxStates: CheckboxStates = {};
+  checkboxStates: TCheckboxStates = {};
   total: number;
-  private onChangeFn: (value: CheckboxStates) => void;
+  private onChangeFn: (value: TCheckboxStates) => void;
 
   get showTopCounter(): boolean {
     return this.showCounters && !!this.text;
@@ -46,16 +46,16 @@ export class NestedCheckboxesGroupComponent<T> implements ControlValueAccessor {
     }
   }
 
-  writeValue(value: CheckboxStates): void {
+  writeValue(value: TCheckboxStates): void {
     this.checkboxStates = value;
     this.changeDetectorRef.markForCheck();
   }
 
-  registerOnChange(fn: (value: CheckboxStates) => void): void {
+  registerOnChange(fn: (value: TCheckboxStates) => void): void {
     this.onChangeFn = fn;
   }
 
-  registerOnTouched(fn: (value: CheckboxStates) => void): void {
+  registerOnTouched(fn: (value: TCheckboxStates) => void): void {
     //
   }
 
@@ -70,7 +70,7 @@ export class NestedCheckboxesGroupComponent<T> implements ControlValueAccessor {
     this.onChangeFn(this.checkboxStates);
   }
 
-  updateCheckboxStates(checkboxStates: CheckboxStates): void {
+  updateCheckboxStates(checkboxStates: TCheckboxStates): void {
     this.checkboxStates = _.merge(this.checkboxStates, checkboxStates);
     this.onChangeFn(this.checkboxStates);
   }

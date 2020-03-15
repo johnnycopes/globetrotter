@@ -2,10 +2,10 @@ import { Component, Input, Output, EventEmitter, ViewChild, OnInit, TemplateRef,
 import { Subscription } from 'rxjs';
 import * as _ from 'lodash';
 
-import { Country } from 'src/app/shared/model/country.interface';
+import { ICountry } from 'src/app/shared/model/country.interface';
 import { FlipCardComponent, FlipCardGuess } from 'src/app/shared/components/flip-card/flip-card.component';
-import { AnimationTimes } from 'src/app/shared/model/animation-times.enum';
-import { QuizType } from 'src/app/shared/model/quiz-type.enum';
+import { EAnimationDuration } from 'src/app/shared/model/animation-duration.enum';
+import { EQuizType } from 'src/app/shared/model/quiz-type.enum';
 import { QuizService } from 'src/app/core/services/quiz/quiz.service';
 import { UtilityService } from 'src/app/core/services/utility/utility.service';
 
@@ -17,9 +17,9 @@ type CardTemplates = _.Dictionary<TemplateRef<any>>;
   styleUrls: ['./quiz-card.component.scss']
 })
 export class QuizCardComponent implements OnInit, OnDestroy {
-  @Input() country: Country;
+  @Input() country: ICountry;
   @Input() canFlip: boolean;
-  @Input() type: QuizType;
+  @Input() type: EQuizType;
   @Output() flipped = new EventEmitter<boolean>();
   @ViewChild('flagTemplate', { static: true }) flagTemplate: TemplateRef<any>;
   @ViewChild('countryTemplate', { static: true }) countryTemplate: TemplateRef<any>;
@@ -29,7 +29,7 @@ export class QuizCardComponent implements OnInit, OnDestroy {
   disabled: boolean;
   templates: CardTemplates;
   private templatesDict: _.Dictionary<CardTemplates>;
-  private currentCountry: Country;
+  private currentCountry: ICountry;
   private currentCountrySubscription: Subscription;
 
   ngOnInit(): void {
@@ -51,14 +51,14 @@ export class QuizCardComponent implements OnInit, OnDestroy {
   async onFlip(): Promise<void> {
     const isGuessCorrect = this.country === this.currentCountry;
     this.flipped.emit(true);
-    await this.utilityService.wait(AnimationTimes.flipCard);
+    await this.utilityService.wait(EAnimationDuration.flipCard);
     this.setCardGuess(isGuessCorrect)
-    await this.utilityService.wait(AnimationTimes.displayCard);
+    await this.utilityService.wait(EAnimationDuration.displayCard);
     this.resetCardGuess();
-    await this.utilityService.wait(AnimationTimes.flipCard);
+    await this.utilityService.wait(EAnimationDuration.flipCard);
     if (isGuessCorrect) {
       this.disabled = true;
-      await this.utilityService.wait(AnimationTimes.flipCard);
+      await this.utilityService.wait(EAnimationDuration.flipCard);
       this.updateQuiz(isGuessCorrect);
     }
     else {
@@ -77,15 +77,15 @@ export class QuizCardComponent implements OnInit, OnDestroy {
 
   private setCardTemplates(): void {
     this.templatesDict = {
-      [QuizType.flagsCountries]: {
+      [EQuizType.flagsCountries]: {
         front: this.flagTemplate,
         back: this.countryTemplate
       },
-      [QuizType.capitalsCountries]: {
+      [EQuizType.capitalsCountries]: {
         front: this.capitalTemplate,
         back: this.countryTemplate
       },
-      [QuizType.countriesCapitals]: {
+      [EQuizType.countriesCapitals]: {
         front: this.countryTemplate,
         back: this.capitalTemplate
       }

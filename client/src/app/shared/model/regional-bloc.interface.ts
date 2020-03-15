@@ -1,4 +1,4 @@
-export interface RegionalBloc {
+export interface IRegionalBloc {
   acronym: string;
   name: string;
   otherAcronyms: string[];

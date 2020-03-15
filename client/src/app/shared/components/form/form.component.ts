@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map, startWith, distinctUntilChanged } from 'rxjs/operators';
 import * as _ from 'lodash';
 
-import { AngularFormStatuses } from '../../model/angular-form-statuses.enum';
+import { EAngularFormStatus } from '../../model/angular-form-status.enum';
 
 interface ViewModel {
   valid: boolean;
@@ -38,8 +38,8 @@ export class FormComponent implements OnInit {
 
   private initializeStreams(): void {
     this.valid$ = this.formGroup.statusChanges.pipe(
-      startWith(this.formGroup.valid ? AngularFormStatuses.valid : AngularFormStatuses.invalid),
-      map((status: AngularFormStatuses) => status === 'VALID'),
+      startWith(this.formGroup.valid ? EAngularFormStatus.valid : EAngularFormStatus.invalid),
+      map((status: EAngularFormStatus) => status === 'VALID'),
       distinctUntilChanged()
     );
   }

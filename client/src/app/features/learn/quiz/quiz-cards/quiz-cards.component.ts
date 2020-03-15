@@ -3,15 +3,15 @@ import { Observable, combineLatest } from 'rxjs';
 import { map, first, distinctUntilChanged} from 'rxjs/operators';
 import * as _ from 'lodash';
 
-import { Country } from 'src/app/shared/model/country.interface';
+import { ICountry } from 'src/app/shared/model/country.interface';
 import { Quiz } from 'src/app/shared/model/quiz.class';
-import { QuizType } from 'src/app/shared/model/quiz-type.enum';
+import { EQuizType } from 'src/app/shared/model/quiz-type.enum';
 import { QuizService } from 'src/app/core/services/quiz/quiz.service';
 import { staggerAnimation, fadeInWithCardsFadeInDelayAnimation } from 'src/app/shared/utility/animations';
 
 interface ViewModel {
-  quizType: QuizType;
-  countries: Country[];
+  quizType: EQuizType;
+  countries: ICountry[];
 }
 
 @Component({
@@ -26,8 +26,8 @@ interface ViewModel {
 export class QuizCardsComponent implements OnInit {
   canFlipCards = true;
   vm$: Observable<ViewModel>;
-  private quizType$: Observable<QuizType>;
-  private countries$: Observable<Country[]>;
+  private quizType$: Observable<EQuizType>;
+  private countries$: Observable<ICountry[]>;
 
   constructor(private quizService: QuizService) { }
 

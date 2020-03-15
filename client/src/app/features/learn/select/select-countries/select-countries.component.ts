@@ -5,14 +5,14 @@ import * as _ from 'lodash';
 
 import { CountryService } from 'src/app/core/services/country/country.service';
 import { SelectService } from 'src/app/core/services/select/select.service';
-import { CheckboxStates, TreeProvider } from 'src/app/shared/components/nested-checkboxes/nested-checkboxes.component';
-import { Place } from 'src/app/shared/model/place.type';
-import { Region } from 'src/app/shared/model/region.interface';
+import { TCheckboxStates, ITreeProvider } from 'src/app/shared/components/nested-checkboxes/nested-checkboxes.component';
+import { TPlace } from 'src/app/shared/model/place.type';
+import { IRegion } from 'src/app/shared/model/region.interface';
 import { PlacesTreeProvider } from 'src/app/shared/model/places-tree-provider.class';
 
 interface ViewModel {
-  regions: Region[];
-  checkboxStates: CheckboxStates;
+  regions: IRegion[];
+  checkboxStates: TCheckboxStates;
 }
 
 @Component({
@@ -22,9 +22,9 @@ interface ViewModel {
 })
 export class SelectCountriesComponent implements OnInit {
   vm$: Observable<ViewModel>;
-  treeProvider: TreeProvider<Place> = new PlacesTreeProvider();
-  private regions$: Observable<Region[]>;
-  private checkboxStates$: Observable<CheckboxStates>;
+  treeProvider: ITreeProvider<TPlace> = new PlacesTreeProvider();
+  private regions$: Observable<IRegion[]>;
+  private checkboxStates$: Observable<TCheckboxStates>;
 
   constructor(
     private countryService: CountryService,
@@ -41,7 +41,7 @@ export class SelectCountriesComponent implements OnInit {
     );
   }
 
-  onCountriesChange(model: CheckboxStates): void {
+  onCountriesChange(model: TCheckboxStates): void {
     this.selectService.updateCountries(model);
   }
 

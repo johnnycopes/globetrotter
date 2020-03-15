@@ -5,11 +5,11 @@ import * as _ from 'lodash';
 
 import { Store } from 'src/app/shared/model/store.class';
 import { Selection } from 'src/app/shared/model/selection.class';
-import { Region } from 'src/app/shared/model/region.interface';
+import { IRegion } from 'src/app/shared/model/region.interface';
 import { CountryService } from '../country/country.service';
-import { QuizType } from 'src/app/shared/model/quiz-type.enum';
-import { CheckboxStates } from 'src/app/shared/components/nested-checkboxes/nested-checkboxes.component';
-import { QuizQuantity } from 'src/app/shared/model/quiz-quantity.type';
+import { EQuizType } from 'src/app/shared/model/quiz-type.enum';
+import { TCheckboxStates } from 'src/app/shared/components/nested-checkboxes/nested-checkboxes.component';
+import { TQuizQuantity } from 'src/app/shared/model/quiz-quantity.type';
 
 @Injectable({
   providedIn: 'root'
@@ -46,7 +46,7 @@ export class SelectService {
     this.updateCountries(countries);
   }
 
-  updateType(type: QuizType): void {
+  updateType(type: EQuizType): void {
     this.store.set(['type'], type);
   }
 
@@ -54,7 +54,7 @@ export class SelectService {
     this.store.set(['quantity'], quantity);
   }
 
-  updateCountries(countries: CheckboxStates): void {
+  updateCountries(countries: TCheckboxStates): void {
     this.store.set(['countries'], countries);
   }
 
@@ -81,8 +81,8 @@ export class SelectService {
   }
 
   mapQueryParamsToSelection(queryParams: _.Dictionary<string>): Selection {
-    const typeKey = _.camelCase(queryParams.type) as keyof typeof QuizType;
-    const type = QuizType[typeKey];
+    const typeKey = _.camelCase(queryParams.type) as keyof typeof EQuizType;
+    const type = EQuizType[typeKey];
     const quantity = this.convertQuantityParamToQuizQuantity(queryParams.quantity);
     const countries = _.reduce(queryParams.countries.split(','), (accum, current) => {
       if (current.includes(this.paramDict.checked)) {
@@ -94,7 +94,7 @@ export class SelectService {
         accum[updatedKey] = 'indeterminate';
       }
       return accum;
-    }, {} as CheckboxStates);
+    }, {} as TCheckboxStates);
     return {
       type,
       quantity,
@@ -102,17 +102,17 @@ export class SelectService {
     };
   }
 
-  private mapCountriesToCheckboxStates(countries: Region[]): CheckboxStates {
+  private mapCountriesToCheckboxStates(countries: IRegion[]): TCheckboxStates {
     return _.reduce(countries, (accum, region) => {
       accum[region.name] = 'checked';
       _.forEach(region.subregions, subregion => {
         accum[subregion.name] = 'checked';
       })
       return accum;
-    }, {} as CheckboxStates);
+    }, {} as TCheckboxStates);
   }
 
-  private convertQuantityParamToQuizQuantity(quantityParam: string): QuizQuantity {
+  private convertQuantityParamToQuizQuantity(quantityParam: string): TQuizQuantity {
     const paramAsNumber = _.toNumber(quantityParam);
     if (!quantityParam) {
       return null;
@@ -125,7 +125,7 @@ export class SelectService {
     }
   }
 
-  private isQuizQuantity(quantityParm: number | null): quantityParm is QuizQuantity {
+  private isQuizQuantity(quantityParm: number | null): quantityParm is TQuizQuantity {
     const isValid =
       quantityParm === 5 ||
       quantityParm === 10 ||

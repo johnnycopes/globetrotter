@@ -7,7 +7,7 @@ import { RouteNames } from 'src/app/shared/model/route-names.enum';
 import { SelectService } from 'src/app/core/services/select/select.service';
 import { UtilityService } from 'src/app/core/services/utility/utility.service';
 import { Selection } from 'src/app/shared/model/selection.class';
-import { AnimationTimes } from 'src/app/shared/model/animation-times.enum';
+import { EAnimationDuration } from 'src/app/shared/model/animation-duration.enum';
 import { FixedSlideablePanelPosition } from 'src/app/shared/components/fixed-slideable-panel/fixed-slideable-panel.component';
 import { TabsetContentVisibility } from 'src/app/shared/components/tabset/tabset.component';
 
@@ -45,9 +45,9 @@ export class SelectComponent implements OnInit, OnDestroy {
 
   async onLaunch(): Promise<void> {
     this.tabsetContentVisibility = 'invisible';
-    await this.utilityService.wait(AnimationTimes.fixedSlideablePanel);
+    await this.utilityService.wait(EAnimationDuration.fixedSlideablePanel);
     this.tabsetControlsPosition = 'offscreen';
-    await this.utilityService.wait(AnimationTimes.fixedSlideablePanel);
+    await this.utilityService.wait(EAnimationDuration.fixedSlideablePanel);
     this.queryParams = this.selectService.mapSelectionToQueryParams(this.selection);
     this.router.navigate(
       [`${RouteNames.learn}/${RouteNames.quiz}`],

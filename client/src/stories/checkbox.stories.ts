@@ -6,10 +6,10 @@ import {
   select,
 } from '@storybook/addon-knobs/angular';
 
-import { CheckboxComponent, CheckboxState } from 'src/app/shared/components/checkbox/checkbox.component';
+import { CheckboxComponent, TCheckboxState } from 'src/app/shared/components/checkbox/checkbox.component';
 import { CounterComponent } from 'src/app/shared/components/counter/counter.component';
 
-const states: CheckboxState[] = ['checked', 'unchecked', 'indeterminate'];
+const states: TCheckboxState[] = ['checked', 'unchecked', 'indeterminate'];
 const actions = {
   onChange: action('ngModelChanged')
 };

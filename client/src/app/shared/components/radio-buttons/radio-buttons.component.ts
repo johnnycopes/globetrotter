@@ -5,7 +5,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, distinctUntilChanged } from 'rxjs/operators';
 
-import { Breakpoints } from 'src/app/shared/model/breakpoints.enum';
+import { EBreakpoint } from 'src/app/shared/model/breakpoint.enum';
 
 export interface RadioButtonsOption<T> {
   display: string;
@@ -65,7 +65,7 @@ export class RadioButtonsComponent<T> implements OnInit, ControlValueAccessor {
 
   private intializeStreams(): void {
     this.stackedVertically$ = this.breakpointObserver
-      .observe([Breakpoints.tablet])
+      .observe([EBreakpoint.tablet])
       .pipe(
         map(state => {
           if (this.alwaysStackedVertically) {

@@ -1,19 +1,19 @@
 // Source: Wikipedia REST API https://en.wikipedia.org/api/rest_v1/#/Page%20content/get_page_summary__title_
 
-interface Image {
+interface IImage {
   source: string;
   width: number;
   height: number;
 };
 
-export interface Summary {
+export interface ISummary {
   title: string;
   displayTitle: string;
   pageid: number;
   extract: string;
   extract_html: string;
-  thumbnail: Image,
-  originalimage: Image,
+  thumbnail: IImage,
+  originalimage: IImage,
   lang: string;
   dir: string;
   timestamp: string;

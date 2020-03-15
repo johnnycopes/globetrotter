@@ -1,19 +1,19 @@
 import * as _ from 'lodash';
 
-import { Place } from './place.type';
-import { Region } from './region.interface';
-import { Subregion } from './subregion.interface';
+import { TPlace } from './place.type';
+import { IRegion } from './region.interface';
+import { ISubregion } from './subregion.interface';
 
 export class PlacesTreeProvider {
-  getItemDisplayName(place: Place): string {
+  getItemDisplayName(place: TPlace): string {
     return place.name;
   }
 
-  getItemID(place: Place): string {
+  getItemID(place: TPlace): string {
     return place.name;
   }
 
-  getChildItems(place: Place): Place[] {
+  getChildItems(place: TPlace): TPlace[] {
     if (isRegion(place)) {
       return place.subregions;
     }
@@ -22,7 +22,7 @@ export class PlacesTreeProvider {
     }
   }
 
-  getItemTotal(place: Place): number {
+  getItemTotal(place: TPlace): number {
     if (isRegion(place)) {
       return _.reduce(place.subregions, (accum, subregion) => accum + subregion.countries.length, 0);
     }
@@ -34,15 +34,15 @@ export class PlacesTreeProvider {
     }
   }
 
-  getItemIcon(place: Place): string {
+  getItemIcon(place: TPlace): string {
     return place.name;
   }
 }
 
-function isRegion(place: Place): place is Region {
+function isRegion(place: TPlace): place is IRegion {
   return 'subregions' in place;
 }
 
-function isSubregion(place: Place): place is Subregion {
+function isSubregion(place: TPlace): place is ISubregion {
   return 'countries' in place;
 }

@@ -1,4 +1,4 @@
-export interface AuthCreds {
+export interface IAuthCreds {
   username: string;
   password: string;
 }

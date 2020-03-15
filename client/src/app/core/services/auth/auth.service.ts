@@ -9,11 +9,11 @@ import * as _ from 'lodash';
 
 import { environment } from 'src/environments/environment';
 import { RouteNames } from 'src/app/shared/model/route-names.enum';
-import { ErrorMessages } from 'src/app/shared/model/error-messages.enum';
+import { EErrorMessage } from 'src/app/shared/model/error-message.enum';
 import { Store } from 'src/app/shared/model/store.class';
 import { Auth } from 'src/app/shared/model/auth.class';
 import { ErrorService } from '../error/error.service';
-import { AuthCreds } from 'src/app/shared/model/auth-creds.interface';
+import { IAuthCreds } from 'src/app/shared/model/auth-creds.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -41,7 +41,7 @@ export class AuthService {
 
   login(form: FormGroup, alertMessage = 'Signed in successfully!'): void {
     form.disable();
-    const model: AuthCreds = form.value;
+    const model: IAuthCreds = form.value;
     this.http.post(this.apiUrl + 'login', model).pipe(
       map((response: { token: string }) => {
         if (response) {
@@ -79,7 +79,7 @@ export class AuthService {
 
   register(form: FormGroup): void {
     form.disable();
-    const model: AuthCreds = form.value;
+    const model: IAuthCreds = form.value;
     this.http.post(this.apiUrl + 'register', model).subscribe(
       () => {
         this.login(form, 'Registered successfully!');
@@ -104,8 +104,8 @@ export class AuthService {
       startWith(''), // fire observable on load for cases where input is touched but not changed
       map(() => {
         if (input.errors) {
-          const inputError = Object.keys(input.errors)[0] as keyof typeof ErrorMessages;
-          const errorMessage = `${inputName} is ${ErrorMessages[inputError]}`;
+          const inputError = Object.keys(input.errors)[0] as keyof typeof EErrorMessage;
+          const errorMessage = `${inputName} is ${EErrorMessage[inputError]}`;
           return errorMessage;
         }
         return '';

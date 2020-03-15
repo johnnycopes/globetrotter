@@ -1,9 +1,9 @@
-import { Country } from "./country.interface"
-import { Region } from "./region.interface";
+import { ICountry } from "./country.interface"
+import { IRegion } from "./region.interface";
 
 export class Countries {
-  countries: Country[] = [];
-  countriesBySubregion: _.Dictionary<Country[]> = {};
+  countries: ICountry[] = [];
+  countriesBySubregion: _.Dictionary<ICountry[]> = {};
   subregionsByRegion: _.Dictionary<string[]> = {};
-  formattedData: Region[] = [];
+  formattedData: IRegion[] = [];
 }

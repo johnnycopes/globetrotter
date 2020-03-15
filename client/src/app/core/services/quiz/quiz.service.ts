@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 
 import { Store } from 'src/app/shared/model/store.class';
 import { CountryService } from '../country/country.service';
-import { Country } from 'src/app/shared/model/country.interface';
+import { ICountry } from 'src/app/shared/model/country.interface';
 import { Selection } from 'src/app/shared/model/selection.class';
 import { Quiz } from 'src/app/shared/model/quiz.class';
 
@@ -59,14 +59,14 @@ export class QuizService {
     });
   }
 
-  private moveGuessedCountryToEnd(countries: Country[]): Country[] {
+  private moveGuessedCountryToEnd(countries: ICountry[]): ICountry[] {
     const guessedCountry = countries[0];
     const updatedCountries = this.removeGuessedCountry(countries);
     updatedCountries.push(guessedCountry);
     return updatedCountries;
   }
 
-  private removeGuessedCountry(countries: Country[]): Country[] {
+  private removeGuessedCountry(countries: ICountry[]): ICountry[] {
     return _.slice(countries, 1);
   }
 

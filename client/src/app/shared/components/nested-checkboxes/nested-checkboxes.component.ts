@@ -2,9 +2,9 @@ import { Component, OnInit, Input, ChangeDetectionStrategy, ChangeDetectorRef } 
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import * as _ from 'lodash';
 
-import { CheckboxState } from '../checkbox/checkbox.component';
+import { TCheckboxState } from '../checkbox/checkbox.component';
 
-export interface TreeProvider<T> {
+export interface ITreeProvider<T> {
   getChildItems(node: T): T[];
   getItemDisplayName(node: T): string;
   getItemID(node: T): string;
@@ -12,7 +12,7 @@ export interface TreeProvider<T> {
   getItemIcon?(node: T): string;
 }
 
-export type CheckboxStates = _.Dictionary<CheckboxState>;
+export type TCheckboxStates = _.Dictionary<TCheckboxState>;
 
 @Component({
   selector: 'app-nested-checkboxes',
@@ -27,7 +27,7 @@ export type CheckboxStates = _.Dictionary<CheckboxState>;
 })
 export class NestedCheckboxesComponent<T> implements OnInit, ControlValueAccessor {
   @Input() item: T;
-  @Input() treeProvider: TreeProvider<T>;
+  @Input() treeProvider: ITreeProvider<T>;
   @Input() isRoot: boolean = true;
   @Input() showCounters?: boolean;
   @Input() showImage?: boolean;
@@ -36,8 +36,8 @@ export class NestedCheckboxesComponent<T> implements OnInit, ControlValueAccesso
   childItems: T[];
   total: number;
   iconName: string;
-  checkboxStates: CheckboxStates = {};
-  private onChangeFn: (value: CheckboxStates) => void;
+  checkboxStates: TCheckboxStates = {};
+  private onChangeFn: (value: TCheckboxStates) => void;
 
   get current(): number | undefined {
     if (this.showCounters && this.checkboxStates && this.childItems.length) {
@@ -66,24 +66,24 @@ export class NestedCheckboxesComponent<T> implements OnInit, ControlValueAccesso
     }
   }
 
-  writeValue(value: CheckboxStates): void {
+  writeValue(value: TCheckboxStates): void {
     this.checkboxStates = value;
     this.changeDetectorRef.markForCheck();
   }
 
-  registerOnChange(fn: (value: CheckboxStates) => void): void {
+  registerOnChange(fn: (value: TCheckboxStates) => void): void {
     this.onChangeFn = fn;
   }
 
-  registerOnTouched(fn: (value: CheckboxStates) => void): void { }
+  registerOnTouched(fn: (value: TCheckboxStates) => void): void { }
 
-  updateSelectedCheckboxState(checkboxState: CheckboxState): void {
+  updateSelectedCheckboxState(checkboxState: TCheckboxState): void {
     const newCheckboxStatesDict = {...this.checkboxStates};
     this.checkboxStates = this.setCheckboxStates(this.item, checkboxState, newCheckboxStatesDict);
     this.onChangeFn(this.checkboxStates);
   }
 
-  updateAllCheckboxStates(newStates: CheckboxStates): void {
+  updateAllCheckboxStates(newStates: TCheckboxStates): void {
     this.checkboxStates = newStates;
 
     const childCheckboxStateCounts = _.reduce(this.childItems, (accum, childItem) => {
@@ -113,7 +113,7 @@ export class NestedCheckboxesComponent<T> implements OnInit, ControlValueAccesso
     this.onChangeFn(this.checkboxStates);
   }
 
-  private setCheckboxStates(item: T, checkboxState: CheckboxState, checkboxStates: CheckboxStates): CheckboxStates {
+  private setCheckboxStates(item: T, checkboxState: TCheckboxState, checkboxStates: TCheckboxStates): TCheckboxStates {
     const itemID = this.treeProvider.getItemID(item);
     checkboxStates[itemID] = checkboxState;
 

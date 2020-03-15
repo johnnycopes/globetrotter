@@ -5,12 +5,12 @@ import * as _ from 'lodash';
 
 import { fadeInAnimation } from 'src/app/shared/utility/animations';
 import { CountryService } from 'src/app/core/services/country/country.service';
-import { Country } from 'src/app/shared/model/country.interface';
+import { ICountry } from 'src/app/shared/model/country.interface';
 import { ListDetailsStyles } from 'src/app/shared/components/list-details/list-details.component';
 
 interface ViewModel {
-  filteredCountries: Country[];
-  selectedCountry: Country;
+  filteredCountries: ICountry[];
+  selectedCountry: ICountry;
   searchTerm: string;
   summary: string;
 }
@@ -27,12 +27,12 @@ export class ExploreComponent implements OnInit {
     gap: '12px'
   };
   vm$: Observable<ViewModel>;
-  private countries$: Observable<Country[]>;
-  private filteredCountries$: Observable<Country[]>;
+  private countries$: Observable<ICountry[]>;
+  private filteredCountries$: Observable<ICountry[]>;
   private searchTerm$: Observable<string>;
   private searchTermChange$ = new Subject<string>();
-  private selectedCountry$: Observable<Country>;
-  private selectedCountryChange$ = new ReplaySubject<Country>(1);
+  private selectedCountry$: Observable<ICountry>;
+  private selectedCountryChange$ = new ReplaySubject<ICountry>(1);
   private summary$: Observable<string>;
   private summaryChange$ = new ReplaySubject<string>(1);
 
@@ -50,11 +50,11 @@ export class ExploreComponent implements OnInit {
     );
   }
 
-  getCountryCode(country: Country): string {
+  getCountryCode(country: ICountry): string {
     return country.cioc;
   }
 
-  onSelect(selectedCountry: Country): void {
+  onSelect(selectedCountry: ICountry): void {
     this.selectedCountryChange$.next(selectedCountry);
     this.countryService.getSummary(selectedCountry.name).pipe(
       map(summary => this.summaryChange$.next(summary))

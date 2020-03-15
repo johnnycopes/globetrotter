@@ -1,9 +1,9 @@
-import { QuizType } from './quiz-type.enum';
-import { QuizQuantity } from './quiz-quantity.type';
-import { CheckboxStates } from '../components/nested-checkboxes/nested-checkboxes.component';
+import { EQuizType } from './quiz-type.enum';
+import { TQuizQuantity } from './quiz-quantity.type';
+import { TCheckboxStates } from '../components/nested-checkboxes/nested-checkboxes.component';
 
 export class Selection {
-  type: QuizType = QuizType.flagsCountries;
-  quantity: QuizQuantity = 5;
-  countries: CheckboxStates = {};
+  type: EQuizType = EQuizType.flagsCountries;
+  quantity: TQuizQuantity = 5;
+  countries: TCheckboxStates = {};
 }

@@ -5,7 +5,7 @@ import { Observable, combineLatest } from 'rxjs';
 import { CustomValidators } from 'src/app/shared/utility/custom-validators';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { ErrorService } from 'src/app/core/services/error/error.service';
-import { Api } from 'src/app/shared/model/api.enum';
+import { EApi } from 'src/app/shared/model/api.enum';
 import { map } from 'rxjs/operators';
 
 interface ViewModel {
@@ -60,14 +60,14 @@ export class RegisterComponent {
 
   private initializeValues(): void {
     this.guidelines = [
-      `Password must be between ${Api.minLength} and ${Api.maxLength} characters`
+      `Password must be between ${EApi.minLength} and ${EApi.maxLength} characters`
     ];
     this.form = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', [
         Validators.required,
-        Validators.minLength(Api.minLength),
-        Validators.maxLength(Api.maxLength)
+        Validators.minLength(EApi.minLength),
+        Validators.maxLength(EApi.maxLength)
       ]],
       confirmPassword: ['', Validators.required]
     }, { validators: CustomValidators.checkPasswords });

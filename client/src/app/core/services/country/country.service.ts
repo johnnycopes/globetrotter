@@ -7,21 +7,21 @@ import * as _ from 'lodash';
 
 import { COUNTRY_STATUSES } from 'src/app/shared/model/country-statuses.data';
 import { Countries } from 'src/app/shared/model/countries.class';
-import { Country } from 'src/app/shared/model/country.interface';
-import { Region } from 'src/app/shared/model/region.interface';
+import { ICountry } from 'src/app/shared/model/country.interface';
+import { IRegion } from 'src/app/shared/model/region.interface';
 import { Selection } from 'src/app/shared/model/selection.class';
 import { Store } from 'src/app/shared/model/store.class';
 import { ErrorService } from '../error/error.service';
-import { Summary } from 'src/app/shared/model/summary.interface';
+import { ISummary } from 'src/app/shared/model/summary.interface';
 
-type CountriesBySubregion = _.Dictionary<Country[]>;
+type CountriesBySubregion = _.Dictionary<ICountry[]>;
 type SubregionsByRegion = _.Dictionary<string[]>;
 
 @Injectable({
   providedIn: 'root'
 })
-export class CountryService implements Resolve<Observable<Country[]>> {
-  private request: Observable<Country[]>;
+export class CountryService implements Resolve<Observable<ICountry[]>> {
+  private request: Observable<ICountry[]>;
   private readonly store: Store;
   private readonly countriesApiUrl = 'https://restcountries.eu/rest/v2/all';
   private readonly wikipediaApiUrl = 'https://en.wikipedia.org/api/rest_v1/page/summary/';
@@ -34,19 +34,19 @@ export class CountryService implements Resolve<Observable<Country[]>> {
     this.initialize();
   }
 
-  resolve(): Observable<Country[]> {
+  resolve(): Observable<ICountry[]> {
     return this.request;
   }
 
-  getCountries(): Observable<Country[]> {
+  getCountries(): Observable<ICountry[]> {
     return this.store.get(['countries']);
   }
 
-  getFormattedData(): Observable<Region[]> {
+  getFormattedData(): Observable<IRegion[]> {
     return this.store.get(['formattedData']);
   }
 
-  getCountriesFromSelection(selection: Selection): Observable<Country[]> {
+  getCountriesFromSelection(selection: Selection): Observable<ICountry[]> {
     return this.store.get(['countriesBySubregion']).pipe(
       map(countriesBySubregion => {
         const quantity = selection.quantity || undefined;
@@ -66,13 +66,13 @@ export class CountryService implements Resolve<Observable<Country[]>> {
   }
 
   getSummary(countryName: string): Observable<string> {
-    return this.http.get<Summary>(this.wikipediaApiUrl + countryName).pipe(
+    return this.http.get<ISummary>(this.wikipediaApiUrl + countryName).pipe(
       map(result => result.extract)
     );
   }
 
   private initialize(): void {
-    this.request = this.http.get<Country[]>(this.countriesApiUrl).pipe(
+    this.request = this.http.get<ICountry[]>(this.countriesApiUrl).pipe(
       shareReplay(),
       catchError(error => {
         this.errorService.setGlobalError(error.message);
@@ -91,7 +91,7 @@ export class CountryService implements Resolve<Observable<Country[]>> {
     });
   }
 
-  private groupSubregionsByRegion(countriesBySubregion: _.Dictionary<Country[]>): _.Dictionary<string[]> {
+  private groupSubregionsByRegion(countriesBySubregion: _.Dictionary<ICountry[]>): _.Dictionary<string[]> {
     return _.reduce(countriesBySubregion, (accum, countries, subregion) => {
       const region = _.get(countries, '[0].region', 'ERROR');
       if (!accum[region]) {
@@ -110,7 +110,7 @@ export class CountryService implements Resolve<Observable<Country[]>> {
     }, {} as _.Dictionary<string[]>);
   }
 
-  private createFormattedData(countriesBySubregion: CountriesBySubregion, subregionsByRegion: SubregionsByRegion): Region[] {
+  private createFormattedData(countriesBySubregion: CountriesBySubregion, subregionsByRegion: SubregionsByRegion): IRegion[] {
     return _.reduce(subregionsByRegion, (accum, subregions, region) => {
       const subregionsData = _.map(subregions, subregion => {
         return {

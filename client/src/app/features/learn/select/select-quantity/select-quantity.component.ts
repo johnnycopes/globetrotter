@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 ;
 import { SelectService } from 'src/app/core/services/select/select.service';
 import { RadioButtonsOption } from 'src/app/shared/components/radio-buttons/radio-buttons.component';
-import { QuizQuantity } from 'src/app/shared/model/quiz-quantity.type';
+import { TQuizQuantity } from 'src/app/shared/model/quiz-quantity.type';
 
 @Component({
   selector: 'app-select-quantity',
@@ -13,8 +13,8 @@ import { QuizQuantity } from 'src/app/shared/model/quiz-quantity.type';
   styleUrls: ['./select-quantity.component.scss']
 })
 export class SelectQuantityComponent implements OnInit {
-  quantities: RadioButtonsOption<QuizQuantity>[];
-  selectedQuantity$: Observable<RadioButtonsOption<QuizQuantity>>;
+  quantities: RadioButtonsOption<TQuizQuantity>[];
+  selectedQuantity$: Observable<RadioButtonsOption<TQuizQuantity>>;
 
   constructor(private selectService: SelectService) { }
 
@@ -38,7 +38,7 @@ export class SelectQuantityComponent implements OnInit {
     );
   }
 
-  onChange(selectedQuantity: RadioButtonsOption<QuizQuantity>): void {
+  onChange(selectedQuantity: RadioButtonsOption<TQuizQuantity>): void {
     this.selectService.updateQuantity(selectedQuantity.value);
   }
 }
