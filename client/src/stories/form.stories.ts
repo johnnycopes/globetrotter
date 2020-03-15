@@ -3,7 +3,7 @@ import { action } from '@storybook/addon-actions';
 import {
   withKnobs,
   text
-} from '@storybook/addon-knobs/angular';
+} from '@storybook/addon-knobs';
 import { FormsModule, ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 
 import { FormComponent } from 'src/app/shared/components/form/form.component';

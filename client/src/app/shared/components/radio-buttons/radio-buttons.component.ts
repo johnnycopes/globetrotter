@@ -9,7 +9,7 @@ import { EBreakpoint } from 'src/app/shared/model/breakpoint.enum';
 
 export interface RadioButtonsOption<T> {
   display: string;
-  value: T;
+  value: T | null;
 }
 
 interface ViewModel {

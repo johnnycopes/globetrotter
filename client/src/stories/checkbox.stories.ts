@@ -4,7 +4,7 @@ import {
   withKnobs,
   boolean,
   select,
-} from '@storybook/addon-knobs/angular';
+} from '@storybook/addon-knobs';
 
 import { CheckboxComponent, TCheckboxState } from 'src/app/shared/components/checkbox/checkbox.component';
 import { CounterComponent } from 'src/app/shared/components/counter/counter.component';

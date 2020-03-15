@@ -5,7 +5,7 @@ import {
   text,
   boolean,
   select,
-} from '@storybook/addon-knobs/angular';
+} from '@storybook/addon-knobs';
 
 import { ButtonComponent, ButtonStyle } from 'src/app/shared/components/button/button.component';
 

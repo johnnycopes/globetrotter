@@ -2,7 +2,7 @@ import { storiesOf, moduleMetadata } from '@storybook/angular';
 import {
   withKnobs,
   boolean
-} from '@storybook/addon-knobs/angular';
+} from '@storybook/addon-knobs';
 
 import { LinkComponent } from 'src/app/shared/components/link/link.component';
 import { FixedSlideablePanelComponent } from 'src/app/shared/components/fixed-slideable-panel/fixed-slideable-panel.component';

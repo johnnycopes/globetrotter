@@ -4,7 +4,7 @@ import {
   withKnobs,
   boolean,
   select
-} from '@storybook/addon-knobs/angular';
+} from '@storybook/addon-knobs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { FlipCardComponent, FlipCardSide, FlipCardGuess } from 'src/app/shared/components/flip-card/flip-card.component';

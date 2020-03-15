@@ -5,7 +5,7 @@ import {
   text,
   boolean,
   object
-} from '@storybook/addon-knobs/angular';
+} from '@storybook/addon-knobs';
 
 import { RadioButtonsComponent, RadioButtonsOption } from 'src/app/shared/components/radio-buttons/radio-buttons.component';
 

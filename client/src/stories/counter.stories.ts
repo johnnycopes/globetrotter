@@ -4,7 +4,7 @@ import {
   text,
   number,
   boolean,
-} from '@storybook/addon-knobs/angular';
+} from '@storybook/addon-knobs';
 import { CounterComponent } from 'src/app/shared/components/counter/counter.component';
 
 storiesOf('Shared/Counter', module)
@@ -28,7 +28,7 @@ storiesOf('Shared/Counter', module)
       component: CounterComponent,
       props: {
         text: text('text', 'Western Africa'),
-        current: number('current', undefined),
+        current: number('current', 0),
         total: number('total', 17),
         wrapNumbers: boolean('wrapNumbers', true),
         boldNumbers: boolean('boldNumbers', false),

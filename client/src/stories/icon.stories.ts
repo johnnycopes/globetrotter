@@ -4,7 +4,7 @@ import {
   withKnobs,
   select,
   boolean
-} from '@storybook/addon-knobs/angular';
+} from '@storybook/addon-knobs';
 
 import { IconComponent } from 'src/app/shared/components/icon/icon.component';
 

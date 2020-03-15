@@ -6,17 +6,11 @@
     "start": "ng serve -o",
     "build": "ng build --prod",
     "karma": "ng test",
-    "test": "jest",
-    "test:watch": "jest --watch",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "storybook": "start-storybook -s ./assets -p 6006",
     "build-storybook": "build-storybook",
     "deploy-storybook": "npm run build-storybook && cd storybook-static && surge . --domain https://globetrotter-components.surge.sh"
-  },
-  "jest": {
-    "preset": "jest-preset-angular",
-    "setupTestFrameworkScriptFile": "<rootDir>/src/setupJest.ts"
   },
   "private": true,
   "dependencies": {
@@ -60,8 +54,6 @@
     "codelyzer": "^5.1.2",
     "jasmine-core": "~3.4.0",
     "jasmine-spec-reporter": "~4.2.1",
-    "jest": "^24.8.0",
-    "jest-preset-angular": "^7.1.1",
     "karma": "~4.1.0",
     "karma-chrome-launcher": "~2.2.0",
     "karma-coverage-istanbul-reporter": "^2.0.5",

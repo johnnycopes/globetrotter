@@ -46,7 +46,7 @@ export class SelectService {
     this.updateCountries(countries);
   }
 
-  updateType(type: EQuizType): void {
+  updateType(type: EQuizType | null): void {
     this.store.set(['type'], type);
   }
 

@@ -5,7 +5,7 @@ import {
   text,
   boolean,
   object
-} from '@storybook/addon-knobs/angular';
+} from '@storybook/addon-knobs';
 
 import { ButtonComponent } from 'src/app/shared/components/button/button.component';
 import { CounterComponent } from 'src/app/shared/components/counter/counter.component';

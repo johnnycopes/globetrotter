@@ -3,7 +3,7 @@ import { action } from '@storybook/addon-actions';
 import {
   withKnobs,
   select
-} from '@storybook/addon-knobs/angular';
+} from '@storybook/addon-knobs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { TabsetComponent, TabsetContentVisibility } from 'src/app/shared/components/tabset/tabset.component';

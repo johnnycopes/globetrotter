@@ -3,7 +3,7 @@ import {
   withKnobs,
   boolean,
   select
-} from '@storybook/addon-knobs/angular';
+} from '@storybook/addon-knobs';
 
 import { AlertComponent } from 'src/app/shared/components/alert/alert.component';
 

@@ -3,10 +3,12 @@ import { action } from '@storybook/addon-actions';
 import {
   withKnobs,
   object
-} from '@storybook/addon-knobs/angular';
+} from '@storybook/addon-knobs';
 
 import { MOCK_DATA } from './mock-data/list-details.data';
 import { ICountry } from 'src/app/shared/model/country.interface';
+import { AlertComponent } from 'src/app/shared/components/alert/alert.component';
+import { InputComponent } from 'src/app/shared/components/input/input.component';
 import { ListDetailsComponent } from 'src/app/shared/components/list-details/list-details.component';
 
 const actions = {
@@ -17,7 +19,11 @@ storiesOf('Shared/List Details', module)
   .addDecorator(withKnobs)
   .addDecorator(
     moduleMetadata({
-      declarations: [ListDetailsComponent]
+      declarations: [
+        AlertComponent,
+        InputComponent,
+        ListDetailsComponent
+      ]
     })
   )
   .add('basic', () => {
