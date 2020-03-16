@@ -1,0 +1,9 @@
+@import "styles";
+
+:host {
+	display: block;
+}
+
+.indent {
+	margin-left: map-get($spacing, 24);
+}

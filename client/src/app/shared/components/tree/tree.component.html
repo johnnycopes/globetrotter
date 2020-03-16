@@ -1,0 +1,24 @@
+<ng-container
+	[ngTemplateOutlet]="itemTemplate ? itemTemplate : defaultTemplate"
+	[ngTemplateOutletContext]="{
+		$implicit: this.item,
+		id: this.id,
+		parent: this.parent,
+		children: this.children,
+		isRoot: !this.parentId
+	}"
+	>
+</ng-container>
+<ng-container *ngIf="children.length">
+	<app-tree [class.indent]="indentChildItems"
+		*ngFor="let childItem of children"
+		[item]="childItem"
+		[treeProvider]="treeProvider"
+		[itemTemplate]="itemTemplate"
+		>
+	</app-tree>
+</ng-container>
+
+<ng-template #defaultTemplate let-id="id">
+	{{id}}
+</ng-template>

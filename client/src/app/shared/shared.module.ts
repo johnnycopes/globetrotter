@@ -21,6 +21,7 @@ import { NestedCheckboxesGroupComponent } from './components/nested-checkboxes-g
 import { RadioButtonsComponent } from './components/radio-buttons/radio-buttons.component';
 import { TabComponent } from './components/tabset/tab/tab.component';
 import { TabsetComponent } from './components/tabset/tabset.component';
+import { TreeComponent } from './components/tree/tree.component';
 
 @NgModule({
   imports: [
@@ -48,6 +49,7 @@ import { TabsetComponent } from './components/tabset/tabset.component';
     RadioButtonsComponent,
     TabComponent,
     TabsetComponent,
+    TreeComponent,
   ],
   exports: [
     AlertComponent,
@@ -69,6 +71,7 @@ import { TabsetComponent } from './components/tabset/tabset.component';
     RadioButtonsComponent,
     TabComponent,
     TabsetComponent,
+    TreeComponent
   ]
 })
 export class SharedModule { }
