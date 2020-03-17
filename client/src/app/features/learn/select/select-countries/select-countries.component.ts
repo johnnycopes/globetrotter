@@ -5,13 +5,17 @@ import * as _ from 'lodash';
 
 import { CountryService } from 'src/app/core/services/country/country.service';
 import { SelectService } from 'src/app/core/services/select/select.service';
-import { TCheckboxStates, ITreeProvider } from 'src/app/shared/components/nested-checkboxes/nested-checkboxes.component';
-import { TPlace } from 'src/app/shared/model/place.type';
 import { IRegion } from 'src/app/shared/model/region.interface';
-import { PlacesTreeProvider } from 'src/app/shared/model/places-tree-provider.class';
+import { PlacesTreeProviderRefactor } from 'src/app/shared/model/places-tree-provider-refactor.class';
+import { TCheckboxStates } from 'src/app/shared/components/nested-checkboxes-refactor/nested-checkboxes-refactor.component';
+
+interface IRegionData {
+  region: IRegion;
+  treeProvider: PlacesTreeProviderRefactor;
+}
 
 interface ViewModel {
-  regions: IRegion[];
+  regionData: IRegionData[];
   checkboxStates: TCheckboxStates;
 }
 
@@ -22,8 +26,7 @@ interface ViewModel {
 })
 export class SelectCountriesComponent implements OnInit {
   vm$: Observable<ViewModel>;
-  treeProvider: ITreeProvider<TPlace> = new PlacesTreeProvider();
-  private regions$: Observable<IRegion[]>;
+  private regionData$: Observable<IRegionData[]>;
   private checkboxStates$: Observable<TCheckboxStates>;
 
   constructor(
@@ -34,19 +37,32 @@ export class SelectCountriesComponent implements OnInit {
   ngOnInit(): void {
     this.initializeStreams();
     this.vm$ = combineLatest([
-      this.regions$,
+      this.regionData$,
       this.checkboxStates$
     ]).pipe(
-      map(([regions, checkboxStates]) => ({regions, checkboxStates}))
+      map(([regionData, checkboxStates]) => ({regionData, checkboxStates}))
     );
   }
 
-  onCountriesChange(model: TCheckboxStates): void {
-    this.selectService.updateCountries(model);
+  onCountriesChange(state: TCheckboxStates): void {
+    this.selectService.updateCountries(state);
+  }
+
+  onSelectAll(): void {
+    this.selectService.updateCountries({});
+  }
+
+  onClearAll(): void {
+    this.selectService.updateCountries({});
   }
 
   private initializeStreams(): void {
-    this.regions$ = this.countryService.getFormattedData();
+    this.regionData$ = this.countryService.getFormattedData().pipe(
+      map(regions => regions.map(region => {
+        const treeProvider = new PlacesTreeProviderRefactor(region);
+        return { region, treeProvider };
+      }))
+    );
     this.checkboxStates$ = this.selectService.getSelection().pipe(
       map(selection => selection.countries)
     );

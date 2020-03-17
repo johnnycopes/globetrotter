@@ -115,6 +115,7 @@ export class CountryService implements Resolve<Observable<ICountry[]>> {
       const subregionsData = _.map(subregions, subregion => {
         return {
           name: subregion,
+          region: region,
           countries: countriesBySubregion[subregion]
         };
       });

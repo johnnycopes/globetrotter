@@ -24,7 +24,7 @@ interface ViewModel {
 })
 export class ShellComponent implements OnInit {
   vm$: Observable<ViewModel>;
-  private showNavigationChanged = new BehaviorSubject<boolean>(false);
+  private showNavigationChange = new BehaviorSubject<boolean>(false);
   private showNavigation$: Observable<boolean>;
   private showContent$: Observable<boolean>;
   private showModal$: Observable<boolean>;
@@ -113,14 +113,14 @@ export class ShellComponent implements OnInit {
       map(currentRoute => currentRoute !== RouteNames.learn),
       distinctUntilChanged(),
       tap(async (showNavigation) => {
-        this.showNavigationChanged.next(false);
+        this.showNavigationChange.next(false);
         if (showNavigation) {
           await this.utilityService.wait(EAnimationDuration.fixedSlideablePanel);
         }
-        this.showNavigationChanged.next(true);
+        this.showNavigationChange.next(true);
       })
     );
-    this.showContent$ = this.showNavigationChanged.asObservable().pipe(
+    this.showContent$ = this.showNavigationChange.asObservable().pipe(
       distinctUntilChanged()
     );
     this.showModal$ = this.modalService.getOpen();

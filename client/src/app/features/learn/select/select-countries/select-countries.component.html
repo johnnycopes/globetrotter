@@ -1,11 +1,50 @@
-<app-nested-checkboxes-group
+<div class="top">
+  <div class="top__counter">
+    <span class="bold">
+      0 / 0
+    </span>
+    possible countries selected.
+  </div>
+  <div class="top__buttons">
+    <app-button class="top__select-all"
+      buttonStyle="secondary"
+      buttonText="Select all"
+      (click)="onSelectAll()"
+      >
+    </app-button>
+    <app-button class="top__clear-all"
+      buttonStyle="secondary"
+      buttonText="Clear all"
+      (click)="onClearAll()"
+      >
+    </app-button>
+  </div>
+</div>
+<div class="items"
   *ngIf="vm$ | async as vm"
-  [items]="vm.regions"
-  [treeProvider]="treeProvider"
-  [showCounters]="true"
-  [showImages]="true"
-  text="possible countries are selected."
-  [ngModel]="vm.checkboxStates"
-  (ngModelChange)="onCountriesChange($event)"
   >
-</app-nested-checkboxes-group>
+  <app-nested-checkboxes-refactor class="item"
+    *ngFor="let regionDatum of vm.regionData"
+    [item]="regionDatum.region"
+    [treeProvider]="regionDatum.treeProvider"
+    [itemTemplate]="label"
+    [ngModel]="vm.checkboxStates"
+    (ngModelChange)="onCountriesChange($event)"
+    >
+  </app-nested-checkboxes-refactor>
+</div>
+
+<ng-template
+  #label
+  let-id="id"
+  let-isRoot="isRoot"
+  >
+  <span class="bold" *ngIf="isRoot; else child">
+    🌍 {{id}} ({{0}} / {{0}})
+  </span>
+  <ng-template #child>
+    <span>
+      {{id}}
+    </span>
+  </ng-template>
+</ng-template>

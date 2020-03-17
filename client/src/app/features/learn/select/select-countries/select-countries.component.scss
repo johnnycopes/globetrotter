@@ -1,0 +1,117 @@
+@import 'styles';
+
+.form {
+  display: grid;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: map-get($spacing, 24);
+
+  @include desktop {
+    flex-direction: row;
+  }
+
+  &__counter {
+    font-size: map-get($font-size, 24);
+    margin-bottom: map-get($spacing, 12);
+
+    @include tablet {
+      font-size: map-get($font-size, 36);
+      margin-bottom: map-get($spacing, 24);
+    }
+
+    @include desktop {
+      margin-bottom: 0;
+    }
+  }
+
+  &__select-all {
+    margin-right: map-get($spacing, 24);
+  }
+}
+
+.items {
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
+
+  @include desktop {
+    grid-template-columns: 1fr 1fr;
+    justify-items: left;
+  }
+}
+
+.bold {
+  font-weight: map-get($font-weight, bold);
+}
+
+// .item {
+//   padding: map-get($spacing, 8) 0;
+//   max-width: 500px;
+//   width: 100%;
+
+//   &__image {
+//     width: map-get($spacing, 96);
+//     padding-right: map-get($spacing, 8);
+
+//     @include mobile {
+//       width: map-get($spacing, 128);
+//     }
+
+//     @include tablet {
+//       width: map-get($spacing, 192);
+//       padding-right: map-get($spacing, 32);
+//     }
+//   }
+
+//   @include tablet {
+//     padding: map-get($spacing, 16) 0;
+//   }
+
+//   @include desktop {
+//     max-width: none;
+//     min-width: 500px;
+//     width: 100%;
+//   }
+// }
+
+
+
+// .nested-checkboxes {
+//   display: flex;
+//   flex: 0 1 50%;
+//   align-items: center;
+//   position: relative;
+
+//   &__image {
+//     width: map-get($spacing, 96);
+//     padding-right: map-get($spacing, 8);
+
+//     @include mobile {
+//       width: map-get($spacing, 128);
+//     }
+
+//     @include tablet {
+//       width: map-get($spacing, 192);
+//       padding-right: map-get($spacing, 32);
+//     }
+//   }
+
+//   &__selection {
+//     display: flex;
+//     flex-direction: column;
+//   }
+
+//   &__checkbox {
+//     position: relative;
+//     margin-bottom: map-get($spacing, 4);
+//   }
+
+//   &__child {
+//     margin-left: map-get($spacing, 24);
+//   }
+// }

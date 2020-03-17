@@ -17,6 +17,7 @@ import { ListDetailsComponent } from './components/list-details/list-details.com
 import { LoaderComponent } from './components/loader/loader.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { NestedCheckboxesComponent } from './components/nested-checkboxes/nested-checkboxes.component';
+import { NestedCheckboxesRefactorComponent } from './components/nested-checkboxes-refactor/nested-checkboxes-refactor.component';
 import { NestedCheckboxesGroupComponent } from './components/nested-checkboxes-group/nested-checkboxes-group.component';
 import { RadioButtonsComponent } from './components/radio-buttons/radio-buttons.component';
 import { TabComponent } from './components/tabset/tab/tab.component';
@@ -45,6 +46,7 @@ import { TreeComponent } from './components/tree/tree.component';
     ListDetailsComponent,
     ModalComponent,
     NestedCheckboxesComponent,
+    NestedCheckboxesRefactorComponent,
     NestedCheckboxesGroupComponent,
     RadioButtonsComponent,
     TabComponent,
@@ -67,6 +69,7 @@ import { TreeComponent } from './components/tree/tree.component';
     ModalComponent,
     ListDetailsComponent,
     NestedCheckboxesComponent,
+    NestedCheckboxesRefactorComponent,
     NestedCheckboxesGroupComponent,
     RadioButtonsComponent,
     TabComponent,
