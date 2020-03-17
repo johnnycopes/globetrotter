@@ -29,6 +29,7 @@ interface ViewModel {
 })
 export class SelectCountriesComponent implements OnInit {
   vm$: Observable<ViewModel>;
+  readonly overallTotalKey: string = '__overall';
   private regionData$: Observable<IRegionData[]>;
   private checkboxStates$: Observable<TCheckboxStates>;
   private totals$: Observable<TPlaceTotals>;
@@ -61,6 +62,34 @@ export class SelectCountriesComponent implements OnInit {
     this.selectService.updateCountries({});
   }
 
+  // private makeItemChecked(item: T): void {
+  //   const id = this.treeProvider.getItemID(item);
+  //   this.checkboxStates[id] = 'checked';
+
+  //   const children = this.treeProvider.getChildItems(item);
+  //   if (!children.length) {
+  //     return;
+  //   }
+
+  //   _.forEach(children, child => {
+  //     this.makeItemChecked(child);
+  //   });
+  // }
+
+  // private makeItemChecked(item: T): void {
+  //   const id = this.treeProvider.getItemID(item);
+  //   this.checkboxStates[id] = 'checked';
+
+  //   const children = this.treeProvider.getChildItems(item);
+  //   if (!children.length) {
+  //     return;
+  //   }
+
+  //   _.forEach(children, child => {
+  //     this.makeItemChecked(child);
+  //   });
+  // }
+
   private initializeStreams(): void {
     this.regionData$ = this.countryService.getFormattedData().pipe(
       map(regions => regions.map(region => {
@@ -80,8 +109,9 @@ export class SelectCountriesComponent implements OnInit {
           return regionTotal + subregionTotal;
         }, 0);
         totalsDict[region.name] = regionTotal;
+        totalsDict[this.overallTotalKey] += regionTotal;
         return totalsDict;
-      }, {} as TPlaceTotals))
+      }, { [this.overallTotalKey]: 0 } as TPlaceTotals))
     );
   }
 }

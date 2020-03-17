@@ -1,59 +1,60 @@
-<div class="top">
-  <div class="top__counter">
-    <span class="bold">
-      0 / 0
-    </span>
-    possible countries selected.
-  </div>
-  <div class="top__buttons">
-    <app-button class="top__select-all"
-      buttonStyle="secondary"
-      buttonText="Select all"
-      (click)="onSelectAll()"
-      >
-    </app-button>
-    <app-button class="top__clear-all"
-      buttonStyle="secondary"
-      buttonText="Clear all"
-      (click)="onClearAll()"
-      >
-    </app-button>
-  </div>
-</div>
-<div class="regions"
-  *ngIf="vm$ | async as vm"
-  >
-  <div class="region"
-    *ngFor="let regionDatum of vm.regionData"
-    >
-    <app-icon class="region__image"
-      *ngIf="regionDatum.region.name as name"
-      [icon]="name"
-      [highlighted]="false"
-      >
-    </app-icon>
-    <app-nested-checkboxes-refactor class="region__checkboxes"
-      [item]="regionDatum.region"
-      [treeProvider]="regionDatum.treeProvider"
-      [itemTemplate]="label"
-      [ngModel]="vm.checkboxStates"
-      (ngModelChange)="onCountriesChange($event)"
-      >
-    </app-nested-checkboxes-refactor>
-
-    <ng-template
-      #label
-      let-id="id"
-      let-isRoot="isRoot"
-      >
-      <span class="bold" *ngIf="isRoot; else child">
-        🌍 {{id}} ({{0}} / {{vm.totals[id]}})
+<ng-container *ngIf="vm$ | async as vm">
+  <div class="top">
+    <div class="top__counter">
+      <span class="bold">
+        0 / {{vm.totals[overallTotalKey]}}
       </span>
-      <ng-template #child>
-        <span>
-          {{id}} ({{vm.totals[id]}})
-        </span>
-      </ng-template>
-    </ng-template>
+      possible countries selected.
+    </div>
+    <div class="top__buttons">
+      <app-button class="top__select-all"
+        buttonStyle="secondary"
+        buttonText="Select all"
+        (click)="onSelectAll()"
+        >
+      </app-button>
+      <app-button class="top__clear-all"
+        buttonStyle="secondary"
+        buttonText="Clear all"
+        (click)="onClearAll()"
+        >
+      </app-button>
+    </div>
   </div>
-</div>
+  <div class="regions">
+    <div class="region"
+      *ngFor="let regionDatum of vm.regionData"
+      >
+      <app-icon class="region__image"
+        [icon]="regionDatum.region.name"
+        [highlighted]="false"
+        >
+      </app-icon>
+      <app-nested-checkboxes-refactor class="region__checkboxes"
+        [item]="regionDatum.region"
+        [treeProvider]="regionDatum.treeProvider"
+        [itemTemplate]="label"
+        [ngModel]="vm.checkboxStates"
+        (ngModelChange)="onCountriesChange($event)"
+        >
+      </app-nested-checkboxes-refactor>
+
+      <ng-template
+        #label
+        let-id="id"
+        let-isRoot="isRoot"
+        >
+        <span class="bold"
+          *ngIf="isRoot; else child"
+          >
+          🌍 {{id}} ({{0}} / {{vm.totals[id]}})
+        </span>
+        <ng-template #child>
+          <span>
+            {{id}} ({{vm.totals[id]}})
+          </span>
+        </ng-template>
+      </ng-template>
+    </div>
+  </div>
+</ng-container>
