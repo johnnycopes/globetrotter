@@ -2,8 +2,8 @@ import { Component, Input, OnInit, TemplateRef, ChangeDetectionStrategy } from "
 
 export interface ITreeProvider<T> {
   getId(item: T): string;
-  getParent(item: T): T | undefined;
   getChildren(item: T): T[];
+  getParent?(item: T): T | undefined;
 }
 
 @Component({
@@ -29,10 +29,11 @@ export class TreeComponent<T> implements OnInit {
       throw new Error("An item and a tree provider must be passed to the tree component");
     }
     this.id = this.treeProvider.getId(this.item);
-    this.parent = this.treeProvider.getParent(this.item);
     this.children = this.treeProvider.getChildren(this.item);
-    if (!!this.parent) {
-      this.parentId = this.treeProvider.getId(this.parent);
+    const parent = this.treeProvider.getParent && this.treeProvider.getParent(this.item);
+    if (!!parent) {
+      this.parent = parent;
+      this.parentId = this.treeProvider.getId(parent);
     }
   }
 }

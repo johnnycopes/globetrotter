@@ -20,31 +20,40 @@
     </app-button>
   </div>
 </div>
-<div class="items"
+<div class="regions"
   *ngIf="vm$ | async as vm"
   >
-  <app-nested-checkboxes-refactor class="item"
+  <div class="region"
     *ngFor="let regionDatum of vm.regionData"
-    [item]="regionDatum.region"
-    [treeProvider]="regionDatum.treeProvider"
-    [itemTemplate]="label"
-    [ngModel]="vm.checkboxStates"
-    (ngModelChange)="onCountriesChange($event)"
     >
-  </app-nested-checkboxes-refactor>
-</div>
+    <app-icon class="region__image"
+      *ngIf="regionDatum.region.name as name"
+      [icon]="name"
+      [highlighted]="false"
+      >
+    </app-icon>
+    <app-nested-checkboxes-refactor class="region__checkboxes"
+      [item]="regionDatum.region"
+      [treeProvider]="regionDatum.treeProvider"
+      [itemTemplate]="label"
+      [ngModel]="vm.checkboxStates"
+      (ngModelChange)="onCountriesChange($event)"
+      >
+    </app-nested-checkboxes-refactor>
 
-<ng-template
-  #label
-  let-id="id"
-  let-isRoot="isRoot"
-  >
-  <span class="bold" *ngIf="isRoot; else child">
-    🌍 {{id}} ({{0}} / {{0}})
-  </span>
-  <ng-template #child>
-    <span>
-      {{id}}
-    </span>
-  </ng-template>
-</ng-template>
+    <ng-template
+      #label
+      let-id="id"
+      let-isRoot="isRoot"
+      >
+      <span class="bold" *ngIf="isRoot; else child">
+        🌍 {{id}} ({{0}} / {{vm.totals[id]}})
+      </span>
+      <ng-template #child>
+        <span>
+          {{id}} ({{vm.totals[id]}})
+        </span>
+      </ng-template>
+    </ng-template>
+  </div>
+</div>

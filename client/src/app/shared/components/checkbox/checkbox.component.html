@@ -9,10 +9,7 @@
   />
   <div class="element"></div>
   <div class="label"
-    [ngClass]="{
-      'label--active': state !== 'unchecked',
-      'label--bold': bold
-    }"
+    [ngClass]="{'label--bold': bold}"
     >
     <ng-content></ng-content>
   </div>

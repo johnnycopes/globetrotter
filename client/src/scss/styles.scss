@@ -24,3 +24,7 @@ body {
     font-size: map-get($font-size, 30);
   }
 }
+
+.bold {
+  font-weight: map-get($font-weight, bold);
+}

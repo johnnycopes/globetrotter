@@ -9,6 +9,8 @@ import { IRegion } from 'src/app/shared/model/region.interface';
 import { PlacesTreeProviderRefactor } from 'src/app/shared/model/places-tree-provider-refactor.class';
 import { TCheckboxStates } from 'src/app/shared/components/nested-checkboxes-refactor/nested-checkboxes-refactor.component';
 
+type TPlaceTotals = _.Dictionary<number>;
+
 interface IRegionData {
   region: IRegion;
   treeProvider: PlacesTreeProviderRefactor;
@@ -17,6 +19,7 @@ interface IRegionData {
 interface ViewModel {
   regionData: IRegionData[];
   checkboxStates: TCheckboxStates;
+  totals: TPlaceTotals;
 }
 
 @Component({
@@ -28,6 +31,7 @@ export class SelectCountriesComponent implements OnInit {
   vm$: Observable<ViewModel>;
   private regionData$: Observable<IRegionData[]>;
   private checkboxStates$: Observable<TCheckboxStates>;
+  private totals$: Observable<TPlaceTotals>;
 
   constructor(
     private countryService: CountryService,
@@ -38,9 +42,10 @@ export class SelectCountriesComponent implements OnInit {
     this.initializeStreams();
     this.vm$ = combineLatest([
       this.regionData$,
-      this.checkboxStates$
+      this.checkboxStates$,
+      this.totals$
     ]).pipe(
-      map(([regionData, checkboxStates]) => ({regionData, checkboxStates}))
+      map(([regionData, checkboxStates, totals]) => ({regionData, checkboxStates, totals}))
     );
   }
 
@@ -65,6 +70,18 @@ export class SelectCountriesComponent implements OnInit {
     );
     this.checkboxStates$ = this.selectService.getSelection().pipe(
       map(selection => selection.countries)
+    );
+    this.totals$ = this.regionData$.pipe(
+      map(regionData => regionData.reduce((totalsDict, regionData) => {
+        const region = regionData.region;
+        const regionTotal = region.subregions.reduce((regionTotal, subregion) => {
+          const subregionTotal = subregion.countries.length;
+          totalsDict[subregion.name] = subregionTotal;
+          return regionTotal + subregionTotal;
+        }, 0);
+        totalsDict[region.name] = regionTotal;
+        return totalsDict;
+      }, {} as TPlaceTotals))
     );
   }
 }

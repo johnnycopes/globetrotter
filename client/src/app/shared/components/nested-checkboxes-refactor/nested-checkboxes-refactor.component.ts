@@ -61,7 +61,7 @@ export class NestedCheckboxesRefactorComponent<T> implements ControlValueAccesso
   }
 
   private _getAncestors(item: T): T[] {
-    const parentItem = this.treeProvider.getParent(item);
+    const parentItem = this.treeProvider.getParent && this.treeProvider.getParent(item);
     if (!!parentItem) {
       return [parentItem, ...this._getAncestors(parentItem)];
     }

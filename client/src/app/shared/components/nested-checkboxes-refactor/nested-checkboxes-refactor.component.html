@@ -1,33 +1,34 @@
 <app-tree
-	[item]="item"
-	[treeProvider]="treeProvider"
-	[itemTemplate]="checkbox"
-	>
+  [item]="item"
+  [treeProvider]="treeProvider"
+  [itemTemplate]="checkbox"
+  >
 </app-tree>
 
 <ng-template #checkbox
-	let-item
-	let-id="id"
-	let-isRoot="isRoot"
+  let-item
+  let-id="id"
+  let-children="children"
+  let-isRoot="isRoot"
   >
-	<app-checkbox class="checkbox"
-		[invertColors]="isRoot && invertedRootCheckbox"
-		[ngModel]="states[id]"
-		(ngModelChange)="onChange($event, item)"
+  <app-checkbox class="checkbox"
+    [invertColors]="isRoot && invertedRootCheckbox"
+    [ngModel]="states[id]"
+    (ngModelChange)="onChange($event, item)"
     >
-		<ng-container
-			[ngTemplateOutlet]="itemTemplate ? itemTemplate : defaultTemplate"
-			[ngTemplateOutletContext]="{
-				id: this.id,
-				isRoot: this.isRoot
-			}"
-			>
-		</ng-container>
-	</app-checkbox>
+    <ng-container
+      [ngTemplateOutlet]="itemTemplate ? itemTemplate : defaultTemplate"
+      [ngTemplateOutletContext]="{
+        id: this.id,
+        isRoot: this.isRoot
+      }"
+      >
+    </ng-container>
+  </app-checkbox>
 </ng-template>
 
 <ng-template #defaultTemplate
   let-id="id"
   >
-	{{id}}
+  {{id}}
 </ng-template>
