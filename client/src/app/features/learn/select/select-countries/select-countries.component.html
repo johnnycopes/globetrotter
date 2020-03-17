@@ -10,7 +10,7 @@
       <app-button class="top__select-all"
         buttonStyle="secondary"
         buttonText="Select all"
-        (click)="onSelectAll()"
+        (click)="onSelectAll(vm.totals)"
         >
       </app-button>
       <app-button class="top__clear-all"
@@ -47,7 +47,7 @@
         <span class="bold"
           *ngIf="isRoot; else child"
           >
-          🌍 {{id}} ({{vm.currents[id]}} / {{vm.totals[id]}})
+          {{id}} ({{vm.currents[id]}} / {{vm.totals[id]}})
         </span>
         <ng-template #child>
           <span>

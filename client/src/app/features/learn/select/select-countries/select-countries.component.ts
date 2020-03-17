@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, combineLatest, BehaviorSubject } from 'rxjs';
-import { map, first, switchMap } from 'rxjs/operators';
+import { Observable, combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 import { CountryService } from 'src/app/core/services/country/country.service';
 import { SelectService } from 'src/app/core/services/select/select.service';
-import { IRegion } from 'src/app/shared/model/region.interface';
 import { PlacesTreeProviderRefactor } from 'src/app/shared/model/places-tree-provider-refactor.class';
+import { IRegion } from 'src/app/shared/model/region.interface';
 import { TCheckboxStates } from 'src/app/shared/components/nested-checkboxes-refactor/nested-checkboxes-refactor.component';
 
 type TPlaceCounts = _.Dictionary<number>;
@@ -59,9 +59,12 @@ export class SelectCountriesComponent implements OnInit {
     this.selectService.updateCountries(state);
   }
 
-  onSelectAll(): void {
-    // TODO: make this work
-    this.selectService.updateCountries({});
+  onSelectAll(totals: TPlaceCounts): void {
+    const newCheckboxStates = _(totals)
+      .mapValues(() => "checked")
+      .omitBy((_, key) => key === this.overallTotalKey)
+      .value() as TCheckboxStates;
+    this.selectService.updateCountries(newCheckboxStates);
   }
 
   onClearAll(): void {
