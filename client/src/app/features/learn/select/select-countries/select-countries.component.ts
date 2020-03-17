@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, combineLatest } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, combineLatest, BehaviorSubject } from 'rxjs';
+import { map, first, switchMap } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 import { CountryService } from 'src/app/core/services/country/country.service';
@@ -9,7 +9,7 @@ import { IRegion } from 'src/app/shared/model/region.interface';
 import { PlacesTreeProviderRefactor } from 'src/app/shared/model/places-tree-provider-refactor.class';
 import { TCheckboxStates } from 'src/app/shared/components/nested-checkboxes-refactor/nested-checkboxes-refactor.component';
 
-type TPlaceTotals = _.Dictionary<number>;
+type TPlaceCounts = _.Dictionary<number>;
 
 interface IRegionData {
   region: IRegion;
@@ -19,7 +19,8 @@ interface IRegionData {
 interface ViewModel {
   regionData: IRegionData[];
   checkboxStates: TCheckboxStates;
-  totals: TPlaceTotals;
+  totals: TPlaceCounts;
+  currents: TPlaceCounts;
 }
 
 @Component({
@@ -32,7 +33,8 @@ export class SelectCountriesComponent implements OnInit {
   readonly overallTotalKey: string = '__overall';
   private regionData$: Observable<IRegionData[]>;
   private checkboxStates$: Observable<TCheckboxStates>;
-  private totals$: Observable<TPlaceTotals>;
+  private totals$: Observable<TPlaceCounts>;
+  private currents$: Observable<TPlaceCounts>;
 
   constructor(
     private countryService: CountryService,
@@ -44,9 +46,12 @@ export class SelectCountriesComponent implements OnInit {
     this.vm$ = combineLatest([
       this.regionData$,
       this.checkboxStates$,
-      this.totals$
+      this.totals$,
+      this.currents$
     ]).pipe(
-      map(([regionData, checkboxStates, totals]) => ({regionData, checkboxStates, totals}))
+      map(([regionData, checkboxStates, totals, currents]) =>
+        ({regionData, checkboxStates, totals, currents})
+      )
     );
   }
 
@@ -55,40 +60,13 @@ export class SelectCountriesComponent implements OnInit {
   }
 
   onSelectAll(): void {
+    // TODO: make this work
     this.selectService.updateCountries({});
   }
 
   onClearAll(): void {
     this.selectService.updateCountries({});
   }
-
-  // private makeItemChecked(item: T): void {
-  //   const id = this.treeProvider.getItemID(item);
-  //   this.checkboxStates[id] = 'checked';
-
-  //   const children = this.treeProvider.getChildItems(item);
-  //   if (!children.length) {
-  //     return;
-  //   }
-
-  //   _.forEach(children, child => {
-  //     this.makeItemChecked(child);
-  //   });
-  // }
-
-  // private makeItemChecked(item: T): void {
-  //   const id = this.treeProvider.getItemID(item);
-  //   this.checkboxStates[id] = 'checked';
-
-  //   const children = this.treeProvider.getChildItems(item);
-  //   if (!children.length) {
-  //     return;
-  //   }
-
-  //   _.forEach(children, child => {
-  //     this.makeItemChecked(child);
-  //   });
-  // }
 
   private initializeStreams(): void {
     this.regionData$ = this.countryService.getFormattedData().pipe(
@@ -111,7 +89,36 @@ export class SelectCountriesComponent implements OnInit {
         totalsDict[region.name] = regionTotal;
         totalsDict[this.overallTotalKey] += regionTotal;
         return totalsDict;
-      }, { [this.overallTotalKey]: 0 } as TPlaceTotals))
+      }, { [this.overallTotalKey]: 0 } as TPlaceCounts))
     );
+    this.currents$ = combineLatest([
+      this.regionData$,
+      this.checkboxStates$,
+      this.totals$,
+    ]).pipe(
+      map(([regionData, checkboxStates, totals]) => {
+        return _.reduce(regionData, (currentsDict, regionDatum) => {
+          const region = regionDatum.region;
+          const regionState = checkboxStates[region.name];
+          let current = 0;
+          if (regionState === "checked" || regionState === "unchecked") {
+            current = this.getCurrentValueOfId(region.name, checkboxStates, totals);
+          } else if (regionState === "indeterminate") {
+            const subregionsTotal = region.subregions.reduce((total, subregion) => {
+              return total + this.getCurrentValueOfId(subregion.name, checkboxStates, totals);
+            }, 0);
+            current = subregionsTotal;
+          }
+          currentsDict[region.name] = current;
+          currentsDict[this.overallTotalKey] += current;
+          return currentsDict;
+        }, { [this.overallTotalKey]: 0 } as TPlaceCounts);
+      })
+    )
+  }
+
+  private getCurrentValueOfId(id: string, checkboxStates: TCheckboxStates, totals: TPlaceCounts): number {
+    const state = checkboxStates[id];
+    return state === "checked" ? totals[id] : 0;
   }
 }
