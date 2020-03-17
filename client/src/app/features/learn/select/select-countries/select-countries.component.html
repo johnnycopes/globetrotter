@@ -26,8 +26,9 @@
       *ngFor="let regionDatum of vm.regionData"
       >
       <app-icon class="region__image"
-        [icon]="regionDatum.region.name"
-        [highlighted]="false"
+        *ngIf="regionDatum.region.name as regionName"
+        [icon]="regionName"
+        [highlighted]="!!vm.currents[regionName]"
         >
       </app-icon>
       <app-nested-checkboxes-refactor class="region__checkboxes"
