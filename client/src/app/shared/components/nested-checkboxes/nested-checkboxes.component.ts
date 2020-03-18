@@ -35,7 +35,6 @@ export class NestedCheckboxesComponent<T> implements ControlValueAccessor, OnIni
     }
     this.id = this.treeProvider.getId(this.item);
     this.children = this.treeProvider.getChildren(this.item);
-    console.log(this.children);
   }
 
   public writeValue(value: TCheckboxStates): void {

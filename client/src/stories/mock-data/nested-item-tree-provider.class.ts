@@ -22,7 +22,6 @@ export class NestedItemTreeProvider implements ITreeProvider<IDefaultTreeItem> {
         }
       }
     }
-    console.log(this.itemsKeyedById);
   }
 
   getId(item: IDefaultTreeItem): string {
