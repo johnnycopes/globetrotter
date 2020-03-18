@@ -27,7 +27,7 @@ const actions = {
 
 storiesOf('Shared/Icon', module)
   .addDecorator(withKnobs)
-  .add('Icon', () => {
+  .add('alone', () => {
     return {
       component: IconComponent,
       props: {
@@ -37,7 +37,7 @@ storiesOf('Shared/Icon', module)
       }
     }
   })
-  .add('Icon highlighted', () => {
+  .add('highlighted', () => {
     return {
       component: IconComponent,
       props: {

@@ -7,7 +7,6 @@ import {
 } from '@storybook/addon-knobs';
 
 import { CheckboxComponent, TCheckboxState } from 'src/app/shared/components/checkbox/checkbox.component';
-import { CounterComponent } from 'src/app/shared/components/counter/counter.component';
 
 const states: TCheckboxState[] = ['checked', 'unchecked', 'indeterminate'];
 const actions = {
@@ -18,7 +17,7 @@ storiesOf('Shared/Checkbox', module)
   .addDecorator(withKnobs)
   .addDecorator(
     moduleMetadata({
-      declarations: [CheckboxComponent, CounterComponent]
+      declarations: [CheckboxComponent]
     }),
   )
   .add('alone', () => {
@@ -51,29 +50,6 @@ storiesOf('Shared/Checkbox', module)
       `,
       props: {
         invertColors: boolean('invertColors', true),
-        onChange: actions.onChange
-      }
-    };
-  })
-  .add('with counter', () => {
-    return {
-      template: `
-        <app-checkbox
-          [invertColors]="invertColors"
-          ngModel="checked"
-          (ngModelChange)="onChange($event)"
-          >
-          <app-counter
-            [total]="17"
-            text="Western Africa"
-            [textFirst]="true"
-            [wrapNumbers]="true"
-            >
-          </app-counter>
-        </app-checkbox>
-      `,
-      props: {
-        invertColors: boolean('invertColors', false),
         onChange: actions.onChange
       }
     };
