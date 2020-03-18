@@ -1,37 +1,34 @@
-<div class="nested-checkboxes">
-  <app-icon class="nested-checkboxes__image"
-    *ngIf="showImage"
-    [icon]="iconName"
-    [highlighted]="imageActive"
+<app-tree
+  [item]="item"
+  [treeProvider]="treeProvider"
+  [itemTemplate]="checkbox"
+  >
+</app-tree>
+
+<ng-template #checkbox
+  let-item
+  let-id="id"
+  let-children="children"
+  let-isRoot="isRoot"
+  >
+  <app-checkbox class="checkbox"
+    [invertColors]="isRoot && invertedRootCheckbox"
+    [ngModel]="states[id]"
+    (ngModelChange)="onChange($event, item)"
     >
-  </app-icon>
-  <div class="nested-checkboxes__selection">
-    <app-checkbox class="nested-checkboxes__checkbox"
-      [bold]="isRoot"
-      [invertColors]="isRoot"
-      [ngModel]="checkboxStates && checkboxStates[itemID]"
-      (ngModelChange)="updateSelectedCheckboxState($event)"
+    <ng-container
+      [ngTemplateOutlet]="itemTemplate ? itemTemplate : defaultTemplate"
+      [ngTemplateOutletContext]="{
+        id: this.id,
+        isRoot: this.isRoot
+      }"
       >
-      <app-counter
-        *ngIf="showCounters"
-        [current]="current"
-        [total]="total"
-        [text]="itemDisplayName"
-        [boldText]="isRoot"
-        [boldNumbers]="isRoot"
-        [wrapNumbers]="true"
-        [textFirst]="true"
-        >
-      </app-counter>
-    </app-checkbox>
-    <app-nested-checkboxes class="nested-checkboxes__child"
-      *ngFor="let childItem of childItems"
-      [item]="childItem"
-      [isRoot]="false"
-      [showCounters]="showCounters"
-      [treeProvider]="treeProvider"
-      [ngModel]="checkboxStates"
-      (ngModelChange)="updateAllCheckboxStates($event)"
-    ></app-nested-checkboxes>
-  </div>
-</div>
+    </ng-container>
+  </app-checkbox>
+</ng-template>
+
+<ng-template #defaultTemplate
+  let-id="id"
+  >
+  {{id}}
+</ng-template>

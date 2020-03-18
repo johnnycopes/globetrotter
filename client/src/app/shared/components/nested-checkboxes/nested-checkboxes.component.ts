@@ -1,153 +1,110 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import * as _ from 'lodash';
+import { Component, Input, OnInit, TemplateRef, forwardRef, ChangeDetectionStrategy, ChangeDetectorRef } from "@angular/core";
+import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
 
-import { TCheckboxState } from '../checkbox/checkbox.component';
-
-export interface ITreeProvider<T> {
-  getChildItems(node: T): T[];
-  getItemDisplayName(node: T): string;
-  getItemID(node: T): string;
-  getItemTotal?(node: T): number;
-  getItemIcon?(node: T): string;
-}
+import { ITreeProvider } from "../tree/tree.component";
+import { TCheckboxState } from "../checkbox/checkbox.component";
 
 export type TCheckboxStates = _.Dictionary<TCheckboxState>;
 
 @Component({
-  selector: 'app-nested-checkboxes',
-  templateUrl: './nested-checkboxes.component.html',
-  styleUrls: ['./nested-checkboxes.component.scss'],
+  selector: "app-nested-checkboxes",
+  templateUrl: "./nested-checkboxes.component.html",
+  styleUrls: ["./nested-checkboxes.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [{
     provide: NG_VALUE_ACCESSOR,
-    useExisting: NestedCheckboxesComponent,
+    useExisting: forwardRef(() => NestedCheckboxesComponent),
     multi: true
   }]
 })
-export class NestedCheckboxesComponent<T> implements OnInit, ControlValueAccessor {
+export class NestedCheckboxesComponent<T> implements ControlValueAccessor, OnInit {
   @Input() item: T;
   @Input() treeProvider: ITreeProvider<T>;
-  @Input() isRoot: boolean = true;
-  @Input() showCounters?: boolean;
-  @Input() showImage?: boolean;
-  itemID: string;
-  itemDisplayName: string;
-  childItems: T[];
-  total: number;
-  iconName: string;
-  checkboxStates: TCheckboxStates = {};
-  private onChangeFn: (value: TCheckboxStates) => void;
-
-  get current(): number | undefined {
-    if (this.showCounters && this.checkboxStates && this.childItems.length) {
-      return this.calculcateCurrent(this.item);
-    }
-  }
-
-  get imageActive(): boolean | undefined {
-    if (this.iconName && this.checkboxStates) {
-      const currentState = this.checkboxStates[this.itemID];
-      return currentState === 'checked' || currentState === 'indeterminate';
-    }
-  }
+  @Input() itemTemplate: TemplateRef<any>;
+  @Input() invertedRootCheckbox: boolean = true;
+  public id: string;
+  public children: T[];
+  public states: TCheckboxStates = {};
+  private _onChangeFn: (value: TCheckboxStates) => void = () => { };
 
   constructor(private changeDetectorRef: ChangeDetectorRef) { }
 
-  ngOnInit(): void {
-    this.itemID = this.treeProvider.getItemID(this.item);
-    this.itemDisplayName = this.treeProvider.getItemDisplayName(this.item);
-    this.childItems = this.treeProvider.getChildItems(this.item);
-    if (this.showCounters && this.treeProvider.getItemTotal) {
-      this.total = this.treeProvider.getItemTotal(this.item);
+  public ngOnInit(): void {
+    if (!this.item) {
+      throw new Error("An item must be passed to the nested-checkboxes component");
     }
-    if (this.showImage && this.treeProvider.getItemIcon) {
-      this.iconName = this.treeProvider.getItemIcon(this.item);
-    }
+    this.id = this.treeProvider.getId(this.item);
+    this.children = this.treeProvider.getChildren(this.item);
   }
 
-  writeValue(value: TCheckboxStates): void {
-    this.checkboxStates = value;
+  public writeValue(value: TCheckboxStates): void {
+    if (value) {
+      this.states = value;
+    }
     this.changeDetectorRef.markForCheck();
   }
 
-  registerOnChange(fn: (value: TCheckboxStates) => void): void {
-    this.onChangeFn = fn;
+  public registerOnChange(fn: (value: TCheckboxStates) => void): void {
+    this._onChangeFn = fn;
   }
 
-  registerOnTouched(fn: (value: TCheckboxStates) => void): void { }
+  public registerOnTouched(_fn: (value: TCheckboxStates) => void): void { }
 
-  updateSelectedCheckboxState(checkboxState: TCheckboxState): void {
-    const newCheckboxStatesDict = {...this.checkboxStates};
-    this.checkboxStates = this.setCheckboxStates(this.item, checkboxState, newCheckboxStatesDict);
-    this.onChangeFn(this.checkboxStates);
+  public onChange(state: TCheckboxState, item: T): void {
+    const states = { ...this.states };
+    const ancestors = this._getAncestors(item);
+    this._updateItemAndDescendantStates(state, item, states);
+    this._updateAncestorStates(ancestors, states);
+
+    this.states = states;
+    this._onChangeFn(this.states);
   }
 
-  updateAllCheckboxStates(newStates: TCheckboxStates): void {
-    this.checkboxStates = newStates;
+  private _getAncestors(item: T): T[] {
+    const parentItem = this.treeProvider.getParent && this.treeProvider.getParent(item);
+    if (!!parentItem) {
+      return [parentItem, ...this._getAncestors(parentItem)];
+    }
+    return [];
+  }
 
-    const childCheckboxStateCounts = _.reduce(this.childItems, (accum, childItem) => {
-      const childID = this.treeProvider.getItemID(childItem);
-      const childCheckboxState = this.checkboxStates[childID] || 'unchecked'; // set to "unchecked" if undefined
-      return {
-        ...accum,
-        [childCheckboxState]: accum[childCheckboxState] + 1
+  private _updateItemAndDescendantStates(state: TCheckboxState, item: T, states: TCheckboxStates): TCheckboxStates {
+    const id = this.treeProvider.getId(item);
+    const children = this.treeProvider.getChildren(item);
+    states[id] = state;
+    if (children.length) {
+      children.forEach(child =>
+        this._updateItemAndDescendantStates(state, child, states)
+      );
+    }
+    return states;
+  }
+
+  private _updateAncestorStates(parentItems: T[], states: TCheckboxStates): TCheckboxStates {
+    parentItems.forEach(parentItem => {
+      const parentItemId = this.treeProvider.getId(parentItem);
+      const parentChildItems = this.treeProvider.getChildren(parentItem);
+      const parentChildItemsStateCounts = parentChildItems.reduce((accum, childItem) => {
+        const childItemId = this.treeProvider.getId(childItem);
+        const childItemState = states[childItemId] || "unchecked"; // set to "unchecked" if not present in states dict
+        return {
+          ...accum,
+          [childItemState]: accum[childItemState] + 1
+        };
+      }, {
+        checked: 0,
+        indeterminate: 0,
+        unchecked: 0
+      });
+
+      if (parentChildItemsStateCounts.checked === parentChildItems.length) {
+        states[parentItemId] = "checked";
+      } else if (parentChildItemsStateCounts.unchecked === parentChildItems.length) {
+        states[parentItemId] = "unchecked";
+      } else {
+        states[parentItemId] = "indeterminate";
       }
-    }, {
-      checked: 0,
-      indeterminate: 0,
-      unchecked: 0
     });
-
-    const id = this.treeProvider.getItemID(this.item);
-    if (childCheckboxStateCounts.checked === this.childItems.length) {
-      this.checkboxStates[id] = 'checked';
-    }
-    else if (childCheckboxStateCounts.unchecked === this.childItems.length) {
-      this.checkboxStates[id] = 'unchecked';
-    }
-    else {
-      this.checkboxStates[id] = 'indeterminate';
-    }
-
-    this.onChangeFn(this.checkboxStates);
+    return states;
   }
-
-  private setCheckboxStates(item: T, checkboxState: TCheckboxState, checkboxStates: TCheckboxStates): TCheckboxStates {
-    const itemID = this.treeProvider.getItemID(item);
-    checkboxStates[itemID] = checkboxState;
-
-    const childItems = this.treeProvider.getChildItems(item);
-    if (childItems.length) {
-      for (let child of childItems) {
-        this.setCheckboxStates(child, checkboxState, checkboxStates);
-      }
-    }
-
-    return checkboxStates;
-  }
-
-  private calculcateCurrent(item: T): number {
-    const checkboxState = this.checkboxStates[this.treeProvider.getItemID(item)];
-    if (checkboxState === 'checked') {
-      return this.total;
-    }
-    else {
-      const childItems = this.treeProvider.getChildItems(item);
-      return _.reduce(childItems, (accum, childItem) => {
-        const childCheckboxState = this.checkboxStates[this.treeProvider.getItemID(childItem)];
-        if (childCheckboxState === 'checked') {
-          let childTotal = 0;
-          if (childItem && this.treeProvider.getItemTotal) {
-            childTotal = this.treeProvider.getItemTotal(childItem);
-          }
-          return accum + childTotal;
-        }
-        else {
-          return accum + this.calculcateCurrent(childItem);
-        }
-      }, 0);
-    }
-  }
-
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core'
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as _ from 'lodash';
@@ -10,7 +10,8 @@ import { TQuizQuantity } from 'src/app/shared/model/quiz-quantity.type';
 @Component({
   selector: 'app-select-quantity',
   templateUrl: './select-quantity.component.html',
-  styleUrls: ['./select-quantity.component.scss']
+  styleUrls: ['./select-quantity.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SelectQuantityComponent implements OnInit {
   quantities: RadioButtonsOption<TQuizQuantity>[];

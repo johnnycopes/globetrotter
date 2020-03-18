@@ -31,14 +31,14 @@
         [highlighted]="!!vm.currents[regionName]"
         >
       </app-icon>
-      <app-nested-checkboxes-refactor class="region__checkboxes"
+      <app-nested-checkboxes class="region__checkboxes"
         [item]="regionDatum.region"
         [treeProvider]="regionDatum.treeProvider"
         [itemTemplate]="label"
         [ngModel]="vm.checkboxStates"
         (ngModelChange)="onCountriesChange($event)"
         >
-      </app-nested-checkboxes-refactor>
+      </app-nested-checkboxes>
 
       <ng-template
         #label

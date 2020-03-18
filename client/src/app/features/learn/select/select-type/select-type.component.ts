@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as _ from 'lodash';
@@ -10,7 +10,8 @@ import { RadioButtonsOption } from 'src/app/shared/components/radio-buttons/radi
 @Component({
   selector: 'app-select-type',
   templateUrl: './select-type.component.html',
-  styleUrls: ['./select-type.component.scss']
+  styleUrls: ['./select-type.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SelectTypeComponent implements OnInit {
   types: RadioButtonsOption<EQuizType>[];
