@@ -3,6 +3,7 @@
 .top {
   display: flex;
   justify-content: space-between;
+  margin-bottom: map-get($spacing, 32);
 }
 
 .name {
@@ -18,16 +19,12 @@
 
 .flag {
   height: map-get($spacing, 128);
-  margin-bottom: map-get($spacing, 32);
 }
 
 .stats {
   display: grid;
   grid-template-rows: repeat(2, map-get($spacing, 128));
-  grid-template-columns: repeat(3, 33%);
-  justify-items: center;
-  align-items: center;
-  margin-bottom: map-get($spacing, 32);
+  grid-template-columns: repeat(4, 25%);
 }
 
 .summary {

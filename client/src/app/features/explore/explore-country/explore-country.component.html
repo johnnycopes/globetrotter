@@ -11,28 +11,36 @@
     [src]="country.flag"
   />
 </div>
-<div class="stats">
-  <div class="region">
-    {{country.region}}
-  </div>
-  <div class="demonym">
+<app-info-table class="stats">
+  <app-info-table-cell category="subregion">
+    {{country.subregion}}
+  </app-info-table-cell>
+  <app-info-table-cell category="demonym">
     {{country.demonym}}
-  </div>
-  <div class="languages">
-    <span *ngFor="let language of country.languages">
-      {{language.name}}
+  </app-info-table-cell>
+  <app-info-table-cell category="language(s)">
+    <span *ngFor="let language of country.languages; last as last">
+      {{language.name}}{{!last ? ',' : ''}}
     </span>
-  </div>
-  <div class="population">
+  </app-info-table-cell>
+  <app-info-table-cell category="currency">
+    <span *ngFor="let currency of country.currencies; last as last">
+      {{currency.code}}{{!last ? ',' : ''}}
+    </span>
+  </app-info-table-cell>
+  <app-info-table-cell category="population">
     {{country.population | number}}
-  </div>
-  <div class="size">
-    {{country.area | number}}
-  </div>
-  <div class="domain">
+  </app-info-table-cell>
+  <app-info-table-cell category="size">
+    {{country.area | number}}km<sup>2</sup>
+  </app-info-table-cell>
+  <app-info-table-cell category="numeric code">
+    +{{country.numericCode}}
+  </app-info-table-cell>
+  <app-info-table-cell category="top-level domain">
     {{country.topLevelDomain}}
-  </div>
-</div>
+  </app-info-table-cell>
+</app-info-table>
 <p class="summary">
   {{summary}}
 </p>

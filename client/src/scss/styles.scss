@@ -25,6 +25,12 @@ body {
   }
 }
 
+sup {
+  position: relative;
+  bottom: 10px;
+	font-size: 20px;
+}
+
 .bold {
   font-weight: map-get($font-weight, bold);
 }
