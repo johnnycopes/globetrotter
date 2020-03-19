@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ExploreComponent } from './explore.component';
+import { ExploreCountryComponent } from './explore-country/explore-country.component';
 
 const exploreRoutes: Routes = [
   { path: '', component: ExploreComponent }
@@ -11,7 +12,8 @@ const exploreRoutes: Routes = [
 
 @NgModule({
   declarations: [
-    ExploreComponent
+    ExploreComponent,
+    ExploreCountryComponent
   ],
   imports: [
     SharedModule,

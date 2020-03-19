@@ -39,9 +39,7 @@ export class PlacesTreeProvider implements ITreeProvider<TPlace> {
     if (isRegion(place)) {
       return place.subregions;
     }
-    else {
-      return [];
-    }
+    return [];
   }
 }
 

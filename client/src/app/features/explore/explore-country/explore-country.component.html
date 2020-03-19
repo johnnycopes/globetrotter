@@ -1,0 +1,38 @@
+<div class="top">
+  <div class="top__details">
+    <h1 class="name">
+      {{country.name}}
+    </h1>
+    <h2 class="capital">
+      {{country.capital}}
+    </h2>
+  </div>
+  <img class="flag"
+    [src]="country.flag"
+  />
+</div>
+<div class="stats">
+  <div class="region">
+    {{country.region}}
+  </div>
+  <div class="demonym">
+    {{country.demonym}}
+  </div>
+  <div class="languages">
+    <span *ngFor="let language of country.languages">
+      {{language.name}}
+    </span>
+  </div>
+  <div class="population">
+    {{country.population | number}}
+  </div>
+  <div class="size">
+    {{country.area | number}}
+  </div>
+  <div class="domain">
+    {{country.topLevelDomain}}
+  </div>
+</div>
+<p class="summary">
+  {{summary}}
+</p>

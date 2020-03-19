@@ -14,7 +14,8 @@
 		*ngFor="let childItem of children"
 		[item]="childItem"
 		[treeProvider]="treeProvider"
-		[itemTemplate]="itemTemplate"
+    [itemTemplate]="itemTemplate"
+    [indentChildItems]="indentChildItems"
 		>
 	</app-tree>
 </ng-container>
