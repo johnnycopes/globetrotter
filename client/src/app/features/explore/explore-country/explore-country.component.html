@@ -11,19 +11,19 @@
     [src]="country.flag"
   />
 </div>
-<app-info-table class="stats">
+<app-info-table>
   <app-info-table-cell category="subregion">
     {{country.subregion}}
   </app-info-table-cell>
   <app-info-table-cell category="demonym">
     {{country.demonym}}
   </app-info-table-cell>
-  <app-info-table-cell category="language(s)">
+  <app-info-table-cell [category]="country.languages.length > 1 ? 'languages' : 'language'">
     <span *ngFor="let language of country.languages; last as last">
       {{language.name}}{{!last ? ',' : ''}}
     </span>
   </app-info-table-cell>
-  <app-info-table-cell category="currency">
+  <app-info-table-cell [category]="country.currencies.length > 1 ? 'currencies' : 'currency'">
     <span *ngFor="let currency of country.currencies; last as last">
       {{currency.code}}{{!last ? ',' : ''}}
     </span>

@@ -13,18 +13,22 @@
 }
 
 .capital {
-  font-size: map-get($font-size, 48);
+  font-size: map-get($font-size, 36);
   margin-bottom: map-get($spacing, 32);
 }
 
 .flag {
   height: map-get($spacing, 128);
+  margin-left: map-get($spacing, 48);
 }
 
-.stats {
-  display: grid;
+app-info-table {
   grid-template-rows: repeat(2, map-get($spacing, 128));
   grid-template-columns: repeat(4, 25%);
+}
+
+app-info-table-cell {
+  margin-right: map-get($spacing, 16);
 }
 
 .summary {
