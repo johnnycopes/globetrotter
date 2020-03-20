@@ -1,0 +1,46 @@
+<div class="top">
+  <div class="top__details">
+    <h1 class="name">
+      {{country.name}}
+    </h1>
+    <h2 class="capital">
+      {{country.capital}}
+    </h2>
+  </div>
+  <img class="flag"
+    [src]="country.flag"
+  />
+</div>
+<app-info-table>
+  <app-info-table-cell category="subregion">
+    {{country.subregion}}
+  </app-info-table-cell>
+  <app-info-table-cell category="demonym">
+    {{country.demonym}}
+  </app-info-table-cell>
+  <app-info-table-cell [category]="country.languages.length > 1 ? 'languages' : 'language'">
+    <span *ngFor="let language of country.languages; last as last">
+      {{language.name}}{{!last ? ',' : ''}}
+    </span>
+  </app-info-table-cell>
+  <app-info-table-cell [category]="country.currencies.length > 1 ? 'currencies' : 'currency'">
+    <span *ngFor="let currency of country.currencies; last as last">
+      {{currency.code}}{{!last ? ',' : ''}}
+    </span>
+  </app-info-table-cell>
+  <app-info-table-cell category="population">
+    {{country.population | number}}
+  </app-info-table-cell>
+  <app-info-table-cell category="size">
+    {{country.area | number}}km<sup>2</sup>
+  </app-info-table-cell>
+  <app-info-table-cell category="numeric code">
+    +{{country.numericCode}}
+  </app-info-table-cell>
+  <app-info-table-cell category="top-level domain">
+    {{country.topLevelDomain}}
+  </app-info-table-cell>
+</app-info-table>
+<p class="summary">
+  {{summary}}
+</p>

@@ -34,7 +34,6 @@ export class ExploreComponent implements OnInit {
   private selectedCountry$: Observable<ICountry>;
   private selectedCountryChange = new ReplaySubject<ICountry>(1);
   private summary$: Observable<string>;
-  private summaryChange$ = new ReplaySubject<string>(1);
 
   constructor(private countryService: CountryService) { }
 
@@ -56,9 +55,6 @@ export class ExploreComponent implements OnInit {
 
   onSelect(selectedCountry: ICountry): void {
     this.selectedCountryChange.next(selectedCountry);
-    this.countryService.getSummary(selectedCountry.name).pipe(
-      map(summary => this.summaryChange$.next(summary))
-    ).subscribe();
   }
 
   onSearch(searchTerm: string) {
@@ -69,12 +65,13 @@ export class ExploreComponent implements OnInit {
     this.selectedCountry$ = this.selectedCountryChange.asObservable().pipe(
       distinctUntilChanged()
     );
+    this.summary$ = this.selectedCountryChange.asObservable().pipe(
+      switchMap(country => this.countryService.getSummary(country.name)),
+      distinctUntilChanged()
+    );
     this.searchTerm$ = this.searchTermChange.asObservable().pipe(
       startWith(''),
       debounceTime(100),
-      distinctUntilChanged()
-    );
-    this.summary$ = this.summaryChange$.asObservable().pipe(
       distinctUntilChanged()
     );
     this.countries$ = this.countryService.getCountries().pipe(

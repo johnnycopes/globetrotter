@@ -40,7 +40,7 @@ $breakpoints: (
 }
 
 @mixin small-caps {
-  font-size: map-get($font-size, 20);
+  font-size: map-get($font-size, 18);
   text-transform: uppercase;
   letter-spacing: 1px;
   color: map-get($color, medium);

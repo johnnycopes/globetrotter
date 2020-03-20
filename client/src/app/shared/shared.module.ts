@@ -10,6 +10,8 @@ import { FixedSlideablePanelComponent } from './components/fixed-slideable-panel
 import { FlipCardComponent } from './components/flip-card/flip-card.component';
 import { FormComponent } from './components/form/form.component';
 import { IconComponent } from './components/icon/icon.component';
+import { InfoTableComponent } from './components/info-table/info-table.component';
+import { InfoTableCellComponent } from './components/info-table/info-table-cell/info-table-cell.component';
 import { InputComponent } from './components/input/input.component';
 import { LinkComponent } from './components/link/link.component';
 import { ListDetailsComponent } from './components/list-details/list-details.component';
@@ -36,6 +38,8 @@ import { TreeComponent } from './components/tree/tree.component';
     FlipCardComponent,
     FormComponent,
     IconComponent,
+    InfoTableComponent,
+    InfoTableCellComponent,
     InputComponent,
     LoaderComponent,
     LinkComponent,
@@ -56,6 +60,8 @@ import { TreeComponent } from './components/tree/tree.component';
     FlipCardComponent,
     FormComponent,
     IconComponent,
+    InfoTableComponent,
+    InfoTableCellComponent,
     InputComponent,
     LoaderComponent,
     LinkComponent,

@@ -6,6 +6,7 @@ import { map, shareReplay, catchError } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 import { COUNTRY_STATUSES } from 'src/app/shared/model/country-statuses.data';
+import { WIKIPEDIA_COUNTRIES } from 'src/app/shared/model/wikipedia-country-names.data';
 import { Countries } from 'src/app/shared/model/countries.class';
 import { ICountry } from 'src/app/shared/model/country.interface';
 import { IRegion } from 'src/app/shared/model/region.interface';
@@ -66,8 +67,10 @@ export class CountryService implements Resolve<Observable<ICountry[]>> {
   }
 
   getSummary(countryName: string): Observable<string> {
-    return this.http.get<ISummary>(this.wikipediaApiUrl + countryName).pipe(
-      map(result => result.extract)
+    const searchTerm = WIKIPEDIA_COUNTRIES[countryName] || countryName;
+    return this.http.get<ISummary>(this.wikipediaApiUrl + searchTerm).pipe(
+      map(result => result.extract),
+      catchError(() => of("A summary of this country could not be found."))
     );
   }
 

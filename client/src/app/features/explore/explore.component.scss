@@ -4,23 +4,3 @@
   display: flex;
   justify-content: space-between;
 }
-
-.name {
-  font-size: map-get($font-size, 60);
-  margin-bottom: map-get($spacing, 24);
-}
-
-.capital {
-  font-size: map-get($font-size, 36);
-  margin-bottom: map-get($spacing, 32);
-}
-
-.flag {
-  height: map-get($spacing, 256);
-  margin-bottom: map-get($spacing, 32);
-}
-
-.summary {
-  line-height: map-get($line-height, normal);
-  margin-bottom: map-get($spacing, 32);
-}
