@@ -21,7 +21,6 @@
       "dom"
     ],
     "paths": {
-      "@app/*": ["src/app/*"],
 			"@env/*": ["src/environments/*"],
 			"@models/*": ["src/app/models/*"],
 			"@services/*": ["src/app/services/*"],

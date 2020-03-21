@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { RouteNames } from '@models/route-names.enum';
+import { ERoute } from '@app/models/route.enum';
 import { SharedModule } from '@shared/shared.module';
 import { AccountComponent } from './account.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -13,9 +13,9 @@ import { RegisterComponent } from './auth/register/register.component';
 
 const accountRoutes: Routes = [
   { path: '', component: AccountComponent, children: [
-    { path: RouteNames.auth, component: AuthComponent },
-    { path: RouteNames.profile, component: ProfileComponent },
-    { path: '', redirectTo: RouteNames.profile, pathMatch: 'full' }
+    { path: ERoute.auth, component: AuthComponent },
+    { path: ERoute.profile, component: ProfileComponent },
+    { path: '', redirectTo: ERoute.profile, pathMatch: 'full' }
   ]}
 ];
 

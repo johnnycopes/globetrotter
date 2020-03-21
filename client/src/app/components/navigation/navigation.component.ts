@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { RouteNames } from '@models/route-names.enum';
+import { ERoute } from '@models/route.enum';
 
 interface NavigationLink {
   name: string;
@@ -26,30 +26,30 @@ export class NavigationComponent implements OnInit {
     this.home = {
       name: 'Home',
       icon: 'Globetrotter',
-      route: RouteNames.home,
+      route: ERoute.home,
       exactPathMatch: true
     };
     this.links = [
       {
         name: 'Explore',
-        route: RouteNames.explore,
+        route: ERoute.explore,
         exactPathMatch: true
       },
       {
         name: 'Prepare',
-        route: RouteNames.prepare,
+        route: ERoute.prepare,
         exactPathMatch: true
       },
       {
         name: 'Learn',
-        route: RouteNames.learn,
+        route: ERoute.learn,
         exactPathMatch: false
       }
     ];
     this.account = {
       name: 'Account',
       icon: 'User',
-      route: RouteNames.account,
+      route: ERoute.account,
       exactPathMatch: false
     };
   }

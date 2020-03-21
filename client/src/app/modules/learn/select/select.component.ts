@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import * as _ from 'lodash';
 
-import { RouteNames } from '@models/route-names.enum';
+import { ERoute } from '@models/route.enum';
 import { Selection } from '@models/selection.class';
 import { EAnimationDuration } from '@models/animation-duration.enum';
 import { SelectService } from '@services/select/select.service';
@@ -50,12 +50,12 @@ export class SelectComponent implements OnInit, OnDestroy {
     await this.utilityService.wait(EAnimationDuration.fixedSlideablePanel);
     this.queryParams = this.selectService.mapSelectionToQueryParams(this.selection);
     this.router.navigate(
-      [`${RouteNames.learn}/${RouteNames.quiz}`],
+      [`${ERoute.learn}/${ERoute.quiz}`],
       { queryParams: this.queryParams }
     );
   }
 
   onQuit(): void {
-    this.router.navigate([RouteNames.home]);
+    this.router.navigate([ERoute.home]);
   }
 }

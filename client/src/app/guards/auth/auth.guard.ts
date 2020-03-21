@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 
 import { AuthService } from '@services/auth/auth.service';
-import { RouteNames } from '@models/route-names.enum';
+import { ERoute } from '@models/route.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +16,8 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     private authService: AuthService
   ) { }
 
-  private authRoute = `${RouteNames.account}/${RouteNames.auth}`;
-  private profileRoute = `${RouteNames.account}/${RouteNames.profile}`;
+  private authRoute = `${ERoute.account}/${ERoute.auth}`;
+  private profileRoute = `${ERoute.account}/${ERoute.profile}`;
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot):
     Observable<boolean | UrlTree> |

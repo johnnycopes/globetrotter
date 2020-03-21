@@ -8,7 +8,7 @@ import { JwtHelperService } from "@auth0/angular-jwt";
 import * as _ from 'lodash';
 
 import { environment } from 'src/environments/environment';
-import { RouteNames } from '@models/route-names.enum';
+import { ERoute } from '@models/route.enum';
 import { EErrorMessage } from '@models/error-message.enum';
 import { Store } from '@models/store.class';
 import { Auth } from '@models/auth.class';
@@ -51,7 +51,7 @@ export class AuthService {
     ).subscribe(
       () => {
         this.router.navigate(
-          [`${RouteNames.account}/${RouteNames.profile}`],
+          [`${ERoute.account}/${ERoute.profile}`],
           { state: { alertMessage } }
         );
         form.reset();
@@ -74,7 +74,7 @@ export class AuthService {
     );
     this.store.set([], new Auth());
     localStorage.removeItem('token');
-    this.router.navigate([`${RouteNames.account}/${RouteNames.auth}`]);
+    this.router.navigate([`${ERoute.account}/${ERoute.auth}`]);
   }
 
   register(form: FormGroup): void {

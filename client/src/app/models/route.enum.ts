@@ -1,4 +1,4 @@
-export enum RouteNames {
+export enum ERoute {
   home = 'home',
   explore = 'explore',
   prepare = 'prepare',

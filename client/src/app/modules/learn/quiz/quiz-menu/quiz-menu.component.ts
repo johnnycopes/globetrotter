@@ -7,7 +7,7 @@ import * as _ from 'lodash';
 import { Quiz } from '@models/quiz.class';
 import { EQuizType } from '@models/quiz-type.enum';
 import { EAnimationDuration } from '@models/animation-duration.enum';
-import { RouteNames } from '@models/route-names.enum';
+import { ERoute } from '@models/route.enum';
 import { FixedSlideablePanelPosition } from '@shared/components/fixed-slideable-panel/fixed-slideable-panel.component';
 import { QuizService } from '@services/quiz/quiz.service';
 import { UtilityService } from '@services/utility/utility.service';
@@ -53,7 +53,7 @@ export class QuizMenuComponent implements OnInit {
 
   onBack(): void {
     this.quizService.reset();
-    this.router.navigate([RouteNames.learn]);
+    this.router.navigate([ERoute.learn]);
   }
 
   private initializeStreams(): void {

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
-import { RouteNames } from '@models/route-names.enum';
+import { ERoute } from '@models/route.enum';
 import { LearnComponent } from './learn.component';
 import { QuizModule } from './quiz/quiz.module';
 import { QuizComponent } from './quiz/quiz.component';
@@ -11,9 +11,9 @@ import { SelectComponent } from './select/select.component';
 
 const learnRoutes: Routes = [
   { path: '', component: LearnComponent, children: [
-    { path: RouteNames.select, component: SelectComponent },
-    { path: RouteNames.quiz, component: QuizComponent },
-    { path: '', redirectTo: RouteNames.select, pathMatch: 'full' },
+    { path: ERoute.select, component: SelectComponent },
+    { path: ERoute.quiz, component: QuizComponent },
+    { path: '', redirectTo: ERoute.select, pathMatch: 'full' },
   ]},
 ];
 

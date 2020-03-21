@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { RouteNames } from '@models/route-names.enum';
+import { ERoute } from '@models/route.enum';
 import { fadeInAnimation } from '@utility/animations';
 
 @Component({
@@ -15,6 +15,6 @@ export class PageNotFoundComponent {
   constructor(private router: Router) { }
 
   onHomeClick(): void {
-    this.router.navigate([RouteNames.home]);
+    this.router.navigate([ERoute.home]);
   }
 }

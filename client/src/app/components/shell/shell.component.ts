@@ -6,7 +6,7 @@ import { RouterService } from '@services/router/router.service';
 import { QuizService } from '@services/quiz/quiz.service';
 import { ModalService } from '@services/modal/modal.service';
 import { UtilityService } from '@services/utility/utility.service';
-import { RouteNames } from '@models/route-names.enum';
+import { ERoute } from '@models/route.enum';
 import { EAnimationDuration } from '@models/animation-duration.enum';
 
 interface ViewModel {
@@ -110,7 +110,7 @@ export class ShellComponent implements OnInit {
 
   private initializeStreams(): void {
     this.showNavigation$ = this.routerService.getCurrentRoute().pipe(
-      map(currentRoute => currentRoute !== RouteNames.learn),
+      map(currentRoute => currentRoute !== ERoute.learn),
       distinctUntilChanged(),
       tap(async (showNavigation) => {
         this.showNavigationChange.next(false);
