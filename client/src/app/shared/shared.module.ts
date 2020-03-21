@@ -16,6 +16,7 @@ import { InputComponent } from './components/input/input.component';
 import { LinkComponent } from './components/link/link.component';
 import { ListDetailsComponent } from './components/list-details/list-details.component';
 import { LoaderComponent } from './components/loader/loader.component';
+import { MeasurementPipe } from './pipes/measurement.pipe';
 import { ModalComponent } from './components/modal/modal.component';
 import { NestedCheckboxesComponent } from './components/nested-checkboxes/nested-checkboxes.component';
 import { RadioButtonsComponent } from './components/radio-buttons/radio-buttons.component';
@@ -44,6 +45,7 @@ import { TreeComponent } from './components/tree/tree.component';
     LoaderComponent,
     LinkComponent,
     ListDetailsComponent,
+    MeasurementPipe,
     ModalComponent,
     NestedCheckboxesComponent,
     RadioButtonsComponent,
@@ -65,6 +67,7 @@ import { TreeComponent } from './components/tree/tree.component';
     InputComponent,
     LoaderComponent,
     LinkComponent,
+    MeasurementPipe,
     ModalComponent,
     ListDetailsComponent,
     NestedCheckboxesComponent,

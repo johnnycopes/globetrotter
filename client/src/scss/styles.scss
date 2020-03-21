@@ -19,6 +19,7 @@ body {
   line-height: map-get($line-height, small);
   min-height: 100vh;
   position: relative;
+  @include custom-scrollbar;
 
   @include tablet {
     font-size: map-get($font-size, 30);

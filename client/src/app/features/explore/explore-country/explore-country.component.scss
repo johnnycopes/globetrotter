@@ -27,10 +27,6 @@ app-info-table {
   grid-template-columns: repeat(4, 25%);
 }
 
-app-info-table-cell {
-  margin-right: map-get($spacing, 16);
-}
-
 .summary {
   line-height: map-get($line-height, normal);
   margin-bottom: map-get($spacing, 32);

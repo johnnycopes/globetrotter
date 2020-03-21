@@ -32,7 +32,12 @@
     {{country.population | number}}
   </app-info-table-cell>
   <app-info-table-cell category="size">
-    {{country.area | number}}km<sup>2</sup>
+    <div>
+      {{country.area | number}} km<sup>2</sup>
+    </div>
+    <div>
+      {{country.area | measurement:'sqKm':'sqMi' | number:'0.0-0'}} mi<sup>2</sup>
+    </div>
   </app-info-table-cell>
   <app-info-table-cell category="numeric code">
     +{{country.numericCode}}
