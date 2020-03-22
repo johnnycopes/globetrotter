@@ -1,4 +1,3 @@
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 
@@ -16,8 +15,7 @@ export class ErrorService {
   }
 
   getGlobalError(): Observable<string> {
-    return this.store.get(['globalError']);
-  }
+    return this.store.get(['globalError']);  }
 
   setGlobalError(error: string): void {
     this.store.set(['globalError'], error);
@@ -39,9 +37,3 @@ export class ErrorService {
     this.store.set(['registerError'], error);
   }
 }
-
-export const ErrorInterceptorProvider = {
-  provide: HTTP_INTERCEPTORS,
-  useClass: ErrorService,
-  multi: true
-};

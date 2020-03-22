@@ -25,6 +25,7 @@
 app-info-table {
   grid-template-rows: repeat(2, map-get($spacing, 128));
   grid-template-columns: repeat(4, 25%);
+  margin-bottom: map-get($spacing, 16);
 }
 
 .summary {
