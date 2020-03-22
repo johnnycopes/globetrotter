@@ -3,8 +3,8 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
 import { flipAnimation, guessAnimation, disabledAnimation } from '@utility/animations';
 import { AnimatedComponent } from '@models/animated-component.class';
 
-export type FlipCardSide = 'front' | 'back';
-export type FlipCardGuess = 'correct' | 'incorrect' | 'none';
+export type TFlipCardSide = 'front' | 'back';
+export type TFlipCardGuess = 'correct' | 'incorrect' | 'none';
 
 @Component({
   selector: 'app-flip-card',
@@ -18,11 +18,11 @@ export type FlipCardGuess = 'correct' | 'incorrect' | 'none';
   ]
 })
 export class FlipCardComponent extends AnimatedComponent {
-  @Input() side: FlipCardSide = 'front';
-  @Input() guess: FlipCardGuess;
+  @Input() side: TFlipCardSide = 'front';
+  @Input() guess: TFlipCardGuess;
   @Input() canFlip: boolean = true;
   @Input() disabled: boolean;
-  @Output() flipped = new EventEmitter<FlipCardSide>();
+  @Output() flipped = new EventEmitter<TFlipCardSide>();
 
   onClick(): void {
     if (this.canFlip && !this.disabled) {

@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 import { EQuizType } from '@models/quiz-type.enum';
-import { RadioButtonsOption } from '@shared/components/radio-buttons/radio-buttons.component';
+import { IRadioButtonsOption } from '@shared/components/radio-buttons/radio-buttons.component';
 import { SelectService } from '@services/select/select.service';
 
 @Component({
@@ -14,8 +14,8 @@ import { SelectService } from '@services/select/select.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SelectTypeComponent implements OnInit {
-  types: RadioButtonsOption<EQuizType>[];
-  selectedType$: Observable<RadioButtonsOption<EQuizType>>;
+  types: IRadioButtonsOption<EQuizType>[];
+  selectedType$: Observable<IRadioButtonsOption<EQuizType>>;
 
   constructor(private selectService: SelectService) { }
 
@@ -39,7 +39,7 @@ export class SelectTypeComponent implements OnInit {
     );
   }
 
-  onChange(selectedType: RadioButtonsOption<EQuizType>): void {
+  onChange(selectedType: IRadioButtonsOption<EQuizType>): void {
     this.selectService.updateType(selectedType.value);
   }
 

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, TemplateRef, ChangeDetectionStrategy, ViewChild, ElementRef, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { InputComponent } from '../input/input.component';
 
-export interface ListDetailsStyles {
+export interface IListDetailsStyles {
   heightOffset: string;
   gap: string;
 }
@@ -16,7 +16,7 @@ export class ListDetailsComponent<T> implements OnInit, AfterViewInit {
   @Input() items: T[];
   @Input() listItemTemplate: TemplateRef<any>;
   @Input() detailsTemplate: TemplateRef<any>;
-  @Input() styles: ListDetailsStyles = {
+  @Input() styles: IListDetailsStyles = {
     heightOffset: '0',
     gap: '12px'
   };

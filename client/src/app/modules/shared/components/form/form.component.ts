@@ -6,7 +6,7 @@ import * as _ from 'lodash';
 
 import { EAngularFormStatus } from '@models/angular-form-status.enum';
 
-interface ViewModel {
+interface IViewModel {
   valid: boolean;
 }
 
@@ -22,7 +22,7 @@ export class FormComponent implements OnInit {
   @Input() error: string;
   @Input() buttonText: string;
   @Output() submitted = new EventEmitter<FormGroup>();
-  vm$: Observable<ViewModel>;
+  vm$: Observable<IViewModel>;
   private valid$: Observable<boolean>;
 
   ngOnInit(): void {

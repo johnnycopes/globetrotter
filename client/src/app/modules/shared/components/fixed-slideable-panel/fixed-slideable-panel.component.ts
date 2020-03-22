@@ -3,7 +3,7 @@ import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { positionAnimation } from '@utility/animations';
 import { AnimatedComponent } from '@models/animated-component.class';
 
-export type FixedSlideablePanelPosition = 'offscreen' | 'header' | 'fullscreen';
+export type TFixedSlideablePanelPosition = 'offscreen' | 'header' | 'fullscreen';
 
 @Component({
   selector: 'app-fixed-slideable-panel',
@@ -13,5 +13,5 @@ export type FixedSlideablePanelPosition = 'offscreen' | 'header' | 'fullscreen';
   animations: [positionAnimation]
 })
 export class FixedSlideablePanelComponent extends AnimatedComponent {
-  @Input() position: FixedSlideablePanelPosition;
+  @Input() position: TFixedSlideablePanelPosition;
 }

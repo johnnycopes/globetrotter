@@ -16,7 +16,7 @@ interface IRegionData {
   treeProvider: PlacesTreeProvider;
 }
 
-interface ViewModel {
+interface IViewModel {
   regionData: IRegionData[];
   checkboxStates: TCheckboxStates;
   totals: TPlaceCounts;
@@ -30,7 +30,7 @@ interface ViewModel {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SelectCountriesComponent implements OnInit {
-  vm$: Observable<ViewModel>;
+  vm$: Observable<IViewModel>;
   readonly overallTotalKey: string = '__overall';
   private regionData$: Observable<IRegionData[]>;
   private checkboxStates$: Observable<TCheckboxStates>;

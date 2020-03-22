@@ -5,11 +5,11 @@ import * as _ from 'lodash';
 import { ICountry } from '@models/country.interface';
 import { EAnimationDuration } from '@models/animation-duration.enum';
 import { EQuizType } from '@models/quiz-type.enum';
-import { FlipCardComponent, FlipCardGuess } from '@shared/components/flip-card/flip-card.component';
+import { FlipCardComponent, TFlipCardGuess } from '@shared/components/flip-card/flip-card.component';
 import { QuizService } from '@services/quiz/quiz.service';
 import { UtilityService } from '@services/utility/utility.service';
 
-type CardTemplates = _.Dictionary<TemplateRef<any>>;
+type TCardTemplates = _.Dictionary<TemplateRef<any>>;
 
 @Component({
   selector: 'app-quiz-card',
@@ -25,10 +25,10 @@ export class QuizCardComponent implements OnInit, OnDestroy {
   @ViewChild('countryTemplate', { static: true }) countryTemplate: TemplateRef<any>;
   @ViewChild('capitalTemplate', { static: true }) capitalTemplate: TemplateRef<any>;
   @ViewChild(FlipCardComponent, { static: true }) private flipCardComponent: FlipCardComponent;
-  guess: FlipCardGuess;
+  guess: TFlipCardGuess;
   disabled: boolean;
-  templates: CardTemplates;
-  private templatesDict: _.Dictionary<CardTemplates>;
+  templates: TCardTemplates;
+  private templatesDict: _.Dictionary<TCardTemplates>;
   private currentCountry: ICountry;
   private currentCountrySubscription: Subscription;
 

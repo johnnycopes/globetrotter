@@ -1,6 +1,6 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
-type AlertType = 'success' | 'error';
+type TAlertType = 'success' | 'error';
 
 @Component({
   selector: 'app-alert',
@@ -9,6 +9,6 @@ type AlertType = 'success' | 'error';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AlertComponent {
-  @Input() type: AlertType = 'error';
+  @Input() type: TAlertType = 'error';
   @Input() large: boolean;
 }

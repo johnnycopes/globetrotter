@@ -8,7 +8,7 @@ import { EQuizType } from '@models/quiz-type.enum';
 import { QuizService } from '@services/quiz/quiz.service';
 import { staggerAnimation, fadeInWithCardsFadeInDelayAnimation } from '@utility/animations';
 
-interface ViewModel {
+interface IViewModel {
   quizType: EQuizType;
   countries: ICountry[];
 }
@@ -24,7 +24,7 @@ interface ViewModel {
 })
 export class QuizCardsComponent implements OnInit {
   canFlipCards = true;
-  vm$: Observable<ViewModel>;
+  vm$: Observable<IViewModel>;
   private quizType$: Observable<EQuizType>;
   private countries$: Observable<ICountry[]>;
 

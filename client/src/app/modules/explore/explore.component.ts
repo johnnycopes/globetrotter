@@ -6,9 +6,9 @@ import * as _ from 'lodash';
 import { fadeInAnimation } from '@utility/animations';
 import { CountryService } from '@services/country/country.service';
 import { ICountry } from '@models/country.interface';
-import { ListDetailsStyles } from '@shared/components/list-details/list-details.component';
+import { IListDetailsStyles } from '@shared/components/list-details/list-details.component';
 
-interface ViewModel {
+interface IViewModel {
   filteredCountries: ICountry[];
   selectedCountry: ICountry;
   searchTerm: string;
@@ -22,11 +22,11 @@ interface ViewModel {
   animations: [fadeInAnimation]
 })
 export class ExploreComponent implements OnInit {
-  styles: ListDetailsStyles = {
+  styles: IListDetailsStyles = {
     heightOffset: '96px',
     gap: '12px'
   };
-  vm$: Observable<ViewModel>;
+  vm$: Observable<IViewModel>;
   private countries$: Observable<ICountry[]>;
   private filteredCountries$: Observable<ICountry[]>;
   private searchTerm$: Observable<string>;

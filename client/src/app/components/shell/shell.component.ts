@@ -9,7 +9,7 @@ import { UtilityService } from '@services/utility/utility.service';
 import { ERoute } from '@models/route.enum';
 import { EAnimationDuration } from '@models/animation-duration.enum';
 
-interface ViewModel {
+interface IViewModel {
   showNavigation: boolean;
   showContent: boolean;
   showModal: boolean;
@@ -23,7 +23,7 @@ interface ViewModel {
   styleUrls: ['./shell.component.scss']
 })
 export class ShellComponent implements OnInit {
-  vm$: Observable<ViewModel>;
+  vm$: Observable<IViewModel>;
   private showNavigationChange = new BehaviorSubject<boolean>(false);
   private showNavigation$: Observable<boolean>;
   private showContent$: Observable<boolean>;
@@ -48,9 +48,9 @@ export class ShellComponent implements OnInit {
     //   quizComplete: this.quizComplete$
     // };
 
-    // this.vm$ = this.utilityService.combineStreams<ViewModel>(streams);
+    // this.vm$ = this.utilityService.combineStreams<IViewModel>(streams);
 
-    // this.vm$ = this.utilityService.combineStuffUnsafeButVariable<ViewModel>([
+    // this.vm$ = this.utilityService.combineStuffUnsafeButVariable<IViewModel>([
     //   this.showNavigation$,
     //   this.showContent$,
     //   this.showModal$,

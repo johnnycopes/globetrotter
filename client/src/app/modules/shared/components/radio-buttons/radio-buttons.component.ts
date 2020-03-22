@@ -7,12 +7,12 @@ import { map, distinctUntilChanged } from 'rxjs/operators';
 
 import { EBreakpoint } from '@models/breakpoint.enum';
 
-export interface RadioButtonsOption<T> {
+export interface IRadioButtonsOption<T> {
   display: string;
   value: T | null;
 }
 
-interface ViewModel {
+interface IViewModel {
   stackedVertically: boolean;
 }
 
@@ -28,11 +28,11 @@ interface ViewModel {
   }]
 })
 export class RadioButtonsComponent<T> implements OnInit, ControlValueAccessor {
-  @Input() options: RadioButtonsOption<T>[];
+  @Input() options: IRadioButtonsOption<T>[];
   @Input() text: string;
   @Input() alwaysStackedVertically: boolean;
-  model: RadioButtonsOption<T>;
-  vm$: Observable<ViewModel>;
+  model: IRadioButtonsOption<T>;
+  vm$: Observable<IViewModel>;
   private stackedVertically$: Observable<boolean>;
   private onChangeFn: any;
 

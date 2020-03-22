@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 import * as _ from 'lodash';
 ;
 import { TQuizQuantity } from '@models/quiz-quantity.type';
-import { RadioButtonsOption } from '@shared/components/radio-buttons/radio-buttons.component';
+import { IRadioButtonsOption } from '@shared/components/radio-buttons/radio-buttons.component';
 import { SelectService } from '@services//select/select.service';
 
 @Component({
@@ -14,8 +14,8 @@ import { SelectService } from '@services//select/select.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SelectQuantityComponent implements OnInit {
-  quantities: RadioButtonsOption<TQuizQuantity>[];
-  selectedQuantity$: Observable<RadioButtonsOption<TQuizQuantity>>;
+  quantities: IRadioButtonsOption<TQuizQuantity>[];
+  selectedQuantity$: Observable<IRadioButtonsOption<TQuizQuantity>>;
 
   constructor(private selectService: SelectService) { }
 
@@ -39,7 +39,7 @@ export class SelectQuantityComponent implements OnInit {
     );
   }
 
-  onChange(selectedQuantity: RadioButtonsOption<TQuizQuantity>): void {
+  onChange(selectedQuantity: IRadioButtonsOption<TQuizQuantity>): void {
     this.selectService.updateQuantity(selectedQuantity.value);
   }
 }

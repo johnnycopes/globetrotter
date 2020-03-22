@@ -8,7 +8,7 @@ import { ErrorService } from '@services/error/error.service';
 import { EApi } from '@models/api.enum';
 import { map } from 'rxjs/operators';
 
-interface ViewModel {
+interface IViewModel {
   formError: string;
   passwordError: string;
 }
@@ -21,7 +21,7 @@ interface ViewModel {
 export class RegisterComponent {
   form: FormGroup;
   guidelines: string[];
-  vm$: Observable<ViewModel>;
+  vm$: Observable<IViewModel>;
   private formError$: Observable<string>;
   private passwordError$: Observable<string>;
 

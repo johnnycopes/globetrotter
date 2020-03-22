@@ -8,8 +8,8 @@ import { Selection } from '@models/selection.class';
 import { EAnimationDuration } from '@models/animation-duration.enum';
 import { SelectService } from '@services/select/select.service';
 import { UtilityService } from '@services/utility/utility.service';
-import { FixedSlideablePanelPosition } from '@shared/components/fixed-slideable-panel/fixed-slideable-panel.component';
-import { TabsetContentVisibility } from '@shared/components/tabset/tabset.component';
+import { TFixedSlideablePanelPosition } from '@shared/components/fixed-slideable-panel/fixed-slideable-panel.component';
+import { TTabsetContentVisibility } from '@shared/components/tabset/tabset.component';
 
 @Component({
   selector: 'app-select',
@@ -17,8 +17,8 @@ import { TabsetContentVisibility } from '@shared/components/tabset/tabset.compon
   styleUrls: ['./select.component.scss']
 })
 export class SelectComponent implements OnInit, OnDestroy {
-  tabsetControlsPosition: FixedSlideablePanelPosition = 'header';
-  tabsetContentVisibility: TabsetContentVisibility = 'visible';
+  tabsetControlsPosition: TFixedSlideablePanelPosition = 'header';
+  tabsetContentVisibility: TTabsetContentVisibility = 'visible';
   canStartQuiz: boolean;
   private queryParams: _.Dictionary<string>;
   private selection: Selection;

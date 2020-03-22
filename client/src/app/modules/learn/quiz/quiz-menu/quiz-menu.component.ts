@@ -8,11 +8,11 @@ import { Quiz } from '@models/quiz.class';
 import { EQuizType } from '@models/quiz-type.enum';
 import { EAnimationDuration } from '@models/animation-duration.enum';
 import { ERoute } from '@models/route.enum';
-import { FixedSlideablePanelPosition } from '@shared/components/fixed-slideable-panel/fixed-slideable-panel.component';
+import { TFixedSlideablePanelPosition } from '@shared/components/fixed-slideable-panel/fixed-slideable-panel.component';
 import { QuizService } from '@services/quiz/quiz.service';
 import { UtilityService } from '@services/utility/utility.service';
 
-interface ViewModel {
+interface IViewModel {
   quiz: Quiz,
   prompt: string;
 }
@@ -23,10 +23,10 @@ interface ViewModel {
   styleUrls: ['./quiz-menu.component.scss']
 })
 export class QuizMenuComponent implements OnInit {
-  vm$: Observable<ViewModel>;
-  private positionChanged = new BehaviorSubject<FixedSlideablePanelPosition>('header');
+  vm$: Observable<IViewModel>;
+  private positionChanged = new BehaviorSubject<TFixedSlideablePanelPosition>('header');
   private quiz$: Observable<Quiz>;
-  private position$: Observable<FixedSlideablePanelPosition>;
+  private position$: Observable<TFixedSlideablePanelPosition>;
   private prompt$: Observable<string>;
   private promptDict: _.Dictionary<string> = {
     [EQuizType.flagsCountries]: 'name',

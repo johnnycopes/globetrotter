@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 
-export type ButtonStyle = 'primary' | 'secondary';
+export type TButtonStyle = 'primary' | 'secondary';
 
 @Component({
   selector: 'app-button',
@@ -11,7 +11,7 @@ export type ButtonStyle = 'primary' | 'secondary';
 export class ButtonComponent {
   @Input() buttonText: string;
   @Input() buttonType: string = 'button';
-  @Input() buttonStyle: ButtonStyle = 'primary';
+  @Input() buttonStyle: TButtonStyle = 'primary';
   @Input() disabled: boolean;
   @Output() clicked = new EventEmitter<void>();
 
