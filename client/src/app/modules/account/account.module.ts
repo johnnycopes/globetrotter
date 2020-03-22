@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { ERoute } from '@app/models/route.enum';
+import { ERoute } from '@models/route.enum';
 import { SharedModule } from '@shared/shared.module';
 import { AccountComponent } from './account.component';
 import { ProfileComponent } from './profile/profile.component';
