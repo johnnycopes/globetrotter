@@ -31,14 +31,22 @@
         [highlighted]="!!vm.currents[regionName]"
         >
       </app-icon>
-      <app-nested-checkboxes class="region__checkboxes"
+      <app-nested-checkboxes-with-counts class="region__checkboxes"
         [item]="regionDatum.region"
         [treeProvider]="regionDatum.treeProvider"
         [itemTemplate]="label"
         [ngModel]="vm.checkboxStates"
         (ngModelChange)="onCountriesChange($event)"
         >
-      </app-nested-checkboxes>
+      </app-nested-checkboxes-with-counts>
+      <!-- <app-nested-checkboxes class="region__checkboxes"
+        [item]="regionDatum.region"
+        [treeProvider]="regionDatum.treeProvider"
+        [itemTemplate]="label"
+        [ngModel]="vm.checkboxStates"
+        (ngModelChange)="onCountriesChange($event)"
+        >
+      </app-nested-checkboxes> -->
 
       <ng-template
         #label

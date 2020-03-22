@@ -19,6 +19,7 @@ import { LoaderComponent } from './components/loader/loader.component';
 import { MeasurementPipe } from './pipes/measurement.pipe';
 import { ModalComponent } from './components/modal/modal.component';
 import { NestedCheckboxesComponent } from './components/nested-checkboxes/nested-checkboxes.component';
+import { NestedCheckboxesWithCountsComponent } from './components/nested-checkboxes-with-counts/nested-checkboxes-with-counts.component';
 import { RadioButtonsComponent } from './components/radio-buttons/radio-buttons.component';
 import { TabComponent } from './components/tabset/tab/tab.component';
 import { TabsetComponent } from './components/tabset/tabset.component';
@@ -52,6 +53,7 @@ import { TreeComponent } from './components/tree/tree.component';
     TabComponent,
     TabsetComponent,
     TreeComponent,
+    NestedCheckboxesWithCountsComponent,
   ],
   exports: [
     AlertComponent,
@@ -71,6 +73,7 @@ import { TreeComponent } from './components/tree/tree.component';
     ModalComponent,
     ListDetailsComponent,
     NestedCheckboxesComponent,
+    NestedCheckboxesWithCountsComponent,
     RadioButtonsComponent,
     TabComponent,
     TabsetComponent,
