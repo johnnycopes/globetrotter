@@ -7,5 +7,5 @@
 
 .category {
   @include small-caps;
-  margin-bottom: map-get($spacing, 2);
+  margin-bottom: map-get($spacing, 8);
 }

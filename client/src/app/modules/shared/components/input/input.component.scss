@@ -19,7 +19,7 @@ label {
   background: map-get($color, white);
   color: map-get($color, darkest);
   font-family: $font-stack;
-  font-size: map-get($font-size, 20);
+  font-size: map-get($font-size, 16);
   transition: map-get($transition, border);
 
   &:focus {

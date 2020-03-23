@@ -20,7 +20,7 @@
     margin-bottom: map-get($spacing, 12);
 
     @include tablet {
-      font-size: map-get($font-size, 36);
+      font-size: map-get($font-size, 30);
       margin-bottom: map-get($spacing, 24);
     }
 

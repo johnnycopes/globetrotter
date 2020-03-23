@@ -23,7 +23,7 @@ interface IViewModel {
 })
 export class ExploreComponent implements OnInit {
   styles: IListDetailsStyles = {
-    heightOffset: '96px',
+    heightOffset: '64px',
     gap: '12px'
   };
   vm$: Observable<IViewModel>;

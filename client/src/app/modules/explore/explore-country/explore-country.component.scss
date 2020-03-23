@@ -3,7 +3,7 @@
 .top {
   display: flex;
   justify-content: space-between;
-  margin-bottom: map-get($spacing, 32);
+  margin-bottom: map-get($spacing, 64);
 }
 
 .name {
@@ -14,11 +14,10 @@
 
 .capital {
   font-size: map-get($font-size, 36);
-  margin-bottom: map-get($spacing, 32);
 }
 
 .flag {
-  height: map-get($spacing, 128);
+  @include flag;
   margin-left: map-get($spacing, 48);
 }
 
