@@ -17,7 +17,7 @@ export class ListDetailsComponent<T> implements OnInit, AfterViewInit {
   @Input() listItemTemplate: TemplateRef<any>;
   @Input() detailsTemplate: TemplateRef<any>;
   @Input() styles: IListDetailsStyles = {
-    heightOffset: '0',
+    heightOffset: '0px',
     gap: '12px'
   };
   @Input() getItemUniqueId: (item: T) => string;

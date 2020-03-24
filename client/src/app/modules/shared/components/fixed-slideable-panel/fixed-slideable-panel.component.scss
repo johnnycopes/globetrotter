@@ -1,15 +1,15 @@
 @import 'styles';
 
-$header-height: map-get($app, navigation-height);
+$header-height: map-get($app, header-height);
 
 @mixin content-slot {
   height: 100%;
   width: 100%;
-  padding: 0 map-get($spacing, 24);
+  padding: 0 map-get($app, gap);
 }
 
 .fixed-slideable-panel {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   height: 100vh;

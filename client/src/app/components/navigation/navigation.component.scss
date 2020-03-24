@@ -1,3 +1,14 @@
+@import 'styles';
+
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: map-get($app, navigation-width);
+  height: 100%;
+  border-right: map-get($border, thin) solid map-get($color, dark);
+}
+
 .icon-link {
   flex: 0;
 }

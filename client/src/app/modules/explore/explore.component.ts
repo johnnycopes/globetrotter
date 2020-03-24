@@ -22,10 +22,6 @@ interface IViewModel {
   animations: [fadeInAnimation]
 })
 export class ExploreComponent implements OnInit {
-  styles: IListDetailsStyles = {
-    heightOffset: '64px',
-    gap: '12px'
-  };
   vm$: Observable<IViewModel>;
   private countries$: Observable<ICountry[]>;
   private filteredCountries$: Observable<ICountry[]>;

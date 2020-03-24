@@ -40,8 +40,8 @@ $border: (
 );
 
 $app: (
-  page-height: calc(100vh - #{map-get($spacing, 64)}),
-  navigation-height: map-get($spacing, 64),
-  quiz-card-width: 300px,
-  quiz-cards-grid-gap: 12px
+  header-height: map-get($spacing, 64),
+  navigation-width: map-get($spacing, 96),
+  gap: map-get($spacing, 12),
+  card-width: map-get($spacing, 256)
 );

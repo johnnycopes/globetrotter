@@ -13,7 +13,8 @@ $tab-border: map-get($border, thin) solid map-get($color, dark);
   justify-content: center;
   align-items: center;
   flex: 1;
-  padding: map-get($spacing, 16);
+  padding: map-get($spacing, 8);
+  font-size: map-get($font-size, 20);
   border: $tab-border;
   border-right: 0;
 

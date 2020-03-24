@@ -4,7 +4,7 @@
   margin: 0 auto;
   padding-top: map-get($spacing, 48);
   max-width: map-get($spacing, 768);
-  min-height: map-get($app, page-height);
+  min-height: 100vh;
 }
 
 .alert {
