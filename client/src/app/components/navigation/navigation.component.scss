@@ -6,7 +6,8 @@ nav {
   left: 0;
   width: map-get($app, navigation-width);
   height: 100%;
-  border-right: map-get($border, thin) solid map-get($color, dark);
+  background: map-get($color, darkest-inset);
+  border-right: map-get($border, thinnest) solid map-get($color, dark);
 }
 
 .icon-link {

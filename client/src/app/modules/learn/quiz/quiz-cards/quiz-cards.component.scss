@@ -6,6 +6,6 @@
   grid-template-columns: repeat(auto-fill, map-get($app, card-width));
   grid-auto-rows: map-get($app, card-width);
   grid-gap: map-get($app, gap);
-  padding-top: calc(#{map-get($app, header-height)} + #{map-get($app, gap)});
-  padding-bottom: calc((#{map-get($app, header-height)} / 2) + #{map-get($app, gap)});
+  padding-top: map-get($app, header-height);
+  padding-bottom: calc((#{map-get($app, header-height)} / 2));
 }

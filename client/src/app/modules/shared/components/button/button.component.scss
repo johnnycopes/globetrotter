@@ -48,8 +48,4 @@
     border-color: map-get($color, medium);
     cursor: not-allowed;
   }
-
-  @include tablet {
-    width: map-get($spacing, 192);
-  }
 }

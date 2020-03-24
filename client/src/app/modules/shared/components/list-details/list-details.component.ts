@@ -41,7 +41,7 @@ export class ListDetailsComponent<T> implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.containerHeight = `calc(100vh - ${this.styles.gap} - ${this.styles.heightOffset})`;
+    this.containerHeight = `calc(100vh - ${this.styles.gap} - ${this.styles.gap} - ${this.styles.heightOffset})`;
     this.toolbarHeight = `
       calc(100vh -
       ${this.search.nativeElement.offsetHeight}px -
