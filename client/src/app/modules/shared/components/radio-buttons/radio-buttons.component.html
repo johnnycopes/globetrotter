@@ -1,15 +1,11 @@
 <form class="form"
-  *ngIf="vm$ | async as vm"
   #optionForm="ngForm"
   >
-  <div class="text">
-    {{text}}
-  </div>
   <div class="options"
-    [ngClass]="{'options--stacked-vertically': vm.stackedVertically}"
+    [ngClass]="{'options--stacked': stacked}"
     >
     <div class="option"
-      [ngClass]="{'option--stacked-vertically': vm.stackedVertically}"
+      [ngClass]="{'option--stacked': stacked}"
       *ngFor="let option of options"
       >
       <input class="option__input"

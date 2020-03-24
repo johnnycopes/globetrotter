@@ -7,7 +7,6 @@ import { Store } from '@models/store.class';
 import { Selection } from '@models/selection.class';
 import { IRegion } from '@models/region.interface';
 import { EQuizType } from '@models/quiz-type.enum';
-import { TQuizQuantity } from '@models/quiz-quantity.type';
 import { TCheckboxStates } from '@shared/components/nested-checkboxes/nested-checkboxes.component';
 import { CountryService } from '../country/country.service';
 
@@ -24,9 +23,7 @@ export class SelectService {
   constructor(private countryService: CountryService) {
     this.store = new Store(new Selection());
     this.countryService.getFormattedData()
-      .pipe(
-        first()
-      )
+      .pipe(first())
       .subscribe(
         regions => {
           const countries = this.mapCountriesToCheckboxStates(regions);
@@ -83,7 +80,7 @@ export class SelectService {
   mapQueryParamsToSelection(queryParams: _.Dictionary<string>): Selection {
     const typeKey = _.camelCase(queryParams.type) as keyof typeof EQuizType;
     const type = EQuizType[typeKey];
-    const quantity = this.convertQuantityParamToQuizQuantity(queryParams.quantity);
+    const quantity = _.toNumber(queryParams.quantity);
     const countries = _.reduce(queryParams.countries.split(','), (accum, current) => {
       if (current.includes(this.paramDict.checked)) {
         const updatedKey = _.replace(current, this.paramDict.checked, '');
@@ -110,27 +107,5 @@ export class SelectService {
       })
       return accum;
     }, {} as TCheckboxStates);
-  }
-
-  private convertQuantityParamToQuizQuantity(quantityParam: string): TQuizQuantity {
-    const paramAsNumber = _.toNumber(quantityParam);
-    if (!quantityParam) {
-      return null;
-    }
-    else if (this.isQuizQuantity(paramAsNumber)) {
-      return paramAsNumber;
-    }
-    else {
-      return 5;
-    }
-  }
-
-  private isQuizQuantity(quantityParm: number | null): quantityParm is TQuizQuantity {
-    const isValid =
-      quantityParm === 5 ||
-      quantityParm === 10 ||
-      quantityParm === 15 ||
-      quantityParm === 20;
-    return isValid;
   }
 }

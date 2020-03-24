@@ -110,7 +110,7 @@ export class ShellComponent implements OnInit {
 
   private initializeStreams(): void {
     this.showNavigation$ = this.routerService.getCurrentRoute().pipe(
-      map(currentRoute => currentRoute !== ERoute.learn),
+      map(currentRoute => currentRoute !== ERoute.quiz),
       distinctUntilChanged(),
       tap(async (showNavigation) => {
         this.showNavigationChange.next(false);

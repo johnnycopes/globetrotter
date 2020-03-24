@@ -15,6 +15,7 @@ import { UtilityService } from '@services/utility/utility.service';
 interface IViewModel {
   quiz: Quiz,
   prompt: string;
+  position: TFixedSlideablePanelPosition;
 }
 
 @Component({

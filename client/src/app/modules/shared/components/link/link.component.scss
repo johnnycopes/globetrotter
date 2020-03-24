@@ -8,6 +8,7 @@
   align-items: center;
   justify-content: center;
   padding: 0 map-get($spacing, 24);
+  font-size: map-get($font-size, 20);
   cursor: pointer;
 }
 

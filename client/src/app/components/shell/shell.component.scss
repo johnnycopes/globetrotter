@@ -4,11 +4,11 @@
   padding-top: map-get($app, navigation-height);
 
   &__wrapper {
-    @include quiz-width;
-    min-height: map-get($app, page-height);
     display: flex;
     flex-direction: column;
     justify-content: center;
+    margin: 0 map-get($spacing, 48);
+    min-height: map-get($app, page-height);
 
     &--no-scroll {
       height: map-get($app, page-height);

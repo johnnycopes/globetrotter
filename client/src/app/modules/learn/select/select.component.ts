@@ -10,18 +10,20 @@ import { SelectService } from '@services/select/select.service';
 import { UtilityService } from '@services/utility/utility.service';
 import { TFixedSlideablePanelPosition } from '@shared/components/fixed-slideable-panel/fixed-slideable-panel.component';
 import { TTabsetContentVisibility } from '@shared/components/tabset/tabset.component';
+import { fadeInAnimation } from '@utility/animations';
 
 @Component({
   selector: 'app-select',
   templateUrl: './select.component.html',
-  styleUrls: ['./select.component.scss']
+  styleUrls: ['./select.component.scss'],
+  animations: [fadeInAnimation]
 })
 export class SelectComponent implements OnInit, OnDestroy {
-  tabsetControlsPosition: TFixedSlideablePanelPosition = 'header';
-  tabsetContentVisibility: TTabsetContentVisibility = 'visible';
+  // tabsetControlsPosition: TFixedSlideablePanelPosition = 'header';
+  // tabsetContentVisibility: TTabsetContentVisibility = 'visible';
   canStartQuiz: boolean;
   private queryParams: _.Dictionary<string>;
-  private selection: Selection;
+  public selection: Selection;
   private selectionSubscription: Subscription;
 
   constructor(
@@ -44,10 +46,10 @@ export class SelectComponent implements OnInit, OnDestroy {
   }
 
   async onLaunch(): Promise<void> {
-    this.tabsetContentVisibility = 'invisible';
-    await this.utilityService.wait(EAnimationDuration.fixedSlideablePanel);
-    this.tabsetControlsPosition = 'offscreen';
-    await this.utilityService.wait(EAnimationDuration.fixedSlideablePanel);
+    // this.tabsetContentVisibility = 'invisible';
+    // await this.utilityService.wait(EAnimationDuration.fixedSlideablePanel);
+    // this.tabsetControlsPosition = 'offscreen';
+    // await this.utilityService.wait(EAnimationDuration.fixedSlideablePanel);
     this.queryParams = this.selectService.mapSelectionToQueryParams(this.selection);
     this.router.navigate(
       [`${ERoute.learn}/${ERoute.quiz}`],

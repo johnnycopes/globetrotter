@@ -1,0 +1,10 @@
+@import 'styles';
+
+:host {
+  display: flex;
+  align-items: center;
+}
+
+app-radio-buttons {
+  margin-left: map-get($spacing, 16);
+}

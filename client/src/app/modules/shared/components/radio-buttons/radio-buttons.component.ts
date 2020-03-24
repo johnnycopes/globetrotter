@@ -2,18 +2,10 @@
 import { Component, Input, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Observable } from 'rxjs';
-import { map, distinctUntilChanged } from 'rxjs/operators';
-
-import { EBreakpoint } from '@models/breakpoint.enum';
 
 export interface IRadioButtonsOption<T> {
   display: string;
   value: T | null;
-}
-
-interface IViewModel {
-  stackedVertically: boolean;
 }
 
 @Component({
@@ -27,26 +19,16 @@ interface IViewModel {
     multi: true
   }]
 })
-export class RadioButtonsComponent<T> implements OnInit, ControlValueAccessor {
+export class RadioButtonsComponent<T> implements ControlValueAccessor {
   @Input() options: IRadioButtonsOption<T>[];
-  @Input() text: string;
-  @Input() alwaysStackedVertically: boolean;
+  @Input() stacked: boolean;
   model: IRadioButtonsOption<T>;
-  vm$: Observable<IViewModel>;
-  private stackedVertically$: Observable<boolean>;
   private onChangeFn: any;
 
   constructor(
     public changeDetectorRef: ChangeDetectorRef,
     public breakpointObserver: BreakpointObserver
   ) { }
-
-  ngOnInit(): void {
-    this.intializeStreams();
-    this.vm$ = this.stackedVertically$.pipe(
-      map(stackedVertically => ({ stackedVertically }))
-    );
-  }
 
   writeValue(obj: any): void {
     this.model = obj;
@@ -61,19 +43,5 @@ export class RadioButtonsComponent<T> implements OnInit, ControlValueAccessor {
 
   onChange(): void {
     this.onChangeFn(this.model);
-  }
-
-  private intializeStreams(): void {
-    this.stackedVertically$ = this.breakpointObserver
-      .observe([EBreakpoint.tablet])
-      .pipe(
-        map(state => {
-          if (this.alwaysStackedVertically) {
-            return true;
-          }
-          return !state.matches;
-        }),
-        distinctUntilChanged()
-      );
   }
 }

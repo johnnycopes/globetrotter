@@ -1,5 +1,25 @@
 @import 'styles';
 
-.quit {
-  width: map-get($spacing, 24);
+.controls {
+  margin-top: map-get($spacing, 12);
+}
+
+.launchpad {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: map-get($spacing, 48);
+}
+
+.header {
+  font-size: map-get($font-size, 36);
+  font-weight: map-get($font-weight, bold);
+}
+
+.fields {
+
+  &__top {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: map-get($spacing, 24)
+  }
 }

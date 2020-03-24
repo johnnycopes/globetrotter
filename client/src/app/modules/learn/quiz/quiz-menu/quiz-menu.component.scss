@@ -12,12 +12,8 @@
   font-size: map-get($font-size, 20);
   text-align: right;
 
-  @include tablet {
-    font-size: map-get($font-size, 24);
-  }
-
   &__tally {
-    margin-bottom: map-get($spacing, 16);
+    margin-bottom: map-get($spacing, 8);
   }
 }
 

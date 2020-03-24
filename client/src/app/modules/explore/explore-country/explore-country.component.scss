@@ -27,6 +27,11 @@ app-info-table {
   margin-bottom: map-get($spacing, 16);
 }
 
+app-info-table {
+  line-height: map-get($line-height, normal);
+  margin-right: map-get($spacing, 16);
+}
+
 .summary {
   line-height: map-get($line-height, normal);
   margin-bottom: map-get($spacing, 32);
