@@ -10,8 +10,7 @@ type TCounts = _.Dictionary<number>;
 /*
 TOBES
 
-1. Tree provider doesn't expose the countries level as children because I don't want to render them in the UI
-2. Unsure how to expose these variables in a template since a template is already being passed into nested-checkboxes
+1. We've gotten total. How to get current?
 */
 
 @Component({
@@ -29,8 +28,9 @@ export class NestedCheckboxesWithCountsComponent<T> implements ControlValueAcces
   @Input() item: T;
   @Input() treeProvider: ITreeProvider<T>;
   @Input() itemTemplate: TemplateRef<any>;
+  @Input() getCount: (item: T) => number;
   @Input() invertedRootCheckbox: boolean = true;
-  totals: TCounts = {};
+  totals: TCounts;
   states: TCheckboxStates = {};
 
   private _onChangeFn: (value: TCheckboxStates) => void = () => { };
@@ -41,20 +41,7 @@ export class NestedCheckboxesWithCountsComponent<T> implements ControlValueAcces
     if (!this.item || !this.treeProvider) {
       throw new Error("An item and a tree provider must be passed to the nested-checkboxes-with-counts component");
     }
-    const items = [this.item];
-    while (items.length) {
-      const currentItem = items.shift();
-      if (currentItem) {
-        const currentItemId = this.treeProvider.getId(currentItem);
-        const currentItemChildren = this.treeProvider.getChildren(currentItem);
-        this.totals[currentItemId] = currentItemChildren.length;
-        if (currentItemChildren.length) {
-          currentItemChildren.forEach(child => {
-            items.push(child);
-          });
-        }
-      }
-    }
+    this.totals = this.getCountsForItem(this.item);
   }
 
   public writeValue(value: TCheckboxStates): void {
@@ -73,5 +60,21 @@ export class NestedCheckboxesWithCountsComponent<T> implements ControlValueAcces
   public onChange(states: TCheckboxStates): void {
     this.states = states;
     this._onChangeFn(this.states);
+  }
+
+  private getCountsForItem(item: T): TCounts {
+    const id = this.treeProvider.getId(item);
+    const children = this.treeProvider.getChildren(item);
+    if (!children.length) {
+      return { [id]: this.getCount(item) };
+    }
+    const childrenTotals = _.reduce(children, (totalsDict, child) =>
+      _.assign(totalsDict, this.getCountsForItem(child))
+    , {} as TCounts);
+    const grandTotal = _.reduce(childrenTotals, (total, value) => total + value, 0);
+    return {
+      ...childrenTotals,
+      [id]: grandTotal
+    };
   }
 }

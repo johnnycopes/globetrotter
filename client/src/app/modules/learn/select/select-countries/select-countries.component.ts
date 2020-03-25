@@ -8,6 +8,7 @@ import { PlacesTreeProvider } from '@models/places-tree-provider.class';
 import { TCheckboxStates } from '@shared/components/nested-checkboxes/nested-checkboxes.component';
 import { CountryService } from '@services/country/country.service';
 import { SelectService } from '@services/select/select.service';
+import { ISubregion } from '@models/subregion.interface';
 
 type TPlaceCounts = _.Dictionary<number>;
 
@@ -70,6 +71,10 @@ export class SelectCountriesComponent implements OnInit {
 
   onClearAll(): void {
     this.selectService.updateCountries({});
+  }
+
+  getCount(item: ISubregion): number {
+    return item.countries.length;
   }
 
   private initializeStreams(): void {

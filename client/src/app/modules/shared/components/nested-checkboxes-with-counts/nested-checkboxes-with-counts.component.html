@@ -1,8 +1,27 @@
 <app-nested-checkboxes
   [item]="item"
   [treeProvider]="treeProvider"
-  [itemTemplate]="itemTemplate"
+  [itemTemplate]="checkbox"
   [ngModel]="states"
   (ngModelChange)="onChange($event)"
   >
 </app-nested-checkboxes>
+
+<ng-template #checkbox
+  let-item
+  let-id="id"
+  let-children="children"
+  let-isRoot="isRoot"
+  >
+  <ng-container
+    [ngTemplateOutlet]="itemTemplate"
+    [ngTemplateOutletContext]="{
+      item: this.item,
+      id: this.id,
+      children: this.children,
+      isRoot: this.isRoot,
+      total: this.totals[this.id]
+    }"
+    >
+  </ng-container>
+</ng-template>
