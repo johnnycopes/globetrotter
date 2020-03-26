@@ -25,9 +25,7 @@
       </li>
     </ul>
   </nav>
-  <div class="details"
-    [ngStyle]="{'margin-left': this.styles.gap}"
-    >
+  <div class="details">
     <ng-container *ngTemplateOutlet="detailsTemplate; context: { $implicit: selectedItem }">
     </ng-container>
   </div>

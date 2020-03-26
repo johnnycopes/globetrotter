@@ -8,8 +8,9 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: map-get($app, gap);
     min-height: 100vh;
+    margin: 0 auto;
+    padding: map-get($app, gap) map-get($app, wrapper-padding);
 
     &--no-scroll {
       height: 100vh;

@@ -26,7 +26,7 @@ nav {
 
 .link {
   display: block;
-  padding: map-get($spacing, 16) map-get($spacing, 24);
+  padding: map-get($spacing, 16) map-get($app, wrapper-padding);
   font-size: map-get($font-size, 20);
   color: map-get($color, light);
 

@@ -2,10 +2,13 @@
 
 .quiz-cards {
   display: grid;
-  justify-content: center;
   grid-template-columns: repeat(auto-fill, map-get($app, card-width));
   grid-auto-rows: map-get($app, card-width);
   grid-gap: map-get($app, gap);
+  justify-content: center;
+  max-width: map-get($learn, max-width);
+  height: calc(100vh - #{map-get($spacing, 24)}); // offset shell content wrapper top/bottom padding
+  margin: 0 auto;
   padding-top: map-get($app, header-height);
   padding-bottom: calc((#{map-get($app, header-height)} / 2));
 }

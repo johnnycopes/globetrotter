@@ -1,29 +1,29 @@
-<div @fadeIn>
-  <div class="controls">
-    <div class="launchpad">
-      <h1 class="header">
-        Create Quiz
-      </h1>
-      <app-button
-        buttonText="Launch"
-        buttonStyle="primary"
-        [disabled]="!canStartQuiz"
-        (clicked)="onLaunch()"
-        >
-      </app-button>
-    </div>
-    <div class="fields">
-      <div class="fields__top">
-        <app-info-table-cell category="type">
-          <app-select-type></app-select-type>
-        </app-info-table-cell>
-        <app-info-table-cell category="quantity">
-          <app-select-quantity></app-select-quantity>
-        </app-info-table-cell>
-      </div>
-      <app-info-table-cell category="content">
-        <app-select-countries></app-select-countries>
+<div class="wrapper"
+  @fadeIn
+  >
+  <div class="launchpad">
+    <h1 class="header">
+      Create Quiz
+    </h1>
+    <app-button
+      buttonText="Launch"
+      buttonStyle="primary"
+      [disabled]="!canStartQuiz"
+      (clicked)="onLaunch()"
+      >
+    </app-button>
+  </div>
+  <div class="fields">
+    <div class="fields__top">
+      <app-info-table-cell category="type">
+        <app-select-type></app-select-type>
+      </app-info-table-cell>
+      <app-info-table-cell category="quantity">
+        <app-select-quantity></app-select-quantity>
       </app-info-table-cell>
     </div>
+    <app-info-table-cell category="content">
+      <app-select-countries></app-select-countries>
+    </app-info-table-cell>
   </div>
 </div>

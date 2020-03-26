@@ -1,11 +1,16 @@
 @import 'styles';
 
+.wrapper {
+  max-width: map-get($learn, max-width);
+  margin: 0 auto;
+}
+
 .launchpad {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
   margin-bottom: map-get($spacing, 24);
-  padding-bottom: map-get($spacing, 8);
+  padding-bottom: map-get($spacing, 16);
   border-bottom: map-get($border, thin) solid map-get($color, dark);
 }
 

@@ -41,8 +41,13 @@ $border: (
 );
 
 $app: (
+  gap: map-get($spacing, 12),
+  wrapper-padding: map-get($spacing, 24),
   header-height: map-get($spacing, 64),
   navigation-width: map-get($spacing, 128),
-  gap: map-get($spacing, 12),
-  card-width: map-get($spacing, 256)
+  card-width: map-get($spacing, 256),
 );
+
+$learn: (
+  max-width: 1328px
+)

@@ -1,5 +1,12 @@
 @import 'styles';
 
+$padding: map-get($app, wrapper-padding);
+
+.progress {
+  max-width: map-get($learn, max-width) + $padding + $padding;
+  margin: 0 auto;
+}
+
 .back {
   width: map-get($spacing, 24);
 }

@@ -36,11 +36,11 @@ export class NavigationComponent implements OnInit {
         route: ERoute.explore,
         exactPathMatch: true
       },
-      {
-        name: 'Prepare',
-        route: ERoute.prepare,
-        exactPathMatch: true
-      },
+      // {
+      //   name: 'Prepare',
+      //   route: ERoute.prepare,
+      //   exactPathMatch: true
+      // },
       {
         name: 'Learn',
         route: ERoute.learn,
