@@ -5,7 +5,7 @@
 }
 
 .button {
-  padding: map-get($spacing, 8) 0;
+  padding: map-get($spacing, 2) 0;
   width: map-get($spacing, 128);
   border: none;
   text-decoration: none;
@@ -47,10 +47,5 @@
   &:disabled {
     border-color: map-get($color, medium);
     cursor: not-allowed;
-  }
-
-  @include tablet {
-    width: map-get($spacing, 192);
-    font-size: map-get($font-size, 24);
   }
 }

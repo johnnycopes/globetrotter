@@ -1,19 +1,19 @@
 @import 'styles';
 
-$header-height: map-get($app, navigation-height);
+$height: map-get($app, header-height);
 
 @mixin content-slot {
   height: 100%;
   width: 100%;
-  padding: 0 map-get($spacing, 24);
+  padding: 0 map-get($app, wrapper-padding);
 }
 
 .fixed-slideable-panel {
   position: fixed;
   top: 0;
-  left: 0;
+  right: 0;
   height: 100vh;
-  width: 100%;
+  width: calc(100% - #{map-get($app, navigation-width)});
   transform: translateY(-100vh);
   display: flex;
   flex-direction: column;
@@ -22,7 +22,7 @@ $header-height: map-get($app, navigation-height);
 
   &__offset,
   &__header {
-    height: $header-height;
+    height: $height;
     width: 100%;
 
     & ::ng-deep > * {
@@ -31,7 +31,7 @@ $header-height: map-get($app, navigation-height);
   }
 
   &__content {
-    height: calc(100% - #{($header-height * 2)});
+    height: calc(100% - #{($height * 2)});
     width: 100%;
 
     & ::ng-deep > * {

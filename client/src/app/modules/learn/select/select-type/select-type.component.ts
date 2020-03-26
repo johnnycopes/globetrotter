@@ -51,6 +51,6 @@ export class SelectTypeComponent implements OnInit {
       .split(' ')
       .value()
     const [ firstWord, secondWord ] = textAsArray;
-    return `${firstWord} → ${secondWord}`;
+    return `${firstWord} / ${secondWord}`;
   }
 }

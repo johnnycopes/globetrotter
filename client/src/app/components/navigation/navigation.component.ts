@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 
 import { ERoute } from '@models/route.enum';
+import { positionAnimation } from '@utility/animations';
 
-interface NavigationLink {
+interface INavigationLink {
   name: string;
   route: string;
   icon?: string;
@@ -13,14 +13,15 @@ interface NavigationLink {
 @Component({
   selector: 'app-navigation',
   templateUrl: './navigation.component.html',
-  styleUrls: ['./navigation.component.scss']
+  styleUrls: ['./navigation.component.scss'],
+  animations: [positionAnimation]
 })
 export class NavigationComponent implements OnInit {
-  home: NavigationLink;
-  links: NavigationLink[];
-  account: NavigationLink;
+  position = "navigation"
+  home: INavigationLink;
+  links: INavigationLink[];
 
-  constructor(private router: Router) { }
+  constructor() { }
 
   ngOnInit() {
     this.home = {
@@ -35,22 +36,21 @@ export class NavigationComponent implements OnInit {
         route: ERoute.explore,
         exactPathMatch: true
       },
-      {
-        name: 'Prepare',
-        route: ERoute.prepare,
-        exactPathMatch: true
-      },
+      // {
+      //   name: 'Prepare',
+      //   route: ERoute.prepare,
+      //   exactPathMatch: true
+      // },
       {
         name: 'Learn',
         route: ERoute.learn,
         exactPathMatch: false
+      },
+      {
+        name: 'Account',
+        route: ERoute.account,
+        exactPathMatch: false
       }
     ];
-    this.account = {
-      name: 'Account',
-      icon: 'User',
-      route: ERoute.account,
-      exactPathMatch: false
-    };
   }
 }

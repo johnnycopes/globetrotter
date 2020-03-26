@@ -1,0 +1,10 @@
+@import 'styles';
+
+:host {
+  margin-bottom: map-get($spacing, 8);
+  font-size: map-get($font-size, 16);
+  font-weight: map-get($font-weight, bold);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: map-get($color, medium);
+}

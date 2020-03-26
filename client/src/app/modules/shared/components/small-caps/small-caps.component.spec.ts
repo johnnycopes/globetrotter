@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InfoTableCellComponent } from './info-table-cell.component';
+import { SmallCapsComponent } from './small-caps.component';
 
-describe('InfoTableCellComponent', () => {
-  let component: InfoTableCellComponent;
-  let fixture: ComponentFixture<InfoTableCellComponent>;
+describe('SmallCapsComponent', () => {
+  let component: SmallCapsComponent;
+  let fixture: ComponentFixture<SmallCapsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ InfoTableCellComponent ]
+      declarations: [ SmallCapsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(InfoTableCellComponent);
+    fixture = TestBed.createComponent(SmallCapsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

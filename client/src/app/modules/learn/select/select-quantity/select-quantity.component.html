@@ -1,7 +1,13 @@
-<app-radio-buttons
-  text="How many countries would you like to include in the quiz?"
-  [options]="quantities"
-  [ngModel]="selectedQuantity$ | async"
-  (ngModelChange)="onChange($event)"
+<app-input
+  label="Quantity"
+  [showError]="invalid"
+  errorMessage="Invalid quantity"
   >
-</app-radio-buttons>
+  <div class="container">
+    <input type="number"
+      [ngModel]="quantity"
+      (ngModelChange)="onChange($event)"
+    />
+    <p>cards</p>
+  </div>
+</app-input>

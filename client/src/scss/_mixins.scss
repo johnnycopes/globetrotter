@@ -33,30 +33,20 @@ $breakpoints: (
   align-items: center;
 }
 
-@mixin quiz-width {
-  max-width: (map-get($app, quiz-card-width) * 5) + (map-get($app, quiz-cards-grid-gap) * 4);
-  width: 90%;
-  margin: 0 auto;
-}
-
-@mixin small-caps {
-  font-size: map-get($font-size, 18);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: map-get($color, medium);
+@mixin flag {
+  max-width: 192px;
+	max-height: 128px;
 }
 
 @mixin custom-scrollbar {
   &::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 2px 6px hsla(0, 0%, 0%, 0.3);
-    box-shadow: inset 0 2px 6px hsla(0, 0%, 0%, 0.3);
-    background-color: map-get($color, dark);
+    background-color: map-get($color, darkest);
     border-radius: map-get($border, radius);
   }
 
   &::-webkit-scrollbar {
     width: 10px;
-    background-color: map-get($color, dark);
+    background-color: map-get($color, darkest);
     border-radius: map-get($border, radius);
   }
 

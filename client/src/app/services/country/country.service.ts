@@ -43,12 +43,16 @@ export class CountryService implements Resolve<Observable<ICountry[]>> {
     return this.store.get(['countries']);
   }
 
+  getCountriesBySubregion(): Observable<_.Dictionary<ICountry[]>> {
+    return this.store.get(['countriesBySubregion']);
+  }
+
   getFormattedData(): Observable<IRegion[]> {
     return this.store.get(['formattedData']);
   }
 
   getCountriesFromSelection(selection: Selection): Observable<ICountry[]> {
-    return this.store.get(['countriesBySubregion']).pipe(
+    return this.getCountriesBySubregion().pipe(
       map(countriesBySubregion => {
         const quantity = selection.quantity || undefined;
         const countries = _.reduce(selection.countries, (accum, checkboxState, placeName) => {

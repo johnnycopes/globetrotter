@@ -22,7 +22,7 @@ form {
 
 :host ::ng-deep app-input {
   width: 100%;
-  margin-bottom: map-get($spacing, 24);
+  margin-bottom: map-get($spacing, 48);
 }
 
 .button {
