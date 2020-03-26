@@ -23,6 +23,7 @@ export class ListDetailsComponent<T> implements OnInit, AfterViewInit {
   @Input() getItemUniqueId: (item: T) => string;
   @Input() selectedItem: T;
   @Input() searchTerm: string;
+  @Input() placeholderText: string = "";
   @Output() selectedItemChange = new EventEmitter<T>();
   @Output() searchTermChange = new EventEmitter<string>();
   public containerHeight: string;

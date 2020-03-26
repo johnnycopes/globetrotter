@@ -17,6 +17,11 @@
   font-size: map-get($font-size, 16);
   transition: map-get($transition, border);
 
+  &::placeholder {
+    font-style: $font-stack;
+    color: map-get($color, light);
+  }
+
   &:focus {
     border-color: map-get($color, medium);
   }
