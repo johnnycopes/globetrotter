@@ -1,5 +1,29 @@
 @import 'styles';
 
-.quit {
-  width: map-get($spacing, 24);
+.wrapper {
+  max-width: map-get($learn, max-width);
+  margin: 0 auto;
+}
+
+.launchpad {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: map-get($spacing, 24);
+  padding-bottom: map-get($spacing, 16);
+  border-bottom: map-get($border, thin) solid map-get($color, dark);
+}
+
+.header {
+  font-size: map-get($font-size, 36);
+  font-weight: map-get($font-weight, bold);
+}
+
+.fields {
+
+  &__top {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: map-get($spacing, 24)
+  }
 }

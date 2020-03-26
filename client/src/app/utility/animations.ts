@@ -68,7 +68,6 @@ export const visibilityAnimation =
     transition('* => *', animate(`${EAnimationDuration.screenTransition}ms ease-in-out`))
   ]);
 
-
 export const flipAnimation =
   trigger('flip', [
     state('front', style({
@@ -113,10 +112,13 @@ export const positionAnimation =
       transform: 'translateY(-100vh)'
     })),
     state('header', style({
-      transform: 'translateY(calc(-100vh + 96px))' // this value must kept in sync with the header height in SCSS
+      transform: 'translateY(calc(-100vh + 64px))' // this value must kept in sync with the header height in SCSS
     })),
     state('fullscreen', style({
       transform: 'translateY(0)'
+    })),
+    state('navigation', style({
+      transform: 'translateX(128px)' //
     })),
     transition('* => *', animate(`${EAnimationDuration.fixedSlideablePanel}ms ease-in-out`))
   ]);

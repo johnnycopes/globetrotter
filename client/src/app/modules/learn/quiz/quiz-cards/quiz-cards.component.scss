@@ -1,13 +1,14 @@
 @import 'styles';
 
-$grid-gap: map-get($app, quiz-cards-grid-gap);
-
 .quiz-cards {
-  margin-top: $grid-gap;
-  padding-bottom: calc((#{map-get($app, navigation-height)} / 2) + #{$grid-gap});
   display: grid;
+  grid-template-columns: repeat(auto-fill, map-get($app, card-width));
+  grid-auto-rows: map-get($app, card-width);
+  grid-gap: map-get($app, gap);
   justify-content: center;
-  grid-template-columns: repeat(auto-fill, 300px);
-  grid-auto-rows: 300px;
-  grid-gap: $grid-gap;
+  max-width: map-get($learn, max-width);
+  height: calc(100vh - #{map-get($spacing, 24)}); // offset shell content wrapper top/bottom padding
+  margin: 0 auto;
+  padding-top: map-get($app, header-height);
+  padding-bottom: calc((#{map-get($app, header-height)} / 2));
 }

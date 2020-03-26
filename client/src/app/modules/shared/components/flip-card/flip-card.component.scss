@@ -6,12 +6,10 @@
 
 .flip-card {
   font-family: $font-stack;
-  font-weight: map-get($font-weight, normal);
-  font-size: map-get($font-size, 30);
   color: map-get($color, darkest);
   position: relative;
-  width: 300px;
-  height: 300px;
+  width: map-get($app, card-width);
+  height: map-get($app, card-width);
   transform-style: preserve-3d;
 
   &__side {

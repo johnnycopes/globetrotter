@@ -9,43 +9,44 @@
   </div>
   <img class="flag"
     [src]="country.flag"
+    alt="Flag of {{country.name}}"
   />
 </div>
-<app-info-table>
-  <app-info-table-cell category="subregion">
+<div class="table">
+  <app-small-caps-content header="subregion">
     {{country.subregion}}
-  </app-info-table-cell>
-  <app-info-table-cell category="demonym">
+  </app-small-caps-content>
+  <app-small-caps-content header="demonym">
     {{country.demonym}}
-  </app-info-table-cell>
-  <app-info-table-cell [category]="country.languages.length > 1 ? 'languages' : 'language'">
+  </app-small-caps-content>
+  <app-small-caps-content [header]="country.languages.length > 1 ? 'languages' : 'language'">
     <span *ngFor="let language of country.languages; last as last">
       {{language.name}}{{!last ? ',' : ''}}
     </span>
-  </app-info-table-cell>
-  <app-info-table-cell [category]="country.currencies.length > 1 ? 'currencies' : 'currency'">
+  </app-small-caps-content>
+  <app-small-caps-content [header]="country.currencies.length > 1 ? 'currencies' : 'currency'">
     <span *ngFor="let currency of country.currencies; last as last">
       {{currency.code}}{{!last ? ',' : ''}}
     </span>
-  </app-info-table-cell>
-  <app-info-table-cell category="population">
+  </app-small-caps-content>
+  <app-small-caps-content header="population">
     {{country.population | number}}
-  </app-info-table-cell>
-  <app-info-table-cell category="size">
+  </app-small-caps-content>
+  <app-small-caps-content header="size">
     <div>
       {{country.area | number}} km<sup>2</sup>
     </div>
     <div>
       {{country.area | measurement:'sqKm':'sqMi' | number:'0.0-0'}} mi<sup>2</sup>
     </div>
-  </app-info-table-cell>
-  <app-info-table-cell category="numeric code">
+  </app-small-caps-content>
+  <app-small-caps-content header="numeric code">
     +{{country.numericCode}}
-  </app-info-table-cell>
-  <app-info-table-cell category="top-level domain">
+  </app-small-caps-content>
+  <app-small-caps-content header="top-level domain">
     {{country.topLevelDomain}}
-  </app-info-table-cell>
-</app-info-table>
+  </app-small-caps-content>
+</div>
 <p class="summary">
   {{summary}}
 </p>

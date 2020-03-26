@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, TemplateRef, ChangeDete
 import { InputComponent } from '../input/input.component';
 
 export interface IListDetailsStyles {
-  heightOffset: string;
+  offsetTop: string;
   gap: string;
 }
 
@@ -17,12 +17,13 @@ export class ListDetailsComponent<T> implements OnInit, AfterViewInit {
   @Input() listItemTemplate: TemplateRef<any>;
   @Input() detailsTemplate: TemplateRef<any>;
   @Input() styles: IListDetailsStyles = {
-    heightOffset: '0',
+    offsetTop: '0px',
     gap: '12px'
   };
   @Input() getItemUniqueId: (item: T) => string;
   @Input() selectedItem: T;
   @Input() searchTerm: string;
+  @Input() placeholderText: string = "";
   @Output() selectedItemChange = new EventEmitter<T>();
   @Output() searchTermChange = new EventEmitter<string>();
   public containerHeight: string;
@@ -31,6 +32,7 @@ export class ListDetailsComponent<T> implements OnInit, AfterViewInit {
     return this.getItemUniqueId(item);
   }
   @ViewChild(InputComponent, { read: ElementRef }) private search: ElementRef;
+  public gap: string = '12px';
 
   constructor(private cdRef: ChangeDetectorRef) { }
 
@@ -41,14 +43,14 @@ export class ListDetailsComponent<T> implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.containerHeight = `calc(100vh - ${this.styles.gap} - ${this.styles.heightOffset})`;
+    this.containerHeight = `calc(100vh - ${this.styles.gap} - ${this.styles.gap} - ${this.styles.offsetTop})`;
     this.toolbarHeight = `
       calc(100vh -
       ${this.search.nativeElement.offsetHeight}px -
       ${this.styles.gap} -
       ${this.styles.gap} -
       ${this.styles.gap} -
-      ${this.styles.heightOffset})
+      ${this.styles.offsetTop})
     `;
     this.cdRef.detectChanges();
   }

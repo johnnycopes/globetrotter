@@ -3,8 +3,7 @@
 .quiz-card {
 
   &__flag {
-    max-width: 200px;
-    max-height: 150px;
+    @include flag;
   }
 
   &__name {

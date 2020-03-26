@@ -6,11 +6,6 @@
   position: relative;
 }
 
-label {
-  margin-bottom: map-get($spacing, 8);
-  @include small-caps();
-}
-
 :host ::ng-deep input {
   width: 100%;
   padding: map-get($spacing, 8);
@@ -19,8 +14,13 @@ label {
   background: map-get($color, white);
   color: map-get($color, darkest);
   font-family: $font-stack;
-  font-size: map-get($font-size, 20);
+  font-size: map-get($font-size, 16);
   transition: map-get($transition, border);
+
+  &::placeholder {
+    font-style: $font-stack;
+    color: map-get($color, light);
+  }
 
   &:focus {
     border-color: map-get($color, medium);
@@ -34,5 +34,6 @@ label {
 
 .error {
   position: absolute;
-  right: map-get($spacing, 8);
+  width: 100%;
+  bottom: -32px;
 }

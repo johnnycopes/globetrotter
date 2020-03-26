@@ -1,17 +1,19 @@
 @import 'styles';
 
 .content {
-  padding-top: map-get($app, navigation-height);
+  position: relative;
+  margin-left: map-get($app, navigation-width);
 
   &__wrapper {
-    @include quiz-width;
-    min-height: map-get($app, page-height);
     display: flex;
     flex-direction: column;
     justify-content: center;
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: map-get($app, gap) map-get($app, wrapper-padding);
 
     &--no-scroll {
-      height: map-get($app, page-height);
+      height: 100vh;
       overflow: hidden;
     }
   }

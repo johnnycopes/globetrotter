@@ -1,0 +1,19 @@
+@import 'styles';
+
+:host {
+  display: flex;
+  align-items: center;
+}
+
+app-input {
+  margin-left: map-get($spacing, 16);
+}
+
+.container {
+  display: flex;
+  align-items: center;
+
+  input {
+    margin-right: map-get($spacing, 8);
+  }
+}

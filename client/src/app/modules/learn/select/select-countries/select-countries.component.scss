@@ -9,7 +9,6 @@
   justify-content: space-between;
   align-items: center;
   flex-direction: column;
-  margin-bottom: map-get($spacing, 24);
 
   @include desktop {
     flex-direction: row;
@@ -20,8 +19,7 @@
     margin-bottom: map-get($spacing, 12);
 
     @include tablet {
-      font-size: map-get($font-size, 36);
-      margin-bottom: map-get($spacing, 24);
+      margin-bottom: map-get($spacing, 12);
     }
 
     @include desktop {
