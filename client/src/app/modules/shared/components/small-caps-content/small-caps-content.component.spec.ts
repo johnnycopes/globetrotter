@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LinkComponent } from './link.component';
+import { SmallCapsContentComponent } from './small-caps-content.component';
 
-describe('LinkComponent', () => {
-  let component: LinkComponent;
-  let fixture: ComponentFixture<LinkComponent>;
+describe('SmallCapsContentComponent', () => {
+  let component: SmallCapsContentComponent;
+  let fixture: ComponentFixture<SmallCapsContentComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LinkComponent ]
+      declarations: [ SmallCapsContentComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LinkComponent);
+    fixture = TestBed.createComponent(SmallCapsContentComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

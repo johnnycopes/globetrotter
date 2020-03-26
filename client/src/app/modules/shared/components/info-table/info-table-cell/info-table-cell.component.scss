@@ -1,6 +1,0 @@
-@import 'styles';
-
-.category {
-  @include small-caps;
-  margin-bottom: map-get($spacing, 8);
-}

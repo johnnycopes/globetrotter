@@ -10,19 +10,18 @@ import { FixedSlideablePanelComponent } from './components/fixed-slideable-panel
 import { FlipCardComponent } from './components/flip-card/flip-card.component';
 import { FormComponent } from './components/form/form.component';
 import { IconComponent } from './components/icon/icon.component';
-import { InfoTableComponent } from './components/info-table/info-table.component';
-import { InfoTableCellComponent } from './components/info-table/info-table-cell/info-table-cell.component';
 import { InputComponent } from './components/input/input.component';
-import { LinkComponent } from './components/link/link.component';
 import { ListDetailsComponent } from './components/list-details/list-details.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { MeasurementPipe } from './pipes/measurement.pipe';
 import { ModalComponent } from './components/modal/modal.component';
 import { NestedCheckboxesComponent } from './components/nested-checkboxes/nested-checkboxes.component';
 import { RadioButtonsComponent } from './components/radio-buttons/radio-buttons.component';
+import { SmallCapsComponent } from './components/small-caps/small-caps.component';
 import { TabComponent } from './components/tabset/tab/tab.component';
 import { TabsetComponent } from './components/tabset/tabset.component';
 import { TreeComponent } from './components/tree/tree.component';
+import { SmallCapsContentComponent } from './components/small-caps-content/small-caps-content.component';
 
 @NgModule({
   imports: [
@@ -39,16 +38,15 @@ import { TreeComponent } from './components/tree/tree.component';
     FlipCardComponent,
     FormComponent,
     IconComponent,
-    InfoTableComponent,
-    InfoTableCellComponent,
     InputComponent,
     LoaderComponent,
-    LinkComponent,
     ListDetailsComponent,
     MeasurementPipe,
     ModalComponent,
     NestedCheckboxesComponent,
     RadioButtonsComponent,
+    SmallCapsComponent,
+    SmallCapsContentComponent,
     TabComponent,
     TabsetComponent,
     TreeComponent,
@@ -62,16 +60,15 @@ import { TreeComponent } from './components/tree/tree.component';
     FlipCardComponent,
     FormComponent,
     IconComponent,
-    InfoTableComponent,
-    InfoTableCellComponent,
     InputComponent,
     LoaderComponent,
-    LinkComponent,
     MeasurementPipe,
     ModalComponent,
     ListDetailsComponent,
     NestedCheckboxesComponent,
     RadioButtonsComponent,
+    SmallCapsComponent,
+    SmallCapsContentComponent,
     TabComponent,
     TabsetComponent,
     TreeComponent

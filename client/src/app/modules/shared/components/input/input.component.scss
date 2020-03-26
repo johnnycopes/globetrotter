@@ -6,11 +6,6 @@
   position: relative;
 }
 
-label {
-  margin-bottom: map-get($spacing, 8);
-  @include small-caps();
-}
-
 :host ::ng-deep input {
   width: 100%;
   padding: map-get($spacing, 8);
