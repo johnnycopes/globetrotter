@@ -1,7 +1,13 @@
-<p>Number of cards:</p>
-<app-input>
-  <input type="number"
-    [ngModel]="quantity$ | async"
-    (ngModelChange)="onChange($event)"
-  />
+<app-input
+  label="Quantity"
+  [showError]="invalid"
+  errorMessage="Invalid quantity"
+  >
+  <div class="container">
+    <input type="number"
+      [ngModel]="quantity"
+      (ngModelChange)="onChange($event)"
+    />
+    <p>cards</p>
+  </div>
 </app-input>

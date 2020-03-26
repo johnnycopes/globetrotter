@@ -29,5 +29,6 @@
 
 .error {
   position: absolute;
-  right: map-get($spacing, 8);
+  width: 100%;
+  bottom: -32px;
 }

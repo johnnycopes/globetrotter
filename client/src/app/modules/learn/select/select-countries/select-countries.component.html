@@ -1,4 +1,7 @@
-<ng-container *ngIf="vm$ | async as vm">
+<app-small-caps-content
+  *ngIf="vm$ | async as vm"
+  header="Content"
+  >
   <div class="top">
     <div class="top__counter">
       <span class="bold">
@@ -58,4 +61,4 @@
       </ng-template>
     </div>
   </div>
-</ng-container>
+</app-small-caps-content>

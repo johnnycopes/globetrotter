@@ -5,9 +5,9 @@
 }
 
 .alert {
-  padding: map-get($spacing, 8);
+  padding: map-get($spacing, 4);
   border-radius: map-get($border, radius);
-  font-size: map-get($font-size, 20);
+  font-size: map-get($font-size, 16);
   font-weight: map-get($font-weight, bold);
 
   &--success {
@@ -21,6 +21,7 @@
   }
 
   &--large {
+    font-size: map-get($font-size, 20);
     padding: map-get($spacing, 16);
   }
 }

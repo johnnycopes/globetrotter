@@ -1,55 +1,57 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Observable, combineLatest } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 import { ERoute } from '@models/route.enum';
 import { Selection } from '@models/selection.class';
-import { EAnimationDuration } from '@models/animation-duration.enum';
 import { SelectService } from '@services/select/select.service';
-import { UtilityService } from '@services/utility/utility.service';
-import { TFixedSlideablePanelPosition } from '@shared/components/fixed-slideable-panel/fixed-slideable-panel.component';
-import { TTabsetContentVisibility } from '@shared/components/tabset/tabset.component';
 import { fadeInAnimation } from '@utility/animations';
+import { CountryService } from '@services/country/country.service';
+
+interface IViewModel {
+  numberOfSelectedCountries: number;
+  quantity: number;
+  invalidQuantity: boolean;
+}
 
 @Component({
   selector: 'app-select',
   templateUrl: './select.component.html',
   styleUrls: ['./select.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [fadeInAnimation]
 })
-export class SelectComponent implements OnInit, OnDestroy {
-  // tabsetControlsPosition: TFixedSlideablePanelPosition = 'header';
-  // tabsetContentVisibility: TTabsetContentVisibility = 'visible';
-  canStartQuiz: boolean;
+export class SelectComponent implements OnInit {
+  vm$: Observable<IViewModel>;
   private queryParams: _.Dictionary<string>;
-  public selection: Selection;
-  private selectionSubscription: Subscription;
+  private selection: Selection;
+  private selection$: Observable<Selection>;
+  private quantity$: Observable<number>;
+  private invalidQuantity$: Observable<boolean>;
+  private numberOfSelectedCountries$: Observable<number>;
 
   constructor(
+    private countryService: CountryService,
     private selectService: SelectService,
-    private utilityService: UtilityService,
     private router: Router
   ) { }
 
   ngOnInit(): void {
-    this.selectionSubscription = this.selectService.getSelection().subscribe(
-      selection => {
-        this.selection = selection;
-        this.canStartQuiz = _.some(this.selection.countries, checkboxState => checkboxState === 'checked');
-      }
+    this.initializeSubscriptions();
+    this.vm$ = combineLatest([
+      this.numberOfSelectedCountries$,
+      this.quantity$,
+      this.invalidQuantity$
+    ]).pipe(
+      map(([numberOfSelectedCountries, quantity, invalidQuantity]) =>
+        ({ numberOfSelectedCountries, quantity, invalidQuantity })
+      )
     );
   }
 
-  ngOnDestroy(): void {
-    this.selectionSubscription.unsubscribe();
-  }
-
   async onLaunch(): Promise<void> {
-    // this.tabsetContentVisibility = 'invisible';
-    // await this.utilityService.wait(EAnimationDuration.fixedSlideablePanel);
-    // this.tabsetControlsPosition = 'offscreen';
-    // await this.utilityService.wait(EAnimationDuration.fixedSlideablePanel);
     this.queryParams = this.selectService.mapSelectionToQueryParams(this.selection);
     this.router.navigate(
       [`${ERoute.learn}/${ERoute.quiz}`],
@@ -57,7 +59,34 @@ export class SelectComponent implements OnInit, OnDestroy {
     );
   }
 
-  onQuit(): void {
-    this.router.navigate([ERoute.home]);
+  private initializeSubscriptions(): void {
+    this.selection$ = this.selectService.getSelection().pipe(
+      tap(selection => this.selection = selection)
+    );
+    this.numberOfSelectedCountries$ = combineLatest([
+      this.countryService.getCountriesBySubregion(),
+      this.selection$
+    ]).pipe(
+      map(([subregions, selection]) => {
+        const selectedPlaces = _(selection.countries)
+          .pickBy((value) => value === "checked")
+          .keys()
+          .value();
+        return _.reduce(selectedPlaces, (total, currentPlace) =>
+          subregions[currentPlace] ? total + subregions[currentPlace].length : total
+        , 0);
+      })
+    );
+    this.quantity$ = this.selection$.pipe(
+      map(selection => selection.quantity)
+    );
+    this.invalidQuantity$ = combineLatest([
+      this.numberOfSelectedCountries$,
+      this.quantity$
+    ]).pipe(
+      map(([numberOfSelectedCountries, quantity]) => {
+        return numberOfSelectedCountries <= 1 || quantity < 2 || quantity > numberOfSelectedCountries;
+      })
+    );
   }
 }

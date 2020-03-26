@@ -1,7 +1,11 @@
-<p>Front / back of cards:</p>
-<app-radio-buttons
-  [options]="types"
-  [ngModel]="selectedType$ | async"
-  (ngModelChange)="onChange($event)"
-  >
-</app-radio-buttons>
+<app-small-caps-content header="Type">
+  <div class="container">
+    <p>Front / back of cards:</p>
+    <app-radio-buttons
+      [options]="types"
+      [ngModel]="selectedType$ | async"
+      (ngModelChange)="onChange($event)"
+      >
+    </app-radio-buttons>
+  </div>
+</app-small-caps-content>

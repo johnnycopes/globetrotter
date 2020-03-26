@@ -1,4 +1,5 @@
 <div class="wrapper"
+  *ngIf="vm$ | async as vm"
   @fadeIn
   >
   <div class="launchpad">
@@ -8,22 +9,20 @@
     <app-button
       buttonText="Launch"
       buttonStyle="primary"
-      [disabled]="!canStartQuiz"
+      [disabled]="vm.invalidQuantity"
       (clicked)="onLaunch()"
       >
     </app-button>
   </div>
   <div class="fields">
     <div class="fields__top">
-      <app-small-caps-content header="Type">
-        <app-select-type></app-select-type>
-      </app-small-caps-content>
-      <app-small-caps-content header="Quantity">
-        <app-select-quantity></app-select-quantity>
-      </app-small-caps-content>
+      <app-select-type></app-select-type>
+      <app-select-quantity
+        [quantity]="vm.quantity"
+        [invalid]="vm.invalidQuantity"
+        >
+      </app-select-quantity>
     </div>
-    <app-small-caps-content header="Content">
-      <app-select-countries></app-select-countries>
-    </app-small-caps-content>
+    <app-select-countries></app-select-countries>
   </div>
 </div>

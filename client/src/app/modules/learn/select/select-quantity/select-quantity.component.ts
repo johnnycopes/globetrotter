@@ -1,9 +1,7 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core'
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core'
 import * as _ from 'lodash';
 ;
-import { SelectService } from '@services//select/select.service';
+import { SelectService } from '@services/select/select.service';
 
 @Component({
   selector: 'app-select-quantity',
@@ -11,16 +9,11 @@ import { SelectService } from '@services//select/select.service';
   styleUrls: ['./select-quantity.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SelectQuantityComponent implements OnInit {
-  quantity$: Observable<number>;
+export class SelectQuantityComponent {
+  @Input() quantity: number
+  @Input() invalid: boolean = false;
 
   constructor(private selectService: SelectService) { }
-
-  ngOnInit(): void {
-    this.quantity$ = this.selectService.getSelection().pipe(
-      map(selection => selection.quantity)
-    );
-  }
 
   onChange(quantity: number): void {
     this.selectService.updateQuantity(quantity);
