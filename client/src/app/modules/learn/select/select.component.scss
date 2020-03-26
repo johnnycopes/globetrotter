@@ -3,7 +3,10 @@
 .launchpad {
   display: flex;
   justify-content: space-between;
-  margin-bottom: map-get($spacing, 32);
+  align-items: center;
+  margin-bottom: map-get($spacing, 24);
+  padding-bottom: map-get($spacing, 8);
+  border-bottom: map-get($border, thin) solid map-get($color, dark);
 }
 
 .header {

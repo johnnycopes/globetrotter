@@ -1,15 +1,58 @@
 @import 'styles';
 
 nav {
+  display: flex;
+  flex-direction: column;
   position: fixed;
   top: 0;
-  left: 0;
+  left: -(map-get($app, navigation-width));
   width: map-get($app, navigation-width);
   height: 100%;
-  background: map-get($color, darkest-inset);
+  padding: map-get($spacing, 16) 0;
   border-right: map-get($border, thinnest) solid map-get($color, dark);
+  background: map-get($color, darkest-inset);
 }
 
-.icon-link {
-  flex: 0;
+.home {
+  display: flex;
+  justify-content: center;
+  margin-bottom: map-get($spacing, 32);
+  padding: 0;
+
+  &__icon {
+    width: map-get($spacing, 64);
+  }
+}
+
+.link {
+  display: block;
+  padding: map-get($spacing, 16) map-get($spacing, 24);
+  font-size: map-get($font-size, 20);
+  color: map-get($color, light);
+
+  &--active {
+    color: map-get($color, lightest);
+    font-weight: map-get($font-weight, bold);
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      height: 70%;
+      transform: translateY(-50%);
+      width: map-get($spacing, 4);
+      background: map-get($color, white);
+    }
+  }
+}
+
+.signature {
+  margin-top: auto;
+  padding: 0 map-get($spacing, 12);
+  font-size: map-get($font-size, 14);
+  line-height: map-get($line-height, normal);
+  text-align: center;
+  color: map-get($color, medium-dark);
 }

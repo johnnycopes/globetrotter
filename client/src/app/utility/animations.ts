@@ -68,7 +68,6 @@ export const visibilityAnimation =
     transition('* => *', animate(`${EAnimationDuration.screenTransition}ms ease-in-out`))
   ]);
 
-
 export const flipAnimation =
   trigger('flip', [
     state('front', style({
@@ -117,6 +116,9 @@ export const positionAnimation =
     })),
     state('fullscreen', style({
       transform: 'translateY(0)'
+    })),
+    state('navigation', style({
+      transform: 'translateX(128px)' //
     })),
     transition('* => *', animate(`${EAnimationDuration.fixedSlideablePanel}ms ease-in-out`))
   ]);
