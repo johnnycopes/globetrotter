@@ -32,7 +32,9 @@ export class RouterService {
         const routeUrl = navigationEnd.urlAfterRedirects.split('/')[1];
         return routeUrl;
       })
-    ).subscribe(route => this.store.set(['currentRoute'], route));
+    ).subscribe(
+      route => this.store.set(['currentRoute'], route)
+    );
 
     this.router.events.pipe(
       filter(event => event instanceof RouterEvent),
@@ -44,7 +46,9 @@ export class RouterService {
         }
         return true;
       })
-    ).subscribe(loading => this.store.set(['loading'], loading));
+    ).subscribe(
+      loading => this.store.set(['loading'], loading)
+    );
   }
 
 }

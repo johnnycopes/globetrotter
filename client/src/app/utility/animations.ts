@@ -39,7 +39,7 @@ export const fadeInWithFixedSlideablePanelDelayAnimation =
       useAnimation(fadeIn, {
         params: {
           timing: EAnimationDuration.screenTransition,
-          delay: EAnimationDuration.fixedSlideablePanel
+          delay: EAnimationDuration.position
         }
       })
     ])
@@ -118,9 +118,9 @@ export const positionAnimation =
       transform: 'translateY(0)'
     })),
     state('navigation', style({
-      transform: 'translateX(128px)' //
+      transform: 'translateX(100%)'
     })),
-    transition('* => *', animate(`${EAnimationDuration.fixedSlideablePanel}ms ease-in-out`))
+    transition('* => *', animate(`${EAnimationDuration.position}ms ease-in-out`))
   ]);
 
 export const staggerAnimation =

@@ -13,40 +13,57 @@
   />
 </div>
 <div class="table">
-  <app-small-caps-content header="subregion">
-    {{country.subregion}}
-  </app-small-caps-content>
-  <app-small-caps-content header="demonym">
-    {{country.demonym}}
-  </app-small-caps-content>
-  <app-small-caps-content [header]="country.languages.length > 1 ? 'languages' : 'language'">
-    <span *ngFor="let language of country.languages; last as last">
-      {{language.name}}{{!last ? ',' : ''}}
-    </span>
-  </app-small-caps-content>
-  <app-small-caps-content [header]="country.currencies.length > 1 ? 'currencies' : 'currency'">
-    <span *ngFor="let currency of country.currencies; last as last">
-      {{currency.code}}{{!last ? ',' : ''}}
-    </span>
-  </app-small-caps-content>
-  <app-small-caps-content header="population">
-    {{country.population | number}}
-  </app-small-caps-content>
-  <app-small-caps-content header="size">
-    <div>
-      {{country.area | number}} km<sup>2</sup>
-    </div>
-    <div>
-      {{country.area | measurement:'sqKm':'sqMi' | number:'0.0-0'}} mi<sup>2</sup>
-    </div>
-  </app-small-caps-content>
-  <app-small-caps-content header="numeric code">
-    +{{country.numericCode}}
-  </app-small-caps-content>
-  <app-small-caps-content header="top-level domain">
-    {{country.topLevelDomain}}
+  <app-small-caps-content
+    *ngFor="let tableDatum of tableData"
+    [header]="tableDatum.header"
+    [template]="tableDatum?.template"
+    >
+    {{tableDatum?.content}}
   </app-small-caps-content>
 </div>
 <p class="summary">
   {{summary}}
 </p>
+
+
+
+<ng-template #language>
+  <ng-container *ngTemplateOutlet="list; context: {
+    items: country.languages,
+    key: 'name'
+  }"
+  >
+  </ng-container>
+</ng-template>
+
+<ng-template #currency>
+  <ng-container *ngTemplateOutlet="list; context: {
+    items: country.currencies,
+    key: 'code'
+  }"
+  >
+  </ng-container>
+</ng-template>
+
+<ng-template #population>
+  {{country.population | number}}
+</ng-template>
+
+<ng-template #size>
+  <div>
+    {{country.area | number}} km<sup>2</sup>
+  </div>
+  <div>
+    {{country.area | measurement:'sqKm':'sqMi' | number:'0.0-0'}} mi<sup>2</sup>
+  </div>
+</ng-template>
+
+<ng-template #list
+  let-items="items"
+  let-key="key"
+  >
+  <span *ngFor="let item of items; last as last">
+    {{ item[key] }}{{ !last ? ',' : '' }}
+  </span>
+</ng-template>
+

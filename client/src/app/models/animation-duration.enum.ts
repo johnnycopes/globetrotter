@@ -4,6 +4,6 @@ export enum EAnimationDuration {
   cardsFadeInDelay = 600,
   displayCard = 1200,
   flipCard = 300,
-  fixedSlideablePanel = 500,
+  position = 500,
   screenTransition = 300
 };
