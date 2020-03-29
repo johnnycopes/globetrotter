@@ -19,9 +19,9 @@ export type TFlipCardGuess = 'correct' | 'incorrect' | 'none';
 })
 export class FlipCardComponent extends AnimatedComponent {
   @Input() side: TFlipCardSide = 'front';
-  @Input() guess: TFlipCardGuess;
+  @Input() guess: TFlipCardGuess = 'none';
   @Input() canFlip: boolean = true;
-  @Input() disabled: boolean;
+  @Input() disabled: boolean = false;
   @Output() flipped = new EventEmitter<TFlipCardSide>();
 
   onClick(): void {

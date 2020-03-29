@@ -10,6 +10,7 @@ import { EQuizType } from '@models/quiz-type.enum';
 import { ERoute } from '@models/route.enum';
 import { TFixedSlideablePanelPosition } from '@shared/components/fixed-slideable-panel/fixed-slideable-panel.component';
 import { QuizService } from '@services/quiz/quiz.service';
+import { ICountry } from '@models/country.interface';
 
 interface IViewModel {
   quiz: Quiz,
@@ -30,10 +31,10 @@ export class QuizMenuComponent implements OnInit {
   private quiz$: Observable<Quiz>;
   private position$: Observable<TFixedSlideablePanelPosition>;
   private prompt$: Observable<string>;
-  private promptDict: _.Dictionary<string> = {
-    [EQuizType.flagsCountries]: 'name',
-    [EQuizType.capitalsCountries]: 'name',
-    [EQuizType.countriesCapitals]: 'capital'
+  private promptDict: _.Dictionary<(country: ICountry) => string> = {
+    [EQuizType.flagsCountries]: country => country.name,
+    [EQuizType.capitalsCountries]: country => country.name,
+    [EQuizType.countriesCapitals]: country => country.capital
   };
 
   constructor(
@@ -80,9 +81,8 @@ export class QuizMenuComponent implements OnInit {
     );
     this.prompt$ = this.quiz$.pipe(
       map(quiz => {
-        const currentCountry = _.head(quiz.countries);
-        const key = this.promptDict[quiz.type];
-        return _.get(currentCountry, key, '');
+        const currentCountry = quiz.countries[0];
+        return currentCountry ? this.promptDict[quiz.type](currentCountry) : '';
       }),
       distinctUntilChanged()
     );

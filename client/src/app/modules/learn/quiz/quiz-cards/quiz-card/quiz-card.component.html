@@ -3,6 +3,7 @@
   [guess]="guess"
   [disabled]="disabled"
   (flipped)="onFlip()"
+  (animationFinished)="onAnimationFinish($event)"
   >
   <div app-flip-card-front>
     <ng-container *ngTemplateOutlet="templates.front"></ng-container>
