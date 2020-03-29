@@ -1,6 +1,5 @@
-import { Component, Input, Output, EventEmitter, ViewChild, OnInit, TemplateRef, OnDestroy } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { AnimationEvent } from '@angular/animations';
-import { Subscription } from 'rxjs';
 import * as _ from 'lodash';
 
 import { ICountry } from '@models/country.interface';
@@ -17,8 +16,9 @@ type TCardTemplates = _.Dictionary<TemplateRef<any>>;
   templateUrl: './quiz-card.component.html',
   styleUrls: ['./quiz-card.component.scss'],
 })
-export class QuizCardComponent implements OnInit, OnDestroy {
+export class QuizCardComponent implements OnInit {
   @Input() country: ICountry;
+  @Input() isCurrentCountry: boolean;
   @Input() canFlip: boolean;
   @Input() type: EQuizType;
   @Output() flipped = new EventEmitter<boolean>();
@@ -29,20 +29,11 @@ export class QuizCardComponent implements OnInit, OnDestroy {
   guess: TFlipCardGuess = "none";
   disabled: boolean = false;
   templates: TCardTemplates;
-  private isGuessCorrect: boolean | undefined;
+  private processingFlip = false;
   private templatesDict: _.Dictionary<TCardTemplates>;
-  private currentCountry: ICountry;
-  private currentCountrySubscription: Subscription;
 
   ngOnInit(): void {
     this.setCardTemplates();
-    this.currentCountrySubscription = this.quizService.getQuiz().subscribe(
-      quiz => this.currentCountry = quiz.countries[0]
-    );
-  }
-
-  ngOnDestroy(): void {
-    this.currentCountrySubscription.unsubscribe();
   }
 
   constructor(
@@ -56,13 +47,13 @@ export class QuizCardComponent implements OnInit, OnDestroy {
     // onFlip kicks off the chain of events, starting with the flip animation from front to back
     if (triggerName === 'flip') {
       if (toState === 'back') {
-        this.guess = this.isGuessCorrect ? 'correct' : 'incorrect';
+        this.guess = this.isCurrentCountry ? 'correct' : 'incorrect';
       }
-      else if (toState === 'front') {
-        if (this.isGuessCorrect === false) {
-          this.updateQuiz(false);
+      else if (toState === 'front' && this.processingFlip) {
+        if (this.isCurrentCountry === false) {
+          this.updateQuiz();
         }
-        else if (this.isGuessCorrect === true) {
+        else if (this.isCurrentCountry === true) {
           this.disabled = true;
         }
       }
@@ -79,12 +70,12 @@ export class QuizCardComponent implements OnInit, OnDestroy {
 
     // disabled is only reached after guess state to correct
     else if (triggerName === 'disabled' && toState === 'disabled') {
-      this.updateQuiz(true);
+      this.updateQuiz();
     }
   }
 
-  async onFlip(): Promise<void> {
-    this.isGuessCorrect = this.country === this.currentCountry;
+  onFlip(): void {
+    this.processingFlip = true;
     this.flipped.emit(true);
   }
 
@@ -106,8 +97,9 @@ export class QuizCardComponent implements OnInit, OnDestroy {
     this.templates = this.templatesDict[this.type];
   }
 
-  private updateQuiz(correctGuess: boolean) {
-    this.quizService.updateQuiz(correctGuess);
+  private updateQuiz() {
+    this.quizService.updateQuiz(this.isCurrentCountry);
+    this.processingFlip = false;
     this.flipped.emit(false);
   }
 }

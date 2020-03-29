@@ -11,6 +11,7 @@ import { staggerAnimation, fadeInAnimation } from '@utility/animations';
 interface IViewModel {
   quizType: EQuizType;
   countries: ICountry[];
+  currentCountry: ICountry;
 }
 
 @Component({
@@ -27,6 +28,7 @@ export class QuizCardsComponent implements OnInit {
   vm$: Observable<IViewModel>;
   private quizType$: Observable<EQuizType>;
   private countries$: Observable<ICountry[]>;
+  private currentCountry$: Observable<ICountry>;
 
   constructor(private quizService: QuizService) { }
 
@@ -34,9 +36,10 @@ export class QuizCardsComponent implements OnInit {
     this.initializeStreams();
     this.vm$ = combineLatest([
       this.quizType$,
-      this.countries$
+      this.countries$,
+      this.currentCountry$
     ]).pipe(
-      map(([quizType, countries]) => ({quizType, countries}))
+      map(([quizType, countries, currentCountry]) => ({quizType, countries, currentCountry}))
     );
   }
 
@@ -54,5 +57,9 @@ export class QuizCardsComponent implements OnInit {
       map(quiz => _.shuffle(quiz.countries)),
       first()
     );
+    this.currentCountry$ = quiz$.pipe(
+      map(quiz => quiz.countries[0]),
+      distinctUntilChanged()
+    )
   }
 }
