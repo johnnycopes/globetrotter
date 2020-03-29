@@ -1,5 +1,8 @@
 <ng-container *ngIf="vm$ | async as vm">
-  <app-fixed-slideable-panel [position]="vm.position">
+  <app-fixed-slideable-panel
+    [position]="vm.position"
+    (animationFinished)="onMenuAnimationFinish($event)"
+    >
     <app-container class="progress"
       header
       *ngIf="!vm.quiz.isComplete"

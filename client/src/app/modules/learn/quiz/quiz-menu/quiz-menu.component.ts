@@ -2,15 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
 import { map, tap, distinctUntilChanged } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { AnimationEvent } from '@angular/animations';
 import * as _ from 'lodash';
 
 import { Quiz } from '@models/quiz.class';
 import { EQuizType } from '@models/quiz-type.enum';
-import { EAnimationDuration } from '@models/animation-duration.enum';
 import { ERoute } from '@models/route.enum';
 import { TFixedSlideablePanelPosition } from '@shared/components/fixed-slideable-panel/fixed-slideable-panel.component';
 import { QuizService } from '@services/quiz/quiz.service';
-import { UtilityService } from '@services/utility/utility.service';
 
 interface IViewModel {
   quiz: Quiz,
@@ -37,7 +36,6 @@ export class QuizMenuComponent implements OnInit {
 
   constructor(
     private quizService: QuizService,
-    private utilityService: UtilityService,
     private router: Router
   ) { }
 
@@ -57,16 +55,18 @@ export class QuizMenuComponent implements OnInit {
     this.router.navigate([ERoute.learn]);
   }
 
+  async onMenuAnimationFinish(event: AnimationEvent): Promise<void> {
+    if (event.toState === 'offscreen') {
+      this.positionChanged.next('fullscreen');
+    }
+  }
+
   private initializeStreams(): void {
     this.quiz$ = this.quizService.getQuiz().pipe(
       distinctUntilChanged(),
       tap(async (quiz) => {
         if (quiz.isComplete) {
           this.positionChanged.next('offscreen');
-          await this.utilityService.wait(EAnimationDuration.cardsFadeInDelay);
-          this.positionChanged.next('fullscreen');
-        } else {
-          this.positionChanged.next('header');
         }
       })
     );
