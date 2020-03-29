@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
 import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
 import { map, tap, distinctUntilChanged } from 'rxjs/operators';
 import { Router } from '@angular/router';
@@ -20,9 +20,11 @@ interface IViewModel {
 @Component({
   selector: 'app-quiz-menu',
   templateUrl: './quiz-menu.component.html',
-  styleUrls: ['./quiz-menu.component.scss']
+  styleUrls: ['./quiz-menu.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class QuizMenuComponent implements OnInit {
+  @Output() menuReady = new EventEmitter<true>();
   vm$: Observable<IViewModel>;
   private positionChanged = new BehaviorSubject<TFixedSlideablePanelPosition>('header');
   private quiz$: Observable<Quiz>;
@@ -56,7 +58,10 @@ export class QuizMenuComponent implements OnInit {
   }
 
   async onMenuAnimationFinish(event: AnimationEvent): Promise<void> {
-    if (event.toState === 'offscreen') {
+    if (event.toState === 'header') {
+      this.menuReady.emit(true);
+    }
+    else if (event.toState === 'offscreen') {
       this.positionChanged.next('fullscreen');
     }
   }

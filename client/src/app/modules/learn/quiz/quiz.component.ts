@@ -11,6 +11,7 @@ import { SelectService } from '@services/select/select.service';
   styleUrls: ['./quiz.component.scss']
 })
 export class QuizComponent implements OnInit {
+  showCards: boolean = false;
 
   constructor(
     private route: ActivatedRoute,

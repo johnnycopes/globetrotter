@@ -6,7 +6,7 @@ import * as _ from 'lodash';
 import { ICountry } from '@models/country.interface';
 import { EQuizType } from '@models/quiz-type.enum';
 import { QuizService } from '@services/quiz/quiz.service';
-import { staggerAnimation, fadeInWithCardsFadeInDelayAnimation } from '@utility/animations';
+import { staggerAnimation, fadeInAnimation } from '@utility/animations';
 
 interface IViewModel {
   quizType: EQuizType;
@@ -18,8 +18,8 @@ interface IViewModel {
   templateUrl: './quiz-cards.component.html',
   styleUrls: ['./quiz-cards.component.scss'],
   animations: [
-    staggerAnimation,
-    fadeInWithCardsFadeInDelayAnimation
+    fadeInAnimation,
+    staggerAnimation
   ]
 })
 export class QuizCardsComponent implements OnInit {

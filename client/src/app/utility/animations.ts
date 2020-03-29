@@ -45,17 +45,17 @@ export const fadeInWithFixedSlideablePanelDelayAnimation =
     ])
   ]);
 
-export const fadeInWithCardsFadeInDelayAnimation =
-  trigger('fadeIn', [
-    transition(':enter', [
-      useAnimation(fadeIn, {
-        params: {
-          timing: EAnimationDuration.screenTransition,
-          delay: EAnimationDuration.cardsFadeInDelay
-        }
-      })
-    ])
-  ]);
+// export const fadeInWithCardsFadeInDelayAnimation =
+//   trigger('fadeIn', [
+//     transition(':enter', [
+//       useAnimation(fadeIn, {
+//         params: {
+//           timing: EAnimationDuration.screenTransition,
+//           delay: EAnimationDuration.cardsFadeInDelay
+//         }
+//       })
+//     ])
+//   ]);
 
 export const visibilityAnimation =
   trigger('visibility', [
