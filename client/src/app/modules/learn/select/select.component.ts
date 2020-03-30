@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, combineLatest } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map, tap, distinctUntilChanged } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 import { ERoute } from '@models/route.enum';
@@ -51,7 +51,7 @@ export class SelectComponent implements OnInit {
     );
   }
 
-  async onLaunch(): Promise<void> {
+  onLaunch(): void {
     this.queryParams = this.selectService.mapSelectionToQueryParams(this.selection);
     this.router.navigate(
       [`${ERoute.learn}/${ERoute.quiz}`],
@@ -75,10 +75,12 @@ export class SelectComponent implements OnInit {
         return _.reduce(selectedPlaces, (total, currentPlace) =>
           subregions[currentPlace] ? total + subregions[currentPlace].length : total
         , 0);
-      })
+      }),
+      distinctUntilChanged()
     );
     this.quantity$ = this.selection$.pipe(
-      map(selection => selection.quantity)
+      map(selection => selection.quantity),
+      distinctUntilChanged()
     );
     this.invalidQuantity$ = combineLatest([
       this.numberOfSelectedCountries$,
@@ -86,7 +88,8 @@ export class SelectComponent implements OnInit {
     ]).pipe(
       map(([numberOfSelectedCountries, quantity]) => {
         return numberOfSelectedCountries <= 1 || quantity < 2 || quantity > numberOfSelectedCountries;
-      })
+      }),
+      distinctUntilChanged()
     );
   }
 }

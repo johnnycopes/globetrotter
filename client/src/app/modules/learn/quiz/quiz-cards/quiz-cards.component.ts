@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Observable, combineLatest } from 'rxjs';
 import { map, first, distinctUntilChanged} from 'rxjs/operators';
 import * as _ from 'lodash';
@@ -6,20 +6,22 @@ import * as _ from 'lodash';
 import { ICountry } from '@models/country.interface';
 import { EQuizType } from '@models/quiz-type.enum';
 import { QuizService } from '@services/quiz/quiz.service';
-import { staggerAnimation, fadeInWithCardsFadeInDelayAnimation } from '@utility/animations';
+import { staggerAnimation, fadeInAnimation } from '@utility/animations';
 
 interface IViewModel {
   quizType: EQuizType;
   countries: ICountry[];
+  currentCountry: ICountry;
 }
 
 @Component({
   selector: 'app-quiz-cards',
   templateUrl: './quiz-cards.component.html',
   styleUrls: ['./quiz-cards.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
-    staggerAnimation,
-    fadeInWithCardsFadeInDelayAnimation
+    fadeInAnimation,
+    staggerAnimation
   ]
 })
 export class QuizCardsComponent implements OnInit {
@@ -27,6 +29,7 @@ export class QuizCardsComponent implements OnInit {
   vm$: Observable<IViewModel>;
   private quizType$: Observable<EQuizType>;
   private countries$: Observable<ICountry[]>;
+  private currentCountry$: Observable<ICountry>;
 
   constructor(private quizService: QuizService) { }
 
@@ -34,9 +37,10 @@ export class QuizCardsComponent implements OnInit {
     this.initializeStreams();
     this.vm$ = combineLatest([
       this.quizType$,
-      this.countries$
+      this.countries$,
+      this.currentCountry$
     ]).pipe(
-      map(([quizType, countries]) => ({quizType, countries}))
+      map(([quizType, countries, currentCountry]) => ({ quizType, countries, currentCountry }))
     );
   }
 
@@ -54,5 +58,9 @@ export class QuizCardsComponent implements OnInit {
       map(quiz => _.shuffle(quiz.countries)),
       first()
     );
+    this.currentCountry$ = quiz$.pipe(
+      map(quiz => quiz.countries[0]),
+      distinctUntilChanged()
+    )
   }
 }
