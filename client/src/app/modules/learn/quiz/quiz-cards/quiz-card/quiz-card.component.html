@@ -1,15 +1,16 @@
 <app-flip-card
+  *ngIf="vm$ | async as vm"
   [canFlip]="canFlip"
-  [guess]="guess"
-  [disabled]="disabled"
+  [guess]="vm.guess"
+  [disabled]="vm.disabled"
   (flipped)="onFlip()"
   (animationFinished)="onAnimationFinish($event)"
   >
   <div app-flip-card-front>
-    <ng-container *ngTemplateOutlet="templates.front"></ng-container>
+    <ng-container *ngTemplateOutlet="template.front"></ng-container>
   </div>
   <div app-flip-card-back>
-    <ng-container *ngTemplateOutlet="templates.back"></ng-container>
+    <ng-container *ngTemplateOutlet="template.back"></ng-container>
   </div>
 </app-flip-card>
 
@@ -23,13 +24,23 @@
 </ng-template>
 
 <ng-template #countryTemplate>
-  <h3 class="quiz-card__name">
-    {{country.name}}
-  </h3>
+  <ng-container
+    [ngTemplateOutlet]="nameTemplate"
+    [ngTemplateOutletContext]="{ $implicit: country.name }">
+  </ng-container>
 </ng-template>
 
 <ng-template #capitalTemplate>
+  <ng-container
+    [ngTemplateOutlet]="nameTemplate"
+    [ngTemplateOutletContext]="{ $implicit: country.capital }">
+  </ng-container>
+</ng-template>
+
+<ng-template #nameTemplate
+  let-name
+  >
   <h3 class="quiz-card__name">
-    {{country.capital}}
+    {{name}}
   </h3>
 </ng-template>

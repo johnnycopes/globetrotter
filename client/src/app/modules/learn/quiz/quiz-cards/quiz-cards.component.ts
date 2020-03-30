@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Observable, combineLatest } from 'rxjs';
 import { map, first, distinctUntilChanged} from 'rxjs/operators';
 import * as _ from 'lodash';
@@ -18,6 +18,7 @@ interface IViewModel {
   selector: 'app-quiz-cards',
   templateUrl: './quiz-cards.component.html',
   styleUrls: ['./quiz-cards.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     fadeInAnimation,
     staggerAnimation
@@ -39,7 +40,7 @@ export class QuizCardsComponent implements OnInit {
       this.countries$,
       this.currentCountry$
     ]).pipe(
-      map(([quizType, countries, currentCountry]) => ({quizType, countries, currentCountry}))
+      map(([quizType, countries, currentCountry]) => ({ quizType, countries, currentCountry }))
     );
   }
 

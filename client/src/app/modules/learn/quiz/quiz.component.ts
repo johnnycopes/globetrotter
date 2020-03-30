@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import * as _ from 'lodash';
 
 import { ActivatedRoute } from '@angular/router';
@@ -8,7 +8,8 @@ import { SelectService } from '@services/select/select.service';
 @Component({
   selector: 'app-quiz',
   templateUrl: './quiz.component.html',
-  styleUrls: ['./quiz.component.scss']
+  styleUrls: ['./quiz.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class QuizComponent implements OnInit {
   showCards: boolean = false;
