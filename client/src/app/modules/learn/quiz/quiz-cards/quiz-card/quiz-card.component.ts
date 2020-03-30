@@ -9,7 +9,7 @@ import { EDuration } from '@models/duration.enum';
 import { EQuizType } from '@models/quiz-type.enum';
 import { FlipCardComponent, TFlipCardGuess } from '@shared/components/flip-card/flip-card.component';
 import { QuizService } from '@services/quiz/quiz.service';
-import { UtilityService } from '@services/utility/utility.service';
+import { wait } from '@utility/functions/wait';
 
 interface IViewModel {
   guess: TFlipCardGuess;
@@ -54,10 +54,7 @@ export class QuizCardComponent implements OnInit {
     );
   }
 
-  constructor(
-    private quizService: QuizService,
-    private utilityService: UtilityService
-  ) { }
+  constructor(private quizService: QuizService) { }
 
   async onAnimationFinish(event: AnimationEvent) {
     const { triggerName, toState } = event;
@@ -75,7 +72,7 @@ export class QuizCardComponent implements OnInit {
     // after flip animation is complete, the card is flipped back over and the guess is reset
     else if (triggerName === 'guess') {
       if (toState === 'correct' || toState === 'incorrect') {
-        await this.utilityService.wait(EDuration.cardFlipDisplay);
+        await wait(EDuration.cardFlipDisplay);
         this.guessChange.next('none');
         this.flipCardComponent.flip();
       }
@@ -93,7 +90,7 @@ export class QuizCardComponent implements OnInit {
   }
 
   private async updateQuiz() {
-    await this.utilityService.wait(EDuration.shortDelay);
+    await wait(EDuration.shortDelay);
     this.quizService.updateQuiz(this.isCurrentCountry);
     this.flipped.emit(false);
     this.processingFlip = false;
