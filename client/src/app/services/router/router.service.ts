@@ -33,7 +33,7 @@ export class RouterService {
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd),
       map((navigationEnd: NavigationEnd) => {
-        const routeUrl = navigationEnd.urlAfterRedirects.split('/')[1];
+        const routeUrl = navigationEnd.urlAfterRedirects;
         return routeUrl;
       })
     ).subscribe(
