@@ -19,7 +19,7 @@
 
   &::placeholder {
     font-style: $font-stack;
-    color: map-get($color, light);
+    color: map-get($color, medium);
   }
 
   &:focus {

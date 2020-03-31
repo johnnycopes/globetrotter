@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
 import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
 import { map, tap, distinctUntilChanged } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { AnimationEvent } from '@angular/animations';
 import * as _ from 'lodash';
 
 import { Quiz } from '@models/quiz.class';
 import { EQuizType } from '@models/quiz-type.enum';
-import { EAnimationDuration } from '@models/animation-duration.enum';
 import { ERoute } from '@models/route.enum';
 import { TFixedSlideablePanelPosition } from '@shared/components/fixed-slideable-panel/fixed-slideable-panel.component';
 import { QuizService } from '@services/quiz/quiz.service';
-import { UtilityService } from '@services/utility/utility.service';
+import { ICountry } from '@models/country.interface';
 
 interface IViewModel {
   quiz: Quiz,
@@ -21,23 +21,24 @@ interface IViewModel {
 @Component({
   selector: 'app-quiz-menu',
   templateUrl: './quiz-menu.component.html',
-  styleUrls: ['./quiz-menu.component.scss']
+  styleUrls: ['./quiz-menu.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class QuizMenuComponent implements OnInit {
+  @Output() menuReady = new EventEmitter<true>();
   vm$: Observable<IViewModel>;
   private positionChanged = new BehaviorSubject<TFixedSlideablePanelPosition>('header');
   private quiz$: Observable<Quiz>;
   private position$: Observable<TFixedSlideablePanelPosition>;
   private prompt$: Observable<string>;
-  private promptDict: _.Dictionary<string> = {
-    [EQuizType.flagsCountries]: 'name',
-    [EQuizType.capitalsCountries]: 'name',
-    [EQuizType.countriesCapitals]: 'capital'
+  private promptDict: _.Dictionary<(country: ICountry) => string> = {
+    [EQuizType.flagsCountries]: country => country.name,
+    [EQuizType.capitalsCountries]: country => country.name,
+    [EQuizType.countriesCapitals]: country => country.capital
   };
 
   constructor(
     private quizService: QuizService,
-    private utilityService: UtilityService,
     private router: Router
   ) { }
 
@@ -57,16 +58,21 @@ export class QuizMenuComponent implements OnInit {
     this.router.navigate([ERoute.learn]);
   }
 
+  async onMenuAnimationFinish(event: AnimationEvent): Promise<void> {
+    if (event.toState === 'header') {
+      this.menuReady.emit(true);
+    }
+    else if (event.toState === 'offscreen') {
+      this.positionChanged.next('fullscreen');
+    }
+  }
+
   private initializeStreams(): void {
     this.quiz$ = this.quizService.getQuiz().pipe(
       distinctUntilChanged(),
       tap(async (quiz) => {
         if (quiz.isComplete) {
           this.positionChanged.next('offscreen');
-          await this.utilityService.wait(EAnimationDuration.cardsFadeInDelay);
-          this.positionChanged.next('fullscreen');
-        } else {
-          this.positionChanged.next('header');
         }
       })
     );
@@ -75,9 +81,8 @@ export class QuizMenuComponent implements OnInit {
     );
     this.prompt$ = this.quiz$.pipe(
       map(quiz => {
-        const currentCountry = _.head(quiz.countries);
-        const key = this.promptDict[quiz.type];
-        return _.get(currentCountry, key, '');
+        const currentCountry = quiz.countries[0];
+        return currentCountry ? this.promptDict[quiz.type](currentCountry) : '';
       }),
       distinctUntilChanged()
     );

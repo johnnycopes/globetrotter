@@ -1,2 +1,4 @@
-<app-quiz-menu></app-quiz-menu>
-<app-quiz-cards></app-quiz-cards>
+<app-quiz-menu (menuReady)="showCards = $event">
+</app-quiz-menu>
+<app-quiz-cards *ngIf="showCards">
+</app-quiz-cards>

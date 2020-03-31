@@ -1,4 +1,4 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy, TemplateRef } from '@angular/core';
 
 @Component({
   selector: 'app-small-caps-content',
@@ -8,4 +8,5 @@ import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 })
 export class SmallCapsContentComponent {
   @Input() header: string;
+  @Input() template: TemplateRef<any>;
 }

@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 import { ERoute } from '@models/route.enum';
 import { positionAnimation } from '@utility/animations';
+import { AnimatedComponent } from '@models/animated-component.class';
 
 interface INavigationLink {
   name: string;
@@ -14,14 +15,13 @@ interface INavigationLink {
   selector: 'app-navigation',
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [positionAnimation]
 })
-export class NavigationComponent implements OnInit {
+export class NavigationComponent extends AnimatedComponent implements OnInit {
   position = "navigation"
   home: INavigationLink;
   links: INavigationLink[];
-
-  constructor() { }
 
   ngOnInit() {
     this.home = {

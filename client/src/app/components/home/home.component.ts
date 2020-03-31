@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { ERoute } from '@models/route.enum';
@@ -8,6 +8,7 @@ import { fadeInAnimation } from '@utility/animations';
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [fadeInAnimation]
 })
 export class HomeComponent {

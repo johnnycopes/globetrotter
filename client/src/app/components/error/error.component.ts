@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 import { fadeInAnimation } from '@utility/animations';
 
@@ -6,8 +6,7 @@ import { fadeInAnimation } from '@utility/animations';
   selector: 'app-error',
   templateUrl: './error.component.html',
   styleUrls: ['./error.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [fadeInAnimation]
 })
-export class ErrorComponent {
-
-}
+export class ErrorComponent { }

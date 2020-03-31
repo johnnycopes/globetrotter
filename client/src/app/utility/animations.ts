@@ -11,7 +11,7 @@ import {
   animateChild
 } from "@angular/animations";
 
-import { EAnimationDuration } from "@models/animation-duration.enum";
+import { EDuration } from "@models/duration.enum";
 
 const fadeIn = animation([
   style({ opacity: '0' }),
@@ -26,7 +26,7 @@ export const fadeInAnimation =
     transition(':enter', [
       useAnimation(fadeIn, {
         params: {
-          timing: EAnimationDuration.screenTransition,
+          timing: EDuration.fadeIn,
           delay: 0
         }
       })
@@ -38,20 +38,8 @@ export const fadeInWithFixedSlideablePanelDelayAnimation =
     transition(':enter', [
       useAnimation(fadeIn, {
         params: {
-          timing: EAnimationDuration.screenTransition,
-          delay: EAnimationDuration.fixedSlideablePanel
-        }
-      })
-    ])
-  ]);
-
-export const fadeInWithCardsFadeInDelayAnimation =
-  trigger('fadeIn', [
-    transition(':enter', [
-      useAnimation(fadeIn, {
-        params: {
-          timing: EAnimationDuration.screenTransition,
-          delay: EAnimationDuration.cardsFadeInDelay
+          timing: EDuration.fadeIn,
+          delay: EDuration.position
         }
       })
     ])
@@ -65,7 +53,7 @@ export const visibilityAnimation =
     state('visible', style({
       opacity: 1
     })),
-    transition('* => *', animate(`${EAnimationDuration.screenTransition}ms ease-in-out`))
+    transition('* => *', animate(`${EDuration.fadeIn}ms ease-in-out`))
   ]);
 
 export const flipAnimation =
@@ -76,8 +64,8 @@ export const flipAnimation =
     state('back', style({
       transform: 'rotateY(180deg)'
     })),
-    transition('front => back', animate(`${EAnimationDuration.flipCard}ms ease-in`)),
-    transition('back => front', animate(`${EAnimationDuration.flipCard}ms ease-out`))
+    transition('front => back', animate(`${EDuration.cardAnimation}ms ease-in`)),
+    transition('back => front', animate(`${EDuration.cardAnimation}ms ease-out`))
   ]);
 
 export const disabledAnimation =
@@ -86,7 +74,7 @@ export const disabledAnimation =
       filter: 'grayscale(100%)',
       cursor: 'not-allowed'
     })),
-    transition('* => disabled', animate(`${EAnimationDuration.flipCard}ms ease-in`))
+    transition('* => disabled', animate(`${EDuration.cardAnimation}ms ease-in`))
   ]);
 
 export const guessAnimation =
@@ -103,7 +91,7 @@ export const guessAnimation =
       border: '20px solid crimson',
       padding: '0'
     })),
-    transition('* => *', animate(`${EAnimationDuration.flipCard}ms ease-in`))
+    transition('* => *', animate(`${EDuration.cardAnimation}ms ease-in`))
   ]);
 
 export const positionAnimation =
@@ -118,14 +106,14 @@ export const positionAnimation =
       transform: 'translateY(0)'
     })),
     state('navigation', style({
-      transform: 'translateX(128px)' //
+      transform: 'translateX(100%)'
     })),
-    transition('* => *', animate(`${EAnimationDuration.fixedSlideablePanel}ms ease-in-out`))
+    transition('* => *', animate(`${EDuration.position}ms ease-in-out`))
   ]);
 
 export const staggerAnimation =
   trigger('stagger', [
     transition(':enter', [
-      query(':enter', stagger(`${EAnimationDuration.cardsStagger}ms`, [animateChild()]))
+      query(':enter', stagger(`${EDuration.stagger}ms`, [animateChild()]))
     ])
   ]);

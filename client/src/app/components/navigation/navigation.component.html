@@ -1,4 +1,7 @@
-<nav [@position]="position">
+<nav class="navigation"
+  [@position]="position"
+  (@position.done)="onAnimationFinish($event)"
+  >
   <a class="home"
     routerLink="/{{home.route}}"
     >

@@ -2,16 +2,18 @@
   [@flip]="side"
   (@flip.start)="onAnimationStart($event)"
   (@flip.done)="onAnimationFinish($event)"
+  [@disabled]="disabled ? 'disabled' : ''"
+  (@disabled.start)="onAnimationStart($event)"
+  (@disabled.done)="onAnimationFinish($event)"
   (click)="onClick()"
   >
-  <div class="flip-card__side flip-card__front"
-    [@disabled]="disabled ? 'disabled' : ''"
-    >
+  <div class="flip-card__side flip-card__front">
     <ng-content select="[app-flip-card-front]"></ng-content>
   </div>
   <div class="flip-card__side flip-card__back"
-    [@disabled]="disabled ? 'disabled' : ''"
     [@guess]="guess"
+    (@guess.start)="onAnimationStart($event)"
+    (@guess.done)="onAnimationFinish($event)"
     >
     <ng-content select="[app-flip-card-back]"></ng-content>
   </div>

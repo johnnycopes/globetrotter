@@ -6,6 +6,7 @@
     *ngFor="let country of vm.countries"
     [type]="vm.quizType"
     [country]="country"
+    [isCurrentCountry]="country === vm.currentCountry"
     [canFlip]="canFlipCards"
     (flipped)="onFlip($event)"
     @fadeIn

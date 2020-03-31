@@ -1,78 +1,108 @@
-import { Component, Input, Output, EventEmitter, ViewChild, OnInit, TemplateRef, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, Input, Output, EventEmitter, OnInit, ViewChild, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
+import { AnimationEvent } from '@angular/animations';
+import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
+import { map, distinctUntilChanged } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 import { ICountry } from '@models/country.interface';
-import { EAnimationDuration } from '@models/animation-duration.enum';
+import { EDuration } from '@models/duration.enum';
 import { EQuizType } from '@models/quiz-type.enum';
 import { FlipCardComponent, TFlipCardGuess } from '@shared/components/flip-card/flip-card.component';
 import { QuizService } from '@services/quiz/quiz.service';
-import { UtilityService } from '@services/utility/utility.service';
+import { wait } from '@utility/functions/wait';
+
+interface IViewModel {
+  guess: TFlipCardGuess;
+  disabled: boolean;
+}
 
 type TCardTemplates = _.Dictionary<TemplateRef<any>>;
 
 @Component({
   selector: 'app-quiz-card',
   templateUrl: './quiz-card.component.html',
-  styleUrls: ['./quiz-card.component.scss']
+  styleUrls: ['./quiz-card.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class QuizCardComponent implements OnInit, OnDestroy {
+export class QuizCardComponent implements OnInit {
   @Input() country: ICountry;
+  @Input() isCurrentCountry: boolean;
   @Input() canFlip: boolean;
   @Input() type: EQuizType;
   @Output() flipped = new EventEmitter<boolean>();
   @ViewChild('flagTemplate', { static: true }) flagTemplate: TemplateRef<any>;
   @ViewChild('countryTemplate', { static: true }) countryTemplate: TemplateRef<any>;
   @ViewChild('capitalTemplate', { static: true }) capitalTemplate: TemplateRef<any>;
-  @ViewChild(FlipCardComponent, { static: true }) private flipCardComponent: FlipCardComponent;
-  guess: TFlipCardGuess;
-  disabled: boolean;
-  templates: TCardTemplates;
+  @ViewChild(FlipCardComponent) private flipCardComponent: FlipCardComponent;
+  vm$: Observable<IViewModel>;
+  template: TCardTemplates;
   private templatesDict: _.Dictionary<TCardTemplates>;
-  private currentCountry: ICountry;
-  private currentCountrySubscription: Subscription;
+  private processingFlip = false;
+  private guess$: Observable<TFlipCardGuess>;
+  private guessChange = new BehaviorSubject<TFlipCardGuess>("none");
+  private disabled$: Observable<boolean>;
+  private disabledChange = new BehaviorSubject<boolean>(false);
 
   ngOnInit(): void {
     this.setCardTemplates();
-    this.currentCountrySubscription = this.quizService.getQuiz().subscribe(
-      quiz => this.currentCountry = quiz.countries[0]
+    this.initializeStreams();
+    this.vm$ = combineLatest([
+      this.guess$,
+      this.disabled$
+    ]).pipe(
+      map(([guess, disabled]) => ({ guess, disabled }))
     );
   }
 
-  ngOnDestroy(): void {
-    this.currentCountrySubscription.unsubscribe();
+  constructor(private quizService: QuizService) { }
+
+  async onAnimationFinish(event: AnimationEvent) {
+    const { triggerName, toState } = event;
+
+    // onFlip kicks off the chain of events, starting with the flip animation from front to back
+    if (triggerName === 'flip') {
+      if (toState === 'back') {
+        this.guessChange.next(this.isCurrentCountry ? 'correct' : 'incorrect');
+      }
+      else if (toState === 'front' && this.processingFlip) {
+        this.isCurrentCountry ? this.disabledChange.next(true) : this.updateQuiz();
+      }
+    }
+
+    // after flip animation is complete, the card is flipped back over and the guess is reset
+    else if (triggerName === 'guess') {
+      if (toState === 'correct' || toState === 'incorrect') {
+        await wait(EDuration.cardFlipDisplay);
+        this.guessChange.next('none');
+        this.flipCardComponent.flip();
+      }
+    }
+
+    // disabled is only reached after guess state to correct
+    else if (triggerName === 'disabled' && toState === 'disabled') {
+      this.updateQuiz();
+    }
   }
 
-  constructor(
-    private quizService: QuizService,
-    private utilityService: UtilityService
-  ) { }
-
-  async onFlip(): Promise<void> {
-    const isGuessCorrect = this.country === this.currentCountry;
+  onFlip(): void {
+    this.processingFlip = true;
     this.flipped.emit(true);
-    await this.utilityService.wait(EAnimationDuration.flipCard);
-    this.setCardGuess(isGuessCorrect)
-    await this.utilityService.wait(EAnimationDuration.displayCard);
-    this.resetCardGuess();
-    await this.utilityService.wait(EAnimationDuration.flipCard);
-    if (isGuessCorrect) {
-      this.disabled = true;
-      await this.utilityService.wait(EAnimationDuration.flipCard);
-      this.updateQuiz(isGuessCorrect);
-    }
-    else {
-      this.updateQuiz(isGuessCorrect);
-    }
   }
 
-  private setCardGuess(correctGuess: boolean): void {
-    this.guess = correctGuess ? 'correct' : 'incorrect';
+  private async updateQuiz() {
+    await wait(EDuration.shortDelay);
+    this.quizService.updateQuiz(this.isCurrentCountry);
+    this.flipped.emit(false);
+    this.processingFlip = false;
   }
 
-  private resetCardGuess(): void {
-    this.flipCardComponent.flip();
-    this.guess = 'none';
+  private initializeStreams(): void {
+    this.guess$ = this.guessChange.asObservable().pipe(
+      distinctUntilChanged()
+    );
+    this.disabled$ = this.disabledChange.asObservable().pipe(
+      distinctUntilChanged()
+    );
   }
 
   private setCardTemplates(): void {
@@ -90,11 +120,6 @@ export class QuizCardComponent implements OnInit, OnDestroy {
         back: this.capitalTemplate
       }
     };
-    this.templates = this.templatesDict[this.type];
-  }
-
-  private updateQuiz(correctGuess: boolean) {
-    this.quizService.updateQuiz(correctGuess);
-    this.flipped.emit(false);
+    this.template = this.templatesDict[this.type];
   }
 }

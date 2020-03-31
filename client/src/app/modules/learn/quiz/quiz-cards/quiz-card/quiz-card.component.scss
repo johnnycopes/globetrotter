@@ -7,6 +7,6 @@
   }
 
   &__name {
-    width: 240px;
+    width: map-get($spacing, 192);
   }
 }
