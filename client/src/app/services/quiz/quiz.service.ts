@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 import { Store } from '@models/store.class';
+import { ERoute } from '@models/route.enum';
 import { ICountry } from '@models/country.interface';
 import { Selection } from '@models/selection.class';
 import { Quiz } from '@models/quiz.class';
 import { CountryService } from '@services/country/country.service';
 import { RouterService } from '@services/router/router.service';
-import { filter } from 'rxjs/operators';
-import { ERoute } from '@models/route.enum';
 
 @Injectable({
   providedIn: 'root'

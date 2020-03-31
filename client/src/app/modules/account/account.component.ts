@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 import { fadeInAnimation } from '@utility/animations';
 
@@ -6,6 +6,7 @@ import { fadeInAnimation } from '@utility/animations';
   selector: 'app-account',
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [fadeInAnimation]
 })
 export class AccountComponent {

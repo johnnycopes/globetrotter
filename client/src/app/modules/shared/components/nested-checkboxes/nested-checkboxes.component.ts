@@ -30,8 +30,8 @@ export class NestedCheckboxesComponent<T> implements ControlValueAccessor, OnIni
   constructor(private changeDetectorRef: ChangeDetectorRef) { }
 
   public ngOnInit(): void {
-    if (!this.item) {
-      throw new Error("An item must be passed to the nested-checkboxes component");
+    if (!this.item || !this.treeProvider) {
+      throw new Error("An item and a tree provider must be passed to the nested-checkboxes component");
     }
     this.id = this.treeProvider.getId(this.item);
     this.children = this.treeProvider.getChildren(this.item);
