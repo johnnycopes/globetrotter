@@ -54,7 +54,6 @@ export class QuizMenuComponent implements OnInit {
   }
 
   onBack(): void {
-    this.quizService.reset();
     this.router.navigate([ERoute.learn]);
   }
 

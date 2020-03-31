@@ -6,7 +6,10 @@ import { Store } from '@models/store.class';
 import { ICountry } from '@models/country.interface';
 import { Selection } from '@models/selection.class';
 import { Quiz } from '@models/quiz.class';
-import { CountryService } from '../country/country.service';
+import { CountryService } from '@services/country/country.service';
+import { RouterService } from '@services/router/router.service';
+import { filter } from 'rxjs/operators';
+import { ERoute } from '@models/route.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +17,16 @@ import { CountryService } from '../country/country.service';
 export class QuizService {
   private readonly store: Store;
 
-  constructor(private countryService: CountryService) {
+  constructor(
+    private countryService: CountryService,
+    private routerService: RouterService
+  ) {
     this.store = new Store(new Quiz());
+    this.routerService.getCurrentRoute().pipe(
+      filter(route => route.includes(ERoute.select))
+    ).subscribe(
+      _ => this.reset()
+    );
   }
 
   reset(): void {
