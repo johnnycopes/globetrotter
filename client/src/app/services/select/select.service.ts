@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
+import { State } from '@boninger-works/state';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
 import * as _ from 'lodash';
 
-import { Store } from '@models/store.class';
 import { Selection } from '@models/selection.class';
 import { IRegion } from '@models/region.interface';
 import { EQuizType } from '@models/quiz-type.enum';
@@ -14,14 +14,14 @@ import { CountryService } from '../country/country.service';
   providedIn: 'root'
 })
 export class SelectService {
-  private readonly store: Store;
+  private readonly state: State<Selection>;
   private readonly paramDict = {
     checked: '_c',
     indeterminate: '_i'
   };
 
   constructor(private countryService: CountryService) {
-    this.store = new Store(new Selection());
+    this.state = new State(new Selection());
     this.countryService.getFormattedData()
       .pipe(first())
       .subscribe(
@@ -33,7 +33,7 @@ export class SelectService {
   }
 
   getSelection(): Observable<Selection> {
-    return this.store.get([]);
+    return this.state.observe();
   }
 
   updateSelection(selection: Selection): void {
@@ -43,16 +43,16 @@ export class SelectService {
     this.updateCountries(countries);
   }
 
-  updateType(type: EQuizType | null): void {
-    this.store.set(['type'], type);
+  updateType(type: EQuizType): void {
+    this.state.set(lens => lens.to("type").set(type));
   }
 
-  updateQuantity(quantity: number | null): void {
-    this.store.set(['quantity'], quantity);
+  updateQuantity(quantity: number): void {
+    this.state.set(lens => lens.to("quantity").set(quantity));
   }
 
   updateCountries(countries: TCheckboxStates): void {
-    this.store.set(['countries'], countries);
+    this.state.set(lens => lens.to("countries").set(countries));
   }
 
   mapSelectionToQueryParams(selection: Selection): _.Dictionary<string> {
