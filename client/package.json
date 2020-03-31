@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve -o",
+    "start": "start cmd /k npm run serve",
+    "serve": "ng serve",
     "build": "ng build --prod",
     "karma": "ng test",
     "lint": "ng lint",
