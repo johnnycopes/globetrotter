@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.loading$ = this.routerService.getLoading();
+    this.loading$ = this.routerService.state.observe(lens => lens.to('loading'));
     this.error$ = this.errorService.getGlobalError();
   }
 }

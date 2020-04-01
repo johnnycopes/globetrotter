@@ -79,9 +79,7 @@ export class SelectCountriesComponent implements OnInit {
         return { region, treeProvider };
       }))
     );
-    this.checkboxStates$ = this.selectService.getSelection().pipe(
-      map(selection => selection.countries)
-    );
+    this.checkboxStates$ = this.selectService.selection.observe(lens => lens.to('countries'));
     this.totals$ = this.regionData$.pipe(
       map(regionData => regionData.reduce((totalsDict, regionData) => {
         const region = regionData.region;

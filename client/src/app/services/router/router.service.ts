@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router, NavigationEnd, RouterEvent, NavigationCancel, NavigationError } from '@angular/router';
-import { State } from '@boninger-works/state';
-import { Observable } from 'rxjs';
+import { State, IStateReadOnly } from '@boninger-works/state';
 import { map, filter } from 'rxjs/operators';
 
 import { RouterInfo } from '@models/router-info.class';
@@ -10,23 +9,14 @@ import { RouterInfo } from '@models/router-info.class';
   providedIn: 'root'
 })
 export class RouterService {
-  private readonly state: State<RouterInfo>;
+  private readonly _state: State<RouterInfo>;
+  get state(): IStateReadOnly<RouterInfo> {
+    return this._state;
+  }
 
   constructor(private router: Router) {
-    this.state = new State(new RouterInfo());
+    this._state = new State(new RouterInfo());
     this.intialize();
-  }
-
-  getCurrentRoute(): Observable<string> {
-    return this.state.observe(lens => lens.to('currentRoute')).pipe(
-      map(currentRoute => currentRoute !== undefined ? currentRoute : '')
-    );
-  }
-
-  getLoading(): Observable<boolean> {
-    return this.state.observe(lens => lens.to('loading')).pipe(
-      map(loading => loading !== undefined ? loading : false)
-    );
   }
 
   private intialize(): void {
@@ -37,7 +27,7 @@ export class RouterService {
         return routeUrl;
       })
     ).subscribe(
-      route => this.state.set(lens => lens.to('currentRoute').set(route))
+      route => this._state.set(lens => lens.to('currentRoute').set(route))
     );
 
     this.router.events.pipe(
@@ -51,7 +41,7 @@ export class RouterService {
         return true;
       })
     ).subscribe(
-      loading => this.state.set(lens => lens.to('loading').set(loading))
+      loading => this._state.set(lens => lens.to('loading').set(loading))
     );
   }
 

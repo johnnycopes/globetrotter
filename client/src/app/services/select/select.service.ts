@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { State } from '@boninger-works/state';
-import { Observable } from 'rxjs';
+import { State, IStateReadOnly } from '@boninger-works/state';
 import { first } from 'rxjs/operators';
 import * as _ from 'lodash';
 
@@ -14,14 +13,17 @@ import { CountryService } from '../country/country.service';
   providedIn: 'root'
 })
 export class SelectService {
-  private readonly state: State<Selection>;
+  private readonly _selection: State<Selection>;
+  get selection(): IStateReadOnly<Selection> {
+    return this._selection;
+  }
   private readonly paramDict = {
     checked: '_c',
     indeterminate: '_i'
   };
 
   constructor(private countryService: CountryService) {
-    this.state = new State(new Selection());
+    this._selection = new State(new Selection());
     this.countryService.getFormattedData()
       .pipe(first())
       .subscribe(
@@ -32,10 +34,6 @@ export class SelectService {
       );
   }
 
-  getSelection(): Observable<Selection> {
-    return this.state.observe();
-  }
-
   updateSelection(selection: Selection): void {
     const { type, quantity, countries } = selection;
     this.updateType(type);
@@ -44,15 +42,15 @@ export class SelectService {
   }
 
   updateType(type: EQuizType): void {
-    this.state.set(lens => lens.to("type").set(type));
+    this._selection.set(lens => lens.to('type').set(type));
   }
 
   updateQuantity(quantity: number): void {
-    this.state.set(lens => lens.to("quantity").set(quantity));
+    this._selection.set(lens => lens.to('quantity').set(quantity));
   }
 
   updateCountries(countries: TCheckboxStates): void {
-    this.state.set(lens => lens.to("countries").set(countries));
+    this._selection.set(lens => lens.to('countries').set(countries));
   }
 
   mapSelectionToQueryParams(selection: Selection): _.Dictionary<string> {

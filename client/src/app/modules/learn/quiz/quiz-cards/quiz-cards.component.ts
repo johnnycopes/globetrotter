@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Observable, combineLatest } from 'rxjs';
-import { map, first, distinctUntilChanged} from 'rxjs/operators';
+import { map, first } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 import { ICountry } from '@models/country.interface';
@@ -49,18 +49,12 @@ export class QuizCardsComponent implements OnInit {
   }
 
   private initializeStreams(): void {
-    const quiz$ = this.quizService.getQuiz();
-    this.quizType$ = quiz$.pipe(
-      map(quiz => quiz.type),
-      distinctUntilChanged()
-    );
-    this.countries$ = quiz$.pipe(
-      map(quiz => _.shuffle(quiz.countries)),
+    this.quizType$ = this.quizService.quiz.observe(lens => lens.to('type'));
+    this.countries$ = this.quizService.quiz.observe(lens => lens.to('countries')).pipe(
+      map(countries => _.shuffle(countries)),
       first()
     );
-    this.currentCountry$ = quiz$.pipe(
-      map(quiz => quiz.countries[0]),
-      distinctUntilChanged()
-    )
+    this.currentCountry$ = this.quizService.quiz
+      .observe(lens => lens.to('countries').to(0));
   }
 }
