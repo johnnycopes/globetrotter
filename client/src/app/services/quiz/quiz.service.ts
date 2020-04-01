@@ -30,16 +30,8 @@ export class QuizService {
       .pipe(
         filter(route => route.includes(ERoute.select))
       ).subscribe(
-        _ => this.reset()
+        _ => this._quiz.set(new Quiz())
       );
-  }
-
-  reset(): void {
-    this._quiz.set(new Quiz());
-  }
-
-  getQuiz(): Observable<Quiz> {
-    return this.quiz.observe();
   }
 
   initializeQuiz(selection: Selection): void {

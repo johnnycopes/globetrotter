@@ -67,22 +67,21 @@ export class QuizMenuComponent implements OnInit {
   }
 
   private initializeStreams(): void {
-    this.quiz$ = this.quizService.getQuiz().pipe(
-      distinctUntilChanged(),
-      tap(async (quiz) => {
+    const quiz$ = this.quizService.quiz.observe();
+    this.quiz$ = quiz$.pipe(
+      tap(quiz => {
         if (quiz.isComplete) {
           this.positionChanged.next('offscreen');
         }
       })
     );
-    this.position$ = this.positionChanged.asObservable().pipe(
-      distinctUntilChanged()
-    );
-    this.prompt$ = this.quiz$.pipe(
+    this.prompt$ = quiz$.pipe(
       map(quiz => {
         const currentCountry = quiz.countries[0];
         return currentCountry ? this.promptDict[quiz.type](currentCountry) : '';
-      }),
+      })
+    );
+    this.position$ = this.positionChanged.asObservable().pipe(
       distinctUntilChanged()
     );
   }

@@ -46,6 +46,6 @@ export class ShellComponent implements OnInit {
     this.showContent$ = this.showContentSubject.asObservable().pipe(
       distinctUntilChanged()
     );
-    this.quizComplete$ = this.quizService.quiz.observe(lens => lens.to("isComplete"));
+    this.quizComplete$ = this.quizService.quiz.observe(lens => lens.to('isComplete'));
   }
 }
