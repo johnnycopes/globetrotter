@@ -23,7 +23,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     Observable<boolean | UrlTree> |
     Promise<boolean | UrlTree> |
     boolean | UrlTree {
-    return this.authService.getData().pipe(
+    return this.authService.authData.observe().pipe(
       take(1),
       map(authData => {
         if (authData.tokenValid && state.url === `/${this.authRoute}`) {

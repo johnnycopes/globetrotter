@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
-    this.formError$ = this.errorService.errors.observe(lens => lens.to('loginError'));
+    this.formError$ = this.errorService.errors.observe(lens => lens.to('login'));
   }
 
   login(form: FormGroup): void {

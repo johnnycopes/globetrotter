@@ -2,15 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { State, IStateReadOnly } from '@boninger-works/state';
 import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import { map, startWith, tap } from 'rxjs/operators';
 import { JwtHelperService } from "@auth0/angular-jwt";
 import * as _ from 'lodash';
 
 import { environment } from 'src/environments/environment';
 import { ERoute } from '@models/route.enum';
 import { EErrorMessage } from '@models/error-message.enum';
-import { Store } from '@models/store.class';
 import { Auth } from '@models/auth.class';
 import { IAuthCreds } from '@models/auth-creds.interface';
 import { ErrorService } from '../error/error.service';
@@ -19,7 +19,10 @@ import { ErrorService } from '../error/error.service';
   providedIn: 'root'
 })
 export class AuthService {
-  private readonly store: Store;
+  private readonly _authData: State<Auth>;
+  get authData(): IStateReadOnly<Auth> {
+    return this._authData;
+  }
   private apiUrl = environment.apiUrl + 'auth/';
   private jwtHelper = new JwtHelperService();
 
@@ -28,15 +31,11 @@ export class AuthService {
     private router: Router,
     private errorService: ErrorService
   ) {
-    this.store = new Store(new Auth());
+    this._authData = new State(new Auth());
     const token = localStorage.getItem('token');
     if (token) {
       this.setData(token);
     }
-  }
-
-  getData(): Observable<Auth> {
-    return this.store.get([]);
   }
 
   login(form: FormGroup, alertMessage = 'Signed in successfully!'): void {
@@ -69,10 +68,12 @@ export class AuthService {
   }
 
   logout(): void {
-    this.store.get(['tokenExpirationTimer']).pipe(
-      map(timer => clearTimeout(timer))
-    );
-    this.store.set([], new Auth());
+    this._authData
+      .observe(lens => lens.to('tokenExpirationTimer'))
+      .pipe(
+        tap(timer => clearTimeout(timer))
+      );
+    this._authData.set(new Auth());
     localStorage.removeItem('token');
     this.router.navigate([`${ERoute.account}/${ERoute.auth}`]);
   }
@@ -119,10 +120,10 @@ export class AuthService {
     const tokenExpirationDate = this.jwtHelper.getTokenExpirationDate(token);
     const timeUntilAutoLogout = tokenExpirationDate ? tokenExpirationDate.getTime() - Date.now() : 0;
     const timer = window.setTimeout(() => this.logout(), timeUntilAutoLogout);
-    this.store.set(['username'], decodedToken.unique_name);
-    this.store.set(['token'], token);
-    this.store.set(['tokenValid'], tokenValid);
-    this.store.set(['tokenExpirationTimer'], timer);
+    this._authData.set(lens => lens.to('username').set(decodedToken.unique_name));
+    this._authData.set(lens => lens.to('token').set(token));
+    this._authData.set(lens => lens.to('tokenValid').set(tokenValid));
+    this._authData.set(lens => lens.to('tokenExpirationTimer').set(timer));
     localStorage.setItem('token', token);
   }
 }
