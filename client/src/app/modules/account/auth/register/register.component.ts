@@ -75,7 +75,7 @@ export class RegisterComponent {
   }
 
   private initializeStreams(): void {
-    this.formError$ = this.errorService.getRegisterError();
+    this.formError$ = this.errorService.errors.observe(lens => lens.to('register'));
     if (this.password) {
       this.passwordError$ = this.authService.getInputError(this.password, 'Password');
     }

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
+import { State, IStateReadOnly } from '@boninger-works/state';
 import * as _ from 'lodash';
 
-import { Store } from '@models/store.class';
 import { ERoute } from '@models/route.enum';
 import { ICountry } from '@models/country.interface';
 import { Selection } from '@models/selection.class';
@@ -15,59 +15,58 @@ import { RouterService } from '@services/router/router.service';
   providedIn: 'root'
 })
 export class QuizService {
-  private readonly store: Store;
+  private readonly _quiz: State<Quiz>;
+  get quiz(): IStateReadOnly<Quiz> {
+    return this._quiz;
+  }
 
   constructor(
     private countryService: CountryService,
     private routerService: RouterService
   ) {
-    this.store = new Store(new Quiz());
-    this.routerService.getCurrentRoute().pipe(
-      filter(route => route.includes(ERoute.select))
-    ).subscribe(
-      _ => this.reset()
-    );
-  }
-
-  reset(): void {
-    this.store.set([], new Quiz());
-  }
-
-  getQuiz(): Observable<Quiz> {
-    return this.store.get([]);
+    this._quiz = new State(new Quiz());
+    this.routerService.state
+      .observe(lens => lens.to('currentRoute'))
+      .pipe(
+        filter(route => route.includes(ERoute.select))
+      ).subscribe(
+        _ => this._quiz.set(new Quiz())
+      );
   }
 
   initializeQuiz(selection: Selection): void {
     this.countryService.getCountriesFromSelection(selection).subscribe(
       countries => {
-        const type = selection.type;
-        this.store.set(['countries'], countries);
-        this.store.set(['totalCountries'], countries.length);
-        this.store.set(['type'], type);
+        const quiz = {
+          ...this.quiz.get(),
+          countries,
+          totalCountries: countries.length,
+          type: selection.type
+        };
+        this._quiz.set(quiz);
       }
     );
   }
 
   updateQuiz(correctGuess: boolean): void {
-    this.store.transform([], (quiz: Quiz) => {
-      const updatedQuiz = _.assign({}, quiz);
-      if (correctGuess) {
-        updatedQuiz.countries = this.removeGuessedCountry(quiz.countries);
-        updatedQuiz.countriesGuessed = quiz.countriesGuessed + 1;
-        if (!updatedQuiz.countries.length) {
-          updatedQuiz.accuracy = this.calculateAccuracy(quiz);
-          updatedQuiz.isComplete = true;
-        }
+    const quiz = this._quiz.get();
+    const updatedQuiz = _.assign({}, quiz);
+    if (correctGuess) {
+      updatedQuiz.countries = this.removeGuessedCountry(quiz.countries);
+      updatedQuiz.countriesGuessed = quiz.countriesGuessed + 1;
+      if (!updatedQuiz.countries.length) {
+        updatedQuiz.accuracy = this.calculateAccuracy(quiz);
+        updatedQuiz.isComplete = true;
       }
-      else {
-        updatedQuiz.countries = this.moveGuessedCountryToEnd(quiz.countries);
-      }
+    }
+    else {
+      updatedQuiz.countries = this.moveGuessedCountryToEnd(quiz.countries);
+    }
 
-      if (!updatedQuiz.isComplete) {
-        updatedQuiz.guess = quiz.guess + 1;
-      }
-      return updatedQuiz;
-    });
+    if (!updatedQuiz.isComplete) {
+      updatedQuiz.guess = quiz.guess + 1;
+    }
+    this._quiz.set(updatedQuiz);
   }
 
   private moveGuessedCountryToEnd(countries: ICountry[]): ICountry[] {

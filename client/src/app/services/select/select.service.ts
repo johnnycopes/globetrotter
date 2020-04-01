@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { State, IStateReadOnly } from '@boninger-works/state';
 import { first } from 'rxjs/operators';
 import * as _ from 'lodash';
 
-import { Store } from '@models/store.class';
 import { Selection } from '@models/selection.class';
 import { IRegion } from '@models/region.interface';
 import { EQuizType } from '@models/quiz-type.enum';
@@ -14,15 +13,19 @@ import { CountryService } from '../country/country.service';
   providedIn: 'root'
 })
 export class SelectService {
-  private readonly store: Store;
   private readonly paramDict = {
     checked: '_c',
     indeterminate: '_i'
   };
+  private readonly _selection: State<Selection>;
+  get selection(): IStateReadOnly<Selection> {
+    return this._selection;
+  }
 
   constructor(private countryService: CountryService) {
-    this.store = new Store(new Selection());
-    this.countryService.getFormattedData()
+    this._selection = new State(new Selection());
+    this.countryService.countries
+      .observe(lens => lens.to('nestedCountries'))
       .pipe(first())
       .subscribe(
         regions => {
@@ -32,27 +35,20 @@ export class SelectService {
       );
   }
 
-  getSelection(): Observable<Selection> {
-    return this.store.get([]);
-  }
-
   updateSelection(selection: Selection): void {
-    const { type, quantity, countries } = selection;
-    this.updateType(type);
-    this.updateQuantity(quantity);
-    this.updateCountries(countries);
+    this._selection.set(selection);
   }
 
-  updateType(type: EQuizType | null): void {
-    this.store.set(['type'], type);
+  updateType(type: EQuizType): void {
+    this._selection.set(lens => lens.to('type').set(type));
   }
 
-  updateQuantity(quantity: number | null): void {
-    this.store.set(['quantity'], quantity);
+  updateQuantity(quantity: number): void {
+    this._selection.set(lens => lens.to('quantity').set(quantity));
   }
 
   updateCountries(countries: TCheckboxStates): void {
-    this.store.set(['countries'], countries);
+    this._selection.set(lens => lens.to('countries').set(countries));
   }
 
   mapSelectionToQueryParams(selection: Selection): _.Dictionary<string> {

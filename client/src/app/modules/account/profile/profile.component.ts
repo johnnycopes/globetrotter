@@ -26,9 +26,7 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.authData$ = this.authService.getData().pipe(
-      map(authData => authData)
-    );
+    this.authData$ = this.authService.authData.observe();
   }
 
   logout(): void {
