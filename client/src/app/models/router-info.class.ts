@@ -1,4 +1,4 @@
 export class RouterInfo {
-  currentRoute: string;
-  loading: boolean;
+  currentRoute: string = '';
+  loading: boolean = false;
 }

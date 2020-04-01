@@ -27,16 +27,17 @@ export class SelectTypeComponent implements OnInit {
       };
       return type;
     });
-    this.selectedType$ = this.selectService.getSelection().pipe(
-      map(selection => {
-        const quizType = selection.type;
-        const selectedType = {
-          display: this.formatDisplayText(quizType),
-          value: quizType
-        };
-        return selectedType;
-      })
-    );
+    this.selectedType$ = this.selectService.selection
+      .observe(lens => lens.to('type'))
+      .pipe(
+        map(quizType => {
+          const selectedType = {
+            display: this.formatDisplayText(quizType),
+            value: quizType
+          };
+          return selectedType;
+        })
+      );
   }
 
   onChange(selectedType: IRadioButtonsOption<EQuizType>): void {

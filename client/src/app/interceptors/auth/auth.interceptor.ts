@@ -12,7 +12,7 @@ export class AuthInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    return this.authService.getData().pipe(
+    return this.authService.authData.observe().pipe(
       take(1),
       exhaustMap(authData => {
         if (!authData.username) {

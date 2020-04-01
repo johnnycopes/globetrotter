@@ -1,28 +1,22 @@
 import { Injectable } from '@angular/core';
 import { Router, NavigationEnd, RouterEvent, NavigationCancel, NavigationError } from '@angular/router';
-import { Observable } from 'rxjs';
+import { State, IStateReadOnly } from '@boninger-works/state';
 import { map, filter } from 'rxjs/operators';
 
-import { Store } from '@models/store.class';
 import { RouterInfo } from '@models/router-info.class';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RouterService {
-  private readonly store: Store;
+  private readonly _state: State<RouterInfo>;
+  get state(): IStateReadOnly<RouterInfo> {
+    return this._state;
+  }
 
   constructor(private router: Router) {
-    this.store = new Store(new RouterInfo());
+    this._state = new State(new RouterInfo());
     this.intialize();
-  }
-
-  getCurrentRoute(): Observable<string> {
-    return this.store.get(['currentRoute']);
-  }
-
-  getLoading(): Observable<boolean> {
-    return this.store.get(['loading']);
   }
 
   private intialize(): void {
@@ -33,7 +27,7 @@ export class RouterService {
         return routeUrl;
       })
     ).subscribe(
-      route => this.store.set(['currentRoute'], route)
+      route => this._state.set(lens => lens.to('currentRoute').set(route))
     );
 
     this.router.events.pipe(
@@ -47,7 +41,7 @@ export class RouterService {
         return true;
       })
     ).subscribe(
-      loading => this.store.set(['loading'], loading)
+      loading => this._state.set(lens => lens.to('loading').set(loading))
     );
   }
 

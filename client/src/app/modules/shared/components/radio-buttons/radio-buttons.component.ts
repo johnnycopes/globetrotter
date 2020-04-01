@@ -5,7 +5,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 
 export interface IRadioButtonsOption<T> {
   display: string;
-  value: T | null;
+  value: T;
 }
 
 @Component({

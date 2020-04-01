@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Resolve } from '@angular/router';
 import { Observable, of } from 'rxjs';
+import { State, IStateReadOnly } from '@boninger-works/state';
 import { map, shareReplay, catchError } from 'rxjs/operators';
 import * as _ from 'lodash';
 
@@ -11,7 +12,6 @@ import { Countries } from '@models/countries.class';
 import { ICountry } from '@models/country.interface';
 import { IRegion } from '@models/region.interface';
 import { Selection } from '@models/selection.class';
-import { Store } from '@models/store.class';
 import { ISummary } from '@models/summary.interface';
 import { ErrorService } from '../error/error.service';
 
@@ -23,15 +23,18 @@ type SubregionsByRegion = _.Dictionary<string[]>;
 })
 export class CountryService implements Resolve<Observable<ICountry[]>> {
   private request: Observable<ICountry[]>;
-  private readonly store: Store;
   private readonly countriesApiUrl = 'https://restcountries.eu/rest/v2/all';
   private readonly wikipediaApiUrl = 'https://en.wikipedia.org/api/rest_v1/page/summary/';
+  private readonly _countries: State<Countries>;
+  get countries(): IStateReadOnly<Countries> {
+    return this._countries;
+  }
 
   constructor(
     private http: HttpClient,
     private errorService: ErrorService
   ) {
-    this.store = new Store(new Countries());
+    this._countries = new State(new Countries());
     this.initialize();
   }
 
@@ -39,35 +42,25 @@ export class CountryService implements Resolve<Observable<ICountry[]>> {
     return this.request;
   }
 
-  getCountries(): Observable<ICountry[]> {
-    return this.store.get(['countries']);
-  }
-
-  getCountriesBySubregion(): Observable<_.Dictionary<ICountry[]>> {
-    return this.store.get(['countriesBySubregion']);
-  }
-
-  getFormattedData(): Observable<IRegion[]> {
-    return this.store.get(['formattedData']);
-  }
-
   getCountriesFromSelection(selection: Selection): Observable<ICountry[]> {
-    return this.getCountriesBySubregion().pipe(
-      map(countriesBySubregion => {
-        const quantity = selection.quantity || undefined;
-        const countries = _.reduce(selection.countries, (accum, checkboxState, placeName) => {
-          if (checkboxState === 'checked' && countriesBySubregion[placeName]) {
-            const selectedCountries = countriesBySubregion[placeName];
-            return _.concat(accum, selectedCountries);
-          }
-          return accum;
-        }, []);
-        return _(countries)
-          .shuffle()
-          .slice(0, quantity)
-          .value();
-      })
-    );
+    return this.countries
+      .observe(lens => lens.to('countriesBySubregion'))
+      .pipe(
+        map(countriesBySubregion => {
+          const quantity = selection.quantity || undefined;
+          const countries = _.reduce(selection.countries, (accum, checkboxState, placeName) => {
+            if (checkboxState === 'checked' && countriesBySubregion[placeName]) {
+              const selectedCountries = countriesBySubregion[placeName];
+              return _.concat(accum, selectedCountries);
+            }
+            return accum;
+          }, []);
+          return _(countries)
+            .shuffle()
+            .slice(0, quantity)
+            .value();
+        })
+      );
   }
 
   getSummary(countryName: string): Observable<string> {
@@ -87,14 +80,16 @@ export class CountryService implements Resolve<Observable<ICountry[]>> {
       })
     );
     this.request.subscribe(allCountries => {
-      const countries = _.filter(allCountries, country => COUNTRY_STATUSES[country.name]);
-      const countriesBySubregion = _.groupBy(countries, 'subregion');
+      const flatCountries = _.filter(allCountries, country => COUNTRY_STATUSES[country.name]);
+      const countriesBySubregion = _.groupBy(flatCountries, 'subregion');
       const subregionsByRegion = this.groupSubregionsByRegion(countriesBySubregion);
-      const formattedData = this.createFormattedData(countriesBySubregion, subregionsByRegion);
-      this.store.set(['countries'], countries);
-      this.store.set(['countriesBySubregion'], countriesBySubregion);
-      this.store.set(['subregionsByRegion'], subregionsByRegion);
-      this.store.set(['formattedData'], formattedData);
+      const nestedCountries = this.createFormattedData(countriesBySubregion, subregionsByRegion);
+      this._countries.set({
+        flatCountries,
+        countriesBySubregion,
+        subregionsByRegion,
+        nestedCountries
+      });
     });
   }
 

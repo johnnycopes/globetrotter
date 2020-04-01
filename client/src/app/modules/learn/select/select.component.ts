@@ -60,26 +60,23 @@ export class SelectComponent implements OnInit {
   }
 
   private initializeSubscriptions(): void {
-    this.selection$ = this.selectService.getSelection().pipe(
+    this.selection$ = this.selectService.selection.observe().pipe(
       tap(selection => this.selection = selection)
     );
+    this.quantity$ = this.selectService.selection.observe(lens => lens.to('quantity'));
     this.numberOfSelectedCountries$ = combineLatest([
-      this.countryService.getCountriesBySubregion(),
+      this.countryService.countries.observe(lens => lens.to('countriesBySubregion')),
       this.selection$
     ]).pipe(
       map(([subregions, selection]) => {
         const selectedPlaces = _(selection.countries)
-          .pickBy((value) => value === "checked")
+          .pickBy((value) => value === 'checked')
           .keys()
           .value();
         return _.reduce(selectedPlaces, (total, currentPlace) =>
           subregions[currentPlace] ? total + subregions[currentPlace].length : total
         , 0);
       }),
-      distinctUntilChanged()
-    );
-    this.quantity$ = this.selection$.pipe(
-      map(selection => selection.quantity),
       distinctUntilChanged()
     );
     this.invalidQuantity$ = combineLatest([
