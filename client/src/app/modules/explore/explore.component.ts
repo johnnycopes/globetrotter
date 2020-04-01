@@ -58,6 +58,7 @@ export class ExploreComponent implements OnInit {
   }
 
   private initializeStreams(): void {
+    this.countries$ = this.countryService.countries.observe(lens => lens.to('flatCountries'));
     this.selectedCountry$ = this.selectedCountryChange.asObservable().pipe(
       distinctUntilChanged()
     );
@@ -68,9 +69,6 @@ export class ExploreComponent implements OnInit {
     this.searchTerm$ = this.searchTermChange.asObservable().pipe(
       startWith(''),
       debounceTime(100),
-      distinctUntilChanged()
-    );
-    this.countries$ = this.countryService.getCountries().pipe(
       distinctUntilChanged()
     );
     this.filteredCountries$ = this.searchTerm$.pipe(

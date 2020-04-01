@@ -2,8 +2,8 @@ import { ICountry } from "./country.interface"
 import { IRegion } from "./region.interface";
 
 export class Countries {
-  countries: ICountry[] = [];
+  flatCountries: ICountry[] = [];
   countriesBySubregion: _.Dictionary<ICountry[]> = {};
   subregionsByRegion: _.Dictionary<string[]> = {};
-  formattedData: IRegion[] = [];
+  nestedCountries: IRegion[] = [];
 }

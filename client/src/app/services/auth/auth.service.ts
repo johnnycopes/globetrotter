@@ -19,12 +19,12 @@ import { ErrorService } from '../error/error.service';
   providedIn: 'root'
 })
 export class AuthService {
+  private apiUrl = environment.apiUrl + 'auth/';
+  private jwtHelper = new JwtHelperService();
   private readonly _authData: State<Auth>;
   get authData(): IStateReadOnly<Auth> {
     return this._authData;
   }
-  private apiUrl = environment.apiUrl + 'auth/';
-  private jwtHelper = new JwtHelperService();
 
   constructor(
     private http: HttpClient,

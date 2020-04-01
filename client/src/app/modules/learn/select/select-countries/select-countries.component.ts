@@ -73,12 +73,14 @@ export class SelectCountriesComponent implements OnInit {
   }
 
   private initializeStreams(): void {
-    this.regionData$ = this.countryService.getFormattedData().pipe(
-      map(regions => regions.map(region => {
-        const treeProvider = new PlacesTreeProvider(region);
-        return { region, treeProvider };
-      }))
-    );
+    this.regionData$ = this.countryService.countries
+      .observe(lens => lens.to('nestedCountries'))
+      .pipe(
+        map(regions => regions.map(region => {
+          const treeProvider = new PlacesTreeProvider(region);
+          return { region, treeProvider };
+        }))
+      );
     this.checkboxStates$ = this.selectService.selection.observe(lens => lens.to('countries'));
     this.totals$ = this.regionData$.pipe(
       map(regionData => regionData.reduce((totalsDict, regionData) => {

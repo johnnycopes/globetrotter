@@ -13,18 +13,19 @@ import { CountryService } from '../country/country.service';
   providedIn: 'root'
 })
 export class SelectService {
-  private readonly _selection: State<Selection>;
-  get selection(): IStateReadOnly<Selection> {
-    return this._selection;
-  }
   private readonly paramDict = {
     checked: '_c',
     indeterminate: '_i'
   };
+  private readonly _selection: State<Selection>;
+  get selection(): IStateReadOnly<Selection> {
+    return this._selection;
+  }
 
   constructor(private countryService: CountryService) {
     this._selection = new State(new Selection());
-    this.countryService.getFormattedData()
+    this.countryService.countries
+      .observe(lens => lens.to('nestedCountries'))
       .pipe(first())
       .subscribe(
         regions => {

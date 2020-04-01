@@ -65,7 +65,7 @@ export class SelectComponent implements OnInit {
     );
     this.quantity$ = this.selectService.selection.observe(lens => lens.to('quantity'));
     this.numberOfSelectedCountries$ = combineLatest([
-      this.countryService.getCountriesBySubregion(),
+      this.countryService.countries.observe(lens => lens.to('countriesBySubregion')),
       this.selection$
     ]).pipe(
       map(([subregions, selection]) => {
