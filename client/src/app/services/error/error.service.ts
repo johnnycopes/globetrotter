@@ -1,39 +1,30 @@
-import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
+import { State, IStateReadOnly } from '@boninger-works/state';
 
-import { Store } from '@models/store.class';
-import { Error } from '@models/error.class';
+import { Errors } from '@models/errors.class';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ErrorService {
-  private readonly store: Store;
+  private readonly _errors: State<Errors>;
+  get errors(): IStateReadOnly<Errors> {
+    return this._errors;
+  }
 
   constructor() {
-    this.store = new Store(new Error());
+    this._errors = new State(new Errors());
   }
-
-  getGlobalError(): Observable<string> {
-    return this.store.get(['globalError']);  }
 
   setGlobalError(error: string): void {
-    this.store.set(['globalError'], error);
-  }
-
-  getLoginError(): Observable<string> {
-    return this.store.get(['loginError']);
+    this._errors.set(lens => lens.to('global').set(error));
   }
 
   setLoginError(error: string): void {
-    this.store.set(['loginError'], error);
-  }
-
-  getRegisterError(): Observable<string> {
-    return this.store.get(['registerError']);
+    this._errors.set(lens => lens.to('login').set(error));
   }
 
   setRegisterError(error: string): void {
-    this.store.set(['registerError'], error);
+    this._errors.set(lens => lens.to('register').set(error));
   }
 }
