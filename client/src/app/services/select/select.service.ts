@@ -36,10 +36,7 @@ export class SelectService {
   }
 
   updateSelection(selection: Selection): void {
-    const { type, quantity, countries } = selection;
-    this.updateType(type);
-    this.updateQuantity(quantity);
-    this.updateCountries(countries);
+    this._selection.set(selection);
   }
 
   updateType(type: EQuizType): void {

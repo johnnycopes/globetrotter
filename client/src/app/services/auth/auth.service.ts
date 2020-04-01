@@ -119,11 +119,13 @@ export class AuthService {
     const tokenValid = !this.jwtHelper.isTokenExpired(token);
     const tokenExpirationDate = this.jwtHelper.getTokenExpirationDate(token);
     const timeUntilAutoLogout = tokenExpirationDate ? tokenExpirationDate.getTime() - Date.now() : 0;
-    const timer = window.setTimeout(() => this.logout(), timeUntilAutoLogout);
-    this._authData.set(lens => lens.to('username').set(decodedToken.unique_name));
-    this._authData.set(lens => lens.to('token').set(token));
-    this._authData.set(lens => lens.to('tokenValid').set(tokenValid));
-    this._authData.set(lens => lens.to('tokenExpirationTimer').set(timer));
+    const tokenExpirationTimer = window.setTimeout(() => this.logout(), timeUntilAutoLogout);
+    this._authData.set({
+      username: decodedToken.unique_name,
+      token,
+      tokenValid,
+      tokenExpirationTimer
+    });
     localStorage.setItem('token', token);
   }
 }

@@ -84,10 +84,12 @@ export class CountryService implements Resolve<Observable<ICountry[]>> {
       const countriesBySubregion = _.groupBy(flatCountries, 'subregion');
       const subregionsByRegion = this.groupSubregionsByRegion(countriesBySubregion);
       const nestedCountries = this.createFormattedData(countriesBySubregion, subregionsByRegion);
-      this._countries.set(lens => lens.to('flatCountries').set(flatCountries));
-      this._countries.set(lens => lens.to('countriesBySubregion').set(countriesBySubregion));
-      this._countries.set(lens => lens.to('subregionsByRegion').set(subregionsByRegion));
-      this._countries.set(lens => lens.to('nestedCountries').set(nestedCountries));
+      this._countries.set({
+        flatCountries,
+        countriesBySubregion,
+        subregionsByRegion,
+        nestedCountries
+      });
     });
   }
 
