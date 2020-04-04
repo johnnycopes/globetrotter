@@ -17,8 +17,8 @@
     <ng-container
       [ngTemplateOutlet]="itemTemplate ? itemTemplate : defaultTemplate"
       [ngTemplateOutletContext]="{
-        $implicit: this.item,
-        parent: this.parent
+        $implicit: item,
+        parent: parent
       }"
       >
     </ng-container>

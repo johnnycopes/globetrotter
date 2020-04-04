@@ -40,26 +40,26 @@
         [item]="regionDatum.region"
         [treeProvider]="regionDatum.treeProvider"
         [itemTemplate]="label"
-        [getTotalCount]="getTotalCount"
+        [getLeafItemCount]="getNumberOfCountries"
         [ngModel]="vm.checkboxStates"
         (ngModelChange)="onCountriesChange($event)"
         >
       </app-nested-checkboxes-with-counts>
       <ng-template
         #label
-        let-id="id"
-        let-isRoot="isRoot"
+        let-item
+        let-parent="parent"
         let-selected="selected"
         let-total="total"
         >
         <span class="bold"
-          *ngIf="isRoot; else child"
+          *ngIf="!parent; else child"
           >
-          {{id}} ({{selected}} / {{total}})
+          {{regionDatum.treeProvider.getId(item)}} ({{selected}} / {{total}})
         </span>
         <ng-template #child>
           <span>
-            {{id}} ({{total}})
+            {{regionDatum.treeProvider.getId(item)}} ({{total}})
           </span>
         </ng-template>
       </ng-template>

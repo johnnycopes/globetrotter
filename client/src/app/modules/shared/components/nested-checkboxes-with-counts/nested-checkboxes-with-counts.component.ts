@@ -30,8 +30,8 @@ export class NestedCheckboxesWithCountsComponent<T> implements ControlValueAcces
   @Input() item: T;
   @Input() treeProvider: ITreeProvider<T>;
   @Input() itemTemplate: TemplateRef<any>;
-  @Input() getTotalCount: (item: T) => number;
   @Input() invertedRootCheckbox: boolean = true;
+  @Input() getLeafItemCount: (item: T) => number;
   states: TCheckboxStates = {};
   selectedCounts: TCounts = {};
   totalCounts: TCounts = {};
@@ -50,7 +50,7 @@ export class NestedCheckboxesWithCountsComponent<T> implements ControlValueAcces
   public writeValue(value: TCheckboxStates): void {
     if (value) {
       this.states = value;
-      this.selectedCounts = this.getSelectedCounts(this.item, this.getTotalCount);
+      this.selectedCounts = this.getSelectedCounts(this.item, this.getLeafItemCount);
     }
     this.changeDetectorRef.markForCheck();
   }
@@ -63,7 +63,7 @@ export class NestedCheckboxesWithCountsComponent<T> implements ControlValueAcces
 
   public onChange(states: TCheckboxStates): void {
     this.states = states;
-    this.selectedCounts = this.getSelectedCounts(this.item, this.getTotalCount);
+    this.selectedCounts = this.getSelectedCounts(this.item, this.getLeafItemCount);
     this._onChangeFn(this.states);
   }
 
@@ -71,7 +71,7 @@ export class NestedCheckboxesWithCountsComponent<T> implements ControlValueAcces
     const id = this.treeProvider.getId(item);
     const children = this.treeProvider.getChildren(item);
     if (!children.length) {
-      return { [id]: this.getTotalCount(item) };
+      return { [id]: this.getLeafItemCount(item) };
     }
     const childrenTotals = _.reduce(children, (totalsDict, child) =>
       _.assign(totalsDict, this.getTotalCounts(child))
@@ -83,15 +83,15 @@ export class NestedCheckboxesWithCountsComponent<T> implements ControlValueAcces
     };
   }
 
-  private getSelectedCounts(item: T, getLeafNodeCount: (item: T) => number): TCounts {
+  private getSelectedCounts(item: T, getLeafItemCount: (item: T) => number): TCounts {
     const id = this.treeProvider.getId(item);
     const children = this.treeProvider.getChildren(item);
     if (!children.length) {
-      const count = this.states[id] === 'checked' ? getLeafNodeCount(item) : 0;
+      const count = this.states[id] === 'checked' ? getLeafItemCount(item) : 0;
       return { [id]: count };
     }
     const childrenTotals = _.reduce(children, (totalsDict, child) =>
-      _.assign(totalsDict, this.getSelectedCounts(child, getLeafNodeCount))
+      _.assign(totalsDict, this.getSelectedCounts(child, getLeafItemCount))
     , {} as TCounts);
     const grandTotal = _.reduce(childrenTotals, (total, value) => total + value, 0);
     return {

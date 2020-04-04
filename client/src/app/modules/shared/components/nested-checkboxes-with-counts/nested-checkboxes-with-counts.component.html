@@ -9,20 +9,25 @@
 
 <ng-template #checkbox
   let-item
-  let-id="id"
-  let-children="children"
-  let-isRoot="isRoot"
+  let-parent="parent"
   >
   <ng-container
-    [ngTemplateOutlet]="itemTemplate"
+    [ngTemplateOutlet]="itemTemplate ? itemTemplate : defaultTemplate"
     [ngTemplateOutletContext]="{
-      item: this.item,
-      id: this.id,
-      children: this.children,
-      isRoot: this.isRoot,
-      selected: this.selectedCounts[this.id],
-      total: this.totalCounts[this.id]
+      $implicit: item,
+      parent: parent,
+      selected: this.selectedCounts[this.treeProvider.getId(item)],
+      total: this.totalCounts[this.treeProvider.getId(item)]
     }"
     >
   </ng-container>
+</ng-template>
+
+<ng-template #defaultTemplate
+  let-item
+  let-selected="selected"
+  let-total="total"
+  >
+  {{this.treeProvider.getId(item)}}
+  ({{this.treeProvider.getChildren(item)?.length ? selected + ' / ' + total : total}})
 </ng-template>

@@ -67,7 +67,7 @@ export class SelectCountriesComponent implements OnInit {
     this.selectService.updateCountries({});
   }
 
-  getTotalCount(item: ISubregion): number {
+  getNumberOfCountries(item: ISubregion): number {
     return item.countries.length;
   }
 
