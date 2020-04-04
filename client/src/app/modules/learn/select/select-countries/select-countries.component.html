@@ -3,19 +3,18 @@
   header="Content"
   >
   <div class="top">
-    <!-- <div class="top__counter">
+    <div class="top__counter">
       <span class="bold">
-        {{vm.currents[overallTotalKey]}} / {{vm.totals[overallTotalKey]}}
+        {{vm.overallCountData.selected}} / {{vm.overallCountData.total}}
       </span>
       possible countries in the cards.
-    </div> -->
+    </div>
     <div class="top__buttons">
       <app-button class="top__select-all"
         buttonStyle="secondary"
         buttonText="Select all"
         (click)="onSelectAll()"
         >
-        <!-- (click)="onSelectAll(vm.totals)" -->
       </app-button>
       <app-button class="top__clear-all"
         buttonStyle="secondary"
@@ -29,22 +28,24 @@
     <div class="region"
       *ngFor="let regionDatum of vm.regionData"
       >
-      <app-icon class="region__image"
-        *ngIf="regionDatum.region.name as regionName"
-        [icon]="regionName"
-        [highlighted]="false"
-        >
-        <!-- [highlighted]="!!vm.currents[regionName]" -->
-      </app-icon>
-      <app-nested-checkboxes-with-counts class="region__checkboxes"
-        [item]="regionDatum.region"
-        [treeProvider]="regionDatum.treeProvider"
-        [itemTemplate]="label"
-        [getLeafItemCount]="getNumberOfCountries"
-        [ngModel]="vm.checkboxStates"
-        (ngModelChange)="onCountriesChange($event)"
-        >
-      </app-nested-checkboxes-with-counts>
+      <ng-container *ngIf="regionDatum.region.name as regionName">
+        <app-icon class="region__image"
+          [icon]="regionName"
+          [highlighted]="!!vm.countData[regionName].selected"
+          >
+        </app-icon>
+        <app-nested-checkboxes-with-counts class="region__checkboxes"
+          [item]="regionDatum.region"
+          [treeProvider]="regionDatum.treeProvider"
+          [itemTemplate]="label"
+          [getLeafItemCount]="getNumberOfCountries"
+          [ngModel]="vm.checkboxStates"
+          (ngModelChange)="onCountriesChange($event)"
+          (countsChange)="onCountsChange($event, regionName)"
+          >
+        </app-nested-checkboxes-with-counts>
+      </ng-container>
+
       <ng-template
         #label
         let-item

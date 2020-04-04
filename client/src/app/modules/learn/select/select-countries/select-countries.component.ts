@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { Observable, combineLatest } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, combineLatest, of, ReplaySubject } from 'rxjs';
+import { map, tap, count } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 import { IRegion } from '@models/region.interface';
@@ -9,8 +9,8 @@ import { TCheckboxStates } from '@shared/components/nested-checkboxes/nested-che
 import { CountryService } from '@services/country/country.service';
 import { SelectService } from '@services/select/select.service';
 import { ISubregion } from '@models/subregion.interface';
-
-type TPlaceCounts = _.Dictionary<number>;
+import { INestedCheckboxesCounts } from '@shared/components/nested-checkboxes-with-counts/nested-checkboxes-with-counts.component';
+import { State } from '@boninger-works/state';
 
 interface IRegionData {
   region: IRegion;
@@ -20,7 +20,11 @@ interface IRegionData {
 interface IViewModel {
   regionData: IRegionData[];
   checkboxStates: TCheckboxStates;
+  countData: TCountData;
+  overallCountData: INestedCheckboxesCounts;
 }
+
+type TCountData = _.Dictionary<INestedCheckboxesCounts>;
 
 @Component({
   selector: 'app-select-countries',
@@ -30,9 +34,11 @@ interface IViewModel {
 })
 export class SelectCountriesComponent implements OnInit {
   vm$: Observable<IViewModel>;
-  readonly overallTotalKey: string = '__overall';
   private regionData$: Observable<IRegionData[]>;
   private checkboxStates$: Observable<TCheckboxStates>;
+  private countData$: Observable<TCountData>;
+  private countData: State<TCountData> = new State({});
+  private overallCountData$: Observable<INestedCheckboxesCounts>;
 
   constructor(
     private countryService: CountryService,
@@ -43,10 +49,12 @@ export class SelectCountriesComponent implements OnInit {
     this.initializeStreams();
     this.vm$ = combineLatest([
       this.regionData$,
-      this.checkboxStates$
+      this.checkboxStates$,
+      this.countData$,
+      this.overallCountData$
     ]).pipe(
-      map(([regionData, checkboxStates]) =>
-        ({ regionData, checkboxStates })
+      map(([regionData, checkboxStates, countData, overallCountData]) =>
+        ({ regionData, checkboxStates, countData, overallCountData })
       )
     );
   }
@@ -55,7 +63,11 @@ export class SelectCountriesComponent implements OnInit {
     this.selectService.updateCountries(state);
   }
 
-  onSelectAll(totals: TPlaceCounts): void {
+  onCountsChange(counts: INestedCheckboxesCounts, regionName: string): void {
+    this.countData.set(lens => lens.to(regionName).set(counts));
+  }
+
+  onSelectAll(totals: any): void {
     // const newCheckboxStates = _(totals)
     //   .mapValues(() => "checked")
     //   .omitBy((_, key) => key === this.overallTotalKey)
@@ -75,11 +87,29 @@ export class SelectCountriesComponent implements OnInit {
     this.regionData$ = this.countryService.countries
       .observe(lens => lens.to('nestedCountries'))
       .pipe(
+        tap(regions => {
+          const countsDict = regions.reduce((countsDict, region) => {
+            countsDict[region.name] = { selected: 0, total: 0 };
+            return countsDict;
+          }, {} as TCountData);
+          this.countData.set(countsDict);
+        }),
         map(regions => regions.map(region => {
           const treeProvider = new PlacesTreeProvider(region);
           return { region, treeProvider };
         }))
       );
     this.checkboxStates$ = this.selectService.selection.observe(lens => lens.to('countries'));
+    this.countData$ = this.countData.observe();
+    this.overallCountData$ = this.countData.observe().pipe(
+      map(countData => {
+        console.log(countData);
+        return _.reduce(countData, (accum, current) => {
+          accum.selected += current.selected;
+          accum.total += current.total;
+          return accum;
+        }, { selected: 0, total: 0} as INestedCheckboxesCounts);
+      })
+    );
   }
 }

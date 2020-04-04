@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, TemplateRef, ChangeDetectorRef, ChangeDetectionStrategy, forwardRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, TemplateRef, ChangeDetectorRef, ChangeDetectionStrategy, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import * as _ from 'lodash';
 
@@ -12,8 +12,12 @@ TOBES
 
 1. general Traverse function
 2. expose current and total count as observable or output for outer component to use
-3. expose only the item and parent in the tree component
 */
+
+export interface INestedCheckboxesCounts {
+  selected: number;
+  total: number;
+}
 
 @Component({
   selector: 'app-nested-checkboxes-with-counts',
@@ -32,9 +36,11 @@ export class NestedCheckboxesWithCountsComponent<T> implements ControlValueAcces
   @Input() itemTemplate: TemplateRef<any>;
   @Input() invertedRootCheckbox: boolean = true;
   @Input() getLeafItemCount: (item: T) => number;
+  @Output() countsChange: EventEmitter<INestedCheckboxesCounts> = new EventEmitter();
   states: TCheckboxStates = {};
   selectedCounts: TCounts = {};
   totalCounts: TCounts = {};
+  private id: string;
 
   private _onChangeFn: (value: TCheckboxStates) => void = () => { };
 
@@ -44,6 +50,7 @@ export class NestedCheckboxesWithCountsComponent<T> implements ControlValueAcces
     if (!this.item || !this.treeProvider) {
       throw new Error("Missing inputs: item, treeProvider, and getTotalCount must be passed to the nested-checkboxes-with-counts component");
     }
+    this.id = this.treeProvider.getId(this.item);
     this.totalCounts = this.getTotalCounts(this.item);
   }
 
@@ -51,6 +58,7 @@ export class NestedCheckboxesWithCountsComponent<T> implements ControlValueAcces
     if (value) {
       this.states = value;
       this.selectedCounts = this.getSelectedCounts(this.item, this.getLeafItemCount);
+      this.emitCounts();
     }
     this.changeDetectorRef.markForCheck();
   }
@@ -63,8 +71,17 @@ export class NestedCheckboxesWithCountsComponent<T> implements ControlValueAcces
 
   public onChange(states: TCheckboxStates): void {
     this.states = states;
-    this.selectedCounts = this.getSelectedCounts(this.item, this.getLeafItemCount);
     this._onChangeFn(this.states);
+
+    this.selectedCounts = this.getSelectedCounts(this.item, this.getLeafItemCount);
+    this.emitCounts();
+  }
+
+  private emitCounts(): void {
+    this.countsChange.emit({
+      selected: this.selectedCounts[this.id],
+      total: this.totalCounts[this.id]
+    });
   }
 
   private getTotalCounts(item: T): TCounts {
