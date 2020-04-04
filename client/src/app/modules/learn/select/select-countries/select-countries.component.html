@@ -3,18 +3,19 @@
   header="Content"
   >
   <div class="top">
-    <div class="top__counter">
+    <!-- <div class="top__counter">
       <span class="bold">
         {{vm.currents[overallTotalKey]}} / {{vm.totals[overallTotalKey]}}
       </span>
       possible countries in the cards.
-    </div>
+    </div> -->
     <div class="top__buttons">
       <app-button class="top__select-all"
         buttonStyle="secondary"
         buttonText="Select all"
-        (click)="onSelectAll(vm.totals)"
+        (click)="onSelectAll()"
         >
+        <!-- (click)="onSelectAll(vm.totals)" -->
       </app-button>
       <app-button class="top__clear-all"
         buttonStyle="secondary"
@@ -31,14 +32,15 @@
       <app-icon class="region__image"
         *ngIf="regionDatum.region.name as regionName"
         [icon]="regionName"
-        [highlighted]="!!vm.currents[regionName]"
+        [highlighted]="false"
         >
+        <!-- [highlighted]="!!vm.currents[regionName]" -->
       </app-icon>
       <app-nested-checkboxes-with-counts class="region__checkboxes"
         [item]="regionDatum.region"
         [treeProvider]="regionDatum.treeProvider"
         [itemTemplate]="label"
-        [getCount]="getCount"
+        [getTotalCount]="getTotalCount"
         [ngModel]="vm.checkboxStates"
         (ngModelChange)="onCountriesChange($event)"
         >
@@ -47,12 +49,13 @@
         #label
         let-id="id"
         let-isRoot="isRoot"
+        let-selected="selected"
         let-total="total"
         >
         <span class="bold"
           *ngIf="isRoot; else child"
           >
-          {{id}} ({{vm.currents[id]}} / {{total}})
+          {{id}} ({{selected}} / {{total}})
         </span>
         <ng-template #child>
           <span>
