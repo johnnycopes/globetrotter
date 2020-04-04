@@ -5,7 +5,7 @@ import {
   select
 } from '@storybook/addon-knobs';
 
-import { AlertComponent } from 'src/app/shared/components/alert/alert.component';
+import { AlertComponent } from '@shared/components/alert/alert.component';
 
 const types = ['success', 'error'];
 

@@ -19,7 +19,6 @@ export class TreeComponent<T> implements OnInit {
   @Input() indentChildItems: boolean = true;
   public id: string;
   public parent: T | undefined;
-  public parentId: string | undefined;
   public children: T[];
 
   constructor() { }
@@ -33,7 +32,6 @@ export class TreeComponent<T> implements OnInit {
     const parent = this.treeProvider.getParent && this.treeProvider.getParent(this.item);
     if (!!parent) {
       this.parent = parent;
-      this.parentId = this.treeProvider.getId(parent);
     }
   }
 }

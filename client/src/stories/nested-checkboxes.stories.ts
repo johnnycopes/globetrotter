@@ -5,9 +5,9 @@ import {
   object
 } from '@storybook/addon-knobs';
 
-import { CheckboxComponent } from 'src/app/shared/components/checkbox/checkbox.component';
-import { NestedCheckboxesComponent } from 'src/app/shared/components/nested-checkboxes/nested-checkboxes.component';
-import { TreeComponent } from 'src/app/shared/components/tree/tree.component';
+import { CheckboxComponent } from '@shared/components/checkbox/checkbox.component';
+import { NestedCheckboxesComponent } from '@shared/components/nested-checkboxes/nested-checkboxes.component';
+import { TreeComponent } from '@shared/components/tree/tree.component';
 import { SOME_SELECTED_DICT, ALL_SELECTED_DICT } from './mock-data/nested-checkboxes.data';
 import { NestedItemTreeProvider } from './mock-data/nested-item-tree-provider.class';
 import { NESTED_ITEM } from './mock-data/nested-item.data';

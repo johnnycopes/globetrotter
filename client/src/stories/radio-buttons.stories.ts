@@ -7,18 +7,18 @@ import {
   object
 } from '@storybook/addon-knobs';
 
-import { RadioButtonsComponent, RadioButtonsOption } from 'src/app/shared/components/radio-buttons/radio-buttons.component';
+import { RadioButtonsComponent, IRadioButtonsOption } from '@shared/components/radio-buttons/radio-buttons.component';
 
 const sampleText = 'Number of countries to include in the quiz:';
 const actions = {
   onChange: action('ngModelChanged')
 };
-const options: RadioButtonsOption<number>[] = [
+const options: IRadioButtonsOption<number>[] = [
   { display: '5', value: 5 },
   { display: '10', value: 10 },
   { display: '15', value: 15 },
   { display: '20', value: 20 },
-  { display: 'All', value: null }
+  { display: 'All', value: 200 }
 ];
 const template = `
   <app-radio-buttons

@@ -1,4 +1,3 @@
-
 export const SOME_SELECTED_DICT = {
   Africa: 'indeterminate',
   'Southern Africa': 'indeterminate',

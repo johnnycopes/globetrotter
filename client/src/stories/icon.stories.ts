@@ -6,7 +6,7 @@ import {
   boolean
 } from '@storybook/addon-knobs';
 
-import { IconComponent } from 'src/app/shared/components/icon/icon.component';
+import { IconComponent } from '@shared/components/icon/icon.component';
 
 const icons = [
   'Africa',
