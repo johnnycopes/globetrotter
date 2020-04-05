@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { State, IStateReadOnly } from '@boninger-works/state';
+import { State, IStateReadOnly } from '@boninger-works/state/library/core';
 import { Observable } from 'rxjs';
 import { map, startWith, tap } from 'rxjs/operators';
 import { JwtHelperService } from "@auth0/angular-jwt";
@@ -73,7 +73,7 @@ export class AuthService {
       .pipe(
         tap(timer => clearTimeout(timer))
       );
-    this._authData.set(new Auth());
+    this._authData.setRoot(new Auth());
     localStorage.removeItem('token');
     this.router.navigate([`${ERoute.account}/${ERoute.auth}`]);
   }
@@ -120,7 +120,7 @@ export class AuthService {
     const tokenExpirationDate = this.jwtHelper.getTokenExpirationDate(token);
     const timeUntilAutoLogout = tokenExpirationDate ? tokenExpirationDate.getTime() - Date.now() : 0;
     const tokenExpirationTimer = window.setTimeout(() => this.logout(), timeUntilAutoLogout);
-    this._authData.set({
+    this._authData.setRoot({
       username: decodedToken.unique_name,
       token,
       tokenValid,

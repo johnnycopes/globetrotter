@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router, NavigationEnd, RouterEvent, NavigationCancel, NavigationError } from '@angular/router';
-import { State, IStateReadOnly } from '@boninger-works/state';
+import { State, IStateReadOnly } from '@boninger-works/state/library/core';
 import { map, filter } from 'rxjs/operators';
 
 import { RouterInfo } from '@models/router-info.class';
@@ -27,7 +27,7 @@ export class RouterService {
         return routeUrl;
       })
     ).subscribe(
-      route => this._state.set(lens => lens.to('currentRoute').set(route))
+      route => this._state.set(lens => lens.to('currentRoute').value(route))
     );
 
     this.router.events.pipe(
@@ -41,7 +41,7 @@ export class RouterService {
         return true;
       })
     ).subscribe(
-      loading => this._state.set(lens => lens.to('loading').set(loading))
+      loading => this._state.set(lens => lens.to('loading').value(loading))
     );
   }
 

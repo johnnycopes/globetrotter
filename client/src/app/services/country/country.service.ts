@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Resolve } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { State, IStateReadOnly } from '@boninger-works/state';
+import { State, IStateReadOnly } from '@boninger-works/state/library/core';
 import { map, shareReplay, catchError } from 'rxjs/operators';
 import * as _ from 'lodash';
 
@@ -84,7 +84,7 @@ export class CountryService implements Resolve<Observable<ICountry[]>> {
       const countriesBySubregion = _.groupBy(flatCountries, 'subregion');
       const subregionsByRegion = this.groupSubregionsByRegion(countriesBySubregion);
       const nestedCountries = this.createFormattedData(countriesBySubregion, subregionsByRegion);
-      this._countries.set({
+      this._countries.setRoot({
         flatCountries,
         countriesBySubregion,
         subregionsByRegion,

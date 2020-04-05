@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { State, IStateReadOnly } from '@boninger-works/state';
+import { State, IStateReadOnly } from '@boninger-works/state/library/core';
 import { first } from 'rxjs/operators';
 import * as _ from 'lodash';
 
@@ -36,19 +36,19 @@ export class SelectService {
   }
 
   updateSelection(selection: Selection): void {
-    this._selection.set(selection);
+    this._selection.setRoot(selection);
   }
 
   updateType(type: EQuizType): void {
-    this._selection.set(lens => lens.to('type').set(type));
+    this._selection.set(lens => lens.to('type').value(type));
   }
 
   updateQuantity(quantity: number): void {
-    this._selection.set(lens => lens.to('quantity').set(quantity));
+    this._selection.set(lens => lens.to('quantity').value(quantity));
   }
 
   updateCountries(countries: TCheckboxStates): void {
-    this._selection.set(lens => lens.to('countries').set(countries));
+    this._selection.set(lens => lens.to('countries').value(countries));
   }
 
   mapSelectionToQueryParams(selection: Selection): _.Dictionary<string> {

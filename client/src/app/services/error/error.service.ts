@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { State, IStateReadOnly } from '@boninger-works/state';
+import { State, IStateReadOnly } from '@boninger-works/state/library/core';
 
 import { Errors } from '@models/errors.class';
 
@@ -17,14 +17,14 @@ export class ErrorService {
   }
 
   setGlobalError(error: string): void {
-    this._errors.set(lens => lens.to('global').set(error));
+    this._errors.set(lens => lens.to('global').value(error));
   }
 
   setLoginError(error: string): void {
-    this._errors.set(lens => lens.to('login').set(error));
+    this._errors.set(lens => lens.to('login').value(error));
   }
 
   setRegisterError(error: string): void {
-    this._errors.set(lens => lens.to('register').set(error));
+    this._errors.set(lens => lens.to('register').value(error));
   }
 }
