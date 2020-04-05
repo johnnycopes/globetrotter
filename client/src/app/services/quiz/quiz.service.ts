@@ -40,12 +40,10 @@ export class QuizService {
     this.countryService.getCountriesFromSelection(selection).subscribe(
       countries => {
         const quizUpdates = {
-          ...this.quiz.get(),
           countries,
           totalCountries: countries.length,
           type: selection.type
         };
-
         this._quiz.set(lens => lens.transform(assign(quizUpdates)));
       }
     );
