@@ -5,7 +5,7 @@
   <div class="top">
     <div class="top__counter">
       <span class="bold">
-        {{vm.overallCountData.selected}} / {{vm.overallCountData.total}}
+        {{vm.overallSelected}} / WIP
       </span>
       possible countries in the cards.
     </div>
@@ -28,20 +28,21 @@
     <div class="region"
       *ngFor="let regionDatum of vm.regionData"
       >
-      <ng-container *ngIf="regionDatum.region.name as regionName">
+      <ng-container *ngIf="regionDatum.region as region">
         <app-icon class="region__image"
-          [icon]="regionName"
-          [highlighted]="!!vm.countData[regionName].selected"
+          [icon]="region.name"
+          [highlighted]="regionDatum.selected$ | async"
           >
         </app-icon>
         <app-nested-checkboxes-with-counts class="region__checkboxes"
-          [item]="regionDatum.region"
+          [item]="region"
           [treeProvider]="regionDatum.treeProvider"
           [itemTemplate]="label"
           [getLeafItemCount]="getNumberOfCountries"
           [ngModel]="vm.checkboxStates"
           (ngModelChange)="onCountriesChange($event)"
-          (countsChange)="onCountsChange($event, regionName)"
+          (selectedChange)="regionDatum.selectedSubject.next($event)"
+          (totalChange)="regionDatum.totalSubject.next($event)"
           >
         </app-nested-checkboxes-with-counts>
       </ng-container>

@@ -11,13 +11,7 @@ type TCounts = _.Dictionary<number>;
 TOBES
 
 1. general Traverse function
-2. expose current and total count as observable or output for outer component to use
 */
-
-export interface INestedCheckboxesCounts {
-  selected: number;
-  total: number;
-}
 
 @Component({
   selector: 'app-nested-checkboxes-with-counts',
@@ -36,7 +30,8 @@ export class NestedCheckboxesWithCountsComponent<T> implements ControlValueAcces
   @Input() itemTemplate: TemplateRef<any>;
   @Input() invertedRootCheckbox: boolean = true;
   @Input() getLeafItemCount: (item: T) => number;
-  @Output() countsChange: EventEmitter<INestedCheckboxesCounts> = new EventEmitter();
+  @Output() selectedChange: EventEmitter<number> = new EventEmitter();
+  @Output() totalChange: EventEmitter<number> = new EventEmitter();
   states: TCheckboxStates = {};
   selectedCounts: TCounts = {};
   totalCounts: TCounts = {};
@@ -51,14 +46,18 @@ export class NestedCheckboxesWithCountsComponent<T> implements ControlValueAcces
       throw new Error("Missing inputs: item, treeProvider, and getTotalCount must be passed to the nested-checkboxes-with-counts component");
     }
     this.id = this.treeProvider.getId(this.item);
-    this.totalCounts = this.getTotalCounts(this.item);
+    // this.totalCounts = this.getTotalCounts(this.item);
+    // this.totalChange.emit(this.selectedCounts[this.id]);
+    // console.log(this.selectedCounts[this.id]);
   }
 
   public writeValue(value: TCheckboxStates): void {
     if (value) {
       this.states = value;
       this.selectedCounts = this.getSelectedCounts(this.item, this.getLeafItemCount);
-      this.emitCounts();
+      this.selectedChange.emit(this.selectedCounts[this.id]);
+      this.totalCounts = this.getTotalCounts(this.item);
+      this.totalChange.emit(this.selectedCounts[this.id]);
     }
     this.changeDetectorRef.markForCheck();
   }
@@ -74,14 +73,7 @@ export class NestedCheckboxesWithCountsComponent<T> implements ControlValueAcces
     this._onChangeFn(this.states);
 
     this.selectedCounts = this.getSelectedCounts(this.item, this.getLeafItemCount);
-    this.emitCounts();
-  }
-
-  private emitCounts(): void {
-    this.countsChange.emit({
-      selected: this.selectedCounts[this.id],
-      total: this.totalCounts[this.id]
-    });
+    this.selectedChange.emit(this.selectedCounts[this.id]);
   }
 
   private getTotalCounts(item: T): TCounts {
