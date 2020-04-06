@@ -1,7 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
-import { map, tap, first, distinctUntilChanged, pluck, switchMap, mergeMap, shareReplay } from 'rxjs/operators';
-import { State } from '@boninger-works/state/library/core';
+import { map, first, distinctUntilChanged, switchMap, shareReplay } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 import { IRegion } from '@models/region.interface';
@@ -24,7 +23,7 @@ interface IViewModel {
   regionData: IRegionData[];
   checkboxStates: TCheckboxStates;
   overallSelected: number;
-  // overallCountData: INestedCheckboxesCounts;
+  overallTotal: number;
 }
 
 @Component({
@@ -50,10 +49,11 @@ export class SelectCountriesComponent implements OnInit {
     this.vm$ = combineLatest([
       this.regionData$,
       this.checkboxStates$,
-      this.overallSelected$
+      this.overallSelected$,
+      this.overallTotal$
     ]).pipe(
-      map(([regionData, checkboxStates, overallSelected ]) =>
-        ({ regionData, checkboxStates, overallSelected  })
+      map(([regionData, checkboxStates, overallSelected, overallTotal]) =>
+        ({ regionData, checkboxStates, overallSelected, overallTotal  })
       )
     );
   }
@@ -62,7 +62,7 @@ export class SelectCountriesComponent implements OnInit {
     this.selectService.updateCountries(state);
   }
 
-  onSelectAll(totals: any): void {
+  onSelectAll(): void {
     // TODO: fix this
   }
 
@@ -75,6 +75,7 @@ export class SelectCountriesComponent implements OnInit {
   }
 
   private initializeStreams(): void {
+    this.checkboxStates$ = this.selectService.selection.observe(lens => lens.to('countries'));
     this.regionData$ = this.countryService.countries
       .observe(lens => lens.to('nestedCountries'))
       .pipe(
@@ -93,10 +94,43 @@ export class SelectCountriesComponent implements OnInit {
         })),
         shareReplay({ bufferSize: 1, refCount: true })
       );
-    this.checkboxStates$ = this.selectService.selection.observe(lens => lens.to('countries'));
-    this.overallSelected$ = this.regionData$.pipe(
+
+    const selected1$ = this.regionData$.pipe(
       switchMap(regionData => regionData[0].selected$),
-      tap(console.log)
+    );
+    const selected2$ = this.regionData$.pipe(
+      switchMap(regionData => regionData[1].selected$),
+    );
+    const selected3$ = this.regionData$.pipe(
+      switchMap(regionData => regionData[2].selected$),
+    );
+    const selected4$ = this.regionData$.pipe(
+      switchMap(regionData => regionData[3].selected$),
+    );
+    const selected5$ = this.regionData$.pipe(
+      switchMap(regionData => regionData[4].selected$),
+    );
+    this.overallSelected$ = combineLatest(selected1$, selected2$, selected3$, selected4$, selected5$).pipe(
+      map(([...values]) => values.reduce((accum, current) => accum + current, 0))
+    );
+
+    const total1$ = this.regionData$.pipe(
+      switchMap(regionData => regionData[0].total$),
+    );
+    const total2$ = this.regionData$.pipe(
+      switchMap(regionData => regionData[1].total$),
+    );
+    const total3$ = this.regionData$.pipe(
+      switchMap(regionData => regionData[2].total$),
+    );
+    const total4$ = this.regionData$.pipe(
+      switchMap(regionData => regionData[3].total$),
+    );
+    const total5$ = this.regionData$.pipe(
+      switchMap(regionData => regionData[4].total$),
+    );
+    this.overallTotal$ = combineLatest(total1$, total2$, total3$, total4$, total5$).pipe(
+      map(([...values]) => values.reduce((accum, current) => accum + current, 0))
     );
   }
 }

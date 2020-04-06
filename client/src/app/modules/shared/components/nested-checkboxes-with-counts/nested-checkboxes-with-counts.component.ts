@@ -46,9 +46,6 @@ export class NestedCheckboxesWithCountsComponent<T> implements ControlValueAcces
       throw new Error("Missing inputs: item, treeProvider, and getTotalCount must be passed to the nested-checkboxes-with-counts component");
     }
     this.id = this.treeProvider.getId(this.item);
-    // this.totalCounts = this.getTotalCounts(this.item);
-    // this.totalChange.emit(this.selectedCounts[this.id]);
-    // console.log(this.selectedCounts[this.id]);
   }
 
   public writeValue(value: TCheckboxStates): void {
@@ -57,7 +54,7 @@ export class NestedCheckboxesWithCountsComponent<T> implements ControlValueAcces
       this.selectedCounts = this.getSelectedCounts(this.item, this.getLeafItemCount);
       this.selectedChange.emit(this.selectedCounts[this.id]);
       this.totalCounts = this.getTotalCounts(this.item);
-      this.totalChange.emit(this.selectedCounts[this.id]);
+      this.totalChange.emit(this.totalCounts[this.id]);
     }
     this.changeDetectorRef.markForCheck();
   }
