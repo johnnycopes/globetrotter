@@ -17,8 +17,8 @@ import { RouterService } from '@services/router/router.service';
   providedIn: 'root'
 })
 export class QuizService {
-  private readonly _quiz: State<Quiz>;
-  get quiz(): IStateReadOnly<Quiz> {
+  private readonly _quiz: State<Quiz | undefined>;
+  get quiz(): IStateReadOnly<Quiz | undefined> {
     return this._quiz;
   }
 
@@ -26,25 +26,23 @@ export class QuizService {
     private countryService: CountryService,
     private routerService: RouterService
   ) {
-    this._quiz = new State(new Quiz());
+    this._quiz = new State(undefined);
     this.routerService.state
       .observe(lens => lens.to('currentRoute'))
       .pipe(
         filter(route => route.includes(ERoute.select))
       ).subscribe(
-        _ => this._quiz.setRoot(new Quiz())
+        _ => this._quiz.setRoot(undefined)
       );
   }
 
   initializeQuiz(selection: Selection): void {
     this.countryService.getCountriesFromSelection(selection).subscribe(
       countries => {
-        const quizUpdates = {
+        this._quiz.setRoot(new Quiz(
           countries,
-          totalCountries: countries.length,
-          type: selection.type
-        };
-        this._quiz.set(lens => lens.transform(assign(quizUpdates)));
+          selection.type
+        ));
       }
     );
   }
@@ -54,7 +52,7 @@ export class QuizService {
       if (correctGuess) {
         batch.set(lens => lens.to('countries').transform(shift()));
         batch.set(lens => lens.to('countriesGuessed').transform(increment()));
-        const quiz = this._quiz.get();
+        const quiz = this._quiz.get() as Quiz;
         if (!quiz.countries.length) {
           batch.set(lens => lens.to('accuracy').value(this.calculateAccuracy(quiz)));
           batch.set(lens => lens.to('isComplete').value(true));
@@ -63,7 +61,7 @@ export class QuizService {
       else {
         batch.set(lens => lens.to('countries').transform(countries => this.moveGuessedCountryToEnd(countries)));
       }
-      if (!this._quiz.get().isComplete) {
+      if (!(this._quiz.get() as Quiz).isComplete) {
         batch.set(lens => lens.to('guess').transform(increment()));
       }
     });

@@ -73,7 +73,7 @@ export class CountryService implements Resolve<Observable<ICountry[]>> {
 
   private initialize(): void {
     this.request = this.http.get<ICountry[]>(this.countriesApiUrl).pipe(
-      shareReplay(),
+      shareReplay({ bufferSize: 1, refCount: true }),
       catchError(error => {
         this.errorService.setGlobalError(error.message);
         return of([]);
