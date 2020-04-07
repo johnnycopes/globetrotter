@@ -21,7 +21,7 @@ import { ErrorService } from '../error/error.service';
 export class AuthService {
   private apiUrl = environment.apiUrl + 'auth/';
   private jwtHelper = new JwtHelperService();
-  private readonly _authData: State<Auth>;
+  private readonly _authData = new State<Auth>(new Auth());
   get authData(): IStateReadOnly<Auth> {
     return this._authData;
   }
@@ -31,7 +31,6 @@ export class AuthService {
     private router: Router,
     private errorService: ErrorService
   ) {
-    this._authData = new State(new Auth());
     const token = localStorage.getItem('token');
     if (token) {
       this.setData(token);

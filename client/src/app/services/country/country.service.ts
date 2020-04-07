@@ -8,10 +8,10 @@ import * as _ from 'lodash';
 
 import { COUNTRY_STATUSES } from '@models/country-statuses.data';
 import { WIKIPEDIA_COUNTRIES } from '@models/wikipedia-country-names.data';
-import { Countries } from '@models/countries.class';
+import { ICountries } from '@models/countries.interface';
 import { ICountry } from '@models/country.interface';
 import { IRegion } from '@models/region.interface';
-import { Selection } from '@models/selection.class';
+import { ISelection } from '@models/selection.interface';
 import { ISummary } from '@models/summary.interface';
 import { ErrorService } from '../error/error.service';
 
@@ -25,8 +25,13 @@ export class CountryService implements Resolve<Observable<ICountry[]>> {
   private request: Observable<ICountry[]>;
   private readonly countriesApiUrl = 'https://restcountries.eu/rest/v2/all';
   private readonly wikipediaApiUrl = 'https://en.wikipedia.org/api/rest_v1/page/summary/';
-  private readonly _countries: State<Countries>;
-  get countries(): IStateReadOnly<Countries> {
+  private readonly _countries = new State<ICountries>({
+    flatCountries: [],
+    countriesBySubregion: {},
+    subregionsByRegion: {},
+    nestedCountries: []
+  });
+  get countries(): IStateReadOnly<ICountries> {
     return this._countries;
   }
 
@@ -34,7 +39,6 @@ export class CountryService implements Resolve<Observable<ICountry[]>> {
     private http: HttpClient,
     private errorService: ErrorService
   ) {
-    this._countries = new State(new Countries());
     this.initialize();
   }
 
@@ -42,7 +46,7 @@ export class CountryService implements Resolve<Observable<ICountry[]>> {
     return this.request;
   }
 
-  getCountriesFromSelection(selection: Selection): Observable<ICountry[]> {
+  getCountriesFromSelection(selection: ISelection): Observable<ICountry[]> {
     return this.countries
       .observe(lens => lens.to('countriesBySubregion'))
       .pipe(

@@ -3,7 +3,7 @@ import { State, IStateReadOnly } from '@boninger-works/state/library/core';
 import { first } from 'rxjs/operators';
 import * as _ from 'lodash';
 
-import { Selection } from '@models/selection.class';
+import { ISelection } from '@models/selection.interface';
 import { IRegion } from '@models/region.interface';
 import { EQuizType } from '@models/quiz-type.enum';
 import { TCheckboxStates } from '@shared/components/nested-checkboxes/nested-checkboxes.component';
@@ -17,13 +17,17 @@ export class SelectService {
     checked: '_c',
     indeterminate: '_i'
   };
-  private readonly _selection: State<Selection>;
-  get selection(): IStateReadOnly<Selection> {
+  private readonly _selection: State<ISelection>;
+  get selection(): IStateReadOnly<ISelection> {
     return this._selection;
   }
 
   constructor(private countryService: CountryService) {
-    this._selection = new State(new Selection());
+    this._selection = new State({
+      type: EQuizType.flagsCountries,
+      quantity: 5,
+      countries: {}
+    });
     this.countryService.countries
       .observe(lens => lens.to('nestedCountries'))
       .pipe(first())
@@ -35,7 +39,7 @@ export class SelectService {
       );
   }
 
-  updateSelection(selection: Selection): void {
+  updateSelection(selection: ISelection): void {
     this._selection.setRoot(selection);
   }
 
@@ -51,7 +55,7 @@ export class SelectService {
     this._selection.set(lens => lens.to('countries').value(countries));
   }
 
-  mapSelectionToQueryParams(selection: Selection): _.Dictionary<string> {
+  mapSelectionToQueryParams(selection: ISelection): _.Dictionary<string> {
     const type = _.toString(selection.type);
     const quantity = _.toString(selection.quantity);
     const countries = _(selection.countries)
@@ -73,7 +77,7 @@ export class SelectService {
     };
   }
 
-  mapQueryParamsToSelection(queryParams: _.Dictionary<string>): Selection {
+  mapQueryParamsToSelection(queryParams: _.Dictionary<string>): ISelection {
     const typeKey = _.camelCase(queryParams.type) as keyof typeof EQuizType;
     const type = EQuizType[typeKey];
     const quantity = _.toNumber(queryParams.quantity);

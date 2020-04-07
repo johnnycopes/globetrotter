@@ -8,7 +8,7 @@ import * as _ from 'lodash';
 
 import { ERoute } from '@models/route.enum';
 import { ICountry } from '@models/country.interface';
-import { Selection } from '@models/selection.class';
+import { ISelection } from '@models/selection.interface';
 import { Quiz } from '@models/quiz.class';
 import { CountryService } from '@services/country/country.service';
 import { RouterService } from '@services/router/router.service';
@@ -17,7 +17,7 @@ import { RouterService } from '@services/router/router.service';
   providedIn: 'root'
 })
 export class QuizService {
-  private readonly _quiz: State<Quiz | undefined>;
+  private readonly _quiz: State<Quiz | undefined> = new State(undefined);
   get quiz(): IStateReadOnly<Quiz | undefined> {
     return this._quiz;
   }
@@ -26,7 +26,6 @@ export class QuizService {
     private countryService: CountryService,
     private routerService: RouterService
   ) {
-    this._quiz = new State(undefined);
     this.routerService.state
       .observe(lens => lens.to('currentRoute'))
       .pipe(
@@ -36,7 +35,7 @@ export class QuizService {
       );
   }
 
-  initializeQuiz(selection: Selection): void {
+  initializeQuiz(selection: ISelection): void {
     this.countryService.getCountriesFromSelection(selection).subscribe(
       countries => {
         this._quiz.setRoot(new Quiz(
