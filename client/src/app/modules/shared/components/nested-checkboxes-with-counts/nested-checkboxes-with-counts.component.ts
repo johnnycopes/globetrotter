@@ -9,7 +9,7 @@ type TCounts = _.Dictionary<number>;
 
 /*
 TOBES
-
+1. review ncwc.component and selected-countries logic
 1. general Traverse function
 */
 
