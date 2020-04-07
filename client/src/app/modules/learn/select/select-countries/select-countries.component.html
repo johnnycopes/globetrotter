@@ -5,7 +5,7 @@
   <div class="top">
     <div class="top__counter">
       <span class="bold">
-        {{vm.currents[overallTotalKey]}} / {{vm.totals[overallTotalKey]}}
+        {{vm.overallSelected}} / {{vm.overallTotal}}
       </span>
       possible countries in the cards.
     </div>
@@ -13,7 +13,7 @@
       <app-button class="top__select-all"
         buttonStyle="secondary"
         buttonText="Select all"
-        (click)="onSelectAll(vm.totals)"
+        (click)="onSelectAll()"
         >
       </app-button>
       <app-button class="top__clear-all"
@@ -28,34 +28,40 @@
     <div class="region"
       *ngFor="let regionDatum of vm.regionData"
       >
-      <app-icon class="region__image"
-        *ngIf="regionDatum.region.name as regionName"
-        [icon]="regionName"
-        [highlighted]="!!vm.currents[regionName]"
-        >
-      </app-icon>
-      <app-nested-checkboxes class="region__checkboxes"
-        [item]="regionDatum.region"
-        [treeProvider]="regionDatum.treeProvider"
-        [itemTemplate]="label"
-        [ngModel]="vm.checkboxStates"
-        (ngModelChange)="onCountriesChange($event)"
-        >
-      </app-nested-checkboxes>
+      <ng-container *ngIf="regionDatum.region as region">
+        <app-icon class="region__image"
+          [icon]="region.name"
+          [highlighted]="regionDatum.selected$ | async"
+          >
+        </app-icon>
+        <app-nested-checkboxes-with-counts class="region__checkboxes"
+          [item]="region"
+          [treeProvider]="regionDatum.treeProvider"
+          [itemTemplate]="label"
+          [getLeafItemCount]="getNumberOfCountries"
+          [ngModel]="vm.checkboxStates"
+          (ngModelChange)="onCountriesChange($event)"
+          (selectedChange)="regionDatum.selectedSubject.next($event)"
+          (totalChange)="regionDatum.totalSubject.next($event)"
+          >
+        </app-nested-checkboxes-with-counts>
+      </ng-container>
 
       <ng-template
         #label
-        let-id="id"
-        let-isRoot="isRoot"
+        let-item
+        let-parent="parent"
+        let-selected="selected"
+        let-total="total"
         >
         <span class="bold"
-          *ngIf="isRoot; else child"
+          *ngIf="!parent; else child"
           >
-          {{id}} ({{vm.currents[id]}} / {{vm.totals[id]}})
+          {{regionDatum.treeProvider.getId(item)}} ({{selected}} / {{total}})
         </span>
         <ng-template #child>
           <span>
-            {{id}} ({{vm.totals[id]}})
+            {{regionDatum.treeProvider.getId(item)}} ({{total}})
           </span>
         </ng-template>
       </ng-template>

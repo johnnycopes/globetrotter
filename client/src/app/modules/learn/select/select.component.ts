@@ -5,7 +5,7 @@ import { map, tap, distinctUntilChanged } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 import { ERoute } from '@models/route.enum';
-import { Selection } from '@models/selection.class';
+import { ISelection } from '@models/selection.interface';
 import { SelectService } from '@services/select/select.service';
 import { fadeInAnimation } from '@utility/animations';
 import { CountryService } from '@services/country/country.service';
@@ -26,8 +26,8 @@ interface IViewModel {
 export class SelectComponent implements OnInit {
   vm$: Observable<IViewModel>;
   private queryParams: _.Dictionary<string>;
-  private selection: Selection;
-  private selection$: Observable<Selection>;
+  private selection: ISelection;
+  private selection$: Observable<ISelection>;
   private quantity$: Observable<number>;
   private invalidQuantity$: Observable<boolean>;
   private numberOfSelectedCountries$: Observable<number>;

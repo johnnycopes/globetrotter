@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
 
-import { ITreeProvider } from "src/app/shared/components/tree/tree.component";
-import { IDefaultTreeItem } from 'src/app/shared/components/tree/default-tree-item.interface';
+import { ITreeProvider } from "@shared/components/tree/tree.component";
+import { IDefaultTreeItem } from '@shared/components/tree/default-tree-item.interface';
 
 export class FlatItemTreeProvider implements ITreeProvider<IDefaultTreeItem> {
   private itemsKeyedById: _.Dictionary<IDefaultTreeItem>;

@@ -2,10 +2,7 @@
 	[ngTemplateOutlet]="itemTemplate ? itemTemplate : defaultTemplate"
 	[ngTemplateOutletContext]="{
 		$implicit: this.item,
-		id: this.id,
-		parent: this.parent,
-		children: this.children,
-		isRoot: !this.parentId
+		parent: this.parent
 	}"
 	>
 </ng-container>
@@ -20,6 +17,6 @@
 	</app-tree>
 </ng-container>
 
-<ng-template #defaultTemplate let-id="id">
+<ng-template #defaultTemplate>
 	{{id}}
 </ng-template>

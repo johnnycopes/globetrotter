@@ -67,7 +67,7 @@ export class QuizMenuComponent implements OnInit {
   }
 
   private initializeStreams(): void {
-    const quiz$ = this.quizService.quiz.observe();
+    const quiz$ = this.quizService.quiz.observe(lens => lens.exists());
     this.quiz$ = quiz$.pipe(
       tap(quiz => {
         if (quiz.isComplete) {

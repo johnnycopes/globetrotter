@@ -3,10 +3,15 @@ import { EQuizType } from './quiz-type.enum';
 
 export class Quiz {
   countriesGuessed = 0;
-  totalCountries: number;
   guess: number = 1;
-  accuracy: number;
-  type: EQuizType;
-  countries: ICountry[] = [];
+  accuracy: number = 100;
   isComplete: boolean = false;
+  totalCountries: number;
+
+  constructor(
+    public countries: ICountry[],
+    public type: EQuizType
+  ) {
+    this.totalCountries = this.countries.length;
+  }
 };

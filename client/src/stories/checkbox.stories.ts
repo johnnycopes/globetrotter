@@ -6,7 +6,7 @@ import {
   select,
 } from '@storybook/addon-knobs';
 
-import { CheckboxComponent, TCheckboxState } from 'src/app/shared/components/checkbox/checkbox.component';
+import { CheckboxComponent, TCheckboxState } from '@shared/components/checkbox/checkbox.component';
 
 const states: TCheckboxState[] = ['checked', 'unchecked', 'indeterminate'];
 const actions = {

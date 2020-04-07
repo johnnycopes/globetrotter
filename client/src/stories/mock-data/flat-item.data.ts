@@ -1,4 +1,4 @@
-import { IDefaultTreeItem } from "src/app/shared/components/tree/default-tree-item.interface";
+import { IDefaultTreeItem } from "@shared/components/tree/default-tree-item.interface";
 
 export const FLAT_ITEMS: IDefaultTreeItem[] = [
   { id: "Africa", parentId: undefined },

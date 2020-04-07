@@ -4,7 +4,7 @@ import {
   object
 } from '@storybook/addon-knobs';
 
-import { TreeComponent } from 'src/app/shared/components/tree/tree.component';
+import { TreeComponent } from '@shared/components/tree/tree.component';
 import { NESTED_ITEM } from './mock-data/nested-item.data';
 import { NestedItemTreeProvider } from './mock-data/nested-item-tree-provider.class';
 import { FLAT_ITEMS } from './mock-data/flat-item.data';
@@ -48,11 +48,11 @@ storiesOf('Shared/Tree', module)
         </app-tree>
 
         <ng-template #sample
-          let-id="id"
-          let-isRoot="isRoot"
+          let-item
+          let-parent="parent"
           >
-          <span [style.fontWeight]="isRoot ? '700' : '300'">
-            {{id.toUpperCase()}}
+          <span [style.fontWeight]="!!parent ? '300' : '700'">
+            {{ this.treeProvider.getId(item).toUpperCase() }}! {{ !!parent ? '' : '🌍' }}
           </span>
         </ng-template>
       `,
@@ -88,11 +88,11 @@ storiesOf('Shared/Tree', module)
         </app-tree>
 
         <ng-template #sample
-          let-id="id"
-          let-isRoot="isRoot"
+          let-item
+          let-parent="parent"
           >
-          <span [style.fontWeight]="isRoot ? '700' : '300'">
-            {{id.toUpperCase()}}
+          <span [style.fontWeight]="!!parent ? '300' : '700'">
+            {{ this.treeProvider.getId(item).toUpperCase() }}! {{ !!parent ? '' : '🌍' }}
           </span>
         </ng-template>
       `,
@@ -101,4 +101,4 @@ storiesOf('Shared/Tree', module)
         treeProvider: flatItemTreeProvider
       }
     };
-  })
+  });

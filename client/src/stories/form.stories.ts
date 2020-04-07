@@ -6,10 +6,10 @@ import {
 } from '@storybook/addon-knobs';
 import { FormsModule, ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 
-import { FormComponent } from 'src/app/shared/components/form/form.component';
-import { InputComponent } from 'src/app/shared/components/input/input.component';
-import { AlertComponent } from 'src/app/shared/components/alert/alert.component';
-import { ButtonComponent } from 'src/app/shared/components/button/button.component';
+import { FormComponent } from '@shared/components/form/form.component';
+import { InputComponent } from '@shared/components/input/input.component';
+import { AlertComponent } from '@shared/components/alert/alert.component';
+import { ButtonComponent } from '@shared/components/button/button.component';
 
 const actions = {
   onSubmit: action('submitted')

@@ -7,9 +7,9 @@ import {
   select,
 } from '@storybook/addon-knobs';
 
-import { ButtonComponent, ButtonStyle } from 'src/app/shared/components/button/button.component';
+import { ButtonComponent, TButtonStyle } from '@shared/components/button/button.component';
 
-const buttonStyles: ButtonStyle[] = ['primary', 'secondary'];
+const buttonStyles: TButtonStyle[] = ['primary', 'secondary'];
 const actions = {
   onClick: action('clicked')
 };

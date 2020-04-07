@@ -22,19 +22,15 @@ export class NestedCheckboxesComponent<T> implements ControlValueAccessor, OnIni
   @Input() treeProvider: ITreeProvider<T>;
   @Input() itemTemplate: TemplateRef<any>;
   @Input() invertedRootCheckbox: boolean = true;
-  public id: string;
-  public children: T[];
   public states: TCheckboxStates = {};
-  private _onChangeFn: (value: TCheckboxStates) => void = () => { };
+  private onChangeFn: (value: TCheckboxStates) => void = () => { };
 
   constructor(private changeDetectorRef: ChangeDetectorRef) { }
 
   public ngOnInit(): void {
     if (!this.item || !this.treeProvider) {
-      throw new Error("An item and a tree provider must be passed to the nested-checkboxes component");
+      throw new Error("Missing inputs: item and treeProvider must be passed to the nested-checkboxes component");
     }
-    this.id = this.treeProvider.getId(this.item);
-    this.children = this.treeProvider.getChildren(this.item);
   }
 
   public writeValue(value: TCheckboxStates): void {
@@ -45,51 +41,51 @@ export class NestedCheckboxesComponent<T> implements ControlValueAccessor, OnIni
   }
 
   public registerOnChange(fn: (value: TCheckboxStates) => void): void {
-    this._onChangeFn = fn;
+    this.onChangeFn = fn;
   }
 
   public registerOnTouched(_fn: (value: TCheckboxStates) => void): void { }
 
   public onChange(state: TCheckboxState, item: T): void {
     const states = { ...this.states };
-    const ancestors = this._getAncestors(item);
-    this._updateItemAndDescendantStates(state, item, states);
-    this._updateAncestorStates(ancestors, states);
+    const ancestors = this.getAncestors(item);
+    this.updateItemAndDescendantStates(state, item, states);
+    this.updateAncestorStates(ancestors, states);
 
     this.states = states;
-    this._onChangeFn(this.states);
+    this.onChangeFn(this.states);
   }
 
-  private _getAncestors(item: T): T[] {
-    const parentItem = this.treeProvider.getParent && this.treeProvider.getParent(item);
-    if (!!parentItem) {
-      return [parentItem, ...this._getAncestors(parentItem)];
+  private getAncestors(item: T): T[] {
+    const parent = this.treeProvider.getParent && this.treeProvider.getParent(item);
+    if (!!parent) {
+      return [parent, ...this.getAncestors(parent)];
     }
     return [];
   }
 
-  private _updateItemAndDescendantStates(state: TCheckboxState, item: T, states: TCheckboxStates): TCheckboxStates {
+  private updateItemAndDescendantStates(state: TCheckboxState, item: T, states: TCheckboxStates): TCheckboxStates {
     const id = this.treeProvider.getId(item);
     const children = this.treeProvider.getChildren(item);
     states[id] = state;
     if (children.length) {
       children.forEach(child =>
-        this._updateItemAndDescendantStates(state, child, states)
+        this.updateItemAndDescendantStates(state, child, states)
       );
     }
     return states;
   }
 
-  private _updateAncestorStates(parentItems: T[], states: TCheckboxStates): TCheckboxStates {
-    parentItems.forEach(parentItem => {
-      const parentItemId = this.treeProvider.getId(parentItem);
-      const parentChildItems = this.treeProvider.getChildren(parentItem);
-      const parentChildItemsStateCounts = parentChildItems.reduce((accum, childItem) => {
-        const childItemId = this.treeProvider.getId(childItem);
-        const childItemState = states[childItemId] || "unchecked"; // set to "unchecked" if not present in states dict
+  private updateAncestorStates(parents: T[], states: TCheckboxStates): TCheckboxStates {
+    parents.forEach(parentItem => {
+      const parentId = this.treeProvider.getId(parentItem);
+      const parentChildren = this.treeProvider.getChildren(parentItem);
+      const parentChildrenStates = parentChildren.reduce((accum, childItem) => {
+        const childId = this.treeProvider.getId(childItem);
+        const childState = states[childId] || "unchecked"; // set to "unchecked" if not present in states dict
         return {
           ...accum,
-          [childItemState]: accum[childItemState] + 1
+          [childState]: accum[childState] + 1
         };
       }, {
         checked: 0,
@@ -97,12 +93,12 @@ export class NestedCheckboxesComponent<T> implements ControlValueAccessor, OnIni
         unchecked: 0
       });
 
-      if (parentChildItemsStateCounts.checked === parentChildItems.length) {
-        states[parentItemId] = "checked";
-      } else if (parentChildItemsStateCounts.unchecked === parentChildItems.length) {
-        states[parentItemId] = "unchecked";
+      if (parentChildrenStates.checked === parentChildren.length) {
+        states[parentId] = "checked";
+      } else if (parentChildrenStates.unchecked === parentChildren.length) {
+        states[parentId] = "unchecked";
       } else {
-        states[parentItemId] = "indeterminate";
+        states[parentId] = "indeterminate";
       }
     });
     return states;

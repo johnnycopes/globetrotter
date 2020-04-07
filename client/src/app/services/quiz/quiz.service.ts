@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { State, IStateReadOnly } from '@boninger-works/state';
+import { State, IStateReadOnly } from '@boninger-works/state/library/core';
+import { assign } from '@boninger-works/state/library/transforms/object';
+import { shift } from '@boninger-works/state/library/transforms/array';
+import { increment } from '@boninger-works/state/library/transforms/numeric';
 import * as _ from 'lodash';
 
 import { ERoute } from '@models/route.enum';
 import { ICountry } from '@models/country.interface';
-import { Selection } from '@models/selection.class';
+import { ISelection } from '@models/selection.interface';
 import { Quiz } from '@models/quiz.class';
 import { CountryService } from '@services/country/country.service';
 import { RouterService } from '@services/router/router.service';
@@ -15,8 +17,8 @@ import { RouterService } from '@services/router/router.service';
   providedIn: 'root'
 })
 export class QuizService {
-  private readonly _quiz: State<Quiz>;
-  get quiz(): IStateReadOnly<Quiz> {
+  private readonly _quiz: State<Quiz | undefined> = new State(undefined);
+  get quiz(): IStateReadOnly<Quiz | undefined> {
     return this._quiz;
   }
 
@@ -24,60 +26,51 @@ export class QuizService {
     private countryService: CountryService,
     private routerService: RouterService
   ) {
-    this._quiz = new State(new Quiz());
     this.routerService.state
       .observe(lens => lens.to('currentRoute'))
       .pipe(
         filter(route => route.includes(ERoute.select))
       ).subscribe(
-        _ => this._quiz.set(new Quiz())
+        _ => this._quiz.setRoot(undefined)
       );
   }
 
-  initializeQuiz(selection: Selection): void {
+  initializeQuiz(selection: ISelection): void {
     this.countryService.getCountriesFromSelection(selection).subscribe(
       countries => {
-        const quiz = {
-          ...this.quiz.get(),
+        this._quiz.setRoot(new Quiz(
           countries,
-          totalCountries: countries.length,
-          type: selection.type
-        };
-        this._quiz.set(quiz);
+          selection.type
+        ));
       }
     );
   }
 
   updateQuiz(correctGuess: boolean): void {
-    const quiz = this._quiz.get();
-    const updatedQuiz = _.assign({}, quiz);
-    if (correctGuess) {
-      updatedQuiz.countries = this.removeGuessedCountry(quiz.countries);
-      updatedQuiz.countriesGuessed = quiz.countriesGuessed + 1;
-      if (!updatedQuiz.countries.length) {
-        updatedQuiz.accuracy = this.calculateAccuracy(quiz);
-        updatedQuiz.isComplete = true;
+    this._quiz.setBatch(batch => {
+      if (correctGuess) {
+        batch.set(lens => lens.to('countries').transform(shift()));
+        batch.set(lens => lens.to('countriesGuessed').transform(increment()));
+        const quiz = this._quiz.get() as Quiz;
+        if (!quiz.countries.length) {
+          batch.set(lens => lens.to('accuracy').value(this.calculateAccuracy(quiz)));
+          batch.set(lens => lens.to('isComplete').value(true));
+        }
       }
-    }
-    else {
-      updatedQuiz.countries = this.moveGuessedCountryToEnd(quiz.countries);
-    }
-
-    if (!updatedQuiz.isComplete) {
-      updatedQuiz.guess = quiz.guess + 1;
-    }
-    this._quiz.set(updatedQuiz);
+      else {
+        batch.set(lens => lens.to('countries').transform(countries => this.moveGuessedCountryToEnd(countries)));
+      }
+      if (!(this._quiz.get() as Quiz).isComplete) {
+        batch.set(lens => lens.to('guess').transform(increment()));
+      }
+    });
   }
 
   private moveGuessedCountryToEnd(countries: ICountry[]): ICountry[] {
     const guessedCountry = countries[0];
-    const updatedCountries = this.removeGuessedCountry(countries);
+    const updatedCountries = _.slice(countries, 1);
     updatedCountries.push(guessedCountry);
     return updatedCountries;
-  }
-
-  private removeGuessedCountry(countries: ICountry[]): ICountry[] {
-    return _.slice(countries, 1);
   }
 
   private calculateAccuracy(quiz: Quiz): number {

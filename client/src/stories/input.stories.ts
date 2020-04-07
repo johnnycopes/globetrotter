@@ -5,8 +5,8 @@ import {
   boolean
 } from '@storybook/addon-knobs';
 
-import { InputComponent } from 'src/app/shared/components/input/input.component';
-import { AlertComponent } from 'src/app/shared/components/alert/alert.component';
+import { InputComponent } from '@shared/components/input/input.component';
+import { AlertComponent } from '@shared/components/alert/alert.component';
 
 storiesOf('Shared/Input', module)
   .addDecorator(withKnobs)

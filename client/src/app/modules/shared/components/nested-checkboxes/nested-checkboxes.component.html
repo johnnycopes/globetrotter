@@ -7,20 +7,18 @@
 
 <ng-template #checkbox
   let-item
-  let-id="id"
-  let-children="children"
-  let-isRoot="isRoot"
+  let-parent="parent"
   >
   <app-checkbox class="checkbox"
-    [invertColors]="isRoot && invertedRootCheckbox"
-    [ngModel]="states[id]"
+    [invertColors]="!parent && invertedRootCheckbox"
+    [ngModel]="states[this.treeProvider.getId(item)]"
     (ngModelChange)="onChange($event, item)"
     >
     <ng-container
       [ngTemplateOutlet]="itemTemplate ? itemTemplate : defaultTemplate"
       [ngTemplateOutletContext]="{
-        id: this.id,
-        isRoot: this.isRoot
+        $implicit: item,
+        parent: parent
       }"
       >
     </ng-container>
@@ -28,7 +26,7 @@
 </ng-template>
 
 <ng-template #defaultTemplate
-  let-id="id"
+  let-item
   >
-  {{id}}
+  {{this.treeProvider.getId(item)}}
 </ng-template>

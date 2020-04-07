@@ -1,7 +1,7 @@
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 
-import { ContainerComponent } from 'src/app/shared/components/container/container.component';
-import { IconComponent } from 'src/app/shared/components/icon/icon.component';
+import { ContainerComponent } from '@shared/components/container/container.component';
+import { IconComponent } from '@shared/components/icon/icon.component';
 
 storiesOf('Shared/Container', module)
   .addDecorator(
