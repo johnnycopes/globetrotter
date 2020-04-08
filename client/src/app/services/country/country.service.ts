@@ -7,7 +7,7 @@ import { map, shareReplay, catchError } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 import { COUNTRY_STATUSES } from '@models/country-statuses.data';
-import { WIKIPEDIA_COUNTRIES } from '@models/wikipedia-country-names.data';
+import { COUNTRY_APP_NAMES, COUNTRY_SUMMARY_NAMES } from '@models/country-modifications.data';
 import { ICountries } from '@models/countries.interface';
 import { ICountry } from '@models/country.interface';
 import { IRegion } from '@models/region.interface';
@@ -68,7 +68,7 @@ export class CountryService implements Resolve<Observable<ICountry[]>> {
   }
 
   getSummary(countryName: string): Observable<string> {
-    const searchTerm = WIKIPEDIA_COUNTRIES[countryName] || countryName;
+    const searchTerm = COUNTRY_SUMMARY_NAMES[countryName] || countryName;
     return this.http.get<ISummary>(this.wikipediaApiUrl + searchTerm).pipe(
       map(result => result.extract),
       catchError(() => of("A summary of this country could not be found."))
@@ -84,7 +84,8 @@ export class CountryService implements Resolve<Observable<ICountry[]>> {
       })
     );
     this.request.subscribe(allCountries => {
-      const flatCountries = _.filter(allCountries, country => COUNTRY_STATUSES[country.name]);
+      const flatCountries = allCountries.filter(country => COUNTRY_STATUSES[country.name])
+      flatCountries.forEach(country => country.name = COUNTRY_APP_NAMES[country.name] || country.name);
       const countriesBySubregion = _.groupBy(flatCountries, 'subregion');
       const subregionsByRegion = this.groupSubregionsByRegion(countriesBySubregion);
       const nestedCountries = this.createFormattedData(countriesBySubregion, subregionsByRegion);
