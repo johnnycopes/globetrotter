@@ -22,8 +22,6 @@ const options: IRadioButtonsOption<number>[] = [
 ];
 const template = `
   <app-radio-buttons
-    [text]="text"
-    [alwaysStackedVertically]="alwaysStackedVertically"
     [options]="options"
     [ngModel]="selectedOption"
     (ngModelChange)="onChange($event)"
@@ -42,8 +40,6 @@ storiesOf('Shared/Radio Buttons', module)
     return {
       template,
       props: {
-        text: text('text', sampleText),
-        alwaysStackedVertically: boolean('alwaysStackedVertically', false),
         selectedOption: object('selectedOption', {}),
         options: object('options', options),
         onChange: actions.onChange
@@ -54,8 +50,6 @@ storiesOf('Shared/Radio Buttons', module)
     return {
       template,
       props: {
-        text: text('text', sampleText),
-        alwaysStackedVertically: boolean('alwaysStackedVertically', false),
         selectedOption: object('selectedOption', options[0]),
         options: object('options', options),
         onChange: actions.onChange
@@ -66,21 +60,7 @@ storiesOf('Shared/Radio Buttons', module)
     return {
       template,
       props: {
-        text: text('text', sampleText),
-        alwaysStackedVertically: boolean('alwaysStackedVertically', false),
         selectedOption: object('selectedOption', options[options.length - 1]),
-        options: object('options', options),
-        onChange: actions.onChange
-      }
-    };
-  })
-  .add('stacked vertically', () => {
-    return {
-      template,
-      props: {
-        text: text('text', sampleText),
-        alwaysStackedVertically: boolean('alwaysStackedVertically', true),
-        selectedOption: object('selectedOption', options[0]),
         options: object('options', options),
         onChange: actions.onChange
       }

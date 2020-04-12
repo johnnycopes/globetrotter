@@ -6,10 +6,11 @@ import {
 } from '@storybook/addon-knobs';
 import { FormsModule, ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 
-import { FormComponent } from '@shared/components/form/form.component';
-import { InputComponent } from '@shared/components/input/input.component';
 import { AlertComponent } from '@shared/components/alert/alert.component';
 import { ButtonComponent } from '@shared/components/button/button.component';
+import { FormComponent } from '@shared/components/form/form.component';
+import { InputComponent } from '@shared/components/input/input.component';
+import { SmallCapsComponent } from '@shared/components/small-caps/small-caps.component';
 
 const actions = {
   onSubmit: action('submitted')
@@ -29,10 +30,11 @@ storiesOf('Shared/Form', module)
   .addDecorator(
     moduleMetadata({
       declarations: [
+        AlertComponent,
+        ButtonComponent,
         FormComponent,
         InputComponent,
-        AlertComponent,
-        ButtonComponent
+        SmallCapsComponent
       ],
       imports: [FormsModule, ReactiveFormsModule]
     })

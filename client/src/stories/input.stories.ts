@@ -5,14 +5,15 @@ import {
   boolean
 } from '@storybook/addon-knobs';
 
-import { InputComponent } from '@shared/components/input/input.component';
 import { AlertComponent } from '@shared/components/alert/alert.component';
+import { InputComponent } from '@shared/components/input/input.component';
+import { SmallCapsComponent } from '@shared/components/small-caps/small-caps.component';
 
 storiesOf('Shared/Input', module)
   .addDecorator(withKnobs)
   .addDecorator(
     moduleMetadata({
-      declarations: [InputComponent, AlertComponent]
+      declarations: [AlertComponent, InputComponent, SmallCapsComponent]
     })
   )
   .add('text', () => {
