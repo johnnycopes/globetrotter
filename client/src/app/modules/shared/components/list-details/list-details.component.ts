@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, TemplateRef, ChangeDetectionStrategy, ViewChild, ElementRef, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, TemplateRef, ChangeDetectionStrategy, ViewChild, ElementRef, AfterViewInit, ChangeDetectorRef, HostListener } from '@angular/core';
 import { InputComponent } from '../input/input.component';
 
 export interface IListDetailsStyles {
@@ -31,10 +31,30 @@ export class ListDetailsComponent<T> implements OnInit, AfterViewInit {
   public trackByFn = (index: number, item: T): string => {
     return this.getItemUniqueId(item);
   }
-  @ViewChild(InputComponent, { read: ElementRef }) private search: ElementRef;
   public gap: string = '12px';
+  @ViewChild(InputComponent, { read: ElementRef }) private search: ElementRef;
 
-  constructor(private cdRef: ChangeDetectorRef) { }
+  @HostListener('window:keyup.arrowUp')
+  onArrowUp(): void {
+    this.moveUpList(1);
+  }
+
+  @HostListener('window:keyup.shift.arrowUp')
+  onShiftArrowUp(): void {
+    this.moveUpList(10);
+  }
+
+  @HostListener('window:keyup.arrowDown')
+  onArrowDown(): void {
+    this.moveDownList(1);
+  }
+
+  @HostListener('window:keyup.shift.arrowDown')
+  onShiftArrowDown(): void {
+    this.moveDownList(10);
+  }
+
+  constructor(private changeDetectorRef: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     if (!this.getItemUniqueId) {
@@ -52,14 +72,30 @@ export class ListDetailsComponent<T> implements OnInit, AfterViewInit {
       ${this.styles.gap} -
       ${this.styles.offsetTop})
     `;
-    this.cdRef.detectChanges();
+    this.changeDetectorRef.detectChanges();
   }
 
-  public onSelect(item: T): void {
+  onSelect(item: T): void {
     this.selectedItemChange.emit(item);
   }
 
-  public checkIfSelected(item: T): boolean {
+  checkIfSelected(item: T): boolean {
     return this.getItemUniqueId(item) === this.getItemUniqueId(this.selectedItem);
+  }
+
+  private moveUpList(incrementValue: number): void {
+    const currentItemIndex = this.items.indexOf(this.selectedItem);
+    const newItemIndex = currentItemIndex - incrementValue;
+    if (newItemIndex >= 0) {
+      this.selectedItemChange.emit(this.items[newItemIndex]);
+    }
+  }
+
+  private moveDownList(incrementValue: number): void {
+    const currentItemIndex = this.items.indexOf(this.selectedItem);
+    const newItemIndex = currentItemIndex + incrementValue;
+    if (newItemIndex < this.items.length) {
+      this.selectedItemChange.emit(this.items[newItemIndex]);
+    }
   }
 }
