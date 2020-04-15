@@ -52,6 +52,7 @@ export class NestedCheckboxesWithCountsComponent<T> implements ControlValueAcces
     if (value) {
       this.states = value;
       this.selectedCounts = this.getSelectedCounts(this.item, this.getLeafItemCount);
+      console.log('selected counts init', this.selectedCounts);
       this.selectedChange.emit(this.selectedCounts[this.id]);
       this.totalCounts = this.getTotalCounts(this.item);
       this.totalChange.emit(this.totalCounts[this.id]);
@@ -79,12 +80,16 @@ export class NestedCheckboxesWithCountsComponent<T> implements ControlValueAcces
     if (!children.length) {
       return { [id]: this.getLeafItemCount(item) };
     }
-    const childrenTotals = _.reduce(children, (totalsDict, child) =>
+    const descendantTotals = _.reduce(children, (totalsDict, child) =>
       _.assign(totalsDict, this.getTotalCounts(child))
     , {} as TCounts);
-    const grandTotal = _.reduce(childrenTotals, (total, value) => total + value, 0);
+    const grandTotal = _.reduce(children, (total, child) => {
+      const childId = this.treeProvider.getId(child);
+      const childTotal = descendantTotals[childId];
+      return total + childTotal;
+    }, 0);
     return {
-      ...childrenTotals,
+      ...descendantTotals,
       [id]: grandTotal
     };
   }
@@ -96,12 +101,16 @@ export class NestedCheckboxesWithCountsComponent<T> implements ControlValueAcces
       const count = this.states[id] === 'checked' ? getLeafItemCount(item) : 0;
       return { [id]: count };
     }
-    const childrenTotals = _.reduce(children, (totalsDict, child) =>
+    const descendantTotals = _.reduce(children, (totalsDict, child) =>
       _.assign(totalsDict, this.getSelectedCounts(child, getLeafItemCount))
     , {} as TCounts);
-    const grandTotal = _.reduce(childrenTotals, (total, value) => total + value, 0);
+    const grandTotal = _.reduce(children, (total, child) => {
+      const childId = this.treeProvider.getId(child);
+      const childTotal = descendantTotals[childId];
+      return total + childTotal;
+    }, 0);
     return {
-      ...childrenTotals,
+      ...descendantTotals,
       [id]: grandTotal
     };
   }
