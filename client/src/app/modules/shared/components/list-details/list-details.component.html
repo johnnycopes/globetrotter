@@ -13,13 +13,14 @@
       />
     </app-input>
     <ul class="list"
+      #list
       [ngStyle]="{'max-height': this.toolbarHeight}"
       >
       <li class="list__item"
-        *ngFor="let item of items; trackBy: trackByFn"
+        *ngFor="let item of items; index as i; trackBy: trackByFn"
         [ngClass]="{'list__item--selected': checkIfSelected(item)}"
         [ngStyle]="{'margin-bottom': this.styles.gap}"
-        (click)="onSelect(item)"
+        (click)="onSelect(item, i)"
         >
         <ng-container *ngTemplateOutlet="listItemTemplate; context: { $implicit: item }">
         </ng-container>

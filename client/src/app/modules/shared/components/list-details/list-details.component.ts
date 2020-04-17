@@ -32,7 +32,9 @@ export class ListDetailsComponent<T> implements OnInit, AfterViewInit {
     return this.getItemUniqueId(item);
   }
   public gap: string = '12px';
+  private selectedItemIndex: number;
   @ViewChild(InputComponent, { read: ElementRef }) private search: ElementRef;
+  @ViewChild('list') private list: ElementRef;
 
   @HostListener('window:keyup.arrowUp')
   onArrowUp(): void {
@@ -60,6 +62,7 @@ export class ListDetailsComponent<T> implements OnInit, AfterViewInit {
     if (!this.getItemUniqueId) {
       throw new Error('A unique key function must defined as an input of the list-details component');
     }
+    this.selectedItemIndex = this.items.indexOf(this.selectedItem);
   }
 
   ngAfterViewInit(): void {
@@ -73,10 +76,12 @@ export class ListDetailsComponent<T> implements OnInit, AfterViewInit {
       ${this.styles.offsetTop})
     `;
     this.changeDetectorRef.detectChanges();
+    console.log(this.list);
   }
 
-  onSelect(item: T): void {
+  onSelect(item: T, index: number): void {
     this.selectedItemChange.emit(item);
+    this.selectedItemIndex = index;
   }
 
   checkIfSelected(item: T): boolean {
@@ -84,18 +89,16 @@ export class ListDetailsComponent<T> implements OnInit, AfterViewInit {
   }
 
   private moveUpList(incrementValue: number): void {
-    const currentItemIndex = this.items.indexOf(this.selectedItem);
-    const newItemIndex = currentItemIndex - incrementValue;
+    const newItemIndex = this.selectedItemIndex - incrementValue;
     if (newItemIndex >= 0) {
-      this.selectedItemChange.emit(this.items[newItemIndex]);
+      this.onSelect(this.items[newItemIndex], newItemIndex);
     }
   }
 
   private moveDownList(incrementValue: number): void {
-    const currentItemIndex = this.items.indexOf(this.selectedItem);
-    const newItemIndex = currentItemIndex + incrementValue;
+    const newItemIndex = this.selectedItemIndex + incrementValue;
     if (newItemIndex < this.items.length) {
-      this.selectedItemChange.emit(this.items[newItemIndex]);
+      this.onSelect(this.items[newItemIndex], newItemIndex);
     }
   }
 }
