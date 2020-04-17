@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, TemplateRef, ChangeDetectionStrategy, ViewChild, ElementRef, AfterViewInit, ChangeDetectorRef, HostListener } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, TemplateRef, ChangeDetectionStrategy, ViewChild, ElementRef, AfterViewInit, ChangeDetectorRef, HostListener, ViewChildren, QueryList } from '@angular/core';
 import { InputComponent } from '../input/input.component';
 
 export interface IListDetailsStyles {
@@ -33,26 +33,32 @@ export class ListDetailsComponent<T> implements OnInit, AfterViewInit {
   }
   public gap: string = '12px';
   private selectedItemIndex: number;
+  private listItemHeight: number;
   @ViewChild(InputComponent, { read: ElementRef }) private search: ElementRef;
   @ViewChild('list') private list: ElementRef;
+  @ViewChild('listItem') private listItem: ElementRef;
 
-  @HostListener('window:keyup.arrowUp')
-  onArrowUp(): void {
+  @HostListener('window:keydown.arrowUp', ['$event'])
+  onArrowUp(event: KeyboardEvent): void {
+    event.preventDefault();
     this.moveUpList(1);
   }
 
-  @HostListener('window:keyup.shift.arrowUp')
-  onShiftArrowUp(): void {
+  @HostListener('window:keydown.shift.arrowUp', ['$event'])
+  onShiftArrowUp(event: KeyboardEvent): void {
+    event.preventDefault();
     this.moveUpList(10);
   }
 
-  @HostListener('window:keyup.arrowDown')
-  onArrowDown(): void {
+  @HostListener('window:keydown.arrowDown', ['$event'])
+  onArrowDown(event: KeyboardEvent): void {
+    event.preventDefault();
     this.moveDownList(1);
   }
 
-  @HostListener('window:keyup.shift.arrowDown')
-  onShiftArrowDown(): void {
+  @HostListener('window:keydown.shift.arrowDown', ['$event'])
+  onShiftArrowDown(event: KeyboardEvent): void {
+    event.preventDefault();
     this.moveDownList(10);
   }
 
@@ -75,13 +81,14 @@ export class ListDetailsComponent<T> implements OnInit, AfterViewInit {
       ${this.styles.gap} -
       ${this.styles.offsetTop})
     `;
+    this.listItemHeight = this.listItem.nativeElement.offsetHeight + parseInt(this.gap);
     this.changeDetectorRef.detectChanges();
-    console.log(this.list);
   }
 
   onSelect(item: T, index: number): void {
     this.selectedItemChange.emit(item);
     this.selectedItemIndex = index;
+    this.list.nativeElement.scrollTop = this.selectedItemIndex * this.listItemHeight;
   }
 
   checkIfSelected(item: T): boolean {
