@@ -29,7 +29,7 @@ export class NestedCheckboxesComponent<T> implements ControlValueAccessor, OnIni
 
   public ngOnInit(): void {
     if (!this.item || !this.treeProvider) {
-      throw new Error("Missing inputs: item and treeProvider must be passed to the nested-checkboxes component");
+      throw new Error('Missing input(s): item and treeProvider must be passed to the nested-checkboxes component');
     }
   }
 

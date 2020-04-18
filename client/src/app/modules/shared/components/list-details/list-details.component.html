@@ -7,15 +7,18 @@
       >
       <input
         type="text"
+        appAutofocus
         [placeholder]="placeholderText"
         [ngModel]="searchTerm"
-        (ngModelChange)="searchTermChange.emit($event)"
+        (ngModelChange)="onSearch($event)"
       />
     </app-input>
     <ul class="list"
+      #list
       [ngStyle]="{'max-height': this.toolbarHeight}"
       >
       <li class="list__item"
+        #listItem
         *ngFor="let item of items; trackBy: trackByFn"
         [ngClass]="{'list__item--selected': checkIfSelected(item)}"
         [ngStyle]="{'margin-bottom': this.styles.gap}"

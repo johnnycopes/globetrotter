@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, TemplateRef, ChangeDetectionStrategy, ViewChild, ElementRef, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, Input, Output, EventEmitter, TemplateRef, ChangeDetectionStrategy, ViewChild, ElementRef, AfterViewInit, ChangeDetectorRef, HostListener } from '@angular/core';
 import { InputComponent } from '../input/input.component';
 
 export interface IListDetailsStyles {
@@ -12,7 +12,7 @@ export interface IListDetailsStyles {
   styleUrls: ['./list-details.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ListDetailsComponent<T> implements OnInit, AfterViewInit {
+export class ListDetailsComponent<T> implements OnInit, OnChanges, AfterViewInit {
   @Input() items: T[];
   @Input() listItemTemplate: TemplateRef<any>;
   @Input() detailsTemplate: TemplateRef<any>;
@@ -31,14 +31,51 @@ export class ListDetailsComponent<T> implements OnInit, AfterViewInit {
   public trackByFn = (index: number, item: T): string => {
     return this.getItemUniqueId(item);
   }
-  @ViewChild(InputComponent, { read: ElementRef }) private search: ElementRef;
   public gap: string = '12px';
+  private selectedItemIndex: number;
+  private listItemHeight: number;
+  @ViewChild(InputComponent, { read: ElementRef }) private search: ElementRef;
+  @ViewChild('list') private list: ElementRef;
+  @ViewChild('listItem') private listItem: ElementRef;
 
-  constructor(private cdRef: ChangeDetectorRef) { }
+  @HostListener('window:keydown.arrowUp', ['$event'])
+  onArrowUp(event: KeyboardEvent): void {
+    event.preventDefault();
+    this.moveUpList(1);
+  }
+
+  @HostListener('window:keydown.shift.arrowUp', ['$event'])
+  onShiftArrowUp(event: KeyboardEvent): void {
+    event.preventDefault();
+    this.moveUpList(10);
+  }
+
+  @HostListener('window:keydown.arrowDown', ['$event'])
+  onArrowDown(event: KeyboardEvent): void {
+    event.preventDefault();
+    this.moveDownList(1);
+  }
+
+  @HostListener('window:keydown.shift.arrowDown', ['$event'])
+  onShiftArrowDown(event: KeyboardEvent): void {
+    event.preventDefault();
+    this.moveDownList(10);
+  }
+
+  constructor(private changeDetectorRef: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     if (!this.getItemUniqueId) {
-      throw new Error('A unique key function must defined as an input of the list-details component');
+      throw new Error('Missing input(s): getItemUniqueId must be passed to the list-details component');
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes?.selectedItem || changes?.items) {
+      this.selectedItemIndex = this.items.indexOf(this.selectedItem);
+      if (this.selectedItemIndex >= 0 && this.list) {
+        setTimeout(() => this.list.nativeElement.scrollTop = this.selectedItemIndex * this.listItemHeight);
+      }
     }
   }
 
@@ -52,14 +89,33 @@ export class ListDetailsComponent<T> implements OnInit, AfterViewInit {
       ${this.styles.gap} -
       ${this.styles.offsetTop})
     `;
-    this.cdRef.detectChanges();
+    this.listItemHeight = this.listItem.nativeElement.offsetHeight + parseInt(this.gap);
+    this.changeDetectorRef.detectChanges();
   }
 
-  public onSelect(item: T): void {
+  onSearch(searchTerm: string): void {
+    this.searchTermChange.emit(searchTerm);
+  }
+
+  onSelect(item: T): void {
     this.selectedItemChange.emit(item);
   }
 
-  public checkIfSelected(item: T): boolean {
+  checkIfSelected(item: T): boolean {
     return this.getItemUniqueId(item) === this.getItemUniqueId(this.selectedItem);
+  }
+
+  private moveUpList(incrementValue: number): void {
+    const newItemIndex = this.selectedItemIndex - incrementValue;
+    if (newItemIndex >= 0) {
+      this.onSelect(this.items[newItemIndex]);
+    }
+  }
+
+  private moveDownList(incrementValue: number): void {
+    const newItemIndex = this.selectedItemIndex + incrementValue;
+    if (newItemIndex < this.items.length) {
+      this.onSelect(this.items[newItemIndex]);
+    }
   }
 }

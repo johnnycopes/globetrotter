@@ -42,7 +42,7 @@ export class NestedCheckboxesWithCountsComponent<T> implements ControlValueAcces
 
   ngOnInit(): void {
     if (!this.item || !this.treeProvider) {
-      throw new Error("Missing inputs: item, treeProvider, and getTotalCount must be passed to the nested-checkboxes-with-counts component");
+      throw new Error('Missing input(s): item, treeProvider, and getTotalCount must be passed to the nested-checkboxes-with-counts component');
     }
     this.id = this.treeProvider.getId(this.item);
   }

@@ -16,6 +16,7 @@ $toolbar-width: map-get($spacing, 384);
 
 .list {
   overflow: auto;
+  scroll-behavior: smooth;
   @include custom-scrollbar;
 
   &__item {
