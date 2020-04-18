@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, TemplateRef, ChangeDetectionStrategy } from "@angular/core";
+import { Component, Input, OnInit, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
 
 export interface ITreeProvider<T> {
   getId(item: T): string;
@@ -7,9 +7,9 @@ export interface ITreeProvider<T> {
 }
 
 @Component({
-  selector: "app-tree",
-  templateUrl: "./tree.component.html",
-  styleUrls: ["./tree.component.scss"],
+  selector: 'app-tree',
+  templateUrl: './tree.component.html',
+  styleUrls: ['./tree.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TreeComponent<T> implements OnInit {
