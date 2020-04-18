@@ -25,7 +25,7 @@ export class TreeComponent<T> implements OnInit {
 
   public ngOnInit(): void {
     if (!this.item || !this.treeProvider) {
-      throw new Error("An item and a tree provider must be passed to the tree component");
+      throw new Error('Missing input(s): item and treeProvider must be passed to the tree component');
     }
     this.id = this.treeProvider.getId(this.item);
     this.children = this.treeProvider.getChildren(this.item);

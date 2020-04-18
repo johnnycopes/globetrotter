@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, TemplateRef, ChangeDetectionStrategy, ViewChild, ElementRef, AfterViewInit, ChangeDetectorRef, HostListener, ViewChildren, QueryList } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, Input, Output, EventEmitter, TemplateRef, ChangeDetectionStrategy, ViewChild, ElementRef, AfterViewInit, ChangeDetectorRef, HostListener } from '@angular/core';
 import { InputComponent } from '../input/input.component';
 
 export interface IListDetailsStyles {
@@ -12,7 +12,7 @@ export interface IListDetailsStyles {
   styleUrls: ['./list-details.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ListDetailsComponent<T> implements OnInit, AfterViewInit {
+export class ListDetailsComponent<T> implements OnInit, OnChanges, AfterViewInit {
   @Input() items: T[];
   @Input() listItemTemplate: TemplateRef<any>;
   @Input() detailsTemplate: TemplateRef<any>;
@@ -66,9 +66,17 @@ export class ListDetailsComponent<T> implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     if (!this.getItemUniqueId) {
-      throw new Error('A unique key function must defined as an input of the list-details component');
+      throw new Error('Missing input(s): getItemUniqueId must be passed to the list-details component');
     }
-    this.selectedItemIndex = this.items.indexOf(this.selectedItem);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes?.selectedItem || changes?.items) {
+      this.selectedItemIndex = this.items.indexOf(this.selectedItem);
+      if (this.selectedItemIndex >= 0 && this.list) {
+        setTimeout(() => this.list.nativeElement.scrollTop = this.selectedItemIndex * this.listItemHeight);
+      }
+    }
   }
 
   ngAfterViewInit(): void {
@@ -85,10 +93,12 @@ export class ListDetailsComponent<T> implements OnInit, AfterViewInit {
     this.changeDetectorRef.detectChanges();
   }
 
-  onSelect(item: T, index: number): void {
+  onSearch(searchTerm: string): void {
+    this.searchTermChange.emit(searchTerm);
+  }
+
+  onSelect(item: T): void {
     this.selectedItemChange.emit(item);
-    this.selectedItemIndex = index;
-    this.list.nativeElement.scrollTop = this.selectedItemIndex * this.listItemHeight;
   }
 
   checkIfSelected(item: T): boolean {
@@ -98,14 +108,14 @@ export class ListDetailsComponent<T> implements OnInit, AfterViewInit {
   private moveUpList(incrementValue: number): void {
     const newItemIndex = this.selectedItemIndex - incrementValue;
     if (newItemIndex >= 0) {
-      this.onSelect(this.items[newItemIndex], newItemIndex);
+      this.onSelect(this.items[newItemIndex]);
     }
   }
 
   private moveDownList(incrementValue: number): void {
     const newItemIndex = this.selectedItemIndex + incrementValue;
     if (newItemIndex < this.items.length) {
-      this.onSelect(this.items[newItemIndex], newItemIndex);
+      this.onSelect(this.items[newItemIndex]);
     }
   }
 }
