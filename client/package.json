@@ -6,7 +6,6 @@
     "start": "start cmd /k npm run serve",
     "serve": "ng serve",
     "build": "ng build --prod",
-    "karma": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "storybook": "start-storybook ./assets -p 6006",
@@ -47,23 +46,13 @@
     "@storybook/addon-viewport": "^6.1.14",
     "@storybook/addons": "^6.1.14",
     "@storybook/angular": "^6.1.14",
-    "@types/jasmine": "~3.6.0",
-    "@types/jasminewd2": "^2.0.6",
     "@types/jest": "^24.9.1",
     "@types/lodash": "^4.14.167",
     "@types/node": "^12.19.14",
     "babel-loader": "^8.2.2",
     "codelyzer": "^6.0.0",
-    "jasmine-core": "~3.6.0",
-    "jasmine-spec-reporter": "~5.0.0",
-    "karma": "~5.0.0",
-    "karma-chrome-launcher": "~3.1.0",
-    "karma-coverage-istanbul-reporter": "~3.0.2",
-    "karma-jasmine": "~4.0.0",
-    "karma-jasmine-html-reporter": "^1.5.4",
-    "protractor": "~7.0.0",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
-    "typescript": "^4.1.3"
+    "typescript": "^4.0.5"
   }
 }
