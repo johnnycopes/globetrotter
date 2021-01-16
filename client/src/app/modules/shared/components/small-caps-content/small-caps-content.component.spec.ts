@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { SmallCapsContentComponent } from './small-caps-content.component';
 
@@ -6,7 +6,7 @@ describe('SmallCapsContentComponent', () => {
   let component: SmallCapsContentComponent;
   let fixture: ComponentFixture<SmallCapsContentComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ SmallCapsContentComponent ]
     })

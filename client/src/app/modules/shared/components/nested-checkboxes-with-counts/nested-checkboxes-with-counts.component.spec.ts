@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { NestedCheckboxesWithCountsComponent } from './nested-checkboxes-with-counts.component';
 
@@ -6,7 +6,7 @@ describe('NestedCheckboxesWithCountsComponent', () => {
   let component: NestedCheckboxesWithCountsComponent;
   let fixture: ComponentFixture<NestedCheckboxesWithCountsComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ NestedCheckboxesWithCountsComponent ]
     })

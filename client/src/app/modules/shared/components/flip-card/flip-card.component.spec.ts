@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { FlipCardComponent } from './flip-card.component';
 
@@ -6,7 +6,7 @@ describe('FlipCardComponent', () => {
   let component: FlipCardComponent;
   let fixture: ComponentFixture<FlipCardComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ FlipCardComponent ]
     })

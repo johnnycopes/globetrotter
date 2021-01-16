@@ -1,6 +1,7 @@
-import { Output, EventEmitter } from "@angular/core";
+import { Output, EventEmitter, Directive } from "@angular/core";
 import { AnimationEvent } from '@angular/animations';
 
+@Directive()
 export abstract class AnimatedComponent {
   @Output() animationStarted = new EventEmitter<AnimationEvent>();
   @Output() animationFinished = new EventEmitter<AnimationEvent>();
