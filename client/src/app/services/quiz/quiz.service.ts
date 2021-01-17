@@ -4,10 +4,10 @@ import { State, IStateReadOnly } from '@boninger-works/state/library/core';
 import { shift } from '@boninger-works/state/library/transforms/array';
 import { increment } from '@boninger-works/state/library/transforms/numeric';
 
-import { ERoute } from '@models/route.enum';
-import { ICountry } from '@models/country.interface';
-import { ISelection } from '@models/selection.interface';
-import { Quiz } from '@models/quiz.class';
+import { ERoute } from '@models/enums/route.enum';
+import { ICountry } from '@models/interfaces/country.interface';
+import { ISelection } from '@models/interfaces/selection.interface';
+import { Quiz } from '@models/classes/quiz';
 import { CountryService } from '@services/country/country.service';
 import { RouterService } from '@services/router/router.service';
 

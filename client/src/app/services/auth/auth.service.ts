@@ -9,10 +9,10 @@ import { JwtHelperService } from "@auth0/angular-jwt";
 import { get } from "lodash-es";
 
 import { environment } from 'src/environments/environment';
-import { ERoute } from '@models/route.enum';
-import { EErrorMessage } from '@models/error-message.enum';
-import { Auth } from '@models/auth.class';
-import { IAuthCreds } from '@models/auth-creds.interface';
+import { ERoute } from '@models/enums/route.enum';
+import { EErrorMessage } from '@models/enums/error-message.enum';
+import { Auth } from '@models/classes/auth';
+import { IAuthCreds } from '@models/interfaces/auth-creds.interface';
 import { ErrorService } from '../error/error.service';
 
 @Injectable({

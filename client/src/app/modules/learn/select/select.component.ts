@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { Observable, combineLatest } from 'rxjs';
 import { map, tap, distinctUntilChanged } from 'rxjs/operators';
 
-import { ERoute } from '@models/route.enum';
-import { ISelection } from '@models/selection.interface';
+import { ERoute } from '@models/enums/route.enum';
+import { ISelection } from '@models/interfaces/selection.interface';
 import { SelectService } from '@services/select/select.service';
 import { fadeInAnimation } from '@utility/animations';
 import { CountryService } from '@services/country/country.service';

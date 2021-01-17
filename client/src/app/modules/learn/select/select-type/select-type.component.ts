@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { EQuizType } from '@models/quiz-type.enum';
+import { EQuizType } from '@models/enums/quiz-type.enum';
 import { IRadioButtonsOption } from '@shared/components/radio-buttons/radio-buttons.component';
 import { SelectService } from '@services/select/select.service';
 

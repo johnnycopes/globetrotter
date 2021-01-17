@@ -4,7 +4,7 @@ import { Dictionary } from "lodash";
 import { reduce } from "lodash-es";
 
 import { ITreeProvider } from '../tree/tree.component';
-import { TCheckboxStates } from '../nested-checkboxes/nested-checkboxes.component';
+import { CheckboxStates } from '../nested-checkboxes/nested-checkboxes.component';
 
 type Counts = Dictionary<number>;
 
@@ -32,13 +32,13 @@ export class NestedCheckboxesWithCountsComponent<T> implements ControlValueAcces
   @Input() getLeafItemCount: (item: T) => number;
   @Output() selectedChange = new EventEmitter<number>();
   @Output() totalChange = new EventEmitter<number>();
-  states: TCheckboxStates = {};
+  states: CheckboxStates = {};
   selectedCounts: Counts = {};
   totalCounts: Counts = {};
   private id: string;
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  private _onChangeFn: (value: TCheckboxStates) => void = () => { };
+  private _onChangeFn: (value: CheckboxStates) => void = () => { };
 
   constructor(private changeDetectorRef: ChangeDetectorRef) { }
 
@@ -49,7 +49,7 @@ export class NestedCheckboxesWithCountsComponent<T> implements ControlValueAcces
     this.id = this.treeProvider.getId(this.item);
   }
 
-  public writeValue(value: TCheckboxStates): void {
+  public writeValue(value: CheckboxStates): void {
     if (value) {
       this.states = value;
       this.selectedCounts = this.getSelectedCounts(this.item);
@@ -60,14 +60,14 @@ export class NestedCheckboxesWithCountsComponent<T> implements ControlValueAcces
     this.changeDetectorRef.markForCheck();
   }
 
-  public registerOnChange(fn: (value: TCheckboxStates) => void): void {
+  public registerOnChange(fn: (value: CheckboxStates) => void): void {
     this._onChangeFn = fn;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function
-  public registerOnTouched(fn: (value: TCheckboxStates) => void): void { }
+  public registerOnTouched(fn: (value: CheckboxStates) => void): void { }
 
-  public onChange(states: TCheckboxStates): void {
+  public onChange(states: CheckboxStates): void {
     this.states = states;
     this._onChangeFn(this.states);
 

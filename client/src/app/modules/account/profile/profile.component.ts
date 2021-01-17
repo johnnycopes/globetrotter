@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
-import { Auth } from '@models/auth.class';
+import { Auth } from '@models/classes/auth';
 import { AuthService } from '@services/auth/auth.service';
 
 @Component({

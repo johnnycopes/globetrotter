@@ -4,7 +4,7 @@ import { map, tap, switchMap, startWith, debounceTime, distinctUntilChanged } fr
 
 import { fadeInAnimation } from '@utility/animations';
 import { CountryService } from '@services/country/country.service';
-import { ICountry } from '@models/country.interface';
+import { ICountry } from '@models/interfaces/country.interface';
 
 interface IViewModel {
   filteredCountries: ICountry[];

@@ -2,8 +2,8 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Observable, combineLatest } from 'rxjs';
 import { map, first } from 'rxjs/operators';
 
-import { ICountry } from '@models/country.interface';
-import { EQuizType } from '@models/quiz-type.enum';
+import { ICountry } from '@models/interfaces/country.interface';
+import { EQuizType } from '@models/enums/quiz-type.enum';
 import { QuizService } from '@services/quiz/quiz.service';
 import { staggerAnimation, fadeInAnimation } from '@utility/animations';
 import { shuffle } from "lodash-es";

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
-import { ERoute } from '@models/route.enum';
+import { ERoute } from '@models/enums/route.enum';
 import { LearnComponent } from './learn.component';
 import { QuizModule } from './quiz/quiz.module';
 import { QuizComponent } from './quiz/quiz.component';

@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith, distinctUntilChanged } from 'rxjs/operators';
 
-import { EAngularFormStatus } from '@models/angular-form-status.enum';
+import { EAngularFormStatus } from '@models/enums/angular-form-status.enum';
 
 interface IViewModel {
   valid: boolean;

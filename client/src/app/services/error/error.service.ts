@@ -1,18 +1,22 @@
 import { Injectable } from '@angular/core';
 import { State, IStateReadOnly } from '@boninger-works/state/library/core';
 
-import { IErrors } from '@models/errors.interface';
+interface IErrorState {
+  global: string;
+  login: string;
+  register: string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class ErrorService {
-  private readonly _errors = new State<IErrors>({
+  private readonly _errors = new State<IErrorState>({
     global: '',
     login: '',
     register: ''
   });
-  get errors(): IStateReadOnly<IErrors> {
+  get errors(): IStateReadOnly<IErrorState> {
     return this._errors;
   }
 

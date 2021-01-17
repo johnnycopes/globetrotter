@@ -6,7 +6,7 @@ import {
 } from '@storybook/addon-knobs';
 
 import { MOCK_DATA } from './mock-data/list-details.data';
-import { ICountry } from '@models/country.interface';
+import { ICountry } from '@models/interfaces/country.interface';
 import { AlertComponent } from '@shared/components/alert/alert.component';
 import { InputComponent } from '@shared/components/input/input.component';
 import { ListDetailsComponent } from '@shared/components/list-details/list-details.component';

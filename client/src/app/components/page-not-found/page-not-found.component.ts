@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { ERoute } from '@models/route.enum';
+import { ERoute } from '@models/enums/route.enum';
 import { fadeInAnimation } from '@utility/animations';
 
 @Component({

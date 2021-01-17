@@ -11,7 +11,7 @@ import {
   animateChild
 } from "@angular/animations";
 
-import { EDuration } from "@models/duration.enum";
+import { EDuration } from "@models/enums/duration.enum";
 
 const fadeIn = animation([
   style({ opacity: '0' }),

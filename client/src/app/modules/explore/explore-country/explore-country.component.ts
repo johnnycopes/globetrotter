@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, AfterViewInit, ChangeDetectionStrategy, ViewChild, TemplateRef, ChangeDetectorRef, SimpleChanges } from '@angular/core';
-import { ICountry } from '@models/country.interface';
+import { ICountry } from '@models/interfaces/country.interface';
 
 interface ITableContent {
   header: string;

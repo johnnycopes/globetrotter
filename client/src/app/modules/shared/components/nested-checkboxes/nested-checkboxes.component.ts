@@ -1,10 +1,11 @@
 import { Component, Input, OnInit, TemplateRef, forwardRef, ChangeDetectionStrategy, ChangeDetectorRef } from "@angular/core";
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
+import { Dictionary } from "lodash";
 
 import { ITreeProvider } from "../tree/tree.component";
 import { CheckboxState } from "../checkbox/checkbox.component";
 
-export type TCheckboxStates = _.Dictionary<CheckboxState>;
+export type CheckboxStates = Dictionary<CheckboxState>;
 
 @Component({
   selector: "app-nested-checkboxes",
@@ -22,9 +23,9 @@ export class NestedCheckboxesComponent<T> implements ControlValueAccessor, OnIni
   @Input() treeProvider: ITreeProvider<T>;
   @Input() itemTemplate: TemplateRef<unknown>;
   @Input() invertedRootCheckbox: boolean = true;
-  public states: TCheckboxStates = {};
+  public states: CheckboxStates = {};
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  private onChangeFn: (value: TCheckboxStates) => void = () => { };
+  private onChangeFn: (value: CheckboxStates) => void = () => { };
 
   constructor(private changeDetectorRef: ChangeDetectorRef) { }
 
@@ -34,19 +35,19 @@ export class NestedCheckboxesComponent<T> implements ControlValueAccessor, OnIni
     }
   }
 
-  public writeValue(value: TCheckboxStates): void {
+  public writeValue(value: CheckboxStates): void {
     if (value) {
       this.states = value;
     }
     this.changeDetectorRef.markForCheck();
   }
 
-  public registerOnChange(fn: (value: TCheckboxStates) => void): void {
+  public registerOnChange(fn: (value: CheckboxStates) => void): void {
     this.onChangeFn = fn;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function
-  public registerOnTouched(_fn: (value: TCheckboxStates) => void): void { }
+  public registerOnTouched(_fn: (value: CheckboxStates) => void): void { }
 
   public onChange(state: CheckboxState, item: T): void {
     const states = { ...this.states };
@@ -66,7 +67,7 @@ export class NestedCheckboxesComponent<T> implements ControlValueAccessor, OnIni
     return [];
   }
 
-  private updateItemAndDescendantStates(state: CheckboxState, item: T, states: TCheckboxStates): TCheckboxStates {
+  private updateItemAndDescendantStates(state: CheckboxState, item: T, states: CheckboxStates): CheckboxStates {
     const id = this.treeProvider.getId(item);
     const children = this.treeProvider.getChildren(item);
     states[id] = state;
@@ -78,7 +79,7 @@ export class NestedCheckboxesComponent<T> implements ControlValueAccessor, OnIni
     return states;
   }
 
-  private updateAncestorStates(parents: T[], states: TCheckboxStates): TCheckboxStates {
+  private updateAncestorStates(parents: T[], states: CheckboxStates): CheckboxStates {
     parents.forEach(parentItem => {
       const parentId = this.treeProvider.getId(parentItem);
       const parentChildren = this.treeProvider.getChildren(parentItem);

@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
-import { ERoute } from '@models/route.enum';
+import { ERoute } from '@models/enums/route.enum';
 import { positionAnimation } from '@utility/animations';
 import { AnimatedComponent } from '@models/animated-component.class';
 

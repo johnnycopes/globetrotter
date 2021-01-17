@@ -2,10 +2,10 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
 import { map, tap, first, distinctUntilChanged, switchMap, shareReplay } from 'rxjs/operators';
 
-import { IRegion } from '@models/region.interface';
-import { ISubregion } from '@models/subregion.interface';
-import { PlacesTreeProvider } from '@models/places-tree-provider.class';
-import { TCheckboxStates } from '@shared/components/nested-checkboxes/nested-checkboxes.component';
+import { IRegion } from '@models/interfaces/region.interface';
+import { ISubregion } from '@models/interfaces/subregion.interface';
+import { PlacesTreeProvider } from '@models/classes/places-tree-provider.class';
+import { CheckboxStates } from '@shared/components/nested-checkboxes/nested-checkboxes.component';
 import { CountryService } from '@services/country/country.service';
 import { SelectService } from '@services/select/select.service';
 
@@ -20,7 +20,7 @@ interface IRegionData {
 
 interface IViewModel {
   regionData: IRegionData[];
-  checkboxStates: TCheckboxStates;
+  checkboxStates: CheckboxStates;
   overallSelected: number;
   overallTotal: number;
 }
@@ -34,10 +34,10 @@ interface IViewModel {
 export class SelectCountriesComponent implements OnInit {
   vm$: Observable<IViewModel>;
   private regionData$: Observable<IRegionData[]>;
-  private checkboxStates$: Observable<TCheckboxStates>;
+  private checkboxStates$: Observable<CheckboxStates>;
   private overallSelected$: Observable<number>;
   private overallTotal$: Observable<number>;
-  private fullySelectedState: TCheckboxStates;
+  private fullySelectedState: CheckboxStates;
 
   constructor(
     private countryService: CountryService,
@@ -58,7 +58,7 @@ export class SelectCountriesComponent implements OnInit {
     );
   }
 
-  onCountriesChange(state: TCheckboxStates): void {
+  onCountriesChange(state: CheckboxStates): void {
     this.selectService.updateCountries(state);
   }
 
@@ -85,7 +85,7 @@ export class SelectCountriesComponent implements OnInit {
             states[region.name] = 'checked';
             region.subregions.forEach(subregion => states[subregion.name] = 'checked');
             return states;
-          }, {} as TCheckboxStates);
+          }, {} as CheckboxStates);
         }),
         map(regions => regions.map(region => {
           const treeProvider = new PlacesTreeProvider(region);

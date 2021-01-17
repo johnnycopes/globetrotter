@@ -4,12 +4,12 @@ import { map, tap, distinctUntilChanged } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AnimationEvent } from '@angular/animations';
 
-import { Quiz } from '@models/quiz.class';
-import { EQuizType } from '@models/quiz-type.enum';
-import { ERoute } from '@models/route.enum';
+import { Quiz } from '@models/classes/quiz';
+import { EQuizType } from '@models/enums/quiz-type.enum';
+import { ERoute } from '@models/enums/route.enum';
 import { TFixedSlideablePanelPosition } from '@shared/components/fixed-slideable-panel/fixed-slideable-panel.component';
 import { QuizService } from '@services/quiz/quiz.service';
-import { ICountry } from '@models/country.interface';
+import { ICountry } from '@models/interfaces/country.interface';
 
 interface IViewModel {
   quiz: Quiz,

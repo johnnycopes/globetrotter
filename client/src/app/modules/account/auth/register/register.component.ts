@@ -5,7 +5,7 @@ import { Observable, combineLatest } from 'rxjs';
 import { CustomValidators } from '@utility/custom-validators';
 import { AuthService } from '@services/auth/auth.service';
 import { ErrorService } from '@services/error/error.service';
-import { EApi } from '@models/api.enum';
+import { EApi } from '@models/enums/api.enum';
 import { map } from 'rxjs/operators';
 
 interface IViewModel {

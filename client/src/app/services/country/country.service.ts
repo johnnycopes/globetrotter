@@ -7,17 +7,23 @@ import { map, shareReplay, catchError } from 'rxjs/operators';
 import { groupBy, reduce, shuffle, map as _map } from "lodash-es";
 import { Dictionary } from "lodash";
 
-import { COUNTRY_STATUSES } from '@models/country-statuses.data';
-import { COUNTRY_APP_NAMES, COUNTRY_SUMMARY_NAMES } from '@models/country-modifications.data';
-import { ICountries } from '@models/countries.interface';
-import { ICountry } from '@models/country.interface';
-import { IRegion } from '@models/region.interface';
-import { ISelection } from '@models/selection.interface';
-import { ISummary } from '@models/summary.interface';
+import { COUNTRY_STATUSES } from '@models/data/country-statuses';
+import { COUNTRY_APP_NAMES, COUNTRY_SUMMARY_NAMES } from '@models/data/country-modifications';
+import { ICountry } from '@models/interfaces/country.interface';
+import { IRegion } from '@models/interfaces/region.interface';
+import { ISelection } from '@models/interfaces/selection.interface';
+import { ISummary } from '@models/interfaces/summary.interface';
 import { ErrorService } from '../error/error.service';
 
 type CountriesBySubregion = Dictionary<ICountry[]>;
 type SubregionsByRegion = Dictionary<string[]>;
+
+interface ICountryState {
+  flatCountries: ICountry[];
+  countriesBySubregion: Dictionary<ICountry[]>;
+  subregionsByRegion: Dictionary<string[]>;
+  nestedCountries: IRegion[];
+}
 
 @Injectable({
   providedIn: 'root'
@@ -26,13 +32,13 @@ export class CountryService implements Resolve<Observable<ICountry[]>> {
   private request: Observable<ICountry[]>;
   private readonly countriesApiUrl = 'https://restcountries.eu/rest/v2/all';
   private readonly wikipediaApiUrl = 'https://en.wikipedia.org/api/rest_v1/page/summary/';
-  private readonly _countries = new State<ICountries>({
+  private readonly _countries = new State<ICountryState>({
     flatCountries: [],
     countriesBySubregion: {},
     subregionsByRegion: {},
     nestedCountries: []
   });
-  get countries(): IStateReadOnly<ICountries> {
+  get countries(): IStateReadOnly<ICountryState> {
     return this._countries;
   }
 

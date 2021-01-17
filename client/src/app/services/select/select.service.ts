@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { State, IStateReadOnly } from '@boninger-works/state/library/core';
 import { first } from 'rxjs/operators';
 
-import { ISelection } from '@models/selection.interface';
-import { IRegion } from '@models/region.interface';
-import { EQuizType } from '@models/quiz-type.enum';
-import { TCheckboxStates } from '@shared/components/nested-checkboxes/nested-checkboxes.component';
+import { ISelection } from '@models/interfaces/selection.interface';
+import { IRegion } from '@models/interfaces/region.interface';
+import { EQuizType } from '@models/enums/quiz-type.enum';
+import { CheckboxStates } from '@shared/components/nested-checkboxes/nested-checkboxes.component';
 import { CountryService } from '../country/country.service';
 import { replace, camelCase, pickBy, map as _map } from "lodash-es";
 import { Dictionary } from "lodash";
@@ -52,11 +52,11 @@ export class SelectService {
     this._selection.set(lens => lens.to('quantity').value(quantity));
   }
 
-  updateCountries(countries: TCheckboxStates): void {
+  updateCountries(countries: CheckboxStates): void {
     this._selection.set(lens => lens.to('countries').value(countries));
   }
 
-  mapSelectionToQueryParams(selection: ISelection): _.Dictionary<string> {
+  mapSelectionToQueryParams(selection: ISelection): Dictionary<string> {
     const type = selection.type.toString();
     const quantity = selection.quantity.toString();
     const selectedCountries = pickBy(selection.countries, value => value !== 'unchecked');
@@ -92,7 +92,7 @@ export class SelectService {
           accum[updatedKey] = 'indeterminate';
         }
         return accum;
-      }, {} as TCheckboxStates);
+      }, {} as CheckboxStates);
     return {
       type,
       quantity,
@@ -100,13 +100,13 @@ export class SelectService {
     };
   }
 
-  private mapCountriesToCheckboxStates(countries: IRegion[]): TCheckboxStates {
+  private mapCountriesToCheckboxStates(countries: IRegion[]): CheckboxStates {
     return countries.reduce((accum, region) => {
       accum[region.name] = 'checked';
       region.subregions.forEach(subregion => {
-        accum[subregion.name] = 'checked';
+        accum[subregion?.name] = 'checked';
       });
       return accum;
-    }, {} as TCheckboxStates);
+    }, {} as CheckboxStates);
   }
 }

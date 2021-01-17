@@ -3,22 +3,24 @@ import { Router, NavigationEnd, RouterEvent, NavigationCancel, NavigationError }
 import { State, IStateReadOnly } from '@boninger-works/state/library/core';
 import { map, filter } from 'rxjs/operators';
 
-import { IRouterInfo } from '@models/router-info.interface';
+interface IRouterState {
+  currentRoute: string;
+  loading: boolean;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class RouterService {
-  private readonly _state: State<IRouterInfo>;
-  get state(): IStateReadOnly<IRouterInfo> {
+  private readonly _state: State<IRouterState> = new State({
+    currentRoute: '',
+    loading: false
+  });
+  get state(): IStateReadOnly<IRouterState> {
     return this._state;
   }
 
   constructor(private router: Router) {
-    this._state = new State({
-      currentRoute: '',
-      loading: false
-    });
     this.intialize();
   }
 
