@@ -9,8 +9,4 @@ import { fadeInAnimation } from '@utility/animations';
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [fadeInAnimation]
 })
-export class AccountComponent {
-
-  constructor() { }
-
-}
+export class AccountComponent { }

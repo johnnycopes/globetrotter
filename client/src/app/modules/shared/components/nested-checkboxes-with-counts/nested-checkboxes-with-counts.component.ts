@@ -1,11 +1,12 @@
 import { Component, OnInit, Input, Output, EventEmitter, TemplateRef, ChangeDetectorRef, ChangeDetectionStrategy, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import * as _ from 'lodash';
+import { Dictionary } from "lodash";
+import { reduce } from "lodash-es";
 
 import { ITreeProvider } from '../tree/tree.component';
 import { TCheckboxStates } from '../nested-checkboxes/nested-checkboxes.component';
 
-type TCounts = _.Dictionary<number>;
+type Counts = Dictionary<number>;
 
 /*
 TOBES
@@ -26,16 +27,17 @@ TOBES
 export class NestedCheckboxesWithCountsComponent<T> implements ControlValueAccessor, OnInit {
   @Input() item: T;
   @Input() treeProvider: ITreeProvider<T>;
-  @Input() itemTemplate: TemplateRef<any>;
+  @Input() itemTemplate: TemplateRef<unknown>;
   @Input() invertedRootCheckbox: boolean = true;
   @Input() getLeafItemCount: (item: T) => number;
-  @Output() selectedChange: EventEmitter<number> = new EventEmitter();
-  @Output() totalChange: EventEmitter<number> = new EventEmitter();
+  @Output() selectedChange = new EventEmitter<number>();
+  @Output() totalChange = new EventEmitter<number>();
   states: TCheckboxStates = {};
-  selectedCounts: TCounts = {};
-  totalCounts: TCounts = {};
+  selectedCounts: Counts = {};
+  totalCounts: Counts = {};
   private id: string;
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   private _onChangeFn: (value: TCheckboxStates) => void = () => { };
 
   constructor(private changeDetectorRef: ChangeDetectorRef) { }
@@ -62,7 +64,8 @@ export class NestedCheckboxesWithCountsComponent<T> implements ControlValueAcces
     this._onChangeFn = fn;
   }
 
-  public registerOnTouched(_fn: (value: TCheckboxStates) => void): void { }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function
+  public registerOnTouched(fn: (value: TCheckboxStates) => void): void { }
 
   public onChange(states: TCheckboxStates): void {
     this.states = states;
@@ -72,11 +75,11 @@ export class NestedCheckboxesWithCountsComponent<T> implements ControlValueAcces
     this.selectedChange.emit(this.selectedCounts[this.id]);
   }
 
-  private getTotalCounts(item: T): TCounts {
+  private getTotalCounts(item: T): Counts {
     return this.getCounts(item, this.getLeafItemCount);
   }
 
-  private getSelectedCounts(item: T): TCounts {
+  private getSelectedCounts(item: T): Counts {
     const leafNodeCount = (leafItem: T): number => {
       const leafItemId = this.treeProvider.getId(leafItem);
       return this.states[leafItemId] === 'checked' ? this.getLeafItemCount(leafItem) : 0
@@ -84,17 +87,17 @@ export class NestedCheckboxesWithCountsComponent<T> implements ControlValueAcces
     return this.getCounts(item, leafNodeCount);
   }
 
-  private getCounts(item: T, getLeafItemCount: (item: T) => number): TCounts {
+  private getCounts(item: T, getLeafItemCount: (item: T) => number): Counts {
     const id = this.treeProvider.getId(item);
     const children = this.treeProvider.getChildren(item);
     if (!children.length) {
       const count = getLeafItemCount(item);
       return { [id]: count };
     }
-    const descendantTotals = _.reduce(children, (totalsDict, child) =>
-      _.assign(totalsDict, this.getCounts(child, getLeafItemCount))
-      , {} as TCounts);
-    const grandTotal = _.reduce(children, (total, child) => {
+    const descendantTotals = children.reduce((totalsDict, child) =>
+      Object.assign(totalsDict, this.getCounts(child, getLeafItemCount))
+      , {} as Counts);
+    const grandTotal = reduce(children, (total, child) => {
       const childId = this.treeProvider.getId(child);
       const childTotal = descendantTotals[childId];
       return total + childTotal;

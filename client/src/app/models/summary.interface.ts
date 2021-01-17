@@ -4,7 +4,7 @@ interface IImage {
   source: string;
   width: number;
   height: number;
-};
+}
 
 export interface ISummary {
   title: string;

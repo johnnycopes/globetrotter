@@ -6,10 +6,10 @@ import {
 } from '@storybook/addon-knobs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { TabsetComponent, TTabsetContentVisibility } from '@shared/components/tabset/tabset.component';
+import { TabsetComponent, TabsetContentVisibility } from '@shared/components/tabset/tabset.component';
 import { TabComponent } from '@shared/components/tabset/tab/tab.component';
 
-const visibilityStates: TTabsetContentVisibility[] = ['visible', 'invisible'];
+const visibilityStates: TabsetContentVisibility[] = ['visible', 'invisible'];
 const actions = {
   onAnimationStart: action('animation started'),
   onAnimationFinish: action('animation finished')

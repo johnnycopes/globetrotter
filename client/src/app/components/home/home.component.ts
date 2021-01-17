@@ -15,7 +15,7 @@ export class HomeComponent {
 
   constructor(private router: Router) { }
 
-  onClick(): void {
-    this.router.navigate([ERoute.learn]);
+  async onClick(): Promise<void> {
+    await this.router.navigate([ERoute.learn]);
   }
 }

@@ -1,7 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
 import { map, tap, first, distinctUntilChanged, switchMap, shareReplay } from 'rxjs/operators';
-import * as _ from 'lodash';
 
 import { IRegion } from '@models/region.interface';
 import { ISubregion } from '@models/subregion.interface';
@@ -82,7 +81,7 @@ export class SelectCountriesComponent implements OnInit {
       .pipe(
         first(),
         tap(regions => {
-          this.fullySelectedState = _.reduce(regions, (states, region) => {
+          this.fullySelectedState = regions.reduce((states, region) => {
             states[region.name] = 'checked';
             region.subregions.forEach(subregion => states[subregion.name] = 'checked');
             return states;

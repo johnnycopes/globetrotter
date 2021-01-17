@@ -1,10 +1,10 @@
-import * as _ from 'lodash';
+import { Dictionary } from "lodash";
 
 import { ITreeProvider } from '@shared/components/tree/tree.component';
 import { IDefaultTreeItem } from '@shared/components/tree/default-tree-item.interface';
 
 export class NestedItemTreeProvider implements ITreeProvider<IDefaultTreeItem> {
-  private itemsKeyedById: _.Dictionary<IDefaultTreeItem> = {};
+  private itemsKeyedById: Dictionary<IDefaultTreeItem> = {};
 
   constructor(item: IDefaultTreeItem) {
     // set itemsKeyedById recursively
@@ -30,7 +30,7 @@ export class NestedItemTreeProvider implements ITreeProvider<IDefaultTreeItem> {
 
   getParent(item: IDefaultTreeItem): IDefaultTreeItem | undefined {
     const parentId = item.parentId;
-    if (!!parentId) {
+    if (parentId) {
       return this.itemsKeyedById[parentId];
     }
     return undefined;

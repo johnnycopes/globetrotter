@@ -23,7 +23,7 @@ export class NavigationComponent extends AnimatedComponent implements OnInit {
   home: INavigationLink;
   links: INavigationLink[];
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.home = {
       name: 'Home',
       icon: 'Globetrotter',

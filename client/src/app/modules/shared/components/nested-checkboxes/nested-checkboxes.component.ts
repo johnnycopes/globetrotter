@@ -2,9 +2,9 @@ import { Component, Input, OnInit, TemplateRef, forwardRef, ChangeDetectionStrat
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
 
 import { ITreeProvider } from "../tree/tree.component";
-import { TCheckboxState } from "../checkbox/checkbox.component";
+import { CheckboxState } from "../checkbox/checkbox.component";
 
-export type TCheckboxStates = _.Dictionary<TCheckboxState>;
+export type TCheckboxStates = _.Dictionary<CheckboxState>;
 
 @Component({
   selector: "app-nested-checkboxes",
@@ -20,9 +20,10 @@ export type TCheckboxStates = _.Dictionary<TCheckboxState>;
 export class NestedCheckboxesComponent<T> implements ControlValueAccessor, OnInit {
   @Input() item: T;
   @Input() treeProvider: ITreeProvider<T>;
-  @Input() itemTemplate: TemplateRef<any>;
+  @Input() itemTemplate: TemplateRef<unknown>;
   @Input() invertedRootCheckbox: boolean = true;
   public states: TCheckboxStates = {};
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   private onChangeFn: (value: TCheckboxStates) => void = () => { };
 
   constructor(private changeDetectorRef: ChangeDetectorRef) { }
@@ -44,9 +45,10 @@ export class NestedCheckboxesComponent<T> implements ControlValueAccessor, OnIni
     this.onChangeFn = fn;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function
   public registerOnTouched(_fn: (value: TCheckboxStates) => void): void { }
 
-  public onChange(state: TCheckboxState, item: T): void {
+  public onChange(state: CheckboxState, item: T): void {
     const states = { ...this.states };
     const ancestors = this.getAncestors(item);
     this.updateItemAndDescendantStates(state, item, states);
@@ -58,13 +60,13 @@ export class NestedCheckboxesComponent<T> implements ControlValueAccessor, OnIni
 
   private getAncestors(item: T): T[] {
     const parent = this.treeProvider.getParent && this.treeProvider.getParent(item);
-    if (!!parent) {
+    if (parent) {
       return [parent, ...this.getAncestors(parent)];
     }
     return [];
   }
 
-  private updateItemAndDescendantStates(state: TCheckboxState, item: T, states: TCheckboxStates): TCheckboxStates {
+  private updateItemAndDescendantStates(state: CheckboxState, item: T, states: TCheckboxStates): TCheckboxStates {
     const id = this.treeProvider.getId(item);
     const children = this.treeProvider.getChildren(item);
     states[id] = state;

@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, Subject, ReplaySubject, combineLatest } from 'rxjs';
 import { map, tap, switchMap, startWith, debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import * as _ from 'lodash';
 
 import { fadeInAnimation } from '@utility/animations';
 import { CountryService } from '@services/country/country.service';
 import { ICountry } from '@models/country.interface';
-import { IListDetailsStyles } from '@shared/components/list-details/list-details.component';
 
 interface IViewModel {
   filteredCountries: ICountry[];
@@ -53,7 +51,7 @@ export class ExploreComponent implements OnInit {
     this.selectedCountryChange.next(selectedCountry);
   }
 
-  onSearch(searchTerm: string) {
+  onSearch(searchTerm: string): void {
     this.searchTermChange.next(searchTerm);
   }
 
@@ -72,13 +70,13 @@ export class ExploreComponent implements OnInit {
       distinctUntilChanged()
     );
     this.filteredCountries$ = this.searchTerm$.pipe(
-      map(searchTerm => _.toLower(searchTerm)),
+      map(searchTerm => searchTerm.toLowerCase()),
       switchMap((searchTerm, index) => this.countries$.pipe(
         tap(countries => index === 0 ? this.onSelect(countries[0]) : null),
         map(countries => {
-          return _.filter(countries, country => {
-            const name = _.toLower(country.name);
-            const capital = _.toLower(country.capital);
+          return countries.filter(country => {
+            const name = country.name.toLowerCase();
+            const capital = country.capital.toLowerCase();
             return name.includes(searchTerm) || capital.includes(searchTerm);
           });
         })

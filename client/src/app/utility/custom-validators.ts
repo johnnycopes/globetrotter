@@ -3,8 +3,8 @@ import { ValidationErrors, FormGroup } from '@angular/forms';
 export class CustomValidators {
 
   static checkPasswords(group: FormGroup): ValidationErrors | null {
-    let password = group.get('password')?.value;
-    let confirmPassword = group.get('confirmPassword')?.value;
+    const password = group.get('password')?.value as string ?? "";
+    const confirmPassword = group.get('confirmPassword')?.value as string ?? "";
     return password === confirmPassword ? null : { differentPasswords: true }
   }
 }

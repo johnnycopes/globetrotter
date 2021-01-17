@@ -1,8 +1,8 @@
+/* eslint-disable brace-style */
 import { Component, Input, Output, EventEmitter, OnInit, ViewChild, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
 import { AnimationEvent } from '@angular/animations';
 import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
 import { map, distinctUntilChanged } from 'rxjs/operators';
-import * as _ from 'lodash';
 
 import { ICountry } from '@models/country.interface';
 import { EDuration } from '@models/duration.enum';
@@ -16,7 +16,7 @@ interface IViewModel {
   disabled: boolean;
 }
 
-type TCardTemplates = _.Dictionary<TemplateRef<any>>;
+type CardTemplate = Record<'front' | 'back', TemplateRef<unknown>>;
 
 @Component({
   selector: 'app-quiz-card',
@@ -30,13 +30,13 @@ export class QuizCardComponent implements OnInit {
   @Input() canFlip: boolean;
   @Input() type: EQuizType;
   @Output() flipped = new EventEmitter<boolean>();
-  @ViewChild('flagTemplate', { static: true }) flagTemplate: TemplateRef<any>;
-  @ViewChild('countryTemplate', { static: true }) countryTemplate: TemplateRef<any>;
-  @ViewChild('capitalTemplate', { static: true }) capitalTemplate: TemplateRef<any>;
+  @ViewChild('flagTemplate', { static: true }) flagTemplate: TemplateRef<unknown>;
+  @ViewChild('countryTemplate', { static: true }) countryTemplate: TemplateRef<unknown>;
+  @ViewChild('capitalTemplate', { static: true }) capitalTemplate: TemplateRef<unknown>;
   @ViewChild(FlipCardComponent) private flipCardComponent: FlipCardComponent;
   vm$: Observable<IViewModel>;
-  template: TCardTemplates;
-  private templatesDict: _.Dictionary<TCardTemplates>;
+  template: CardTemplate;
+  private templates: Record<EQuizType, CardTemplate>;
   private processingFlip = false;
   private guess$: Observable<TFlipCardGuess>;
   private guessChange = new BehaviorSubject<TFlipCardGuess>("none");
@@ -56,16 +56,19 @@ export class QuizCardComponent implements OnInit {
 
   constructor(private quizService: QuizService) { }
 
-  async onAnimationFinish(event: AnimationEvent) {
+  async onAnimationFinish(event: AnimationEvent): Promise<void> {
     const { triggerName, toState } = event;
 
     // onFlip kicks off the chain of events, starting with the flip animation from front to back
     if (triggerName === 'flip') {
       if (toState === 'back') {
         this.guessChange.next(this.isCurrentCountry ? 'correct' : 'incorrect');
-      }
-      else if (toState === 'front' && this.processingFlip) {
-        this.isCurrentCountry ? this.disabledChange.next(true) : this.updateQuiz();
+      } else if (toState === 'front' && this.processingFlip) {
+        if (this.isCurrentCountry) {
+          this.disabledChange.next(true);
+        } else {
+          await this.updateQuiz();
+        }
       }
     }
 
@@ -80,7 +83,7 @@ export class QuizCardComponent implements OnInit {
 
     // disabled is only reached after guess state to correct
     else if (triggerName === 'disabled' && toState === 'disabled') {
-      this.updateQuiz();
+      await this.updateQuiz();
     }
   }
 
@@ -106,7 +109,7 @@ export class QuizCardComponent implements OnInit {
   }
 
   private setCardTemplates(): void {
-    this.templatesDict = {
+    this.templates = {
       [EQuizType.flagsCountries]: {
         front: this.flagTemplate,
         back: this.countryTemplate
@@ -120,6 +123,6 @@ export class QuizCardComponent implements OnInit {
         back: this.capitalTemplate
       }
     };
-    this.template = this.templatesDict[this.type];
+    this.template = this.templates[this.type];
   }
 }

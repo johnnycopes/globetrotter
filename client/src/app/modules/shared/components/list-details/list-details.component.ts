@@ -14,8 +14,8 @@ export interface IListDetailsStyles {
 })
 export class ListDetailsComponent<T> implements OnInit, OnChanges, AfterViewInit {
   @Input() items: T[];
-  @Input() listItemTemplate: TemplateRef<any>;
-  @Input() detailsTemplate: TemplateRef<any>;
+  @Input() listItemTemplate: TemplateRef<unknown>;
+  @Input() detailsTemplate: TemplateRef<unknown>;
   @Input() styles: IListDetailsStyles = {
     offsetTop: '0px',
     gap: '12px'
@@ -26,17 +26,18 @@ export class ListDetailsComponent<T> implements OnInit, OnChanges, AfterViewInit
   @Input() placeholderText: string = "";
   @Output() selectedItemChange = new EventEmitter<T>();
   @Output() searchTermChange = new EventEmitter<string>();
+  @ViewChild(InputComponent, { read: ElementRef }) private search: ElementRef<HTMLInputElement>;
+  @ViewChild('list') private list: ElementRef<HTMLElement>;
+  @ViewChild('listItem') private listItem: ElementRef<HTMLElement>;
+  public gap: string = '12px';
   public containerHeight: string;
   public toolbarHeight: string;
+  private selectedItemIndex: number;
+  private listItemHeight: number;
+
   public trackByFn = (index: number, item: T): string => {
     return this.getItemUniqueId(item);
   }
-  public gap: string = '12px';
-  private selectedItemIndex: number;
-  private listItemHeight: number;
-  @ViewChild(InputComponent, { read: ElementRef }) private search: ElementRef;
-  @ViewChild('list') private list: ElementRef;
-  @ViewChild('listItem') private listItem: ElementRef;
 
   @HostListener('window:keydown.arrowUp', ['$event'])
   onArrowUp(event: KeyboardEvent): void {
@@ -74,7 +75,12 @@ export class ListDetailsComponent<T> implements OnInit, OnChanges, AfterViewInit
     if (changes?.selectedItem || changes?.items) {
       this.selectedItemIndex = this.items.indexOf(this.selectedItem);
       if (this.selectedItemIndex >= 0 && this.list) {
-        setTimeout(() => this.list.nativeElement.scrollTop = this.selectedItemIndex * this.listItemHeight);
+        setTimeout(() => {
+          const list = this.list?.nativeElement;
+          if (list) {
+            list.scrollTop = this.selectedItemIndex * this.listItemHeight
+          }
+        });
       }
     }
   }
@@ -83,7 +89,7 @@ export class ListDetailsComponent<T> implements OnInit, OnChanges, AfterViewInit
     this.containerHeight = `calc(100vh - ${this.styles.gap} - ${this.styles.gap} - ${this.styles.offsetTop})`;
     this.toolbarHeight = `
       calc(100vh -
-      ${this.search.nativeElement.offsetHeight}px -
+      ${this.search?.nativeElement?.offsetHeight ?? 0}px -
       ${this.styles.gap} -
       ${this.styles.gap} -
       ${this.styles.gap} -

@@ -12,10 +12,10 @@ import { fadeInAnimation } from '@utility/animations';
 export class TabComponent {
   @Input() name: string;
   @Input()
-  get selected() {
+  get selected(): boolean {
     return this._selected;
   }
-  set selected(value) {
+  set selected(value: boolean) {
     if (this._selected !== value) {
       this.changeDetectorRef.markForCheck();
     }

@@ -4,4 +4,4 @@ export enum EBreakpoint {
   mobile = '(min-width: 400px)',
   tablet = '(min-width: 700px)',
   desktop = '(min-width: 1200px)'
-};
+}

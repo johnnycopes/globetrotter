@@ -2,13 +2,13 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, combineLatest } from 'rxjs';
 import { map, tap, distinctUntilChanged } from 'rxjs/operators';
-import * as _ from 'lodash';
 
 import { ERoute } from '@models/route.enum';
 import { ISelection } from '@models/selection.interface';
 import { SelectService } from '@services/select/select.service';
 import { fadeInAnimation } from '@utility/animations';
 import { CountryService } from '@services/country/country.service';
+import { pickBy } from "lodash-es";
 
 interface IViewModel {
   numberOfSelectedCountries: number;
@@ -51,9 +51,9 @@ export class SelectComponent implements OnInit {
     );
   }
 
-  onLaunch(): void {
+  async onLaunch(): Promise<void> {
     this.queryParams = this.selectService.mapSelectionToQueryParams(this.selection);
-    this.router.navigate(
+    await this.router.navigate(
       [`${ERoute.learn}/${ERoute.quiz}`],
       { queryParams: this.queryParams }
     );
@@ -69,13 +69,12 @@ export class SelectComponent implements OnInit {
       this.selection$
     ]).pipe(
       map(([subregions, selection]) => {
-        const selectedPlaces = _(selection.countries)
-          .pickBy((value) => value === 'checked')
-          .keys()
-          .value();
-        return _.reduce(selectedPlaces, (total, currentPlace) =>
-          subregions[currentPlace] ? total + subregions[currentPlace].length : total
-        , 0);
+        const selectedCountries = pickBy(selection.countries, value => value === 'checked');
+        return Object
+          .keys(selectedCountries)
+          .reduce((total, currentPlace) =>
+            subregions[currentPlace] ? total + subregions[currentPlace].length : total
+          , 0);
       }),
       distinctUntilChanged()
     );

@@ -1,5 +1,4 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import * as _ from 'lodash';
 
 import { ActivatedRoute } from '@angular/router';
 import { QuizService } from '@services/quiz/quiz.service';

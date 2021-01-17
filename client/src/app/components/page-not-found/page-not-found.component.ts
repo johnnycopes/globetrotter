@@ -15,7 +15,7 @@ export class PageNotFoundComponent {
 
   constructor(private router: Router) { }
 
-  onHomeClick(): void {
-    this.router.navigate([ERoute.home]);
+  async onHomeClick(): Promise<void> {
+    await this.router.navigate([ERoute.home]);
   }
 }

@@ -3,7 +3,6 @@ import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
 import { map, tap, distinctUntilChanged } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AnimationEvent } from '@angular/animations';
-import * as _ from 'lodash';
 
 import { Quiz } from '@models/quiz.class';
 import { EQuizType } from '@models/quiz-type.enum';
@@ -53,15 +52,14 @@ export class QuizMenuComponent implements OnInit {
     );
   }
 
-  onBack(): void {
-    this.router.navigate([ERoute.learn]);
+  async onBack(): Promise<void> {
+    await this.router.navigate([ERoute.learn]);
   }
 
-  async onMenuAnimationFinish(event: AnimationEvent): Promise<void> {
+  onMenuAnimationFinish(event: AnimationEvent): void {
     if (event.toState === 'header') {
       this.menuReady.emit(true);
-    }
-    else if (event.toState === 'offscreen') {
+    } else if (event.toState === 'offscreen') {
       this.positionChanged.next('fullscreen');
     }
   }

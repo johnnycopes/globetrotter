@@ -1,5 +1,5 @@
 
-import { Component, Input, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BreakpointObserver } from '@angular/cdk/layout';
 
@@ -23,23 +23,24 @@ export class RadioButtonsComponent<T> implements ControlValueAccessor {
   @Input() options: IRadioButtonsOption<T>[];
   @Input() stacked: boolean;
   model: IRadioButtonsOption<T>;
-  private onChangeFn: any;
+  private onChangeFn: (model: IRadioButtonsOption<T>) => void;
 
   constructor(
     public changeDetectorRef: ChangeDetectorRef,
     public breakpointObserver: BreakpointObserver
   ) { }
 
-  writeValue(obj: any): void {
+  writeValue(obj: IRadioButtonsOption<T>): void {
     this.model = obj;
     this.changeDetectorRef.markForCheck();
   }
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: () => void): void {
     this.onChangeFn = fn;
   }
 
-  registerOnTouched(fn: any): void { }
+  // eslint-disable-next-line @typescript-eslint/no-empty-function, @typescript-eslint/no-unused-vars
+  registerOnTouched(fn: () => void): void { }
 
   onChange(): void {
     this.onChangeFn(this.model);
