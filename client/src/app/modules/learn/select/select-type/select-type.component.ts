@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -12,46 +12,40 @@ import { SelectService } from '@services/select/select.service';
   styleUrls: ['./select-type.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SelectTypeComponent implements OnInit {
-  types: IRadioButtonsOption<EQuizType>[] = [];
-  selectedType$: Observable<IRadioButtonsOption<EQuizType>>;
-  private quizTypes: Record<EQuizType, string[]> = {
-    [EQuizType.flagsCountries]: ["Flags", "Countries"],
-    [EQuizType.capitalsCountries]: ["Capitals", "Countries"],
-    [EQuizType.countriesCapitals]: ["Countries", "Capitals"],
-  };
+export class SelectTypeComponent {
+  public types: IRadioButtonsOption<EQuizType>[] = [
+    EQuizType.flagsCountries,
+    EQuizType.capitalsCountries,
+    EQuizType.countriesCapitals
+  ].map(quizType => this._generateOption(quizType));
 
-  constructor(private selectService: SelectService) { }
+  public selectedType$: Observable<IRadioButtonsOption<EQuizType>> = this._selectService.selection
+    .observe(lens => lens.to('type'))
+    .pipe(
+      map(quizType => this._generateOption(quizType))
+    );
 
-  ngOnInit(): void {
-    this.types = Object
-      .keys(this.quizTypes)
-      .map(quizType => {
-        const type = quizType as EQuizType;
-        return {
-          display: this.formatDisplayText(type),
-          value: type
-        };
-      });
-    this.selectedType$ = this.selectService.selection
-      .observe(lens => lens.to('type'))
-      .pipe(
-        map(quizType => {
-          const selectedType = {
-            display: this.formatDisplayText(quizType),
-            value: quizType
-          };
-          return selectedType;
-        })
-      );
+  constructor(private _selectService: SelectService) { }
+
+  public onChange(selectedType: IRadioButtonsOption<EQuizType>): void {
+    this._selectService.updateType(selectedType.value);
   }
 
-  onChange(selectedType: IRadioButtonsOption<EQuizType>): void {
-    this.selectService.updateType(selectedType.value);
+  private _generateOption(quizType: EQuizType): IRadioButtonsOption<EQuizType> {
+    return {
+      display: this._getDisplayText(quizType),
+      value: quizType
+    };
   }
 
-  private formatDisplayText(quizType: EQuizType): string {
-    const [ firstWord, secondWord ] = this.quizTypes[quizType];
-    return `${firstWord} / ${secondWord}`;
+  private _getDisplayText(quizType: EQuizType): string {
+    switch (quizType) {
+      case EQuizType.flagsCountries:
+        return "Flags / Countries";
+      case EQuizType.capitalsCountries:
+        return "Capitals / Countries";
+      case EQuizType.countriesCapitals:
+        return "Countries / Capitals";
+    }
   }
 }

@@ -6,14 +6,14 @@ import {
 import { action } from '@storybook/addon-actions';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FixedSlideablePanelComponent, TFixedSlideablePanelPosition } from '@shared/components/fixed-slideable-panel/fixed-slideable-panel.component';
+import { FixedSlideablePanelComponent, FixedSlideablePanelPosition } from '@shared/components/fixed-slideable-panel/fixed-slideable-panel.component';
 import { ContainerComponent } from '@shared/components/container/container.component';
 
 const actions = {
   onAnimationStart: action('animation started'),
   onAnimationFinish: action('animation finished')
 };
-const positions: TFixedSlideablePanelPosition[] = ['offscreen', 'header', 'fullscreen'];
+const positions: FixedSlideablePanelPosition[] = ['offscreen', 'header', 'fullscreen'];
 const simpleTemplate = `
   <app-fixed-slideable-panel
     [position]="position"

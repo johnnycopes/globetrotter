@@ -7,7 +7,7 @@ import { IRegion } from '@models/interfaces/region.interface';
 import { EQuizType } from '@models/enums/quiz-type.enum';
 import { CheckboxStates } from '@shared/components/nested-checkboxes/nested-checkboxes.component';
 import { CountryService } from '../country/country.service';
-import { replace, camelCase, pickBy, map as _map } from "lodash-es";
+import { replace, pickBy, map as _map } from "lodash-es";
 import { Dictionary } from "lodash";
 
 @Injectable({
@@ -78,8 +78,7 @@ export class SelectService {
   }
 
   mapQueryParamsToSelection(queryParams: Dictionary<string>): ISelection {
-    const typeKey = camelCase(queryParams.type) as keyof typeof EQuizType;
-    const type = EQuizType[typeKey];
+    const type = parseInt(queryParams.type, 10) as EQuizType;
     const quantity = parseInt(queryParams.quantity, 10);
     const countries = queryParams.countries
       .split(',')

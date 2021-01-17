@@ -1,10 +1,10 @@
 /*
-names represent the front and back sides of the cards
-(e.g. `flagsCountries` means coutnry flag on the front, country names on the back)
+The names represent the front and back sides of the cards, respectively
+(e.g. `flagsCountries` means country flag on the front and country name on the back)
 */
 
 export enum EQuizType {
-  flagsCountries = 'FLAGS_COUNTRIES',
-  capitalsCountries = 'CAPITALS_COUNTRIES',
-  countriesCapitals = 'COUNTRIES_CAPITALS'
+  flagsCountries = 1,
+  capitalsCountries,
+  countriesCapitals,
 }

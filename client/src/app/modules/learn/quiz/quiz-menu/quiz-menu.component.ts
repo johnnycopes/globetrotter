@@ -7,14 +7,14 @@ import { AnimationEvent } from '@angular/animations';
 import { Quiz } from '@models/classes/quiz';
 import { EQuizType } from '@models/enums/quiz-type.enum';
 import { ERoute } from '@models/enums/route.enum';
-import { TFixedSlideablePanelPosition } from '@shared/components/fixed-slideable-panel/fixed-slideable-panel.component';
+import { FixedSlideablePanelPosition } from '@shared/components/fixed-slideable-panel/fixed-slideable-panel.component';
 import { QuizService } from '@services/quiz/quiz.service';
 import { ICountry } from '@models/interfaces/country.interface';
 
 interface IViewModel {
   quiz: Quiz,
   prompt: string;
-  position: TFixedSlideablePanelPosition;
+  position: FixedSlideablePanelPosition;
 }
 
 @Component({
@@ -25,61 +25,62 @@ interface IViewModel {
 })
 export class QuizMenuComponent implements OnInit {
   @Output() menuReady = new EventEmitter<true>();
-  vm$: Observable<IViewModel>;
-  private positionChanged = new BehaviorSubject<TFixedSlideablePanelPosition>('header');
-  private quiz$: Observable<Quiz>;
-  private position$: Observable<TFixedSlideablePanelPosition>;
-  private prompt$: Observable<string>;
-  private promptDict: _.Dictionary<(country: ICountry) => string> = {
+  public vm$: Observable<IViewModel>;
+  private _positionSubject$ = new BehaviorSubject<FixedSlideablePanelPosition>('header');
+  private _quiz$: Observable<Quiz>;
+  private _position$: Observable<FixedSlideablePanelPosition>;
+  private _prompt$: Observable<string>;
+  private _promptDict: Record<EQuizType, (country: ICountry) => string> = {
     [EQuizType.flagsCountries]: country => country.name,
     [EQuizType.capitalsCountries]: country => country.name,
     [EQuizType.countriesCapitals]: country => country.capital
   };
 
   constructor(
-    private quizService: QuizService,
-    private router: Router
+    private _quizService: QuizService,
+    private _router: Router
   ) { }
 
-  ngOnInit(): void {
-    this.initializeStreams();
+  public ngOnInit(): void {
+    this._initializeStreams();
     this.vm$ = combineLatest([
-      this.quiz$,
-      this.position$,
-      this.prompt$
+      this._quiz$,
+      this._position$,
+      this._prompt$
     ]).pipe(
       map(([quiz, position, prompt]) => ({quiz, position, prompt}))
     );
   }
 
-  async onBack(): Promise<void> {
-    await this.router.navigate([ERoute.learn]);
+  public async onBack(): Promise<void> {
+    await this._router.navigate([ERoute.learn]);
   }
 
-  onMenuAnimationFinish(event: AnimationEvent): void {
+  public onMenuAnimationFinish(event: AnimationEvent): void {
     if (event.toState === 'header') {
       this.menuReady.emit(true);
     } else if (event.toState === 'offscreen') {
-      this.positionChanged.next('fullscreen');
+      this._positionSubject$.next('fullscreen');
     }
   }
 
-  private initializeStreams(): void {
-    const quiz$ = this.quizService.quiz.observe(lens => lens.exists());
-    this.quiz$ = quiz$.pipe(
+  private _initializeStreams(): void {
+    const quiz$ = this._quizService.quiz.observe(lens => lens.exists());
+    this._quiz$ = quiz$.pipe(
       tap(quiz => {
         if (quiz.isComplete) {
-          this.positionChanged.next('offscreen');
+          this._positionSubject$.next('offscreen');
         }
       })
     );
-    this.prompt$ = quiz$.pipe(
+    this._prompt$ = quiz$.pipe(
       map(quiz => {
+        console.log(quiz);
         const currentCountry = quiz.countries[0];
-        return currentCountry ? this.promptDict[quiz.type](currentCountry) : '';
+        return currentCountry ? this._promptDict[quiz.type](currentCountry) : '';
       })
     );
-    this.position$ = this.positionChanged.asObservable().pipe(
+    this._position$ = this._positionSubject$.asObservable().pipe(
       distinctUntilChanged()
     );
   }

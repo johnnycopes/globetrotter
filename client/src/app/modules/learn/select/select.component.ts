@@ -9,6 +9,7 @@ import { SelectService } from '@services/select/select.service';
 import { fadeInAnimation } from '@utility/animations';
 import { CountryService } from '@services/country/country.service';
 import { pickBy } from "lodash-es";
+import { Dictionary } from "lodash";
 
 interface IViewModel {
   numberOfSelectedCountries: number;
@@ -24,26 +25,26 @@ interface IViewModel {
   animations: [fadeInAnimation]
 })
 export class SelectComponent implements OnInit {
-  vm$: Observable<IViewModel>;
-  private queryParams: _.Dictionary<string>;
-  private selection: ISelection;
-  private selection$: Observable<ISelection>;
-  private quantity$: Observable<number>;
-  private invalidQuantity$: Observable<boolean>;
-  private numberOfSelectedCountries$: Observable<number>;
+  public vm$: Observable<IViewModel>;
+  private _queryParams: Dictionary<string>;
+  private _selection: ISelection;
+  private _selection$: Observable<ISelection>;
+  private _quantity$: Observable<number>;
+  private _invalidQuantity$: Observable<boolean>;
+  private _numberOfSelectedCountries$: Observable<number>;
 
   constructor(
-    private countryService: CountryService,
-    private selectService: SelectService,
-    private router: Router
+    private _countryService: CountryService,
+    private _selectService: SelectService,
+    private _router: Router
   ) { }
 
-  ngOnInit(): void {
-    this.initializeSubscriptions();
+  public ngOnInit(): void {
+    this._initializeSubscriptions();
     this.vm$ = combineLatest([
-      this.numberOfSelectedCountries$,
-      this.quantity$,
-      this.invalidQuantity$
+      this._numberOfSelectedCountries$,
+      this._quantity$,
+      this._invalidQuantity$
     ]).pipe(
       map(([numberOfSelectedCountries, quantity, invalidQuantity]) =>
         ({ numberOfSelectedCountries, quantity, invalidQuantity })
@@ -51,22 +52,22 @@ export class SelectComponent implements OnInit {
     );
   }
 
-  async onLaunch(): Promise<void> {
-    this.queryParams = this.selectService.mapSelectionToQueryParams(this.selection);
-    await this.router.navigate(
+  public async onLaunch(): Promise<void> {
+    this._queryParams = this._selectService.mapSelectionToQueryParams(this._selection);
+    await this._router.navigate(
       [`${ERoute.learn}/${ERoute.quiz}`],
-      { queryParams: this.queryParams }
+      { queryParams: this._queryParams }
     );
   }
 
-  private initializeSubscriptions(): void {
-    this.selection$ = this.selectService.selection.observe().pipe(
-      tap(selection => this.selection = selection)
+  private _initializeSubscriptions(): void {
+    this._selection$ = this._selectService.selection.observe().pipe(
+      tap(selection => this._selection = selection)
     );
-    this.quantity$ = this.selectService.selection.observe(lens => lens.to('quantity'));
-    this.numberOfSelectedCountries$ = combineLatest([
-      this.countryService.countries.observe(lens => lens.to('countriesBySubregion')),
-      this.selection$
+    this._quantity$ = this._selectService.selection.observe(lens => lens.to('quantity'));
+    this._numberOfSelectedCountries$ = combineLatest([
+      this._countryService.countries.observe(lens => lens.to('countriesBySubregion')),
+      this._selection$
     ]).pipe(
       map(([subregions, selection]) => {
         const selectedCountries = pickBy(selection.countries, value => value === 'checked');
@@ -78,9 +79,9 @@ export class SelectComponent implements OnInit {
       }),
       distinctUntilChanged()
     );
-    this.invalidQuantity$ = combineLatest([
-      this.numberOfSelectedCountries$,
-      this.quantity$
+    this._invalidQuantity$ = combineLatest([
+      this._numberOfSelectedCountries$,
+      this._quantity$
     ]).pipe(
       map(([numberOfSelectedCountries, quantity]) => {
         return numberOfSelectedCountries <= 1 || quantity < 2 || quantity > numberOfSelectedCountries;
