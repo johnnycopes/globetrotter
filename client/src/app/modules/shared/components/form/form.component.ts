@@ -2,7 +2,6 @@ import { Component, Input, Output, EventEmitter, OnInit, ChangeDetectionStrategy
 import { FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith, distinctUntilChanged } from 'rxjs/operators';
-import * as _ from 'lodash';
 
 import { EAngularFormStatus } from '@models/angular-form-status.enum';
 

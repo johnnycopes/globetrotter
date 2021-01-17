@@ -14,4 +14,4 @@ export class Quiz {
   ) {
     this.totalCountries = this.countries.length;
   }
-};
+}

@@ -28,8 +28,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
       map(authData => {
         if (authData.tokenValid && state.url === `/${this.authRoute}`) {
           return this.router.createUrlTree([this.profileRoute]);
-        }
-        else if (!authData.tokenValid && state.url === `/${this.profileRoute}`) {
+        } else if (!authData.tokenValid && state.url === `/${this.profileRoute}`) {
           return this.router.createUrlTree([this.authRoute]);
         }
         return true;

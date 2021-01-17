@@ -5,4 +5,4 @@ export enum EDuration {
   position = 500,
   stagger = 100,
   shortDelay = 100,
-};
+}

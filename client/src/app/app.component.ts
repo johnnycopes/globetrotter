@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import * as _ from 'lodash';
+import { map } from "rxjs/operators";
 
 import { RouterService } from '@services/router/router.service';
 import { ErrorService } from '@services/error/error.service';
@@ -12,7 +12,7 @@ import { ErrorService } from '@services/error/error.service';
 })
 export class AppComponent implements OnInit {
   loading$: Observable<boolean>;
-  error$: Observable<string>;
+  error$: Observable<boolean>;
 
   constructor(
     private routerService: RouterService,
@@ -21,6 +21,8 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading$ = this.routerService.state.observe(lens => lens.to('loading'));
-    this.error$ = this.errorService.errors.observe(lens => lens.to('global'));
+    this.error$ = this.errorService.errors.observe(lens => lens.to('global')).pipe(
+      map(error => !!error)
+    );
   }
 }

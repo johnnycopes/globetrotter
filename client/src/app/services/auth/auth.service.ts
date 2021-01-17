@@ -6,7 +6,7 @@ import { State, IStateReadOnly } from '@boninger-works/state/library/core';
 import { Observable } from 'rxjs';
 import { map, startWith, tap } from 'rxjs/operators';
 import { JwtHelperService } from "@auth0/angular-jwt";
-import * as _ from 'lodash';
+import { get } from "lodash-es";
 
 import { environment } from 'src/environments/environment';
 import { ERoute } from '@models/route.enum';
@@ -39,7 +39,7 @@ export class AuthService {
 
   login(form: FormGroup, alertMessage = 'Signed in successfully!'): void {
     form.disable();
-    const model: IAuthCreds = form.value;
+    const model = form.value as IAuthCreds;
     this.http.post(this.apiUrl + 'login', model).pipe(
       map((response: { token: string }) => {
         if (response) {
@@ -48,7 +48,7 @@ export class AuthService {
       })
     ).subscribe(
       () => {
-        this.router.navigate(
+        void this.router.navigate(
           [`${ERoute.account}/${ERoute.profile}`],
           { state: { alertMessage } }
         );
@@ -57,7 +57,7 @@ export class AuthService {
       },
       (error: HttpErrorResponse) => {
         form.enable();
-        let message = error.error;
+        let message = error.error as string;
         if (error.status === 401) {
           message = 'Incorrect password';
         }
@@ -74,12 +74,12 @@ export class AuthService {
       );
     this._authData.setRoot(new Auth());
     localStorage.removeItem('token');
-    this.router.navigate([`${ERoute.account}/${ERoute.auth}`]);
+    void this.router.navigate([`${ERoute.account}/${ERoute.auth}`]);
   }
 
   register(form: FormGroup): void {
     form.disable();
-    const model: IAuthCreds = form.value;
+    const model = form.value as IAuthCreds;
     this.http.post(this.apiUrl + 'register', model).subscribe(
       () => {
         this.login(form, 'Registered successfully!');
@@ -87,8 +87,8 @@ export class AuthService {
       },
       (error: HttpErrorResponse) => {
         if (error.status === 400) {
-          let message = error.error;
-          const multipleErrors = !!(_.get(error, 'error.errors'));
+          let message = error.error as string;
+          const multipleErrors = !!(get(error, 'error.errors', undefined));
           if (multipleErrors) {
             message = 'Failed to register new account';
           }
@@ -114,7 +114,7 @@ export class AuthService {
   }
 
   private setData(token: string): void {
-    const decodedToken = this.jwtHelper.decodeToken(token);
+    const decodedToken: { unique_name: string } = this.jwtHelper.decodeToken(token);
     const tokenValid = !this.jwtHelper.isTokenExpired(token);
     const tokenExpirationDate = this.jwtHelper.getTokenExpirationDate(token);
     const timeUntilAutoLogout = tokenExpirationDate ? tokenExpirationDate.getTime() - Date.now() : 0;

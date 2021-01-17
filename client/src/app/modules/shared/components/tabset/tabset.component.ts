@@ -4,7 +4,7 @@ import { visibilityAnimation, fadeInWithFixedSlideablePanelDelayAnimation } from
 import { AnimatedComponent } from '@models/animated-component.class';
 import { TabComponent } from './tab/tab.component';
 
-export type TTabsetContentVisibility = 'visible' | 'invisible';
+export type TabsetContentVisibility = 'visible' | 'invisible';
 
 @Component({
   selector: 'app-tabset',
@@ -17,8 +17,8 @@ export type TTabsetContentVisibility = 'visible' | 'invisible';
   ]
 })
 export class TabsetComponent extends AnimatedComponent implements AfterContentInit {
-  @Input() controlsTemplate: TemplateRef<any>;
-  @Input() contentVisibility: TTabsetContentVisibility = 'visible';
+  @Input() controlsTemplate: TemplateRef<unknown>;
+  @Input() contentVisibility: TabsetContentVisibility = 'visible';
   @ContentChildren(TabComponent) tabs: QueryList<TabComponent>;
 
   ngAfterContentInit(): void {
@@ -29,7 +29,7 @@ export class TabsetComponent extends AnimatedComponent implements AfterContentIn
     }
   }
 
-  onSelectTab(tab: TabComponent) {
+  onSelectTab(tab: TabComponent): void {
     this.tabs.forEach(tab => tab.selected = false);
     tab.selected = true;
   }

@@ -7,4 +7,4 @@ export enum EQuizType {
   flagsCountries = 'FLAGS_COUNTRIES',
   capitalsCountries = 'CAPITALS_COUNTRIES',
   countriesCapitals = 'COUNTRIES_CAPITALS'
-};
+}

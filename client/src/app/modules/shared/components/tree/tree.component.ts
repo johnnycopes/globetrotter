@@ -15,13 +15,11 @@ export interface ITreeProvider<T> {
 export class TreeComponent<T> implements OnInit {
   @Input() item: T;
   @Input() treeProvider: ITreeProvider<T>;
-  @Input() itemTemplate: TemplateRef<any>;
+  @Input() itemTemplate: TemplateRef<unknown>;
   @Input() indentChildItems: boolean = true;
   public id: string;
   public parent: T | undefined;
   public children: T[];
-
-  constructor() { }
 
   public ngOnInit(): void {
     if (!this.item || !this.treeProvider) {
@@ -30,7 +28,7 @@ export class TreeComponent<T> implements OnInit {
     this.id = this.treeProvider.getId(this.item);
     this.children = this.treeProvider.getChildren(this.item);
     const parent = this.treeProvider.getParent && this.treeProvider.getParent(this.item);
-    if (!!parent) {
+    if (parent) {
       this.parent = parent;
     }
   }

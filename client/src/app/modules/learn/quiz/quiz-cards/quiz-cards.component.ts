@@ -1,12 +1,12 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Observable, combineLatest } from 'rxjs';
 import { map, first } from 'rxjs/operators';
-import * as _ from 'lodash';
 
 import { ICountry } from '@models/country.interface';
 import { EQuizType } from '@models/quiz-type.enum';
 import { QuizService } from '@services/quiz/quiz.service';
 import { staggerAnimation, fadeInAnimation } from '@utility/animations';
+import { shuffle } from "lodash-es";
 
 interface IViewModel {
   quizType: EQuizType;
@@ -51,7 +51,7 @@ export class QuizCardsComponent implements OnInit {
   private initializeStreams(): void {
     this.quizType$ = this.quizService.quiz.observe(lens => lens.to('type'));
     this.countries$ = this.quizService.quiz.observe(lens => lens.to('countries')).pipe(
-      map(countries => _.shuffle(countries)),
+      map(countries => shuffle(countries)),
       first()
     );
     this.currentCountry$ = this.quizService.quiz

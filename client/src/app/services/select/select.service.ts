@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { State, IStateReadOnly } from '@boninger-works/state/library/core';
 import { first } from 'rxjs/operators';
-import * as _ from 'lodash';
 
 import { ISelection } from '@models/selection.interface';
 import { IRegion } from '@models/region.interface';
 import { EQuizType } from '@models/quiz-type.enum';
 import { TCheckboxStates } from '@shared/components/nested-checkboxes/nested-checkboxes.component';
 import { CountryService } from '../country/country.service';
+import { replace, camelCase, pickBy, map as _map } from "lodash-es";
+import { Dictionary } from "lodash";
 
 @Injectable({
   providedIn: 'root'
@@ -56,20 +57,19 @@ export class SelectService {
   }
 
   mapSelectionToQueryParams(selection: ISelection): _.Dictionary<string> {
-    const type = _.toString(selection.type);
-    const quantity = _.toString(selection.quantity);
-    const countries = _(selection.countries)
-      .pickBy((state) => state !== 'unchecked')
-      .map((value, key) => {
-        if (value === 'checked') {
-          return key + this.paramDict.checked;
-        } else if (value === 'indeterminate') {
-          return key + this.paramDict.indeterminate;
-        } else {
-          return;
-        }
-      })
-      .join(',');
+    const type = selection.type.toString();
+    const quantity = selection.quantity.toString();
+    const selectedCountries = pickBy(selection.countries, value => value !== 'unchecked');
+    const countries = _map(selectedCountries, (value, key) => {
+      if (value === 'checked') {
+        return key + this.paramDict.checked;
+      } else if (value === 'indeterminate') {
+        return key + this.paramDict.indeterminate;
+      } else {
+        return;
+      }
+    })
+    .join(',');
     return {
       type,
       quantity,
@@ -77,21 +77,22 @@ export class SelectService {
     };
   }
 
-  mapQueryParamsToSelection(queryParams: _.Dictionary<string>): ISelection {
-    const typeKey = _.camelCase(queryParams.type) as keyof typeof EQuizType;
+  mapQueryParamsToSelection(queryParams: Dictionary<string>): ISelection {
+    const typeKey = camelCase(queryParams.type) as keyof typeof EQuizType;
     const type = EQuizType[typeKey];
-    const quantity = _.toNumber(queryParams.quantity);
-    const countries = _.reduce(queryParams.countries.split(','), (accum, current) => {
-      if (current.includes(this.paramDict.checked)) {
-        const updatedKey = _.replace(current, this.paramDict.checked, '');
-        accum[updatedKey] = 'checked';
-      }
-      else if (current.includes(this.paramDict.indeterminate)) {
-        const updatedKey = _.replace(current, this.paramDict.indeterminate, '');
-        accum[updatedKey] = 'indeterminate';
-      }
-      return accum;
-    }, {} as TCheckboxStates);
+    const quantity = parseInt(queryParams.quantity, 10);
+    const countries = queryParams.countries
+      .split(',')
+      .reduce((accum, current) => {
+        if (current.includes(this.paramDict.checked)) {
+          const updatedKey = replace(current, this.paramDict.checked, '');
+          accum[updatedKey] = 'checked';
+        } else if (current.includes(this.paramDict.indeterminate)) {
+          const updatedKey = replace(current, this.paramDict.indeterminate, '');
+          accum[updatedKey] = 'indeterminate';
+        }
+        return accum;
+      }, {} as TCheckboxStates);
     return {
       type,
       quantity,
@@ -100,11 +101,11 @@ export class SelectService {
   }
 
   private mapCountriesToCheckboxStates(countries: IRegion[]): TCheckboxStates {
-    return _.reduce(countries, (accum, region) => {
+    return countries.reduce((accum, region) => {
       accum[region.name] = 'checked';
-      _.forEach(region.subregions, subregion => {
+      region.subregions.forEach(subregion => {
         accum[subregion.name] = 'checked';
-      })
+      });
       return accum;
     }, {} as TCheckboxStates);
   }

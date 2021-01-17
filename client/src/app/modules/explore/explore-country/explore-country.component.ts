@@ -4,7 +4,7 @@ import { ICountry } from '@models/country.interface';
 interface ITableContent {
   header: string;
   content?: string;
-  template?: TemplateRef<any>;
+  template?: TemplateRef<unknown>;
 }
 
 @Component({
@@ -17,11 +17,11 @@ export class ExploreCountryComponent implements OnChanges, AfterViewInit {
   @Input() country: ICountry;
   @Input() summary: string;
   tableData: ITableContent[];
-  @ViewChild("population") populationTemplate: TemplateRef<any>;
-  @ViewChild("size") sizeTemplate: TemplateRef<any>;
-  @ViewChild("language") languageTemplate: TemplateRef<any>;
-  @ViewChild("currency") currencyTemplate: TemplateRef<any>;
-  @ViewChild("list") listTemplate: TemplateRef<any>;
+  @ViewChild("population") populationTemplate: TemplateRef<unknown>;
+  @ViewChild("size") sizeTemplate: TemplateRef<unknown>;
+  @ViewChild("language") languageTemplate: TemplateRef<unknown>;
+  @ViewChild("currency") currencyTemplate: TemplateRef<unknown>;
+  @ViewChild("list") listTemplate: TemplateRef<unknown>;
 
   constructor(private changeDetectorRef: ChangeDetectorRef) { }
 

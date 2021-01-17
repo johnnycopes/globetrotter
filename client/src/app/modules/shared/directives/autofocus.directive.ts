@@ -12,9 +12,9 @@ export class AutofocusDirective {
     }
   }
 
-  constructor(private elementRef: ElementRef) { }
+  constructor(private elementRef: ElementRef<HTMLInputElement>) { }
 
   private setFocus(): void {
-    setTimeout(() => this.elementRef.nativeElement.focus());
+    setTimeout(() => this.elementRef?.nativeElement?.focus());
   }
 }

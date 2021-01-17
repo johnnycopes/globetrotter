@@ -1,8 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import * as _ from 'lodash';
 
 import { Auth } from '@models/auth.class';
 import { AuthService } from '@services/auth/auth.service';
@@ -14,7 +12,7 @@ import { AuthService } from '@services/auth/auth.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProfileComponent implements OnInit {
-  alertMessage: string;
+  alertMessage: string | undefined;
   authData$: Observable<Auth>;
 
   constructor(
@@ -22,10 +20,10 @@ export class ProfileComponent implements OnInit {
     private router: Router
   ) {
     const navigation = this.router.getCurrentNavigation();
-    this.alertMessage = _.get(navigation, "extras.state.alertMessage");
+    this.alertMessage = navigation?.extras?.state?.alertMessage as string;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.authData$ = this.authService.authData.observe();
   }
 

@@ -10,19 +10,19 @@ export class IconComponent implements OnInit {
   @Input() icon: string;
   @Input() highlighted: boolean;
   @Output() clicked = new EventEmitter<void>();
-  @ViewChild('africaTemplate', { static: true }) africaTemplate: TemplateRef<any>;
-  @ViewChild('americasTemplate', { static: true }) americasTemplate: TemplateRef<any>;
-  @ViewChild('airplaneTemplate', { static: true }) airplaneTemplate: TemplateRef<any>;
-  @ViewChild('asiaTemplate', { static: true }) asiaTemplate: TemplateRef<any>;
-  @ViewChild('cancelTemplate', { static: true }) cancelTemplate: TemplateRef<any>;
-  @ViewChild('earthTemplate', { static: true }) earthTemplate: TemplateRef<any>;
-  @ViewChild('europeTemplate', { static: true }) europeTemplate: TemplateRef<any>;
-  @ViewChild('globetrotterTemplate', { static: true }) globetrotterTemplate: TemplateRef<any>;
-  @ViewChild('lightbulbTemplate', { static: true }) lightbulbTemplate: TemplateRef<any>;
-  @ViewChild('luggageTemplate', { static: true }) luggageTemplate: TemplateRef<any>;
-  @ViewChild('oceaniaTemplate', { static: true }) oceaniaTemplate: TemplateRef<any>;
-  @ViewChild('userTemplate', { static: true }) userTemplate: TemplateRef<any>;
-  templatesDict: _.Dictionary<TemplateRef<any>>;
+  @ViewChild('africaTemplate', { static: true }) africaTemplate: TemplateRef<unknown>;
+  @ViewChild('americasTemplate', { static: true }) americasTemplate: TemplateRef<unknown>;
+  @ViewChild('airplaneTemplate', { static: true }) airplaneTemplate: TemplateRef<unknown>;
+  @ViewChild('asiaTemplate', { static: true }) asiaTemplate: TemplateRef<unknown>;
+  @ViewChild('cancelTemplate', { static: true }) cancelTemplate: TemplateRef<unknown>;
+  @ViewChild('earthTemplate', { static: true }) earthTemplate: TemplateRef<unknown>;
+  @ViewChild('europeTemplate', { static: true }) europeTemplate: TemplateRef<unknown>;
+  @ViewChild('globetrotterTemplate', { static: true }) globetrotterTemplate: TemplateRef<unknown>;
+  @ViewChild('lightbulbTemplate', { static: true }) lightbulbTemplate: TemplateRef<unknown>;
+  @ViewChild('luggageTemplate', { static: true }) luggageTemplate: TemplateRef<unknown>;
+  @ViewChild('oceaniaTemplate', { static: true }) oceaniaTemplate: TemplateRef<unknown>;
+  @ViewChild('userTemplate', { static: true }) userTemplate: TemplateRef<unknown>;
+  templatesDict: Record<string, TemplateRef<unknown>>;
   clickable: boolean;
 
   ngOnInit(): void {

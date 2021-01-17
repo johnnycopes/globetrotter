@@ -2,14 +2,11 @@ import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { action } from '@storybook/addon-actions';
 import {
   withKnobs,
-  text,
-  boolean,
   object
 } from '@storybook/addon-knobs';
 
 import { RadioButtonsComponent, IRadioButtonsOption } from '@shared/components/radio-buttons/radio-buttons.component';
 
-const sampleText = 'Number of countries to include in the quiz:';
 const actions = {
   onChange: action('ngModelChanged')
 };

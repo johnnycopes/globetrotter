@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { filter } from 'rxjs/operators';
 import { State, IStateReadOnly } from '@boninger-works/state/library/core';
-import { assign } from '@boninger-works/state/library/transforms/object';
 import { shift } from '@boninger-works/state/library/transforms/array';
 import { increment } from '@boninger-works/state/library/transforms/numeric';
-import * as _ from 'lodash';
 
 import { ERoute } from '@models/route.enum';
 import { ICountry } from '@models/country.interface';
@@ -31,7 +29,7 @@ export class QuizService {
       .pipe(
         filter(route => route.includes(ERoute.select))
       ).subscribe(
-        _ => this._quiz.setRoot(undefined)
+        () => this._quiz.setRoot(undefined)
       );
   }
 
@@ -56,8 +54,7 @@ export class QuizService {
           batch.set(lens => lens.to('accuracy').value(this.calculateAccuracy(quiz)));
           batch.set(lens => lens.to('isComplete').value(true));
         }
-      }
-      else {
+      } else {
         batch.set(lens => lens.to('countries').transform(countries => this.moveGuessedCountryToEnd(countries)));
       }
       if (!(this._quiz.get() as Quiz).isComplete) {
@@ -68,7 +65,7 @@ export class QuizService {
 
   private moveGuessedCountryToEnd(countries: ICountry[]): ICountry[] {
     const guessedCountry = countries[0];
-    const updatedCountries = _.slice(countries, 1);
+    const updatedCountries = countries.slice(1);
     updatedCountries.push(guessedCountry);
     return updatedCountries;
   }

@@ -1,5 +1,4 @@
 import { Component, ChangeDetectionStrategy, Input } from '@angular/core'
-import * as _ from 'lodash';
 ;
 import { SelectService } from '@services/select/select.service';
 
