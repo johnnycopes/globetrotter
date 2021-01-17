@@ -5,16 +5,22 @@
   ],
   "overrides": [
     {
+      /**
+     * -----------------------------------------------------
+     * TYPESCRIPT FILES (COMPONENTS, SERVICES ETC) (.ts)
+     * -----------------------------------------------------
+     */
       "files": [
         "*.ts"
       ],
       "parserOptions": {
         "project": [
-          "tsconfig.json",
-          "e2e/tsconfig.json"
+          "tsconfig.json"
         ],
         "createDefaultProgram": true
       },
+      // ... applies a special processor to extract inline Component templates
+      // and treat them like HTML files
       "extends": [
         "plugin:@angular-eslint/recommended",
         "eslint:recommended",
@@ -44,6 +50,11 @@
         "quotes": "off"
       }
     },
+    /**
+     * -----------------------------------------------------
+     * COMPONENT TEMPLATES
+     * -----------------------------------------------------
+     */
     {
       "files": [
         "*.html"
