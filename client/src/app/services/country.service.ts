@@ -13,13 +13,9 @@ import { IRegion } from "@models/interfaces/region.interface";
 import { ISelection } from "@models/interfaces/selection.interface";
 import { ApiService } from "./api.service";
 
-type CountriesBySubregion = Dictionary<ICountry[]>;
-type SubregionsByRegion = Dictionary<string[]>;
-
 interface ICountryState {
   flatCountries: ICountry[];
   countriesBySubregion: Dictionary<ICountry[]>;
-  subregionsByRegion: Dictionary<string[]>;
   nestedCountries: IRegion[];
 }
 
@@ -31,7 +27,6 @@ export class CountryService implements Resolve<Observable<ICountry[]>> {
   private readonly _countries = new State<ICountryState>({
     flatCountries: [],
     countriesBySubregion: {},
-    subregionsByRegion: {},
     nestedCountries: []
   });
   get countries(): IStateReadOnly<ICountryState> {
@@ -39,7 +34,17 @@ export class CountryService implements Resolve<Observable<ICountry[]>> {
   }
 
   constructor(private _apiService: ApiService) {
-    this._initialize();
+    this._apiService.fetchCountries().subscribe(countriesData => {
+      const flatCountries = this._sanitizeRawData(countriesData);
+      const countriesBySubregion = groupBy(flatCountries, "subregion");
+      const subregionsByRegion = this._groupSubregionsByRegion(countriesBySubregion);
+      const nestedCountries = this._formatNestedCountries(countriesBySubregion, subregionsByRegion);
+      this._countries.setRoot({
+        flatCountries,
+        countriesBySubregion,
+        nestedCountries
+      });
+    });
   }
 
   resolve(): Observable<ICountry[]> {
@@ -69,23 +74,18 @@ export class CountryService implements Resolve<Observable<ICountry[]>> {
     return this._apiService.fetchSummary(searchTerm);
   }
 
-  private _initialize(): void {
-    this._apiService.fetchCountries().subscribe(allCountries => {
-      const flatCountries = allCountries.filter(country => COUNTRY_STATUSES[country.name])
-      flatCountries.forEach(country => country.name = COUNTRY_APP_NAMES[country.name] || country.name);
-      const countriesBySubregion = groupBy(flatCountries, "subregion");
-      const subregionsByRegion = this.groupSubregionsByRegion(countriesBySubregion);
-      const nestedCountries = this.createFormattedData(countriesBySubregion, subregionsByRegion);
-      this._countries.setRoot({
-        flatCountries,
-        countriesBySubregion,
-        subregionsByRegion,
-        nestedCountries
-      });
-    });
+  private _sanitizeRawData(countries: ICountry[]): ICountry[] {
+    const sanitizedCountries: ICountry[] = [];
+    for (const country of countries) {
+      if (COUNTRY_STATUSES[country.name]) {
+        country.name = COUNTRY_APP_NAMES[country.name] || country.name;
+        sanitizedCountries.push(country);
+      }
+    }
+    return sanitizedCountries;
   }
 
-  private groupSubregionsByRegion(countriesBySubregion: _.Dictionary<ICountry[]>): _.Dictionary<string[]> {
+  private _groupSubregionsByRegion(countriesBySubregion: Dictionary<ICountry[]>): Dictionary<string[]> {
     return reduce(countriesBySubregion, (accum, countries, subregion) => {
       const region = countries?.[0]?.region ?? "ERROR";
       if (!accum[region]) {
@@ -103,7 +103,10 @@ export class CountryService implements Resolve<Observable<ICountry[]>> {
     }, {} as Dictionary<string[]>);
   }
 
-  private createFormattedData(countriesBySubregion: CountriesBySubregion, subregionsByRegion: SubregionsByRegion): IRegion[] {
+  private _formatNestedCountries(
+    countriesBySubregion: Dictionary<ICountry[]>,
+    subregionsByRegion: Dictionary<string[]>
+  ): IRegion[] {
     return reduce(subregionsByRegion, (accum, subregions, region) => {
       const subregionsData = _map(subregions, subregion => {
         return {
@@ -118,6 +121,6 @@ export class CountryService implements Resolve<Observable<ICountry[]>> {
       };
       const regions = accum.slice();
       return [...regions, regionData];
-    }, []);
+    }, [] as IRegion[]);
   }
 }
