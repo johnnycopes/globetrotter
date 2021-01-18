@@ -13,7 +13,7 @@ import { ERoute } from '@models/enums/route.enum';
 import { EErrorMessage } from '@models/enums/error-message.enum';
 import { Auth } from '@models/classes/auth';
 import { IAuthCreds } from '@models/interfaces/auth-creds.interface';
-import { ErrorService } from '../error/error.service';
+import { ErrorService } from './error.service';
 
 @Injectable({
   providedIn: 'root'

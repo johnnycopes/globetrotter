@@ -8,7 +8,7 @@ import { ICountry } from '@models/interfaces/country.interface';
 import { EDuration } from '@models/enums/duration.enum';
 import { EQuizType } from '@models/enums/quiz-type.enum';
 import { FlipCardComponent, TFlipCardGuess } from '@shared/components/flip-card/flip-card.component';
-import { QuizService } from '@services/quiz/quiz.service';
+import { QuizService } from '@services/quiz.service';
 import { wait } from '@utility/functions/wait';
 
 interface IViewModel {

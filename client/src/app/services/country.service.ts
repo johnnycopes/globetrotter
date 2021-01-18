@@ -13,7 +13,7 @@ import { ICountry } from '@models/interfaces/country.interface';
 import { IRegion } from '@models/interfaces/region.interface';
 import { ISelection } from '@models/interfaces/selection.interface';
 import { ISummary } from '@models/interfaces/summary.interface';
-import { ErrorService } from '../error/error.service';
+import { ErrorService } from './error.service';
 
 type CountriesBySubregion = Dictionary<ICountry[]>;
 type SubregionsByRegion = Dictionary<string[]>;

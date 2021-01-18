@@ -6,8 +6,8 @@ import { IRegion } from '@models/interfaces/region.interface';
 import { ISubregion } from '@models/interfaces/subregion.interface';
 import { PlacesTreeProvider } from '@models/classes/places-tree-provider.class';
 import { CheckboxStates } from '@shared/components/nested-checkboxes/nested-checkboxes.component';
-import { CountryService } from '@services/country/country.service';
-import { SelectService } from '@services/select/select.service';
+import { CountryService } from '@services/country.service';
+import { SelectService } from '@services/select.service';
 
 interface IRegionData {
   region: IRegion;

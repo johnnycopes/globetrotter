@@ -2,8 +2,8 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 
-import { AuthService } from '@services/auth/auth.service';
-import { ErrorService } from '@services/error/error.service';
+import { AuthService } from '@services/auth.service';
+import { ErrorService } from '@services/error.service';
 
 @Component({
   selector: 'app-login',

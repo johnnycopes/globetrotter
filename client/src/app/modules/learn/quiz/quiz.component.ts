@@ -1,8 +1,8 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
-import { QuizService } from '@services/quiz/quiz.service';
-import { SelectService } from '@services/select/select.service';
+import { QuizService } from '@services/quiz.service';
+import { SelectService } from '@services/select.service';
 
 @Component({
   selector: 'app-quiz',

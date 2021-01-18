@@ -2,7 +2,7 @@ import { HttpInterceptor, HttpEvent, HttpHandler, HttpRequest, HTTP_INTERCEPTORS
 import { Observable } from 'rxjs';
 import { take, exhaustMap } from 'rxjs/operators';
 
-import { AuthService } from '@services/auth/auth.service';
+import { AuthService } from '@services/auth.service';
 
 export class AuthInterceptor implements HttpInterceptor {
 

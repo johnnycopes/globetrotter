@@ -5,9 +5,9 @@ import { map, tap, distinctUntilChanged } from 'rxjs/operators';
 
 import { ERoute } from '@models/enums/route.enum';
 import { ISelection } from '@models/interfaces/selection.interface';
-import { SelectService } from '@services/select/select.service';
+import { SelectService } from '@services/select.service';
 import { fadeInAnimation } from '@utility/animations';
-import { CountryService } from '@services/country/country.service';
+import { CountryService } from '@services/country.service';
 import { pickBy } from "lodash-es";
 import { Dictionary } from "lodash";
 

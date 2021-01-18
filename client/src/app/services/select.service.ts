@@ -6,7 +6,7 @@ import { ISelection } from '@models/interfaces/selection.interface';
 import { IRegion } from '@models/interfaces/region.interface';
 import { EQuizType } from '@models/enums/quiz-type.enum';
 import { CheckboxStates } from '@shared/components/nested-checkboxes/nested-checkboxes.component';
-import { CountryService } from '../country/country.service';
+import { CountryService } from './country.service';
 import { replace, pickBy, map as _map } from "lodash-es";
 import { Dictionary } from "lodash";
 

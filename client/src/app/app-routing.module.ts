@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes, PreloadAllModules } from '@angular/router';
 
 import { ERoute } from './models/enums/route.enum';
-import { CountryService } from './services/country/country.service';
+import { CountryService } from './services/country.service';
 import { AuthGuard } from './guards/auth/auth.guard';
 import { ShellComponent } from './components/shell/shell.component';
 import { HomeComponent } from './components/home/home.component';

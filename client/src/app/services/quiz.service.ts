@@ -8,8 +8,8 @@ import { ERoute } from '@models/enums/route.enum';
 import { ICountry } from '@models/interfaces/country.interface';
 import { ISelection } from '@models/interfaces/selection.interface';
 import { Quiz } from '@models/classes/quiz';
-import { CountryService } from '@services/country/country.service';
-import { RouterService } from '@services/router/router.service';
+import { CountryService } from '@services/country.service';
+import { RouterService } from '@services/router.service';
 
 @Injectable({
   providedIn: 'root'
