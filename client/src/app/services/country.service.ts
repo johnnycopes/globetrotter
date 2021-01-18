@@ -1,19 +1,17 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Resolve } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { State, IStateReadOnly } from '@boninger-works/state/library/core';
-import { map, shareReplay, catchError } from 'rxjs/operators';
+import { Injectable } from "@angular/core";
+import { Resolve } from "@angular/router";
+import { Observable } from "rxjs";
+import { State, IStateReadOnly } from "@boninger-works/state/library/core";
+import { map } from "rxjs/operators";
 import { groupBy, reduce, shuffle, map as _map } from "lodash-es";
 import { Dictionary } from "lodash";
 
-import { COUNTRY_STATUSES } from '@models/data/country-statuses';
-import { COUNTRY_APP_NAMES, COUNTRY_SUMMARY_NAMES } from '@models/data/country-modifications';
-import { ICountry } from '@models/interfaces/country.interface';
-import { IRegion } from '@models/interfaces/region.interface';
-import { ISelection } from '@models/interfaces/selection.interface';
-import { ISummary } from '@models/interfaces/summary.interface';
-import { ErrorService } from './error.service';
+import { COUNTRY_STATUSES } from "@models/data/country-statuses";
+import { COUNTRY_APP_NAMES, COUNTRY_SUMMARY_NAMES } from "@models/data/country-modifications";
+import { ICountry } from "@models/interfaces/country.interface";
+import { IRegion } from "@models/interfaces/region.interface";
+import { ISelection } from "@models/interfaces/selection.interface";
+import { ApiService } from "./api.service";
 
 type CountriesBySubregion = Dictionary<ICountry[]>;
 type SubregionsByRegion = Dictionary<string[]>;
@@ -26,12 +24,10 @@ interface ICountryState {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class CountryService implements Resolve<Observable<ICountry[]>> {
   private request: Observable<ICountry[]>;
-  private readonly countriesApiUrl = 'https://restcountries.eu/rest/v2/all';
-  private readonly wikipediaApiUrl = 'https://en.wikipedia.org/api/rest_v1/page/summary/';
   private readonly _countries = new State<ICountryState>({
     flatCountries: [],
     countriesBySubregion: {},
@@ -42,11 +38,8 @@ export class CountryService implements Resolve<Observable<ICountry[]>> {
     return this._countries;
   }
 
-  constructor(
-    private http: HttpClient,
-    private errorService: ErrorService
-  ) {
-    this.initialize();
+  constructor(private _apiService: ApiService) {
+    this._initialize();
   }
 
   resolve(): Observable<ICountry[]> {
@@ -55,12 +48,12 @@ export class CountryService implements Resolve<Observable<ICountry[]>> {
 
   getCountriesFromSelection(selection: ISelection): Observable<ICountry[]> {
     return this.countries
-      .observe(lens => lens.to('countriesBySubregion'))
+      .observe(lens => lens.to("countriesBySubregion"))
       .pipe(
         map(countriesBySubregion => {
           const quantity = selection.quantity || undefined;
           const countries = reduce(selection.countries, (accum, checkboxState, placeName) => {
-            if (checkboxState === 'checked' && countriesBySubregion[placeName]) {
+            if (checkboxState === "checked" && countriesBySubregion[placeName]) {
               const selectedCountries = countriesBySubregion[placeName];
               return accum.concat(selectedCountries);
             }
@@ -73,24 +66,14 @@ export class CountryService implements Resolve<Observable<ICountry[]>> {
 
   getSummary(countryName: string): Observable<string> {
     const searchTerm = COUNTRY_SUMMARY_NAMES[countryName] || countryName;
-    return this.http.get<ISummary>(this.wikipediaApiUrl + searchTerm).pipe(
-      map(result => result.extract),
-      catchError(() => of("A summary of this country could not be found."))
-    );
+    return this._apiService.fetchSummary(searchTerm);
   }
 
-  private initialize(): void {
-    this.request = this.http.get<ICountry[]>(this.countriesApiUrl).pipe(
-      shareReplay({ bufferSize: 1, refCount: true }),
-      catchError((error: { message: string }) => {
-        this.errorService.setGlobalError(error.message);
-        return of([]);
-      })
-    );
-    this.request.subscribe(allCountries => {
+  private _initialize(): void {
+    this._apiService.fetchCountries().subscribe(allCountries => {
       const flatCountries = allCountries.filter(country => COUNTRY_STATUSES[country.name])
       flatCountries.forEach(country => country.name = COUNTRY_APP_NAMES[country.name] || country.name);
-      const countriesBySubregion = groupBy(flatCountries, 'subregion');
+      const countriesBySubregion = groupBy(flatCountries, "subregion");
       const subregionsByRegion = this.groupSubregionsByRegion(countriesBySubregion);
       const nestedCountries = this.createFormattedData(countriesBySubregion, subregionsByRegion);
       this._countries.setRoot({
