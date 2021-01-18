@@ -75,7 +75,6 @@ export class QuizMenuComponent implements OnInit {
     );
     this._prompt$ = quiz$.pipe(
       map(quiz => {
-        console.log(quiz);
         const currentCountry = quiz.countries[0];
         return currentCountry ? this._promptDict[quiz.type](currentCountry) : '';
       })

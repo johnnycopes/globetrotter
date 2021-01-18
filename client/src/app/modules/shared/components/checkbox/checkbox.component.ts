@@ -1,12 +1,12 @@
-import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef } from "@angular/core";
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 
-export type CheckboxState = 'checked' | 'unchecked' | 'indeterminate';
+export type CheckboxState = "checked" | "unchecked" | "indeterminate";
 
 @Component({
-  selector: 'app-checkbox',
-  templateUrl: './checkbox.component.html',
-  styleUrls: ['./checkbox.component.scss'],
+  selector: "app-checkbox",
+  templateUrl: "./checkbox.component.html",
+  styleUrls: ["./checkbox.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [{
     provide: NG_VALUE_ACCESSOR,
@@ -17,25 +17,25 @@ export type CheckboxState = 'checked' | 'unchecked' | 'indeterminate';
 export class CheckboxComponent implements ControlValueAccessor {
   @Input() bold: boolean;
   @Input() invertColors: boolean;
-  state: CheckboxState = 'unchecked';
+  public state: CheckboxState = "unchecked";
   private onChangeFn: (value: CheckboxState) => void;
 
-  constructor(private changeDetectorRef: ChangeDetectorRef) { }
+  constructor(private _changeDetectorRef: ChangeDetectorRef) { }
 
-  writeValue(value: CheckboxState): void {
+  public writeValue(value: CheckboxState): void {
     this.state = value;
-    this.changeDetectorRef.markForCheck();
+    this._changeDetectorRef.markForCheck();
   }
 
-  registerOnChange(fn: (value: CheckboxState) => void): void {
+  public registerOnChange(fn: (value: CheckboxState) => void): void {
     this.onChangeFn = fn;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function
-  registerOnTouched(fn: (value: CheckboxState) => void): void { }
+  public registerOnTouched(fn: (value: CheckboxState) => void): void { }
 
-  onChange(): void {
-    this.state = this.state !== 'checked' ? 'checked' : 'unchecked';
+  public onChange(): void {
+    this.state = this.state !== "checked" ? "checked" : "unchecked";
     this.onChangeFn(this.state);
   }
 }

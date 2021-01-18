@@ -1,11 +1,12 @@
+import { Dictionary } from "lodash";
+
 import { Place } from "../types/place.type";
 import { IRegion } from "../interfaces/region.interface";
 import { ISubregion } from "../interfaces/subregion.interface";
 import { ITreeProvider } from "@shared/components/tree/tree.component";
-import { Dictionary } from "lodash";
 
 export class PlacesTreeProvider implements ITreeProvider<Place> {
-  private placesKeyedById: Dictionary<Place> = {};
+  private _placesById: Dictionary<Place> = {};
 
   constructor(place: Place) {
     // set placesKeyedById recursively
@@ -15,7 +16,7 @@ export class PlacesTreeProvider implements ITreeProvider<Place> {
       if (currentPlace) {
         const currentPlaceId = this.getId(currentPlace);
         const currentPlaceChildren = this.getChildren(currentPlace);
-        this.placesKeyedById[currentPlaceId] = currentPlace;
+        this._placesById[currentPlaceId] = currentPlace;
         if (currentPlaceChildren.length) {
           currentPlaceChildren.forEach(child => {
             places.push(child);
@@ -31,7 +32,7 @@ export class PlacesTreeProvider implements ITreeProvider<Place> {
 
   getParent(place: Place): Place | undefined {
     if (isSubregion(place)) {
-      return this.placesKeyedById[place.region];
+      return this._placesById[place.region];
     }
     return undefined;
   }
@@ -45,9 +46,9 @@ export class PlacesTreeProvider implements ITreeProvider<Place> {
 }
 
 function isRegion(place: Place): place is IRegion {
-  return 'subregions' in place;
+  return "subregions" in place;
 }
 
 function isSubregion(place: Place): place is ISubregion {
-  return 'countries' in place;
+  return "countries" in place;
 }

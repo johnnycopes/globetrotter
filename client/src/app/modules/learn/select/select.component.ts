@@ -1,15 +1,14 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { Router } from '@angular/router';
-import { Observable, combineLatest } from 'rxjs';
-import { map, tap, distinctUntilChanged } from 'rxjs/operators';
-
-import { ERoute } from '@models/enums/route.enum';
-import { ISelection } from '@models/interfaces/selection.interface';
-import { SelectService } from '@services/select.service';
-import { fadeInAnimation } from '@utility/animations';
-import { CountryService } from '@services/country.service';
+import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
+import { Params, Router } from "@angular/router";
+import { Observable, combineLatest } from "rxjs";
+import { map, tap, distinctUntilChanged } from "rxjs/operators";
 import { pickBy } from "lodash-es";
-import { Dictionary } from "lodash";
+
+import { ERoute } from "@models/enums/route.enum";
+import { ISelection, ISelectionParams } from "@models/interfaces/selection.interface";
+import { SelectService } from "@services/select.service";
+import { fadeInAnimation } from "@utility/animations";
+import { CountryService } from "@services/country.service";
 
 interface IViewModel {
   numberOfSelectedCountries: number;
@@ -18,15 +17,15 @@ interface IViewModel {
 }
 
 @Component({
-  selector: 'app-select',
-  templateUrl: './select.component.html',
-  styleUrls: ['./select.component.scss'],
+  selector: "app-select",
+  templateUrl: "./select.component.html",
+  styleUrls: ["./select.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [fadeInAnimation]
 })
 export class SelectComponent implements OnInit {
   public vm$: Observable<IViewModel>;
-  private _queryParams: Dictionary<string>;
+  private _queryParams: ISelectionParams;
   private _selection: ISelection;
   private _selection$: Observable<ISelection>;
   private _quantity$: Observable<number>;
@@ -64,13 +63,13 @@ export class SelectComponent implements OnInit {
     this._selection$ = this._selectService.selection.observe().pipe(
       tap(selection => this._selection = selection)
     );
-    this._quantity$ = this._selectService.selection.observe(lens => lens.to('quantity'));
+    this._quantity$ = this._selectService.selection.observe(lens => lens.to("quantity"));
     this._numberOfSelectedCountries$ = combineLatest([
-      this._countryService.countries.observe(lens => lens.to('countriesBySubregion')),
+      this._countryService.countries.observe(lens => lens.to("countriesBySubregion")),
       this._selection$
     ]).pipe(
       map(([subregions, selection]) => {
-        const selectedCountries = pickBy(selection.countries, value => value === 'checked');
+        const selectedCountries = pickBy(selection.countries, value => value === "checked");
         return Object
           .keys(selectedCountries)
           .reduce((total, currentPlace) =>
