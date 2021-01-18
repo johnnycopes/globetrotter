@@ -11,7 +11,7 @@ import { get } from "lodash-es";
 import { environment } from "src/environments/environment";
 import { ERoute } from "@models/enums/route.enum";
 import { EErrorMessage } from "@models/enums/error-message.enum";
-import { Auth } from "@models/classes/auth";
+import { IAuth } from "@models/interfaces/auth.interface";
 import { IAuthCreds } from "@models/interfaces/auth-creds.interface";
 import { ErrorService } from "./error.service";
 
@@ -21,9 +21,9 @@ import { ErrorService } from "./error.service";
 export class AuthService {
   private _apiUrl = environment.apiUrl + "auth/";
   private _jwtHelper = new JwtHelperService();
-  private readonly _authData = new State<IAuthState>(new Auth());
-  get authData(): IStateReadOnly<Auth> {
-    return this._authData;
+  private readonly _state = new State<IAuth | undefined>(undefined);
+  get state(): IStateReadOnly<IAuth | undefined> {
+    return this._state;
   }
 
   constructor(
@@ -67,12 +67,12 @@ export class AuthService {
   }
 
   public logout(): void {
-    this._authData
+    this._state
       .observe(lens => lens.to("tokenExpirationTimer"))
       .pipe(
         tap(timer => clearTimeout(timer))
       );
-    this._authData.setRoot(new Auth());
+    this._state.setRoot(undefined);
     localStorage.removeItem("token");
     void this._router.navigate([`${ERoute.account}/${ERoute.auth}`]);
   }
@@ -119,7 +119,7 @@ export class AuthService {
     const tokenExpirationDate = this._jwtHelper.getTokenExpirationDate(token);
     const timeUntilAutoLogout = tokenExpirationDate ? tokenExpirationDate.getTime() - Date.now() : 0;
     const tokenExpirationTimer = window.setTimeout(() => this.logout(), timeUntilAutoLogout);
-    this._authData.setRoot({
+    this._state.setRoot({
       username: decodedToken.unique_name,
       token,
       tokenValid,
