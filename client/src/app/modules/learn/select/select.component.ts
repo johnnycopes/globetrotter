@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
-import { Params, Router } from "@angular/router";
+import { Router } from "@angular/router";
 import { Observable, combineLatest } from "rxjs";
 import { map, tap, distinctUntilChanged } from "rxjs/operators";
 import { pickBy } from "lodash-es";
