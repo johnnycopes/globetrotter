@@ -21,7 +21,7 @@ import { ErrorService } from "./error.service";
 export class AuthService {
   private _apiUrl = environment.apiUrl + "auth/";
   private _jwtHelper = new JwtHelperService();
-  private readonly _authData = new State<Auth>(new Auth());
+  private readonly _authData = new State<IAuthState>(new Auth());
   get authData(): IStateReadOnly<Auth> {
     return this._authData;
   }

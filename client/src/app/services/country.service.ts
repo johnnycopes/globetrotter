@@ -23,7 +23,7 @@ interface ICountryState {
   providedIn: "root"
 })
 export class CountryService implements Resolve<Observable<ICountry[]>> {
-  private request: Observable<ICountry[]>;
+  private _request: Observable<ICountry[]>;
   private readonly _countries = new State<ICountryState>({
     flatCountries: [],
     countriesBySubregion: {},
@@ -47,11 +47,11 @@ export class CountryService implements Resolve<Observable<ICountry[]>> {
     });
   }
 
-  resolve(): Observable<ICountry[]> {
-    return this.request;
+  public resolve(): Observable<ICountry[]> {
+    return this._request;
   }
 
-  getCountriesFromSelection(selection: ISelection): Observable<ICountry[]> {
+  public getCountriesFromSelection(selection: ISelection): Observable<ICountry[]> {
     return this.countries
       .observe(lens => lens.to("countriesBySubregion"))
       .pipe(
@@ -69,7 +69,7 @@ export class CountryService implements Resolve<Observable<ICountry[]>> {
       );
   }
 
-  getSummary(countryName: string): Observable<string> {
+  public getSummary(countryName: string): Observable<string> {
     const searchTerm = COUNTRY_SUMMARY_NAMES[countryName] || countryName;
     return this._apiService.fetchSummary(searchTerm);
   }

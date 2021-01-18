@@ -7,7 +7,7 @@ import { increment } from "@boninger-works/state/library/transforms/numeric";
 import { ERoute } from "@models/enums/route.enum";
 import { ICountry } from "@models/interfaces/country.interface";
 import { ISelection } from "@models/interfaces/selection.interface";
-import { Quiz } from "@models/classes/quiz";
+import { IQuiz } from "@models/interfaces/quiz.interface";
 import { CountryService } from "@services/country.service";
 import { RouterService } from "@services/router.service";
 
@@ -15,8 +15,8 @@ import { RouterService } from "@services/router.service";
   providedIn: "root"
 })
 export class QuizService {
-  private readonly _quiz: State<Quiz | undefined> = new State(undefined);
-  get quiz(): IStateReadOnly<Quiz | undefined> {
+  private readonly _quiz: State<IQuiz | undefined> = new State(undefined);
+  get quiz(): IStateReadOnly<IQuiz | undefined> {
     return this._quiz;
   }
 
@@ -36,10 +36,15 @@ export class QuizService {
   public initializeQuiz(selection: ISelection): void {
     this._countryService.getCountriesFromSelection(selection).subscribe(
       countries => {
-        this._quiz.setRoot(new Quiz(
-          countries,
-          selection.type
-        ));
+        this._quiz.setRoot({
+          guess: 1,
+          correctGuesses: 0,
+          type: selection.type,
+          countries: countries,
+          totalCountries: countries.length,
+          accuracy: 100,
+          isComplete: false,
+        });
       }
     );
   }
@@ -48,8 +53,9 @@ export class QuizService {
     this._quiz.setBatch(batch => {
       if (correctGuess) {
         batch.set(lens => lens.to("countries").transform(shift()));
-        batch.set(lens => lens.to("countriesGuessed").transform(increment()));
-        const quiz = this._quiz.get() as Quiz;
+        batch.set(lens => lens.to("correctGuesses").transform(increment()));
+        const quiz = this._quiz.get() as IQuiz;
+        // End the game if there are no remaining countries left to guess
         if (!quiz.countries.length) {
           batch.set(lens => lens.to("accuracy").value(this._calculateAccuracy(quiz)));
           batch.set(lens => lens.to("isComplete").value(true));
@@ -57,7 +63,8 @@ export class QuizService {
       } else {
         batch.set(lens => lens.to("countries").transform(countries => this._moveGuessedCountryToEnd(countries)));
       }
-      if (!(this._quiz.get() as Quiz).isComplete) {
+      // Increment the guess counter if the game isn't over, regardless of whether the guess was right or wrong
+      if (!(this._quiz.get() as IQuiz).isComplete) {
         batch.set(lens => lens.to("guess").transform(increment()));
       }
     });
@@ -70,7 +77,7 @@ export class QuizService {
     return updatedCountries;
   }
 
-  private _calculateAccuracy(quiz: Quiz): number {
+  private _calculateAccuracy(quiz: IQuiz): number {
     return Math.round((quiz.totalCountries / quiz.guess) * 100);
   }
 }
