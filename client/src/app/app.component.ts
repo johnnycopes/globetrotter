@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from "rxjs/operators";
 
-import { RouterService } from '@services/router/router.service';
-import { ErrorService } from '@services/error/error.service';
+import { RouterService } from '@services/router.service';
+import { ErrorService } from '@services/error.service';
 
 @Component({
   selector: 'app-root',

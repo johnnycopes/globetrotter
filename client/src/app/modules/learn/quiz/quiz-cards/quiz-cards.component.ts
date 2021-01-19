@@ -1,11 +1,11 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { Observable, combineLatest } from 'rxjs';
-import { map, first } from 'rxjs/operators';
+import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
+import { Observable, combineLatest } from "rxjs";
+import { map, first } from "rxjs/operators";
 
-import { ICountry } from '@models/interfaces/country.interface';
-import { EQuizType } from '@models/enums/quiz-type.enum';
-import { QuizService } from '@services/quiz/quiz.service';
-import { staggerAnimation, fadeInAnimation } from '@utility/animations';
+import { ICountry } from "@models/interfaces/country.interface";
+import { EQuizType } from "@models/enums/quiz-type.enum";
+import { QuizService } from "@services/quiz.service";
+import { staggerAnimation, fadeInAnimation } from "@utility/animations";
 import { shuffle } from "lodash-es";
 
 interface IViewModel {
@@ -15,9 +15,9 @@ interface IViewModel {
 }
 
 @Component({
-  selector: 'app-quiz-cards',
-  templateUrl: './quiz-cards.component.html',
-  styleUrls: ['./quiz-cards.component.scss'],
+  selector: "app-quiz-cards",
+  templateUrl: "./quiz-cards.component.html",
+  styleUrls: ["./quiz-cards.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     fadeInAnimation,
@@ -25,36 +25,36 @@ interface IViewModel {
   ]
 })
 export class QuizCardsComponent implements OnInit {
-  canFlipCards = true;
-  vm$: Observable<IViewModel>;
-  private quizType$: Observable<EQuizType>;
-  private countries$: Observable<ICountry[]>;
-  private currentCountry$: Observable<ICountry>;
+  public canFlipCards = true;
+  public vm$: Observable<IViewModel>;
+  private _quizType$: Observable<EQuizType>;
+  private _countries$: Observable<ICountry[]>;
+  private _currentCountry$: Observable<ICountry>;
 
   constructor(private quizService: QuizService) { }
 
-  ngOnInit(): void {
-    this.initializeStreams();
+  public ngOnInit(): void {
+    this._initializeStreams();
     this.vm$ = combineLatest([
-      this.quizType$,
-      this.countries$,
-      this.currentCountry$
+      this._quizType$,
+      this._countries$,
+      this._currentCountry$
     ]).pipe(
       map(([quizType, countries, currentCountry]) => ({ quizType, countries, currentCountry }))
     );
   }
 
-  onFlip(cardFlipped: boolean): void {
+  public onFlip(cardFlipped: boolean): void {
     this.canFlipCards = !cardFlipped;
   }
 
-  private initializeStreams(): void {
-    this.quizType$ = this.quizService.quiz.observe(lens => lens.to('type'));
-    this.countries$ = this.quizService.quiz.observe(lens => lens.to('countries')).pipe(
+  private _initializeStreams(): void {
+    this._quizType$ = this.quizService.quiz.observe(lens => lens.to("type"));
+    this._countries$ = this.quizService.quiz.observe(lens => lens.to("countries")).pipe(
       map(countries => shuffle(countries)),
       first()
     );
-    this.currentCountry$ = this.quizService.quiz
-      .observe(lens => lens.to('countries').to(0));
+    this._currentCountry$ = this.quizService.quiz
+      .observe(lens => lens.to("countries").to(0));
   }
 }

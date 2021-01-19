@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 
 import { EQuizType } from '@models/enums/quiz-type.enum';
 import { IRadioButtonsOption } from '@shared/components/radio-buttons/radio-buttons.component';
-import { SelectService } from '@services/select/select.service';
+import { SelectService } from '@services/select.service';
 
 @Component({
   selector: 'app-select-type',

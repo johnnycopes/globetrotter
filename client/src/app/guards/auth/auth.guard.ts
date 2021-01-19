@@ -3,7 +3,7 @@ import { CanActivate, CanActivateChild, ActivatedRouteSnapshot, RouterStateSnaps
 import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 
-import { AuthService } from '@services/auth/auth.service';
+import { AuthService } from '@services/auth.service';
 import { ERoute } from '@models/enums/route.enum';
 
 @Injectable({
@@ -23,12 +23,12 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     Observable<boolean | UrlTree> |
     Promise<boolean | UrlTree> |
     boolean | UrlTree {
-    return this.authService.authData.observe().pipe(
+    return this.authService.state.observe().pipe(
       take(1),
       map(authData => {
-        if (authData.tokenValid && state.url === `/${this.authRoute}`) {
+        if (authData?.tokenValid && state.url === `/${this.authRoute}`) {
           return this.router.createUrlTree([this.profileRoute]);
-        } else if (!authData.tokenValid && state.url === `/${this.profileRoute}`) {
+        } else if (!authData?.tokenValid && state.url === `/${this.profileRoute}`) {
           return this.router.createUrlTree([this.authRoute]);
         }
         return true;
