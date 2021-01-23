@@ -1,33 +1,33 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
+import { Router } from "@angular/router";
+import { Observable } from "rxjs";
 
-import { Auth } from '@models/classes/auth';
-import { AuthService } from '@services/auth/auth.service';
+import { AuthService } from "@services/auth.service";
+import { IAuth } from "@models/interfaces/auth.interface";
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss'],
+  selector: "app-profile",
+  templateUrl: "./profile.component.html",
+  styleUrls: ["./profile.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProfileComponent implements OnInit {
-  alertMessage: string | undefined;
-  authData$: Observable<Auth>;
+  public alertMessage: string | undefined;
+  public authData$: Observable<IAuth | undefined>;
 
   constructor(
-    private authService: AuthService,
-    private router: Router
+    private _authService: AuthService,
+    private _router: Router
   ) {
-    const navigation = this.router.getCurrentNavigation();
+    const navigation = this._router.getCurrentNavigation();
     this.alertMessage = navigation?.extras?.state?.alertMessage as string;
   }
 
-  ngOnInit(): void {
-    this.authData$ = this.authService.authData.observe();
+  public ngOnInit(): void {
+    this.authData$ = this._authService.state.observe();
   }
 
-  logout(): void {
-    this.authService.logout();
+  public logout(): void {
+    this._authService.logout();
   }
 }

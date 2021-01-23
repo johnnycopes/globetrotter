@@ -25,7 +25,7 @@ export class NestedCheckboxesComponent<T> implements ControlValueAccessor, OnIni
   @Input() invertedRootCheckbox: boolean = true;
   public states: CheckboxStates = {};
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  private onChangeFn: (value: CheckboxStates) => void = () => { };
+  private _onChangeFn: (value: CheckboxStates) => void = () => { };
 
   constructor(private changeDetectorRef: ChangeDetectorRef) { }
 
@@ -43,7 +43,7 @@ export class NestedCheckboxesComponent<T> implements ControlValueAccessor, OnIni
   }
 
   public registerOnChange(fn: (value: CheckboxStates) => void): void {
-    this.onChangeFn = fn;
+    this._onChangeFn = fn;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function
@@ -51,35 +51,35 @@ export class NestedCheckboxesComponent<T> implements ControlValueAccessor, OnIni
 
   public onChange(state: CheckboxState, item: T): void {
     const states = { ...this.states };
-    const ancestors = this.getAncestors(item);
-    this.updateItemAndDescendantStates(state, item, states);
-    this.updateAncestorStates(ancestors, states);
+    const ancestors = this._getAncestors(item);
+    this._updateItemAndDescendantStates(state, item, states);
+    this._updateAncestorStates(ancestors, states);
 
     this.states = states;
-    this.onChangeFn(this.states);
+    this._onChangeFn(this.states);
   }
 
-  private getAncestors(item: T): T[] {
+  private _getAncestors(item: T): T[] {
     const parent = this.treeProvider.getParent && this.treeProvider.getParent(item);
     if (parent) {
-      return [parent, ...this.getAncestors(parent)];
+      return [parent, ...this._getAncestors(parent)];
     }
     return [];
   }
 
-  private updateItemAndDescendantStates(state: CheckboxState, item: T, states: CheckboxStates): CheckboxStates {
+  private _updateItemAndDescendantStates(state: CheckboxState, item: T, states: CheckboxStates): CheckboxStates {
     const id = this.treeProvider.getId(item);
     const children = this.treeProvider.getChildren(item);
     states[id] = state;
     if (children.length) {
       children.forEach(child =>
-        this.updateItemAndDescendantStates(state, child, states)
+        this._updateItemAndDescendantStates(state, child, states)
       );
     }
     return states;
   }
 
-  private updateAncestorStates(parents: T[], states: CheckboxStates): CheckboxStates {
+  private _updateAncestorStates(parents: T[], states: CheckboxStates): CheckboxStates {
     parents.forEach(parentItem => {
       const parentId = this.treeProvider.getId(parentItem);
       const parentChildren = this.treeProvider.getChildren(parentItem);

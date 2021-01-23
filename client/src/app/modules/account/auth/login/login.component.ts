@@ -1,44 +1,44 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
+import { FormBuilder, FormGroup, Validators, AbstractControl } from "@angular/forms";
+import { Observable } from "rxjs";
 
-import { AuthService } from '@services/auth/auth.service';
-import { ErrorService } from '@services/error/error.service';
+import { AuthService } from "@services/auth.service";
+import { ErrorService } from "@services/error.service";
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  selector: "app-login",
+  templateUrl: "./login.component.html",
+  styleUrls: ["./login.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginComponent implements OnInit {
-  form: FormGroup;
-  formError$: Observable<string>;
+  public form: FormGroup;
+  public formError$: Observable<string>;
 
   constructor(
-    private authService: AuthService,
-    private formBuilder: FormBuilder,
-    private errorService: ErrorService
+    private _authService: AuthService,
+    private _formBuilder: FormBuilder,
+    private _errorService: ErrorService
   ) { }
 
-  get username(): AbstractControl | null {
-    return this.form.get('username');
+  public get username(): AbstractControl | null {
+    return this.form.get("username");
   }
 
-  get password(): AbstractControl | null {
-    return this.form.get('password');
+  public get password(): AbstractControl | null {
+    return this.form.get("password");
   }
 
-  ngOnInit(): void {
-    this.form = this.formBuilder.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required]
+  public ngOnInit(): void {
+    this.form = this._formBuilder.group({
+      username: ["", Validators.required],
+      password: ["", Validators.required]
     });
-    this.formError$ = this.errorService.errors.observe(lens => lens.to('login'));
+    this.formError$ = this._errorService.errors.observe(lens => lens.to("login"));
   }
 
-  login(form: FormGroup): void {
-    this.authService.login(form);
+  public login(form: FormGroup): void {
+    this._authService.login(form);
   }
 
 }

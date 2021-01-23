@@ -3,7 +3,7 @@ import { Observable, Subject, ReplaySubject, combineLatest } from 'rxjs';
 import { map, tap, switchMap, startWith, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 import { fadeInAnimation } from '@utility/animations';
-import { CountryService } from '@services/country/country.service';
+import { CountryService } from '@services/country.service';
 import { ICountry } from '@models/interfaces/country.interface';
 
 interface IViewModel {

@@ -6,3 +6,9 @@ export interface ISelection {
   quantity: number;
   countries: CheckboxStates;
 }
+
+export interface ISelectionParams {
+  type: string;
+  quantity: string;
+  countries: string;
+}

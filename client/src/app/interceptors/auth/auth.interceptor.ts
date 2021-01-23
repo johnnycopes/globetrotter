@@ -1,26 +1,26 @@
-import { HttpInterceptor, HttpEvent, HttpHandler, HttpRequest, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { take, exhaustMap } from 'rxjs/operators';
+import { HttpInterceptor, HttpEvent, HttpHandler, HttpRequest, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { Observable } from "rxjs";
+import { take, exhaustMap } from "rxjs/operators";
 
-import { AuthService } from '@services/auth/auth.service';
+import { AuthService } from "@services/auth.service";
 
 export class AuthInterceptor implements HttpInterceptor {
 
-  constructor(private authService: AuthService) { }
+  constructor(private _authService: AuthService) { }
 
   intercept(
     req: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    return this.authService.authData.observe().pipe(
+    return this._authService.state.observe().pipe(
       take(1),
       exhaustMap(authData => {
-        if (!authData.username) {
+        if (!authData?.username) {
           return next.handle(req);
         }
         // TODO: attach the token to requests
-        console.log('current username:', authData.username);
-        console.log('current request:', req);
+        console.log("current username:", authData.username);
+        console.log("current request:", req);
         return next.handle(req);
       })
     );

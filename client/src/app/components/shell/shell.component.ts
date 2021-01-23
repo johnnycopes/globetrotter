@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
 import { map, distinctUntilChanged } from 'rxjs/operators';
 
-import { QuizService } from '@services/quiz/quiz.service';
+import { QuizService } from '@services/quiz.service';
 
 interface IViewModel {
   showContent: boolean;

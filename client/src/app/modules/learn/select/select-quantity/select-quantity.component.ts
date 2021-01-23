@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy, Input } from '@angular/core'
 ;
-import { SelectService } from '@services/select/select.service';
+import { SelectService } from '@services/select.service';
 
 @Component({
   selector: 'app-select-quantity',
