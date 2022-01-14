@@ -11,7 +11,7 @@ import { ISummary } from "@models/interfaces/summary.interface";
   providedIn: "root"
 })
 export class ApiService {
-  private readonly _countriesApiUrl = 'https://restcountries.eu/rest/v2/all';
+  private readonly _countriesApiUrl = 'https://restcountries.com/v2/all';
   private readonly _wikipediaApiUrl = 'https://en.wikipedia.org/api/rest_v1/page/summary/';
 
   constructor(
