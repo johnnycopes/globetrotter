@@ -115,5 +115,8 @@
       }
     }
   },
-  "defaultProject": "globetrotter"
+  "defaultProject": "globetrotter",
+  "cli": {
+    "defaultCollection": "@angular-eslint/schematics"
+  }
 }
