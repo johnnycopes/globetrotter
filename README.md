@@ -1,29 +1,27 @@
 # Globetrotter
 
-#### Live links:
+#### Live link: https://globetrotter.rocks
 
-- **Application**: https://globetrotter.rocks
-- **Component library**: https://globetrotter-components.surge.sh
+This is a geography app containing a country explorer and a configurable quiz. Test yourself on the national flags, capitals, or country names from any part(s) of the world that you choose and receive a score based on your answers.
 
-This is a geography app! Currently, only the Learn section is complete: you can test yourself on the national flags, capitals, or country names from any part(s) of the world that you choose and receive a score based on your answers. The application is built with [Angular](https://angular.io/) and the component library is built with [Storybook](https://storybook.js.org/).
+Globetrotter is built with [Angular](https://angular.io/).
 
 #### Local installation:
 
-1. Clone the project repository
-1. Navigate into the newly-created directory and install all dependencies by running `npm install`
-1. Navigate into the project folder
-1. **To open the application**: run `npm start`. This will run the app locally in a new browser tab pointing to `http://localhost:4200/`
-1. **To open the component library**: run `npm run storybook`. This will run Storybook locally in a new browser tab pointing to `http://localhost:6006/`
-1. In opening either the app or the component library, changing the source files will reload the served project on save
+To run this locally on your machine, clone the repo and enter the following commands into your CLI:
+```
+npm install
+npm run start
+```
+Visit http://localhost:4200 to see the application running locally.
 
 #### Goals of this project:
 
-- Tap into the [REST Countries API](https://restcountries.eu) for all data
+- Tap into the [REST Countries API](https://restcountries.com) for all data
 - Build a well-organized, sophisticated front-end application with Angular
 - Include some slick transitions/effects in the app with Angular's animations module
-- Create a polished set of generic components and document them with Storybook
 
-#### Future plans:
+#### Future Improvements:
 
 - Make app mobile-friendly (currently, it looks good only on tablet screens or larger)
 - Add ability to view and re-take past quizzes
