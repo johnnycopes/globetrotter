@@ -36,21 +36,11 @@ export class NavigationComponent extends AnimatedComponent implements OnInit {
         route: ERoute.explore,
         exactPathMatch: true
       },
-      // {
-      //   name: 'Prepare',
-      //   route: ERoute.prepare,
-      //   exactPathMatch: true
-      // },
       {
         name: 'Learn',
         route: ERoute.learn,
         exactPathMatch: false
       },
-      {
-        name: 'Account',
-        route: ERoute.account,
-        exactPathMatch: false
-      }
     ];
   }
 }
