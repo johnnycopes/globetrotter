@@ -5,7 +5,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AccountModule } from './modules/account/account.module';
 import { ExploreModule } from './modules/explore/explore.module';
 import { LearnModule } from './modules/learn/learn.module';
 import { SharedModule } from '@shared/shared.module';
@@ -33,7 +32,6 @@ import { ShellComponent } from './components/shell/shell.component';
     BrowserAnimationsModule,
     HttpClientModule,
     RouterModule,
-    AccountModule,
     ExploreModule,
     LearnModule,
     SharedModule,
