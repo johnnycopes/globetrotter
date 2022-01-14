@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve -o",
-    "serve": "ng serve",
-    "build": "ng build --configuration production",
+    "start": "ng serve",
+    "build": "ng build",
+    "deploy": "npm run build && cd dist/globetrotter && mv index.html 200.html && surge . --domain https://globetrotter.surge.sh",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "storybook": "start-storybook ./assets -p 6006",
