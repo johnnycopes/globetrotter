@@ -4,14 +4,12 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
-    "deploy": "npm run build && cd dist/globetrotter && mv index.html 200.html && surge . --domain https://globetrotter.surge.sh",
     "lint": "ng lint",
-    "e2e": "ng e2e",
+    "build": "ng build",
+    "deploy-dev": "npm run build && cd dist/globetrotter && mv index.html 200.html && surge . --domain https://globetrotter.surge.sh",
     "storybook": "start-storybook ./assets -p 6006",
     "build-storybook": "build-storybook",
-    "deploy-storybook": "npm run build-storybook && cd storybook-static && surge . --domain https://globetrotter-components.surge.sh",
-    "prepare": "husky install"
+    "deploy-storybook": "npm run build-storybook && cd storybook-static && surge . --domain https://globetrotter-components.surge.sh"
   },
   "husky": {
     "hooks": {
