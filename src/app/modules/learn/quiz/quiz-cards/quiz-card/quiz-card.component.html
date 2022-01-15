@@ -6,12 +6,12 @@
   (flipped)="onFlip()"
   (animationFinished)="onAnimationFinish($event)"
   >
-  <div app-flip-card-front>
+  <ng-container app-flip-card-front>
     <ng-container *ngTemplateOutlet="template.front"></ng-container>
-  </div>
-  <div app-flip-card-back>
+  </ng-container>
+  <ng-container app-flip-card-back>
     <ng-container *ngTemplateOutlet="template.back"></ng-container>
-  </div>
+  </ng-container>
 </app-flip-card>
 
 
