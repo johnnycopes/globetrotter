@@ -1,6 +1,6 @@
 # Globetrotter
 
-#### Live link: https://globetrotter.rocks
+### Live site: https://globetrotter.rocks
 
 This is a geography app containing a country explorer and a configurable quiz. Test yourself on the national flags, capitals, or country names from any part(s) of the world that you choose and receive a score based on your answers.
 
