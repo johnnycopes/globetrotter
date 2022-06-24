@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { State, IStateReadOnly } from "@boninger-works/state/library/core";
-import { first } from "rxjs/operators";
+import { first, map } from "rxjs/operators";
 import { replace, omitBy, map as _map } from "lodash-es";
 
 import { ISelection, ISelectionParams } from "@models/interfaces/selection.interface";
@@ -31,8 +31,10 @@ export class SelectService {
       countries: {}
     });
     this._countryService.countries
-      .observe(lens => lens.to("nestedCountries"))
-      .pipe(first())
+      .pipe(
+        first(),
+        map(({ nestedCountries }) => nestedCountries),
+      )
       .subscribe(
         regions => {
           const countries = this._mapCountriesToCheckboxStates(regions);

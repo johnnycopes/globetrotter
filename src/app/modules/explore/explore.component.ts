@@ -56,7 +56,9 @@ export class ExploreComponent implements OnInit {
   }
 
   private initializeStreams(): void {
-    this.countries$ = this.countryService.countries.observe(lens => lens.to('flatCountries'));
+    this.countries$ = this.countryService.countries.pipe(
+      map(({ flatCountries }) => flatCountries)
+    );
     this.selectedCountry$ = this.selectedCountryChange.asObservable().pipe(
       distinctUntilChanged()
     );

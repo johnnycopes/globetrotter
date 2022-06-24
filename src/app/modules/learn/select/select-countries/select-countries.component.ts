@@ -77,9 +77,9 @@ export class SelectCountriesComponent implements OnInit {
   private initializeStreams(): void {
     this.checkboxStates$ = this.selectService.selection.observe(lens => lens.to('countries'));
     this.regionData$ = this.countryService.countries
-      .observe(lens => lens.to('nestedCountries'))
       .pipe(
         first(),
+        map(({ nestedCountries }) => nestedCountries),
         tap(regions => {
           this.fullySelectedState = regions.reduce((states, region) => {
             states[region.name] = 'checked';

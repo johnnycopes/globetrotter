@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Resolve } from "@angular/router";
-import { Observable } from "rxjs";
-import { State, IStateReadOnly } from "@boninger-works/state/library/core";
+import { BehaviorSubject, Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { groupBy, reduce, shuffle, map as _map } from "lodash-es";
 import { Dictionary } from "lodash";
@@ -24,12 +23,12 @@ interface ICountryState {
 })
 export class CountryService implements Resolve<Observable<ICountry[]>> {
   private _request: Observable<ICountry[]>;
-  private readonly _countries = new State<ICountryState>({
+  private readonly _countries = new BehaviorSubject<ICountryState>({
     flatCountries: [],
     countriesBySubregion: {},
     nestedCountries: []
   });
-  get countries(): IStateReadOnly<ICountryState> {
+  get countries(): Observable<ICountryState> {
     return this._countries;
   }
 
@@ -39,7 +38,7 @@ export class CountryService implements Resolve<Observable<ICountry[]>> {
       const countriesBySubregion = groupBy(flatCountries, "subregion");
       const subregionsByRegion = this._groupSubregionsByRegion(countriesBySubregion);
       const nestedCountries = this._formatNestedCountries(countriesBySubregion, subregionsByRegion);
-      this._countries.setRoot({
+      this._countries.next({
         flatCountries,
         countriesBySubregion,
         nestedCountries
@@ -53,9 +52,8 @@ export class CountryService implements Resolve<Observable<ICountry[]>> {
 
   public getCountriesFromSelection(selection: ISelection): Observable<ICountry[]> {
     return this.countries
-      .observe(lens => lens.to("countriesBySubregion"))
       .pipe(
-        map(countriesBySubregion => {
+        map(({ countriesBySubregion }) => {
           const quantity = selection.quantity || undefined;
           const countries = reduce(selection.countries, (accum, checkboxState, placeName) => {
             if (checkboxState === "checked" && countriesBySubregion[placeName]) {
