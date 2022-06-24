@@ -60,10 +60,12 @@ export class SelectComponent implements OnInit {
   }
 
   private _initializeSubscriptions(): void {
-    this._selection$ = this._selectService.selection.observe().pipe(
+    this._selection$ = this._selectService.selection.pipe(
       tap(selection => this._selection = selection)
     );
-    this._quantity$ = this._selectService.selection.observe(lens => lens.to("quantity"));
+    this._quantity$ = this._selectService.selection.pipe(
+      map(({ quantity }) => quantity)
+    );
     this._numberOfSelectedCountries$ = combineLatest([
       this._countryService.countries.pipe(map(({ countriesBySubregion }) => countriesBySubregion)),
       this._selection$

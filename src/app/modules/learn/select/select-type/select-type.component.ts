@@ -20,9 +20,8 @@ export class SelectTypeComponent {
   ].map(quizType => this._generateOption(quizType));
 
   public selectedType$: Observable<IRadioButtonsOption<EQuizType>> = this._selectService.selection
-    .observe(lens => lens.to('type'))
     .pipe(
-      map(quizType => this._generateOption(quizType))
+      map(({ type }) => this._generateOption(type))
     );
 
   constructor(private _selectService: SelectService) { }

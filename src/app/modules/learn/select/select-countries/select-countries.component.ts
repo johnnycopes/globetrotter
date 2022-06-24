@@ -75,7 +75,9 @@ export class SelectCountriesComponent implements OnInit {
   }
 
   private initializeStreams(): void {
-    this.checkboxStates$ = this.selectService.selection.observe(lens => lens.to('countries'));
+    this.checkboxStates$ = this.selectService.selection.pipe(
+      map(({ countries }) => countries)
+    );
     this.regionData$ = this.countryService.countries
       .pipe(
         first(),

@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { State, IStateReadOnly } from "@boninger-works/state/library/core";
+import { BehaviorSubject } from "rxjs";
 import { first, map } from "rxjs/operators";
 import { replace, omitBy, map as _map } from "lodash-es";
 
@@ -19,13 +19,13 @@ export class SelectService {
     indeterminate: "_i",
     unchecked: "",
   };
-  private readonly _selection: State<ISelection>;
-  get selection(): IStateReadOnly<ISelection> {
+  private readonly _selection: BehaviorSubject<ISelection>;
+  get selection(): BehaviorSubject<ISelection> {
     return this._selection;
   }
 
   constructor(private _countryService: CountryService) {
-    this._selection = new State({
+    this._selection = new BehaviorSubject({
       type: EQuizType.flagsCountries,
       quantity: 5,
       countries: {}
@@ -44,19 +44,28 @@ export class SelectService {
   }
 
   public updateSelection(selection: ISelection): void {
-    this._selection.setRoot(selection);
+    this._selection.next(selection);
   }
 
   public updateType(type: EQuizType): void {
-    this._selection.set(lens => lens.to("type").value(type));
+    this._selection.pipe(
+      first(),
+      map(selection => ({ ...selection, type }))
+    ).subscribe(selection => this._selection.next(selection));
   }
 
   public updateQuantity(quantity: number): void {
-    this._selection.set(lens => lens.to("quantity").value(quantity));
+    this._selection.pipe(
+      first(),
+      map(selection => ({ ...selection, quantity }))
+    ).subscribe(selection => this._selection.next(selection));
   }
 
   public updateCountries(countries: CheckboxStates): void {
-    this._selection.set(lens => lens.to("countries").value(countries));
+    this._selection.pipe(
+      first(),
+      map(selection => ({ ...selection, countries }))
+    ).subscribe(selection => this._selection.next(selection));
   }
 
   public mapSelectionToQueryParams(selection: ISelection): ISelectionParams {
