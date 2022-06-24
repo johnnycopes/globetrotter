@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { filter } from "rxjs/operators";
+import { filter, map } from "rxjs/operators";
 import { State, IStateReadOnly } from "@boninger-works/state/library/core";
 import { shift } from "@boninger-works/state/library/transforms/array";
 import { increment } from "@boninger-works/state/library/transforms/numeric";
@@ -25,8 +25,8 @@ export class QuizService {
     private _routerService: RouterService
   ) {
     this._routerService.state
-      .observe(lens => lens.to("currentRoute"))
       .pipe(
+        map(({ currentRoute }) => currentRoute),
         filter(route => route.includes(ERoute.select))
       ).subscribe(
         () => this._quiz.setRoot(undefined)
