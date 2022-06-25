@@ -11,7 +11,7 @@ import { shuffle } from "lodash-es";
 interface IViewModel {
   quizType: EQuizType;
   countries: ICountry[];
-  currentCountry: ICountry;
+  currentCountry: ICountry | undefined;
 }
 
 @Component({
@@ -29,7 +29,7 @@ export class QuizCardsComponent implements OnInit {
   public vm$: Observable<IViewModel>;
   private _quizType$: Observable<EQuizType>;
   private _countries$: Observable<ICountry[]>;
-  private _currentCountry$: Observable<ICountry>;
+  private _currentCountry$: Observable<ICountry | undefined>;
 
   constructor(private quizService: QuizService) { }
 
@@ -49,12 +49,15 @@ export class QuizCardsComponent implements OnInit {
   }
 
   private _initializeStreams(): void {
-    this._quizType$ = this.quizService.quiz.observe(lens => lens.to("type"));
-    this._countries$ = this.quizService.quiz.observe(lens => lens.to("countries")).pipe(
-      map(countries => shuffle(countries)),
-      first()
+    this._quizType$ = this.quizService.quiz.pipe(
+      map(quiz => quiz?.type ?? EQuizType.flagsCountries)
     );
-    this._currentCountry$ = this.quizService.quiz
-      .observe(lens => lens.to("countries").to(0));
+    this._countries$ = this.quizService.quiz.pipe(
+      first(),
+      map(quiz => shuffle(quiz?.countries ?? [])),
+    );
+    this._currentCountry$ = this.quizService.quiz.pipe(
+      map(quiz => quiz?.countries[0] ?? undefined)
+    );
   }
 }

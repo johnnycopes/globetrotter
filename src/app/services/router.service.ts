@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Router, NavigationEnd, RouterEvent, NavigationCancel, NavigationError } from "@angular/router";
-import { State, IStateReadOnly } from "@boninger-works/state/library/core";
-import { map, filter } from "rxjs/operators";
+import { BehaviorSubject, of } from "rxjs";
+import { map, filter, first, switchMap, distinctUntilChanged } from "rxjs/operators";
 
 interface IRouterState {
   currentRoute: string;
@@ -12,11 +12,11 @@ interface IRouterState {
   providedIn: "root"
 })
 export class RouterService {
-  private readonly _state: State<IRouterState> = new State({
+  private readonly _state: BehaviorSubject<IRouterState> = new BehaviorSubject({
     currentRoute: "",
     loading: false
   });
-  get state(): IStateReadOnly<IRouterState> {
+  get state(): BehaviorSubject<IRouterState> {
     return this._state;
   }
 
@@ -27,27 +27,30 @@ export class RouterService {
   private _intialize(): void {
     this._router.events.pipe(
       filter(event => event instanceof NavigationEnd),
-      map((navigationEnd: NavigationEnd) => {
-        const routeUrl = navigationEnd.urlAfterRedirects;
-        return routeUrl;
-      })
-    ).subscribe(
-      route => this._state.set(lens => lens.to("currentRoute").value(route))
-    );
+      switchMap((navigationEnd: NavigationEnd) =>  navigationEnd.urlAfterRedirects),
+      map(currentRoute => this._state.pipe(
+        first(),
+        map(state => ({ ...state, currentRoute }))
+      ).subscribe(state => this._state.next(state))),
+      distinctUntilChanged(),
+    ).subscribe();
 
     this._router.events.pipe(
       filter(event => event instanceof RouterEvent),
-      map((routerEvent: RouterEvent) => {
+      switchMap((routerEvent: RouterEvent) => {
         if (routerEvent instanceof NavigationEnd ||
           routerEvent instanceof NavigationCancel ||
           routerEvent instanceof NavigationError) {
-          return false;
+          return of(false);
         }
-        return true;
-      })
-    ).subscribe(
-      loading => this._state.set(lens => lens.to("loading").value(loading))
-    );
+        return of(true);
+      }),
+      map(loading => this._state.pipe(
+        first(),
+        map(state => ({ ...state, loading }))
+      ).subscribe(state => this._state.next(state))),
+      distinctUntilChanged(),
+    ).subscribe();
   }
 
 }
