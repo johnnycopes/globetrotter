@@ -23,8 +23,8 @@ export class AppComponent implements OnInit {
     this.loading$ = this.routerService.state.pipe(
       map(({ loading }) => loading)
     );
-    this.error$ = this.errorService.errors.observe(lens => lens.to('global')).pipe(
-      map(error => !!error)
+    this.error$ = this.errorService.errors.pipe(
+      map(({ global }) => !!global)
     );
   }
 }
