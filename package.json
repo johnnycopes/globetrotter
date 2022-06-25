@@ -28,7 +28,6 @@
     "@angular/platform-browser-dynamic": "^13.1.2",
     "@angular/router": "^13.1.2",
     "@auth0/angular-jwt": "^5.0.2",
-    "@boninger-works/state": "^3.2.0",
     "core-js": "^3.8.2",
     "lodash-es": "^4.17.21",
     "rxjs": "^6.6.3",
