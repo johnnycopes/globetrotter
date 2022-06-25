@@ -12,7 +12,7 @@ import { QuizService } from "@services/quiz.service";
 import { ICountry } from "@models/interfaces/country.interface";
 
 interface IViewModel {
-  quiz: IQuiz,
+  quiz: IQuiz | undefined,
   prompt: string;
   position: FixedSlideablePanelPosition;
 }
@@ -27,7 +27,7 @@ export class QuizMenuComponent implements OnInit {
   @Output() menuReady = new EventEmitter<true>();
   public vm$: Observable<IViewModel>;
   private _positionSubject$ = new BehaviorSubject<FixedSlideablePanelPosition>("header");
-  private _quiz$: Observable<IQuiz>;
+  private _quiz$: Observable<IQuiz | undefined>;
   private _position$: Observable<FixedSlideablePanelPosition>;
   private _prompt$: Observable<string>;
   private _promptDict: Record<EQuizType, (country: ICountry) => string> = {
@@ -69,17 +69,16 @@ export class QuizMenuComponent implements OnInit {
   }
 
   private _initializeStreams(): void {
-    const quiz$ = this._quizService.quiz.observe(lens => lens.exists());
-    this._quiz$ = quiz$.pipe(
+    this._quiz$ = this._quizService.quiz.pipe(
       tap(quiz => {
-        if (quiz.isComplete) {
+        if (quiz?.isComplete) {
           this._positionSubject$.next("offscreen");
         }
       })
     );
-    this._prompt$ = quiz$.pipe(
+    this._prompt$ = this._quizService.quiz.pipe(
       map(quiz => {
-        const currentCountry = quiz.countries[0];
+        const currentCountry = quiz?.countries[0];
         return currentCountry ? this._promptDict[quiz.type](currentCountry) : "";
       })
     );

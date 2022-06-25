@@ -1,8 +1,6 @@
 import { Injectable } from "@angular/core";
-import { filter, map } from "rxjs/operators";
-import { State, IStateReadOnly } from "@boninger-works/state/library/core";
-import { shift } from "@boninger-works/state/library/transforms/array";
-import { increment } from "@boninger-works/state/library/transforms/numeric";
+import { BehaviorSubject } from "rxjs";
+import { filter, first, map } from "rxjs/operators";
 
 import { ERoute } from "@models/enums/route.enum";
 import { ICountry } from "@models/interfaces/country.interface";
@@ -15,8 +13,8 @@ import { RouterService } from "@services/router.service";
   providedIn: "root"
 })
 export class QuizService {
-  private readonly _quiz: State<IQuiz | undefined> = new State(undefined);
-  get quiz(): IStateReadOnly<IQuiz | undefined> {
+  private readonly _quiz: BehaviorSubject<IQuiz | undefined> = new BehaviorSubject(undefined);
+  get quiz(): BehaviorSubject<IQuiz | undefined> {
     return this._quiz;
   }
 
@@ -29,14 +27,14 @@ export class QuizService {
         map(({ currentRoute }) => currentRoute),
         filter(route => route.includes(ERoute.select))
       ).subscribe(
-        () => this._quiz.setRoot(undefined)
+        () => this._quiz.next(undefined)
       );
   }
 
   public initializeQuiz(selection: ISelection): void {
     this._countryService.getCountriesFromSelection(selection).subscribe(
       countries => {
-        this._quiz.setRoot({
+        this._quiz.next({
           guess: 1,
           correctGuesses: 0,
           type: selection.type,
@@ -50,24 +48,36 @@ export class QuizService {
   }
 
   public updateQuiz(correctGuess: boolean): void {
-    this._quiz.setBatch(batch => {
-      if (correctGuess) {
-        batch.set(lens => lens.to("countries").transform(shift()));
-        batch.set(lens => lens.to("correctGuesses").transform(increment()));
-        const quiz = this._quiz.get() as IQuiz;
-        // End the game if there are no remaining countries left to guess
-        if (!quiz.countries.length) {
-          batch.set(lens => lens.to("accuracy").value(this._calculateAccuracy(quiz)));
-          batch.set(lens => lens.to("isComplete").value(true));
+    this._quiz.pipe(
+      first(),
+
+      map(quiz => {
+        if (!quiz) {
+          return undefined;
         }
-      } else {
-        batch.set(lens => lens.to("countries").transform(countries => this._moveGuessedCountryToEnd(countries)));
-      }
-      // Increment the guess counter if the game isn't over, regardless of whether the guess was right or wrong
-      if (!(this._quiz.get() as IQuiz).isComplete) {
-        batch.set(lens => lens.to("guess").transform(increment()));
-      }
-    });
+
+        const updatedQuiz = { ...quiz };
+        if (correctGuess) {
+          updatedQuiz.countries.shift();
+          updatedQuiz.correctGuesses++;
+          // End the game if there are no remaining countries left to guess
+          if (!updatedQuiz.countries.length) {
+            updatedQuiz.accuracy = this._calculateAccuracy(updatedQuiz);
+            updatedQuiz.isComplete = true;
+          }
+        } else {
+          updatedQuiz.countries = this._moveGuessedCountryToEnd(updatedQuiz.countries);
+        }
+
+        // Increment the guess counter if the game isn't over, regardless of whether the guess was right or wrong
+        if (!updatedQuiz.isComplete) {
+          updatedQuiz.guess++;
+        }
+
+        console.log(updatedQuiz.countries);
+        return updatedQuiz;
+      })
+    ).subscribe(quiz => this._quiz.next(quiz));
   }
 
   private _moveGuessedCountryToEnd(countries: ICountry[]): ICountry[] {
