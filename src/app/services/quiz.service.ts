@@ -74,7 +74,6 @@ export class QuizService {
           updatedQuiz.guess++;
         }
 
-        console.log(updatedQuiz.countries);
         return updatedQuiz;
       })
     ).subscribe(quiz => this._quiz.next(quiz));

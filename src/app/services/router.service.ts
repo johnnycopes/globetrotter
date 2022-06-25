@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Router, NavigationEnd, RouterEvent, NavigationCancel, NavigationError } from "@angular/router";
 import { BehaviorSubject, of } from "rxjs";
-import { map, filter, first, switchMap, distinctUntilChanged, concatMap } from "rxjs/operators";
+import { map, filter, first, switchMap, distinctUntilChanged } from "rxjs/operators";
 
 interface IRouterState {
   currentRoute: string;
@@ -27,7 +27,7 @@ export class RouterService {
   private _intialize(): void {
     this._router.events.pipe(
       filter(event => event instanceof NavigationEnd),
-      concatMap((navigationEnd: NavigationEnd) =>  navigationEnd.urlAfterRedirects),
+      switchMap((navigationEnd: NavigationEnd) =>  navigationEnd.urlAfterRedirects),
       map(currentRoute => this._state.pipe(
         first(),
         map(state => ({ ...state, currentRoute }))
